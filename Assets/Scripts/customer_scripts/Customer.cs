@@ -1,71 +1,91 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
     public string customerName;
-    public float waitTime;   // Time that the customer will wait to place an order
-    public float cookTime;   // Time it takes to cook food
-    public float returnTime; // Total time to return food t customer
-    public bool isOrderCompleted = false;
+    public float waitTime;  
+    public float cookTime; 
+
+    public Material grayMaterial; // order not taken yet
+    public Material greenMaterial; // waiting for order
+    public Material redMaterial; // patience ran out
+    public Material blueMaterial; // order successfully complete
 
     private float timer = 0f;
-    private enum CustomerState { Waiting, Ordering, Cooking, Returning, Done }
+    private Renderer customerRenderer;
+    private bool orderTaken = false;
+    private bool foodReady = false;
+    public bool isOrderCompleted = false;
+
+    private enum CustomerState { WaitingForOrder, Cooking, Returning, Done }
     private CustomerState currentState;
-    public void Initialize(string name, float wait, float cook, float returnT)
+
+    public Transform player;
+    public float interactionRange = 2f;
+
+    void Start()
     {
-        customerName = name;
-        waitTime = wait;
-        cookTime = cook;
-        returnTime = returnT;
-        currentState = CustomerState.Waiting;
+        customerRenderer = GetComponent<Renderer>();
+        currentState = CustomerState.WaitingForOrder;
+        customerRenderer.material = grayMaterial;
+        Debug.Log(customerName + " is waiting for an order.");
     }
+
     void Update()
     {
-        timer += Time.deltaTime;
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         switch (currentState)
         {
-            case CustomerState.Waiting:
-                if (timer >= waitTime)
+            case CustomerState.WaitingForOrder:
+                if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E))
                 {
-                    currentState = CustomerState.Ordering;
+                    Debug.Log(customerName + " placed an order.");
+                    currentState = CustomerState.Cooking;
+                    customerRenderer.material = greenMaterial;
                     timer = 0f;
-                    Debug.Log(customerName + " has placed an order.");
+                    orderTaken = true;
                 }
-                break;
-
-            case CustomerState.Ordering:
-                currentState = CustomerState.Cooking;
                 break;
 
             case CustomerState.Cooking:
-                if (timer >= cookTime)
+                if (timer >= cookTime && !foodReady)
                 {
-                    currentState = CustomerState.Returning;
-                    timer = 0f;
-                    Debug.Log(customerName + " order ready for return.");
+                    Debug.Log(customerName + "'s food is ready for delivery.");
+                    foodReady = true;
                 }
-                break;
 
-            case CustomerState.Returning:
-                if (timer >= returnTime)
+                if (timer >= waitTime)
                 {
                     if (!isOrderCompleted)
                     {
-                        Debug.Log(customerName + " not returned in time.");
+                        Debug.Log(customerName + " is upset! The order was not returned in time.");
+                        currentState = CustomerState.Done;
+                        customerRenderer.material = redMaterial;
                     }
-                    currentState = CustomerState.Done;
-                    timer = 0f;
+                }
+
+                if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E) && foodReady)
+                {
+                    CompleteOrder();
                 }
                 break;
+
+            case CustomerState.Done:
+                break;
+        }
+
+        if (currentState != CustomerState.WaitingForOrder && currentState != CustomerState.Done)
+        {
+            timer += Time.deltaTime;
         }
     }
+
     public void CompleteOrder()
     {
-        isOrderCompleted = true;
-        currentState = CustomerState.Done;
         Debug.Log(customerName + " received their order.");
+        currentState = CustomerState.Done;
+        customerRenderer.material = blueMaterial; 
+        isOrderCompleted = true;
     }
 }

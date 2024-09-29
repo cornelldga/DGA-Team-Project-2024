@@ -3,37 +3,16 @@ using System.Collections.Generic;
 
 public class CustomerManager : MonoBehaviour
 {
-    public GameObject customerPrefab;
-    public Transform spawnLocation; 
-    private List<Customer> customers = new List<Customer>();
+    public List<Customer> customers;
 
-    // Method to spawn customers
-    public void SpawnCustomer(string name, float waitTime, float cookTime, float returnTime)
-    {
-        GameObject newCustomer = Instantiate(customerPrefab, spawnLocation.position, Quaternion.identity);
-        Customer customerScript = newCustomer.GetComponent<Customer>();
-        customerScript.Initialize(name, waitTime, cookTime, returnTime);
-        customers.Add(customerScript);
-    }
-
-    // Cleanup finished customers
     void Update()
     {
-        foreach (Customer customer in customers)
+        for (int i = customers.Count - 1; i >= 0; i--)
         {
-            if (customer != null && customer.isOrderCompleted)
+            if (customers[i] != null && customers[i].isOrderCompleted)
             {
-                Debug.Log(customer.customerName + " is completed and removed.");
-                customers.Remove(customer);
+                customers.RemoveAt(i);
             }
-        }
-    }
-
-    public void DeliverOrder(Customer customer)
-    {
-        if (customers.Contains(customer))
-        {
-            customer.CompleteOrder();
         }
     }
 }
