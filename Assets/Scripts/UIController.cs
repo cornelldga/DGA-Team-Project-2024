@@ -32,6 +32,11 @@ public class UIController : MonoBehaviour
     }
 
 
+    void Update(){
+        float width = hotbarNodePrefab.GetComponent<RectTransform>().rect.width;
+        this.transform.position = new Vector3((Screen.width/2) - (hotbar.Count * (width/2)) + width/2, transform.position.y, 0);
+    }
+
     /// <summary>
     /// This function will be called every second to update the hotbar
     /// </summary>
