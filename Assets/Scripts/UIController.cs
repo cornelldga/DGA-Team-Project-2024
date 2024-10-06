@@ -19,9 +19,10 @@ public class UIController : MonoBehaviour
         hotbar.Add(new HotbarNode(5, Color.red, "Burger", 5, hotbarNodePrefab, hotbarPanel));
         hotbar.Add(new HotbarNode(10, Color.blue, "Fries", 5, hotbarNodePrefab, hotbarPanel));
         hotbar.Add(new HotbarNode(12, Color.green, "Drink", 5, hotbarNodePrefab, hotbarPanel));
+        hotbar.Add(new HotbarNode(20, Color.yellow, "DOnut", 5, hotbarNodePrefab, hotbarPanel));
 
         // Display the hotbar
-        for(int i = 0; i < hotbar.Count; i++)
+        for (int i = 0; i < hotbar.Count; i++)
         {
             HotbarNode node = (HotbarNode)hotbar[i];
             node.displayNode(hotbarPanel, i * 100, 0);
