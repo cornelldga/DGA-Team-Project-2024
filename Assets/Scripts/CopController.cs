@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,7 +11,7 @@ public class CopController: MonoBehaviour
 
     private void Start()
     {
-
+        agent.SetDestination(new Vector3(0,0,0));
     } 
 
     // Update is called once per frame
