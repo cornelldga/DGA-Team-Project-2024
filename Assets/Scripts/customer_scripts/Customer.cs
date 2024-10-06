@@ -52,7 +52,7 @@ public class Customer : MonoBehaviour
         switch (currentState)
         {
             case CustomerState.WaitingForOrder:
-                if (range.GetComponent<CustomerRange>().orderTaken)
+                if (range.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && !orderTaken)
                 {
                     Debug.Log(customerName + " placed an order.");
                     currentState = CustomerState.Cooking;
@@ -79,7 +79,7 @@ public class Customer : MonoBehaviour
                     }
                 }
 
-                if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E) && foodReady)
+                if (range.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && foodReady)
                 {
                     CompleteOrder();
                 }
