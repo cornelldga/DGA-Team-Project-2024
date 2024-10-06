@@ -9,6 +9,7 @@ public class Customer : MonoBehaviour
     public float cookTime;
     public Transform player;
     public float interactionRange = 2f;
+    [SerializeField] private GameObject range;
 
     [Header("Tentative Materials")]
     public Material grayMaterial; // order not taken yet
@@ -41,6 +42,7 @@ public class Customer : MonoBehaviour
 
         // Initialize and configure the LineRenderer
         SetupInteractionRangeIndicator();
+        range.GetComponent<SphereCollider>().radius = interactionRange;
     }
 
     void Update()
@@ -50,7 +52,7 @@ public class Customer : MonoBehaviour
         switch (currentState)
         {
             case CustomerState.WaitingForOrder:
-                if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E))
+                if (range.GetComponent<CustomerRange>().orderTaken)
                 {
                     Debug.Log(customerName + " placed an order.");
                     currentState = CustomerState.Cooking;
@@ -101,6 +103,8 @@ public class Customer : MonoBehaviour
         currentState = CustomerState.Done;
         customerRenderer.material = blueMaterial;
         isOrderCompleted = true;
+
+        // TODO: Call the GameManager to update the game status
     }
 
     void MoveCustomer()
@@ -147,8 +151,8 @@ public class Customer : MonoBehaviour
 
         for (int i = 0; i <= segments; i++)
         {
-            float x = Mathf.Cos(Mathf.Deg2Rad * angle) * interactionRange;
-            float z = Mathf.Sin(Mathf.Deg2Rad * angle) * interactionRange;
+            float x = Mathf.Cos(Mathf.Deg2Rad * angle) * interactionRange * 2;
+            float z = Mathf.Sin(Mathf.Deg2Rad * angle) * interactionRange * 2;
 
             lineRenderer.SetPosition(i, new Vector3(x, 0f, z));
 
