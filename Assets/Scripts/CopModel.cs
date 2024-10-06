@@ -32,12 +32,16 @@ public class CopModel : MonoBehaviour
             int x, y;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             MapInstance.MapGrid.GetXY(worldPosition, out x, out y);
+
+            int sx, sy;
+            MapInstance.MapGrid.GetXY(RB.transform.position, out sx, out sy);   
             //UnityEngine.Debug.Log("{"+x+","+y+"}");
-            Pathfinding p = new Pathfinding(Map.Instance.MapGrid, new Vector2(0, 0), new Vector2(x, y));
+            Pathfinding p = new Pathfinding(Map.Instance.MapGrid, new Vector2(sx, sy), new Vector2(x, y));
 
             //Vector2 DirVector = RB.transform.position - MapInstance.MapGrid.GetWorldPosition()
 
             //RB.velocity = new Vector2(RB.velocity.x, RB.velocity.y * 0.5f);
+            RB.transform.position = MapInstance.MapGrid.GetWorldPosition(x + 0.5f, y+0.5f);
         }
 
 
