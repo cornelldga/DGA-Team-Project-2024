@@ -875,8 +875,6 @@ MonoBehaviour:
   turnSpeed: 180
   accelerationMultiplier: 3
   driftFactor: 0.5
-  lateralDriftFactor: 0.8
-  brakingFactor: 0.95
 --- !u!4 &1904249955 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1880317207959290724, guid: c4cad50aa03bbca42938fe318344950b, type: 3}
@@ -996,6 +994,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1171727956100483509, guid: 1ee74df1607b2fa458d92c11be8f3548, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 4229518997468610015, guid: 1ee74df1607b2fa458d92c11be8f3548, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10
