@@ -10,6 +10,7 @@ public class PlayerCar : MonoBehaviour
     Quaternion targetRotation;
     Rigidbody _rigidbody;
 
+    //Allows for script to interact with Rigidbody component
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -39,11 +40,11 @@ public class PlayerCar : MonoBehaviour
             targetRotation = Quaternion.Euler(0, rotationAngle, 0);
         }
     }
-
+    // Calculating the acceleration input based on mouse button presses
+    // If the left mouse button (button 0) is pressed, accelerationInput is positive
+    // If the right mouse button (button 1) is pressed, accelerationInput is negative
     private void FixedUpdate()
     {
-
-
         float accelerationInput = acceleration * (Input.GetMouseButton(0) ? 1 : Input.GetMouseButton(1) ? -1 : 0) * Time.fixedDeltaTime;
         _rigidbody.AddRelativeForce(Vector3.forward * accelerationInput);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turnSpeed * Time.fixedDeltaTime);

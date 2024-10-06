@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class TopDownContr : MonoBehaviour
 {
+    //Target object camera follows 
     [SerializeField] Transform observe;
+    //How far ahead  of target's velocity camera should be positioned
     [SerializeField] float aheadSpeed;
+    //Smoothness of camera movement
     [SerializeField] float followDamping;
-    [SerializeField] float cameraHeight;
 
+    [SerializeField] float cameraHeight;
+    //Used to get target's velocity
     Rigidbody observeRigidBody;
     // Start is called before the first frame update
     void Start()
