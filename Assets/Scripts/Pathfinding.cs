@@ -219,7 +219,7 @@ public class Pathfinding
         while (Path.Count > 0)
         {
             PathNode p = Path.Pop();
-            Debug.DrawLine(map.GetWorldPosition(p.ParentX + 0.5f, p.ParentY + 0.5f), map.GetWorldPosition(p.X + 0.5f, p.Y + 0.5f), Color.green, 100f);
+            Debug.DrawLine(map.GetWorldPosition(p.ParentX + 0.5f, p.ParentY + 0.5f), map.GetWorldPosition(p.X + 0.5f, p.Y + 0.5f), Color.green, 2f);
             //UnityEngine.Debug.Log("{" + p.X + ", " + p.Y + "}");
             VectorPath[i] = new Vector2(p.X, p.Y);
             i++;
