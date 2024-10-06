@@ -21,7 +21,7 @@ public class Customer : MonoBehaviour
     public float movementFrequency = 1f; // Speed of the oscillation
 
     private Vector3 startingPosition;
-
+    private LineRenderer lineRenderer;
     private float timer = 0f;
     private Renderer customerRenderer;
     private bool orderTaken = false;
@@ -38,6 +38,9 @@ public class Customer : MonoBehaviour
         customerRenderer.material = grayMaterial;
         startingPosition = transform.position;
         Debug.Log(customerName + " is waiting for an order.");
+
+        // Initialize and configure the LineRenderer
+        SetupInteractionRangeIndicator();
     }
 
     void Update()
@@ -111,6 +114,48 @@ public class Customer : MonoBehaviour
         // Update the customer's position
         transform.position = newPosition;
     }
+
+    void SetupInteractionRangeIndicator()
+    {
+        // Get or Add a LineRenderer component
+        lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer == null)
+        {
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
+
+        // Configure LineRenderer properties
+        lineRenderer.positionCount = 0; // Will be set later
+        lineRenderer.loop = true; // Close the circle
+        lineRenderer.useWorldSpace = false; // Relative to the GameObject
+        lineRenderer.startWidth = 0.05f;
+        lineRenderer.endWidth = 0.05f;
+        lineRenderer.startColor = Color.blue;
+        lineRenderer.endColor = Color.blue;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // Use a simple material
+
+        // Create the circle
+        CreateCirclePoints();
+    }
+
+    void CreateCirclePoints()
+    {
+        int segments = 100; // Number of segments to make the circle smooth
+        float angle = 0f;
+
+        lineRenderer.positionCount = segments + 1; // +1 to close the circle
+
+        for (int i = 0; i <= segments; i++)
+        {
+            float x = Mathf.Cos(Mathf.Deg2Rad * angle) * interactionRange;
+            float z = Mathf.Sin(Mathf.Deg2Rad * angle) * interactionRange;
+
+            lineRenderer.SetPosition(i, new Vector3(x, 0f, z));
+
+            angle += (360f / segments);
+        }
+    }
+
 
     // ---------------------------- Getters ----------------------------
     public bool IsOrderTaken()
