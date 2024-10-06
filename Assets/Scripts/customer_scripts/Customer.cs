@@ -1,11 +1,16 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Renderer))]
 public class Customer : MonoBehaviour
 {
+    [Header("Customer Attributes")]
     public string customerName;
     public float waitTime;
     public float cookTime;
+    public Transform player;
+    public float interactionRange = 2f;
 
+    [Header("Tentative Materials")]
     public Material grayMaterial; // order not taken yet
     public Material greenMaterial; // waiting for order
     public Material redMaterial; // patience ran out
@@ -19,9 +24,6 @@ public class Customer : MonoBehaviour
 
     private enum CustomerState { WaitingForOrder, Cooking, Returning, Done }
     private CustomerState currentState;
-
-    public Transform player;
-    public float interactionRange = 2f;
 
     void Start()
     {
