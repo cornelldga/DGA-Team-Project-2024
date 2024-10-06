@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController: MonoBehaviour
+public class CopController: MonoBehaviour
 {
     public NavMeshAgent agent;
+   
+
+    private void Start()
+    {
+
+    } 
 
     // Update is called once per frame
     void Update()
@@ -16,6 +22,7 @@ public class PlayerController: MonoBehaviour
       
             if (Physics.Raycast(movePosition, out var hitinfo)){
                 agent.SetDestination(hitinfo.point);
+           
             }
         }
     }
