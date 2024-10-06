@@ -16,6 +16,12 @@ public class Customer : MonoBehaviour
     public Material redMaterial; // patience ran out
     public Material blueMaterial; // order successfully complete
 
+    [Header("Movement Settings")]
+    public float movementAmplitude = 0.5f; // Distance of movement from the starting position
+    public float movementFrequency = 1f; // Speed of the oscillation
+
+    private Vector3 startingPosition;
+
     private float timer = 0f;
     private Renderer customerRenderer;
     private bool orderTaken = false;
@@ -30,6 +36,7 @@ public class Customer : MonoBehaviour
         customerRenderer = GetComponent<Renderer>();
         currentState = CustomerState.WaitingForOrder;
         customerRenderer.material = grayMaterial;
+        startingPosition = transform.position;
         Debug.Log(customerName + " is waiting for an order.");
     }
 
@@ -81,6 +88,8 @@ public class Customer : MonoBehaviour
         {
             timer += Time.deltaTime;
         }
+
+        MoveCustomer();
     }
 
     public void CompleteOrder()
@@ -89,6 +98,18 @@ public class Customer : MonoBehaviour
         currentState = CustomerState.Done;
         customerRenderer.material = blueMaterial;
         isOrderCompleted = true;
+    }
+
+    void MoveCustomer()
+    {
+        // Calculate the movement offset using a sine wave
+        float movementOffset = Mathf.Sin(Time.time * movementFrequency) * movementAmplitude;
+
+        // Apply the movement along the desired axis (e.g., z-axis)
+        Vector3 newPosition = startingPosition + new Vector3(0f, 0f, movementOffset);
+
+        // Update the customer's position
+        transform.position = newPosition;
     }
 
     // ---------------------------- Getters ----------------------------
