@@ -26,12 +26,20 @@ public class Pathfinding
     private int Height;
     private int Width;
     private Vector2 start;
-    public Pathfinding(Grid<int> map, Vector2 src, Vector2 dst)
+
+    public Vector2[] Path;
+    public Pathfinding(Grid<int> map, Vector2 src)
     {
         this.Height = map.getHeight();
         this.Width = map.getWidth();
         this.start = src;
         this.map = map;
+    }
+
+    public bool FindShortestPath(Vector2 src, Vector2 dst)
+    {
+
+        this.start = src;
 
         UnityEngine.Debug.Log("start: {" + src.x + ", " + src.y + "}");
         UnityEngine.Debug.Log("end: {" + dst.x + ", " + dst.y + "}");
@@ -47,15 +55,15 @@ public class Pathfinding
                 PathDetails[i, j].gCost = double.MaxValue;
                 PathDetails[i, j].hCost = double.MaxValue;
                 PathDetails[i, j].ParentX = -1;
-                PathDetails[i, j].ParentY = -1; 
+                PathDetails[i, j].ParentY = -1;
                 PathDetails[i, j].X = i;
                 PathDetails[i, j].Y = j;
             }
         }
 
         // Initalize Parameters of startNode
-        int x = (int) src.x;
-        int y = (int) src.y;
+        int x = (int)src.x;
+        int y = (int)src.y;
 
         PathNode start = PathDetails[x, y];
 
@@ -79,7 +87,7 @@ public class Pathfinding
             PathNode p = OpenList.Min;
             OpenList.Remove(p);
 
-            UnityEngine.Debug.Log("{" + p.X+", "+p.Y+"}");
+            UnityEngine.Debug.Log("{" + p.X + ", " + p.Y + "}");
 
 
             // Add vertex to closed list
@@ -87,9 +95,9 @@ public class Pathfinding
 
             // Find 8 successors of Node
 
-            for (int i = -1; i <=1; i++) 
+            for (int i = -1; i <= 1; i++)
             {
-                for (int j = -1; j <=1; j++)
+                for (int j = -1; j <= 1; j++)
                 {
                     // self
                     if (i == 0 && j == 0)
@@ -100,7 +108,7 @@ public class Pathfinding
                     int NewX = p.X + i;
                     int NewY = p.Y + j;
 
-                    
+
                     if (isValid(NewX, NewY))
                     {
                         UnityEngine.Debug.Log("New {" + NewX + ", " + NewY + "}");
@@ -108,14 +116,14 @@ public class Pathfinding
                         if (NewX == (int)dst.x && NewY == (int)dst.y)
                         {
                             UnityEngine.Debug.Log("Destination found");
-                            UnityEngine.Debug.Log("dst {" +dst.x + ", " + dst.y + "}");
-                            
+                            UnityEngine.Debug.Log("dst {" + dst.x + ", " + dst.y + "}");
+
                             PathDetails[NewX, NewY].ParentX = p.X;
                             PathDetails[NewX, NewY].ParentY = p.Y;
 
                             TracePath(PathDetails, dst);
                             foundDest = true;
-                            return;
+                            return true;
                         }
 
                         // calculate costs
@@ -125,7 +133,7 @@ public class Pathfinding
                             double gNew = PathDetails[p.X, p.Y].gCost + 1.0; // 1 is the path cost
                             double hNew = CalculateHValue(NewX, NewY, (int)dst.x, (int)dst.y);
                             double fNew = gNew + hNew;
-                            UnityEngine.Debug.Log("h: " + hNew + ", g: " + gNew +", f: " + fNew);
+                            UnityEngine.Debug.Log("h: " + hNew + ", g: " + gNew + ", f: " + fNew);
 
                             // update the value of the cell if this path is lesser than
                             if (PathDetails[NewX, NewY].fCost == double.MaxValue || PathDetails[NewX, NewY].fCost > fNew)
@@ -143,7 +151,7 @@ public class Pathfinding
 
                                 UnityEngine.Debug.Log("New Parent {" + PathDetails[NewX, NewY].ParentX + ", " + PathDetails[NewX, NewY].ParentY + "}");
                             }
-                            
+
                         }
                     }
 
@@ -157,6 +165,7 @@ public class Pathfinding
             UnityEngine.Debug.Log("path not found");
         }
 
+        return foundDest;
     }
 
     public bool isValid(int  x, int y)
@@ -204,11 +213,18 @@ public class Pathfinding
 
         Path.Push(PathDetails[x, y]);
 
+        Vector2[] VectorPath = new Vector2[Path.Count];
+
+        int i = 0;
         while (Path.Count > 0)
         {
             PathNode p = Path.Pop();
             Debug.DrawLine(map.GetWorldPosition(p.ParentX + 0.5f, p.ParentY + 0.5f), map.GetWorldPosition(p.X + 0.5f, p.Y + 0.5f), Color.green, 100f);
-            UnityEngine.Debug.Log("{" + p.X + ", " +p.Y + "}");
+            //UnityEngine.Debug.Log("{" + p.X + ", " + p.Y + "}");
+            VectorPath[i] = new Vector2 (p.X, p.Y);
+            i++;
         }
+
+        
     }
 }
