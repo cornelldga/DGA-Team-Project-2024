@@ -636,7 +636,7 @@ GameObject:
   - component: {fileID: 1466211915}
   - component: {fileID: 1466211914}
   m_Layer: 0
-  m_Name: Customermanager(empty
+  m_Name: Customer Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

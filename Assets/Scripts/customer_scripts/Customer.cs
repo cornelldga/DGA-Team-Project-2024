@@ -3,8 +3,8 @@ using UnityEngine;
 public class Customer : MonoBehaviour
 {
     public string customerName;
-    public float waitTime;  
-    public float cookTime; 
+    public float waitTime;
+    public float cookTime;
 
     public Material grayMaterial; // order not taken yet
     public Material greenMaterial; // waiting for order
@@ -15,7 +15,7 @@ public class Customer : MonoBehaviour
     private Renderer customerRenderer;
     private bool orderTaken = false;
     private bool foodReady = false;
-    public bool isOrderCompleted = false;
+    private bool isOrderCompleted = false;
 
     private enum CustomerState { WaitingForOrder, Cooking, Returning, Done }
     private CustomerState currentState;
@@ -85,7 +85,23 @@ public class Customer : MonoBehaviour
     {
         Debug.Log(customerName + " received their order.");
         currentState = CustomerState.Done;
-        customerRenderer.material = blueMaterial; 
+        customerRenderer.material = blueMaterial;
         isOrderCompleted = true;
+    }
+
+    // ---------------------------- Getters ----------------------------
+    public bool IsOrderTaken()
+    {
+        return orderTaken;
+    }
+
+    public bool IsFoodReady()
+    {
+        return foodReady;
+    }
+
+    public bool IsOrderCompleted()
+    {
+        return isOrderCompleted;
     }
 }
