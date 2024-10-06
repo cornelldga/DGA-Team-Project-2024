@@ -27,7 +27,7 @@ public class Pathfinding
     private int Width;
     private Vector2 start;
 
-    public Vector2[] Path;
+    public Vector2[] VectorPath;
     public Pathfinding(Grid<int> map, Vector2 src)
     {
         this.Height = map.getHeight();
@@ -213,7 +213,7 @@ public class Pathfinding
 
         Path.Push(PathDetails[x, y]);
 
-        Vector2[] VectorPath = new Vector2[Path.Count];
+        VectorPath = new Vector2[Path.Count];
 
         int i = 0;
         while (Path.Count > 0)
@@ -221,7 +221,7 @@ public class Pathfinding
             PathNode p = Path.Pop();
             Debug.DrawLine(map.GetWorldPosition(p.ParentX + 0.5f, p.ParentY + 0.5f), map.GetWorldPosition(p.X + 0.5f, p.Y + 0.5f), Color.green, 100f);
             //UnityEngine.Debug.Log("{" + p.X + ", " + p.Y + "}");
-            VectorPath[i] = new Vector2 (p.X, p.Y);
+            VectorPath[i] = new Vector2(p.X, p.Y);
             i++;
         }
 
