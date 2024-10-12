@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//A work in progress isometric controller (just for testing cop following.)
 public class Movement : MonoBehaviour
 {
     private float speed = 10;
