@@ -10,7 +10,7 @@ public class Grid<TGridObject>
     private Vector3 Origin;
     private TGridObject[,] GridArray;
 
-    public Grid(int Width, int Height, int CellSize, Vector3 Origin)
+    public Grid(int Width, int Height, float CellSize, Vector3 Origin)
     {
         this.Width = Width;
         this.Height = Height;   
@@ -23,12 +23,19 @@ public class Grid<TGridObject>
         {
             for (int y = 0; y < Height; y++)
             {
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition((float)(x + 1.5), y + 1), Color.white, 100f);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
 
             }
+        }
+               for (int x = 0; 3*(Width/10) < Width ; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition((float)(x + 1.5), y + 1), Color.white, 100f);
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
 
-
+            }
         }
         Debug.DrawLine(GetWorldPosition(0, Height), GetWorldPosition(Width, Height), Color.white, 100f);
         Debug.DrawLine(GetWorldPosition(Width, 0), GetWorldPosition(Width, Height), Color.white, 100f);

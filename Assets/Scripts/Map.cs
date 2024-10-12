@@ -6,7 +6,7 @@ public class Map : MonoBehaviour
 {
     [SerializeField] private int Width;
     [SerializeField] private int Height;
-    [SerializeField] private int CellSize;
+    [SerializeField] private float CellSize;
     [SerializeField] private Vector3 Origin;
 
     public Grid<int> MapGrid;

@@ -25,14 +25,12 @@ public class CopModel : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            UnityEngine.Debug.Log("click");
             int x, y;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             MapInstance.MapGrid.GetXY(worldPosition, out x, out y);
 
             int sx, sy;
             MapInstance.MapGrid.GetXY(RB.transform.position, out sx, out sy);   
-            UnityEngine.Debug.Log("{"+x+","+y+"}");
 
             if (pathfindingLogic == null)
             {
@@ -45,10 +43,6 @@ public class CopModel : MonoBehaviour
                 {
                     CurrentPath = pathfindingLogic.VectorPath;
                     CurrentIndex = 0;
-                    UnityEngine.Debug.Log(CurrentPath != null);
-                    UnityEngine.Debug.Log(CurrentPath.Length);
-
-
                     //RB.transform.position = MapInstance.MapGrid.GetWorldPosition(x + 0.5f, y + 0.5f);
                 }
             }
@@ -62,10 +56,8 @@ public class CopModel : MonoBehaviour
 
     private void HandleMovement()
     {
-        UnityEngine.Debug.Log(CurrentPath != null);
         if (CurrentPath != null && CurrentIndex < CurrentPath.Length)
         {
-            UnityEngine.Debug.Log("enter");
             Vector2 targetPosition = MapInstance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
            
             if (Vector3.Distance(RB.transform.position, targetPosition) > 0.1f)
