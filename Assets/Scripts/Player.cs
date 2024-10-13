@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VehicleController : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float speed;
     public float oil;
@@ -11,6 +11,9 @@ public class VehicleController : MonoBehaviour
     private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315};
     private int curAngle = 0;
     private bool turnPressed = false;
+    private bool oilOut = false;
+    private float oilTimer = 10f;
+    private float timeOilOut;
 
     // Start is called before the first frame update
     void Start()
@@ -29,10 +32,20 @@ public class VehicleController : MonoBehaviour
 
     void Nitro()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && oil > 0)
+        if (Input.GetKey(KeyCode.LeftShift) && !oilOut)
         {
-            rb.AddRelativeForce(Vector3.forward * 100);
+            rb.AddRelativeForce(Vector3.forward * 50);
             oil--;
+            if (oil == 0)
+            {
+                oilOut = true;
+                timeOilOut = Time .time;
+            }
+        }
+        if (oilOut && Time.time >= timeOilOut + oilTimer)
+        {
+            oil = 100;
+            oilOut = false;
         }
     }
 
