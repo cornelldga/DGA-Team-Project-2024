@@ -6,8 +6,9 @@ using System.Transactions;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// https://www.geeksforgeeks.org/a-search-algorithm/
+// A* algorithm adapted from: https://www.geeksforgeeks.org/a-search-algorithm/
 
+/** Represents a node on a grid for use in an A* pathfinding algorithm */
 public struct PathNode
 {
     // positions of parent in the grid
@@ -20,6 +21,7 @@ public struct PathNode
 }
 
 
+/** A* Pathfinding algorithm on a rectangular grid. */
 public class Pathfinding
 {
     private Grid<int> map;
@@ -28,14 +30,14 @@ public class Pathfinding
     private Vector2 start;
 
     public Vector2[] VectorPath;
-    public Pathfinding(Grid<int> map, Vector2 src)
+    public Pathfinding(Grid<int> map)
     {
         this.Height = map.getHeight();
         this.Width = map.getWidth();
-        this.start = src;
         this.map = map;
     }
 
+    /** Returns true if a path has been found between the points */
     public bool FindShortestPath(Vector2 src, Vector2 dst)
     {
 
@@ -44,9 +46,11 @@ public class Pathfinding
         UnityEngine.Debug.Log("start: {" + src.x + ", " + src.y + "}");
         UnityEngine.Debug.Log("end: {" + dst.x + ", " + dst.y + "}");
 
+        //TODO: preintialize these so they are not reconstructed each call
         bool[,] ClosedList = new bool[Width, Height];
         PathNode[,] PathDetails = new PathNode[Width, Height];
 
+        // reset costs for each path node on the grid. 
         for (int i = 0; i < Width; i++)
         {
             for (int j = 0; j < Height; j++)
@@ -75,6 +79,7 @@ public class Pathfinding
 
         PathDetails[x, y] = start;
 
+        // list of nodes we are traversing, prioritizing lower f costs. 
         SortedSet<PathNode> OpenList = new SortedSet<PathNode>(
             Comparer<PathNode>.Create((a, b) => a.fCost.CompareTo(b.fCost)));
 
@@ -87,14 +92,10 @@ public class Pathfinding
             PathNode p = OpenList.Min;
             OpenList.Remove(p);
 
-            UnityEngine.Debug.Log("{" + p.X + ", " + p.Y + "}");
-
-
             // Add vertex to closed list
             ClosedList[p.X, p.Y] = true;
 
             // Find 8 successors of Node
-
             for (int i = -1; i <= 1; i++)
             {
                 for (int j = -1; j <= 1; j++)
@@ -108,16 +109,12 @@ public class Pathfinding
                     int NewX = p.X + i;
                     int NewY = p.Y + j;
 
-
+                    // check if position is within the grid
                     if (isValid(NewX, NewY))
                     {
-                        UnityEngine.Debug.Log("New {" + NewX + ", " + NewY + "}");
-                        // Destination
+                        // if the new position is our target destination
                         if (NewX == (int)dst.x && NewY == (int)dst.y)
                         {
-                            UnityEngine.Debug.Log("Destination found");
-                            UnityEngine.Debug.Log("dst {" + dst.x + ", " + dst.y + "}");
-
                             PathDetails[NewX, NewY].ParentX = p.X;
                             PathDetails[NewX, NewY].ParentY = p.Y;
 
@@ -129,18 +126,13 @@ public class Pathfinding
                         // calculate costs
                         if (!ClosedList[NewX, NewY])
                         {
-                            UnityEngine.Debug.Log("calculate costs");
-                            double gNew = PathDetails[p.X, p.Y].gCost + 1.0; // 1 is the path cost
+                            double gNew = PathDetails[p.X, p.Y].gCost + 1.0; // 1 is the path cost, can be customized
                             double hNew = CalculateHValue(NewX, NewY, (int)dst.x, (int)dst.y);
                             double fNew = gNew + hNew;
-                            UnityEngine.Debug.Log("h: " + hNew + ", g: " + gNew + ", f: " + fNew);
 
-                            // update the value of the cell if this path is lesser than
+                            // update the value of the cell the current path to this node is cheaper
                             if (PathDetails[NewX, NewY].fCost == double.MaxValue || PathDetails[NewX, NewY].fCost > fNew)
                             {
-                                UnityEngine.Debug.Log("add new node costs");
-
-
                                 PathDetails[NewX, NewY].fCost = fNew;
                                 PathDetails[NewX, NewY].gCost = gNew;
                                 PathDetails[NewX, NewY].hCost = hNew;
@@ -148,8 +140,6 @@ public class Pathfinding
                                 PathDetails[NewX, NewY].ParentY = p.Y;
 
                                 OpenList.Add(PathDetails[NewX, NewY]);
-
-                                UnityEngine.Debug.Log("New Parent {" + PathDetails[NewX, NewY].ParentX + ", " + PathDetails[NewX, NewY].ParentY + "}");
                             }
 
                         }
@@ -168,31 +158,30 @@ public class Pathfinding
         return foundDest;
     }
 
+    /** Returns true of the given coordinates are within the bounds of the map */
     public bool isValid(int  x, int y)
     {
         return (x >= 0 && y >= 0 && x < Width && y < Height);
     }
 
-    // A Utility Function to calculate the 'h' heuristics.
-    public static double CalculateHValue(int x, int y, int dstX, int dstY)
+    /** A Utility Function to calculate the 'h' heuristics. */
+    private static double CalculateHValue(int x, int y, int dstX, int dstY)
     {
         // Return using the distance formula
         return Math.Sqrt(Math.Pow((x - dstX), 2) + Math.Pow(y - dstY, 2));
         //return Math.Pow((x - dstX), 2) + Math.Pow(y - dstY, 2);
     }
 
-    public void TracePath(PathNode[,] PathDetails, Vector2 dst)
+    /** Trace through the found shortest path and convert it into a vector represention 
+     * starting from the start and ending at the destination*/
+    private void TracePath(PathNode[,] PathDetails, Vector2 dst)
     {
-        UnityEngine.Debug.Log("The path is");
-
         Stack<PathNode> Path =  new Stack<PathNode>();
 
         int x = (int) dst.x;
         int y = (int) dst.y;
-        UnityEngine.Debug.Log("Dst Parent {" + PathDetails[x, y].ParentX + ", " + PathDetails[x, y].ParentY + "}");
-
-        UnityEngine.Debug.Log(PathDetails.Length);
         
+        // find the path by traversing through each nodes parent
         while (!(PathDetails[x, y].ParentX == (int)this.start.x && PathDetails[x, y].ParentY == (int)this.start.y))
         {
             UnityEngine.Debug.Log("{" + x + ", " + y + "}");
@@ -210,17 +199,20 @@ public class Pathfinding
             y = TempY;
 
         }
-
+        // add start node to the stack
         Path.Push(PathDetails[x, y]);
 
+
+        // read stack to convert to start to destination order
         VectorPath = new Vector2[Path.Count];
 
         int i = 0;
+        
         while (Path.Count > 0)
         {
             PathNode p = Path.Pop();
+            // draw the debug lines of the path onto the map
             Debug.DrawLine(map.GetWorldPosition(p.ParentX + 0.5f, p.ParentY + 0.5f), map.GetWorldPosition(p.X + 0.5f, p.Y + 0.5f), Color.green, 2f);
-            //UnityEngine.Debug.Log("{" + p.X + ", " + p.Y + "}");
             VectorPath[i] = new Vector2(p.X, p.Y);
             i++;
         }
