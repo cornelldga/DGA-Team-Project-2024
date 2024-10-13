@@ -47,8 +47,6 @@ public class Customer : MonoBehaviour
 
     void Update()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
         switch (currentState)
         {
             case CustomerState.WaitingForOrder:
@@ -59,6 +57,8 @@ public class Customer : MonoBehaviour
                     customerRenderer.material = greenMaterial;
                     timer = 0f;
                     orderTaken = true;
+
+                    // TODO: Pass self to Player 
                 }
                 break;
 
