@@ -32,7 +32,7 @@ public class CopModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Navigate to the position of the left click
+        // Navigate to the position of the right click
         if (Input.GetMouseButtonDown(1))
         {
             UnityEngine.Debug.Log("click");
