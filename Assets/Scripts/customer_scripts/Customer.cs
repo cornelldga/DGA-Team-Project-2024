@@ -58,7 +58,11 @@ public class Customer : MonoBehaviour
                     timer = 0f;
                     orderTaken = true;
 
-                    // TODO: Pass self to Player 
+                    //TODO: Pass self to Player 
+                    // NOTE: I used GameManager.Instance.AddCustomer() instead
+                    // This is not going to work since I am not passing myself. 
+                    // We should change this.
+                    GameManager.Instance.addCustomer();
                 }
                 break;
 
@@ -105,6 +109,7 @@ public class Customer : MonoBehaviour
         isOrderCompleted = true;
 
         // TODO: Call the GameManager to update the game status
+        GameManager.Instance.CompleteOrder();
     }
 
     void MoveCustomer()
