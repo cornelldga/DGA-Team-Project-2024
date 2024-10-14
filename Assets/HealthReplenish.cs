@@ -4,22 +4,18 @@ using UnityEngine;
 
 public class HealthReplenish : MonoBehaviour
 {
-    // Player's health
-    [SerializeField] int health = 100;
-    // Amount of health to replenish on collision
-    [SerializeField] int healthReplenishAmount = 20;
 
     void OnTriggerEnter(Collider other)
     {
-        // Check if the collision is with a specific object or tag
-        if (other.gameObject.CompareTag("Player"))
+        // Get the PlayerHealth component from the player
+        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
         {
-            // Replenish health
-            health += healthReplenishAmount;
-            Debug.Log("Oil replenished!");
-
-            // Destroy the health object
-            Destroy(gameObject);
+            // Replenish the player's health
+            playerHealth.ReplenishHealth();
         }
+
+        // Destroy the health object
+        Destroy(gameObject);
     }
 }
