@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orderTextField: {fileID: 3374075612013405501}
-  customerImage: {fileID: 0}
+  customerImage: {fileID: 2211289071711162295}
   cookTime: {fileID: 4349923426543448072}
   patienceTime: {fileID: 2936897165477941256}
   selectedBorder: {fileID: 4227423236877997491}
@@ -418,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1902517490770191639
 RectTransform:
   m_ObjectHideFlags: 0

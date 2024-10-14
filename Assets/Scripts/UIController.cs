@@ -3,23 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// The UIController class is responsible for managing the UI elements in the game. This class is responsible for updating the orders UI.
+/// The UIController class is responsible for managing the UI elements in the game. This class is responsible for holding UI elements and providing the methods to update them.
 /// </summary>
 public class UIController : MonoBehaviour
 {
 
-    private GameObject[] customers;
+
+    //these are the customers that the UIController is going to display in the hotbar
+    //these will be provided by the player when we merge the code, right now it's being serialzed so that we can see it in the editor
+    [SerializeField] private GameObject[] customers;
+
+    //this is the hotbar that the UIController is going to display the customers in
     [SerializeField] private GameObject hotbar;
+
+    //this is the list of hotbar nodes that the UIController is going to display the customers in
     private List<GameObject> hotbarNodes = new List<GameObject>();
+
+    //this is the prefab for the hotbar nodes
     [SerializeField] private GameObject hotbarNodePrefab;
 
-    private int hotbarIndex = 0;
+
+    //I don't have any buttons set up to change this index, once we decide what keys to use to change the selected node, we can add that functionality
+    private int hotbarIndex = 1;
 
     /// <summary>
-    ///Constructor for the UIController class. This constructor initializes the UIController with the customers that are currently in the scene.
+    ///Start method.
     /// </summary>
-    public UIController(GameObject[] customers){
-        this.customers = customers;
+    void Start(){
         updateOrdersUI();
     }
     
@@ -28,6 +38,8 @@ public class UIController : MonoBehaviour
     /// </summary>
     void Update()
     {
+        //updateOrdersUI is going to be called by the Player script every second (according to Jacob)
+        //so we don't need to call it here, but for now, I'm going to call it here so that we can see the orders UI update in the editor
         updateOrdersUI();
     }
 
@@ -35,22 +47,37 @@ public class UIController : MonoBehaviour
     /// <summary>
     ///updates the orders UI by clearing the current hotbar nodes and populating it with new nodes based on the current customers.
     /// </summary>
-    void updateOrdersUI(){
-        //clear the hotbar
-        foreach (GameObject hotbarNode in hotbarNodes){
-            Destroy(hotbarNode);
+    public void updateOrdersUI(){
+        //clear the current hotbar nodes
+        foreach(GameObject node in hotbarNodes){
+            Destroy(node);
         }
-        foreach (GameObject customer in customers){
-            //this assumes that the customer script is called Customer
-            GameObject hotbarNode = Instantiate(hotbarNodePrefab, hotbar.transform);
-            hotbarNode.GetComponent<HotbarNode>().setOrder(customer.GetComponent<Customer>().getOrder());
-            hotbarNode.GetComponent<HotbarNode>().setCustomerImage(customer.GetComponent<Customer>().getCustomerImage());
-            hotbarNode.GetComponent<HotbarNode>().setCookTime(customer.GetComponent<Customer>().getCookTime());
-            hotbarNode.GetComponent<HotbarNode>().setPatienceTime(customer.GetComponent<Customer>().getPatienceTime());
-            hotbarNodes.Add(hotbarNode);
-            //if the node we just added is the selected node, set it to selected
-            if(hotbarIndex == hotbarNodes.Count){
-                hotbarNode.GetComponent<HotbarNode>().setSelected(true);
+        hotbarNodes.Clear();
+
+        //populate the hotbar with the current customers
+        foreach(GameObject customer in customers){
+            if(customer == null){
+                continue;
+            }
+            GameObject node = Instantiate(hotbarNodePrefab, hotbar.transform);
+            HotbarNode hotbarNode = node.GetComponent<HotbarNode>();
+
+            hotbarNode.setOrder(customer.GetComponent<Customer>().order);
+            hotbarNode.setCustomerImage(customer.GetComponent<Customer>().customerImage);
+            hotbarNode.setCookTime(customer.GetComponent<Customer>().cookTime);
+            hotbarNode.setPatienceTime(customer.GetComponent<Customer>().patienceTime);
+
+            hotbarNodes.Add(node);
+        }
+
+
+        //set the selected border of the hotbar node at the hotbarIndex
+        //this is really hacky, but it's just to show off selection for now
+        for(int i = 0; i < hotbarNodes.Count; i++){
+            if(i == hotbarIndex){
+                hotbarNodes[i].GetComponent<HotbarNode>().getSelectedBorder().SetActive(true);
+            } else {
+                hotbarNodes[i].GetComponent<HotbarNode>().getSelectedBorder().SetActive(false);
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// The HotbarNode class is essentially one hotbar item. This class is allows for easier getting and setting of the hotbar item's properties.
@@ -15,26 +16,12 @@ public class HotbarNode : MonoBehaviour
 
     [SerializeField] private GameObject selectedBorder;
 
-    private Boolean isSelected = false;
     // Start is called before the first frame update
-    private GameObject customer;
     void Start()
     {
         
     }
 
-    
-    /// <summary>
-    /// Update is called once per frame. This function updates the selected border based on whether the node is selected or not.
-    /// </summary>
-    void Update()
-    {
-        if(isSelected){
-            selectedBorder.SetActive(true);
-        } else {
-            selectedBorder.SetActive(false);
-        }
-    }
 
     /// <summary>
     /// Sets the order of the hotbar node.
@@ -48,7 +35,7 @@ public class HotbarNode : MonoBehaviour
     /// Sets the customer image of the hotbar node.
     /// </summary>
     public void setCustomerImage(Sprite image){
-        customerImage.GetComponent<SpriteRenderer>().sprite = image;
+        customerImage.GetComponent<UnityEngine.UI.Image>().sprite = image;
     }
 
 
@@ -67,10 +54,7 @@ public class HotbarNode : MonoBehaviour
         patienceTime.GetComponent<TMPro.TextMeshProUGUI>().text = time.ToString();
     }
 
-    /// <summary>
-    /// Sets the customer of the hotbar node.
-    /// </summary>
-    public void setSelected(Boolean selected){
-        isSelected = selected;
+    public GameObject getSelectedBorder(){
+        return selectedBorder;
     }
 }
