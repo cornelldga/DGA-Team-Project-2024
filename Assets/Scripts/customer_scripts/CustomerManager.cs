@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class CustomerManager : MonoBehaviour
 {
-    public List<Customer> customers;
+    public List<Customer2> customers;
 
     void Update()
     {
