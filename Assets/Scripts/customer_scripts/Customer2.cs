@@ -9,6 +9,7 @@ public class Customer2 : MonoBehaviour
     public float cookTime;
     public Transform player;
     public float interactionRange = 2f;
+    [SerializeField] private GameObject range;
 
     [Header("Tentative Materials")]
     public Material grayMaterial; // order not taken yet
@@ -41,22 +42,27 @@ public class Customer2 : MonoBehaviour
 
         // Initialize and configure the LineRenderer
         SetupInteractionRangeIndicator();
+        range.GetComponent<SphereCollider>().radius = interactionRange;
     }
 
     void Update()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
         switch (currentState)
         {
             case CustomerState.WaitingForOrder:
-                if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E))
+                if (range.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && !orderTaken)
                 {
                     Debug.Log(customerName + " placed an order.");
                     currentState = CustomerState.Cooking;
                     customerRenderer.material = greenMaterial;
                     timer = 0f;
                     orderTaken = true;
+
+                    //TODO: Pass self to Player 
+                    // NOTE: I used GameManager.Instance.AddCustomer() instead
+                    // This is not going to work since I am not passing myself. 
+                    // We should change this.
+                    GameManager.Instance.addCustomer();
                 }
                 break;
 
@@ -77,7 +83,7 @@ public class Customer2 : MonoBehaviour
                     }
                 }
 
-                if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E) && foodReady)
+                if (range.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && foodReady)
                 {
                     CompleteOrder();
                 }
@@ -101,6 +107,9 @@ public class Customer2 : MonoBehaviour
         currentState = CustomerState.Done;
         customerRenderer.material = blueMaterial;
         isOrderCompleted = true;
+
+        // TODO: Call the GameManager to update the game status
+        GameManager.Instance.CompleteOrder();
     }
 
     void MoveCustomer()
@@ -147,8 +156,8 @@ public class Customer2 : MonoBehaviour
 
         for (int i = 0; i <= segments; i++)
         {
-            float x = Mathf.Cos(Mathf.Deg2Rad * angle) * interactionRange;
-            float z = Mathf.Sin(Mathf.Deg2Rad * angle) * interactionRange;
+            float x = Mathf.Cos(Mathf.Deg2Rad * angle) * interactionRange * 2;
+            float z = Mathf.Sin(Mathf.Deg2Rad * angle) * interactionRange * 2;
 
             lineRenderer.SetPosition(i, new Vector3(x, 0f, z));
 
