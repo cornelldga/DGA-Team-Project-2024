@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
-public class Customer : MonoBehaviour
+public class Customer2 : MonoBehaviour
 {
     [Header("Customer Attributes")]
     public string customerName;

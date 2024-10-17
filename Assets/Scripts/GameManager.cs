@@ -15,31 +15,31 @@ public class GameManager : MonoBehaviour
         Instance = this;
         GameManager gameManager = GameManager.Instance;
     }
-
+    
     public void Start()
     {
         player = FindObjectOfType<Player>();
     }
-
+    
 
     public Player getPlayer()
-    {
-        return player;
-    }
+        {
+            return player;
+        }
     public void addCustomer()
-    {
+        {
 
-    }
+        }
     public void CompleteOrder()
-    {
+        {
 
-    }
+        }
     public void WinGame()
-    {
+        {
 
-    }
+        }
     public void LoseGame()
-    {
+        {
 
+        }
     }
-}
