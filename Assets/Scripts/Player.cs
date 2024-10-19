@@ -2,37 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// This script handles the inputs and manages the oil and cooking timers for the player
 public class Player : MonoBehaviour
 {
     public float speed;
     public float oil;
 
+    [SerializeField] private KeyCode nitro = KeyCode.LeftShift;
+
     private Rigidbody rb;
     private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int curAngle = 0;
-    private bool turnPressed = false;
     private bool oilOut = false;
     private float oilTimer = 10f;
     private float timeOilOut;
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         Drive();
-        Turn();
         Nitro();
     }
 
+    private void Update()
+    {
+        Turn();
+    }
+
+    // While holding shift, the player uses oil to nitro boost.
     void Nitro()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && !oilOut)
+        if (Input.GetKey(nitro) && !oilOut)
         {
             rb.AddRelativeForce(Vector3.forward * 50);
             oil--;
@@ -49,6 +54,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // The player can press up and down arrows to drive forwards and backwards.
     void Drive()
     {
         if (Input.GetKey(KeyCode.UpArrow))
@@ -61,9 +67,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    // The player can use left or right arrow to turn to the next of 8 possible directions.
     void Turn()
     {
-        if (Input.GetKey(KeyCode.RightArrow) && !turnPressed)
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (curAngle == 7)
             {
@@ -74,9 +81,8 @@ public class Player : MonoBehaviour
                 curAngle++;
             }
             transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
-            turnPressed = true;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow) && !turnPressed)
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (curAngle == 0)
             {
@@ -87,11 +93,6 @@ public class Player : MonoBehaviour
                 curAngle--;
             }
             transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
-            turnPressed = true;
-        }
-        else if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) && turnPressed)
-        {
-            turnPressed = false;
         }
     }
 }
