@@ -13,9 +13,6 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int curAngle = 0;
-    private bool oilOut = false;
-    private float oilTimer = 10f;
-    private float timeOilOut;
 
     void Start()
     {
@@ -37,20 +34,10 @@ public class Player : MonoBehaviour
     // While holding shift, the player uses oil to nitro boost.
     void Nitro()
     {
-        if (Input.GetKey(nitro) && !oilOut)
+        if (Input.GetKey(nitro) && oil > 0)
         {
             rb.AddRelativeForce(Vector3.forward * 50);
             oil--;
-            if (oil == 0)
-            {
-                oilOut = true;
-                timeOilOut = Time.time;
-            }
-        }
-        if (oilOut && Time.time >= timeOilOut + oilTimer)
-        {
-            oil = 100;
-            oilOut = false;
         }
     }
 
