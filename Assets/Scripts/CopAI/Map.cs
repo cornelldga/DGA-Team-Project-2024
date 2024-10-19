@@ -27,6 +27,7 @@ public class Map : MonoBehaviour
     [SerializeField] private int CellSize;
     [SerializeField] private Vector3 Origin;
 
+    // TODO: change this initalization read from a json rather than manually change each value. 
     [SerializeField] private MapTile[] MapTiles;
 
     public Grid<int> MapGrid;

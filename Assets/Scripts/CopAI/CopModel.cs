@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// Navigation type
+public enum NavState
+{
+    HOTPURSUIT,     // Travel directly towards the target position via the most direct path. 
+    WANDER,         // Drive through the streets to cover the most distance 
+    IDLE            //  Cop is not moving and staying still in current location. 
+}
+
+
 /** 
  * Represents a cop that navs towards the given postion 
  * TODO: add different cop behaviors rather than following a point 
@@ -10,6 +19,7 @@ using UnityEngine;
 public class CopModel : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D RB;
+    [SerializeField] private NavState State;
 
     // Pathfinding parameters
     private Pathfinding pathfindingLogic;
@@ -19,7 +29,13 @@ public class CopModel : MonoBehaviour
     private int CurrentIndex;
 
     // Movement speed multiplier towards the target
-    private int speed = 5;
+    private int speed = 4;
+
+
+    public NavState getNavState()
+    {
+        return State;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +46,17 @@ public class CopModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (State == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
+        {
+            int sx, sy;
+            Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
+
+            SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
+        }
+
         HandleMovement();
+
+
     }
 
 
@@ -39,6 +65,12 @@ public class CopModel : MonoBehaviour
         int x, y;
         Map.Instance.MapGrid.GetXY(WorldPosition, out x, out y);
 
+        SetTarget (x, y);
+
+    }
+
+    public void SetTarget(int dx, int dy)
+    {
         int sx, sy;
         Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
         //UnityEngine.Debug.Log("{" + x + "," + y + "}");
@@ -48,9 +80,9 @@ public class CopModel : MonoBehaviour
             // initalize this here to ensure that map grid in the map instance has be initalized. 
             pathfindingLogic = new Pathfinding();
         }
-        if (pathfindingLogic.isValid(x, y))
+        if (pathfindingLogic.isValid(dx, dy))
         {
-            bool pathFound = pathfindingLogic.FindShortestPath(new Vector2(sx, sy), new Vector2(x, y));
+            bool pathFound = pathfindingLogic.FindShortestPath(new Vector2(sx, sy), new Vector2(dx, dy));
             if (pathFound)
             {
                 CurrentPath = pathfindingLogic.VectorPath;

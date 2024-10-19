@@ -124,7 +124,7 @@ public class Pathfinding
                         // calculate costs
                         if (!ClosedList[NewX, NewY])
                         {
-                            double gNew = PathDetails[p.X, p.Y].gCost + Map.getNavCost(p.X, p.Y, map); // 1 is the path cost, can be customized
+                            double gNew = PathDetails[p.X, p.Y].gCost + Map.getNavCost(p.X, p.Y, map); // 1 is the default path cost, variable based on tile type
                             double hNew = CalculateHValue(NewX, NewY, (int)dst.x, (int)dst.y);
                             double fNew = gNew + hNew;
 
