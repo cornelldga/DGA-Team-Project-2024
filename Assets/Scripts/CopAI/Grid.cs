@@ -54,10 +54,7 @@ public class Grid<TGridObject>
     /** Set the value stored at the grid position coordinates */
     public void SetValue(int x, int y, TGridObject value)
     {
-        Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.black, 100f);
-        Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.black, 100f);
-        Debug.DrawLine(GetWorldPosition(x+1, y), GetWorldPosition(x + 1, y + 1), Color.black, 100f);
-        Debug.DrawLine(GetWorldPosition(x, y + 1), GetWorldPosition(x + 1, y + 1), Color.black, 100f);
+       
 
         if (x >= 0 && y >= 0 && x < Width && y < Height) 
         {

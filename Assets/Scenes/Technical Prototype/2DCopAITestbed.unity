@@ -410,6 +410,18 @@ MonoBehaviour:
   - x: 3
     y: 6
     value: 1
+  - x: 3
+    y: 2
+    value: 2
+  - x: 4
+    y: 2
+    value: 2
+  - x: 4
+    y: 4
+    value: 2
+  - x: 3
+    y: 4
+    value: 2
 --- !u!1001 &1888632677429347191
 PrefabInstance:
   m_ObjectHideFlags: 0

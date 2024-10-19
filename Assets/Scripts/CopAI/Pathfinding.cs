@@ -22,19 +22,27 @@ public struct PathNode
 
 
 /** A* Pathfinding algorithm on a rectangular grid. */
-public class Pathfinding
+public class Pathfinding : MonoBehaviour
 {
+    [SerializeField] Map MapInstance;
+
     private Grid<int> map;
     private int Height;
     private int Width;
     private Vector2 start;
 
     public Vector2[] VectorPath;
+
     public Pathfinding(Grid<int> map)
     {
         this.Height = map.getHeight();
         this.Width = map.getWidth();
         this.map = map;
+    }
+
+    private void Start()
+    {
+        
     }
 
     /** Returns true if a path has been found between the points */
@@ -126,7 +134,7 @@ public class Pathfinding
                         // calculate costs
                         if (!ClosedList[NewX, NewY])
                         {
-                            double gNew = PathDetails[p.X, p.Y].gCost + 1.0; // 1 is the path cost, can be customized
+                            double gNew = PathDetails[p.X, p.Y].gCost + Map.getNavCost(p.X, p.Y, map); // 1 is the path cost, can be customized
                             double hNew = CalculateHValue(NewX, NewY, (int)dst.x, (int)dst.y);
                             double fNew = gNew + hNew;
 
@@ -161,7 +169,7 @@ public class Pathfinding
     /** Returns true of the given coordinates are within the bounds of the map */
     public bool isValid(int  x, int y)
     {
-        bool canNav = map.GetValue(x, y) == 0;
+        bool canNav = map.GetValue(x, y) != 1;
         return canNav && (x >= 0 && y >= 0 && x < Width && y < Height);
     }
 
@@ -185,16 +193,11 @@ public class Pathfinding
         // find the path by traversing through each nodes parent
         while (!(PathDetails[x, y].ParentX == (int)this.start.x && PathDetails[x, y].ParentY == (int)this.start.y))
         {
-            UnityEngine.Debug.Log("{" + x + ", " + y + "}");
-
             PathNode CurrentNode = PathDetails[x, y];
 
             Path.Push(CurrentNode);
             int TempX = CurrentNode.ParentX;
-            UnityEngine.Debug.Log("tempX: " + TempX);
             int TempY = CurrentNode.ParentY;
-            UnityEngine.Debug.Log("tempY: " + TempY);
-
 
             x = TempX;
             y = TempY;

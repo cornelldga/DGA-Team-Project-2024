@@ -71,7 +71,7 @@ public class CopModel : MonoBehaviour
     /** Transform the cops position along their pathing finding path towards their current target */
     private void HandleMovement()
     {
-        UnityEngine.Debug.Log(CurrentPath != null);
+        //UnityEngine.Debug.Log(CurrentPath != null);
         if (CurrentPath != null && CurrentIndex < CurrentPath.Length)
         {
             Vector2 targetPosition = MapInstance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
