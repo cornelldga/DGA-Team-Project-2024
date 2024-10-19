@@ -22,10 +22,8 @@ public struct PathNode
 
 
 /** A* Pathfinding algorithm on a rectangular grid. */
-public class Pathfinding : MonoBehaviour
+public class Pathfinding
 {
-    [SerializeField] Map MapInstance;
-
     private Grid<int> map;
     private int Height;
     private int Width;
@@ -33,16 +31,11 @@ public class Pathfinding : MonoBehaviour
 
     public Vector2[] VectorPath;
 
-    public Pathfinding(Grid<int> map)
+    public Pathfinding()
     {
-        this.Height = map.getHeight();
-        this.Width = map.getWidth();
-        this.map = map;
-    }
-
-    private void Start()
-    {
-        
+        map = Map.Instance.MapGrid;
+        Height = map.getHeight();
+        Width = map.getWidth();
     }
 
     /** Returns true if a path has been found between the points */
@@ -50,9 +43,6 @@ public class Pathfinding : MonoBehaviour
     {
 
         this.start = src;
-
-        //UnityEngine.Debug.Log("start: {" + src.x + ", " + src.y + "}");
-        //UnityEngine.Debug.Log("end: {" + dst.x + ", " + dst.y + "}");
 
         //TODO: preintialize these so they are not reconstructed each call
         bool[,] ClosedList = new bool[Width, Height];

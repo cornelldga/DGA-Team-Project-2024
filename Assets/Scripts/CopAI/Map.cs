@@ -22,8 +22,6 @@ public struct MapTile
  */
 public class Map : MonoBehaviour
 {
-    
-
     [SerializeField] private int Width;
     [SerializeField] private int Height;
     [SerializeField] private int CellSize;
@@ -41,7 +39,6 @@ public class Map : MonoBehaviour
     {
         MapGrid = new Grid<int>(Width, Height, CellSize, Origin);
 
-        UnityEngine.Debug.Log(MapTiles.Length);
         for (int i = 0; i < MapTiles.Length; i++)
         {
             MapTile mp = MapTiles[i];
