@@ -74,22 +74,22 @@ public class CopModel : MonoBehaviour
         UnityEngine.Debug.Log(CurrentPath != null);
         if (CurrentPath != null && CurrentIndex < CurrentPath.Length)
         {
-            UnityEngine.Debug.Log("enter");
             Vector2 targetPosition = MapInstance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
            
-            if (Vector3.Distance(RB.transform.position, targetPosition) > 0.1f)
+            if (Vector3.Distance(RB.transform.position, targetPosition) > 0.5f)
             {
-
-                //TODO: change to velocity based movement rather than translation 
                 Vector2 position = new Vector2(RB.transform.position.x, RB.transform.position.y);
                 Vector2 moveDir = (targetPosition - position).normalized;
 
+                // TODO change to vel once able to prevent cops from being knocked off the map. 
                 RB.transform.position = position + moveDir * speed * Time.deltaTime;
-
+                //RB.velocity = moveDir * speed;
             }
             else
             {
                 CurrentIndex++;
+
+                //RB.velocity = Vector2.zero;
             }
         }
     }
