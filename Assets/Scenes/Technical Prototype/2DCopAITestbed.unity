@@ -287,6 +287,10 @@ PrefabInstance:
       propertyPath: MapInstance
       value: 
       objectReference: {fileID: 1769420784}
+    - target: {fileID: 3921954499315539261, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7762214288339112326, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.536918
@@ -384,6 +388,28 @@ MonoBehaviour:
   Height: 10
   CellSize: 1
   Origin: {x: 0, y: 0, z: 0}
+  MapTiles:
+  - x: 3
+    y: 0
+    value: 1
+  - x: 4
+    y: 0
+    value: 1
+  - x: 4
+    y: 1
+    value: 1
+  - x: 3
+    y: 1
+    value: 1
+  - x: 3
+    y: 5
+    value: 1
+  - x: 4
+    y: 5
+    value: 1
+  - x: 3
+    y: 6
+    value: 1
 --- !u!1001 &1888632677429347191
 PrefabInstance:
   m_ObjectHideFlags: 0

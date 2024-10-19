@@ -43,8 +43,8 @@ public class Pathfinding
 
         this.start = src;
 
-        UnityEngine.Debug.Log("start: {" + src.x + ", " + src.y + "}");
-        UnityEngine.Debug.Log("end: {" + dst.x + ", " + dst.y + "}");
+        //UnityEngine.Debug.Log("start: {" + src.x + ", " + src.y + "}");
+        //UnityEngine.Debug.Log("end: {" + dst.x + ", " + dst.y + "}");
 
         //TODO: preintialize these so they are not reconstructed each call
         bool[,] ClosedList = new bool[Width, Height];
@@ -161,7 +161,8 @@ public class Pathfinding
     /** Returns true of the given coordinates are within the bounds of the map */
     public bool isValid(int  x, int y)
     {
-        return (x >= 0 && y >= 0 && x < Width && y < Height);
+        bool canNav = map.GetValue(x, y) == 0;
+        return canNav && (x >= 0 && y >= 0 && x < Width && y < Height);
     }
 
     /** A Utility Function to calculate the 'h' heuristics. */
