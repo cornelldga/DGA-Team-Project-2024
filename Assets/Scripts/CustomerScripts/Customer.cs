@@ -78,6 +78,8 @@ public class Customer : MonoBehaviour
                     // We should change this.
                     //GameManager.Instance.addCustomer();
 
+                    GameManager.Instance.getPlayer().TakeCustomerOrder(this);
+
 
                 }
                 break;
@@ -98,12 +100,16 @@ public class Customer : MonoBehaviour
                         currentState = CustomerState.Done;
                         customerRenderer.material = redMaterial;
                     }
+                    break;
                 }
 
                 if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && foodReady)
                 {
                     CompleteOrder();
                 }
+
+                waitTime -= 1;
+
                 break;
 
             case CustomerState.Done:
