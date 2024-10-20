@@ -246,7 +246,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaedd48800a522c4a96f9aa9249b7837, type: 3}
+  m_Script: {fileID: 11500000, guid: a542c40f295d96849b2f04008af93106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &235718062 stripped
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaedd48800a522c4a96f9aa9249b7837, type: 3}
+  m_Script: {fileID: 11500000, guid: a542c40f295d96849b2f04008af93106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1095920594 stripped
@@ -436,7 +436,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaedd48800a522c4a96f9aa9249b7837, type: 3}
+  m_Script: {fileID: 11500000, guid: a542c40f295d96849b2f04008af93106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1437877464 stripped
@@ -611,74 +611,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1769420781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb940f18eb0105448ac45de9dac665f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c635aeba55b0ef42bf19860db461c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Width: 18
-  Height: 10
+  Width: 20
+  Height: 20
   CellSize: 1
   Origin: {x: 0, y: 0, z: 0}
   MapTiles:
-  - x: 3
-    y: 0
-    value: 1
-  - x: 4
-    y: 0
-    value: 1
-  - x: 4
-    y: 1
-    value: 1
-  - x: 3
-    y: 1
-    value: 1
-  - x: 3
-    y: 5
-    value: 1
-  - x: 4
-    y: 5
-    value: 1
-  - x: 3
-    y: 6
+  - x: 2
+    y: 2
     value: 1
   - x: 3
     y: 2
-    value: 2
-  - x: 4
-    y: 2
-    value: 2
-  - x: 4
-    y: 4
-    value: 2
+    value: 1
   - x: 3
-    y: 4
-    value: 2
-  - x: 7
-    y: 4
-    value: 1
-  - x: 8
-    y: 4
-    value: 1
-  - x: 14
-    y: 7
-    value: 1
-  - x: 14
-    y: 8
-    value: 1
-  - x: 14
-    y: 2
-    value: 1
-  - x: 13
-    y: 2
-    value: 1
-  - x: 13
     y: 3
-    value: 2
-  - x: 13
-    y: 1
-    value: 2
-  - x: 12
-    y: 2
-    value: 2
+    value: 1
+  - x: 2
+    y: 3
+    value: 1
 --- !u!114 &1854767169 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2142699969854059093, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
@@ -687,7 +639,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaedd48800a522c4a96f9aa9249b7837, type: 3}
+  m_Script: {fileID: 11500000, guid: a542c40f295d96849b2f04008af93106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1854767171 stripped

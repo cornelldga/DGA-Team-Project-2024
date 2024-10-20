@@ -96,11 +96,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7766638833031876969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaedd48800a522c4a96f9aa9249b7837, type: 3}
+  m_Script: {fileID: 11500000, guid: a542c40f295d96849b2f04008af93106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   RB: {fileID: 3921954499315539261}
-  MapInstance: {fileID: 0}
+  State: 0
 --- !u!50 &3921954499315539261
 Rigidbody2D:
   serializedVersion: 4
