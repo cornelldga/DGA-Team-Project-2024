@@ -8,6 +8,8 @@ using UnityEngine;
 [RequireComponent(typeof(Renderer))]
 public class Customer : MonoBehaviour
 {
+    public HotbarManager hotbarManager;
+
     [Header("Customer Attributes")]
     public string customerName;
     public string orderName;
@@ -71,6 +73,7 @@ public class Customer : MonoBehaviour
                     customerRenderer.material = greenMaterial;
                     timer = 0f;
                     orderTaken = true;
+                    hotbarManager.AddToHotbar(this);
 
                     // TODO: Pass self to Player 
                     // NOTE: I used GameManager.Instance.AddCustomer() instead
@@ -97,6 +100,7 @@ public class Customer : MonoBehaviour
                         Debug.Log(customerName + " is upset! The order was not returned in time.");
                         currentState = CustomerState.Done;
                         customerRenderer.material = redMaterial;
+                        hotbarManager.RemoveFromHotBar(this);
                     }
                 }
 
@@ -129,6 +133,7 @@ public class Customer : MonoBehaviour
         currentState = CustomerState.Done;
         customerRenderer.material = blueMaterial;
         isOrderCompleted = true;
+        hotbarManager.RemoveFromHotBar(this);
     }
 
     // GETTERS ----------------------------

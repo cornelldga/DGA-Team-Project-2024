@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 4268020404640366872}
   - component: {fileID: 3397216360323778373}
   - component: {fileID: 3281241723500394206}
-  - component: {fileID: 8285639364344685743}
+  - component: {fileID: 2818427175522752929}
   m_Layer: 0
   m_Name: Car
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +134,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8285639364344685743
+--- !u!114 &2818427175522752929
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,8 +143,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8498858998442318803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7137c8fe61abd1e4fb5e5a827c2d5378, type: 3}
+  m_Script: {fileID: 11500000, guid: 729564c76a524f94a9102e965667bb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 2
   oil: 100
+  oilConsumptionRate: 1
+  cookingTime: 60
+  nitro: 304

@@ -19,7 +19,7 @@ public class HotbarSlot : MonoBehaviour
     private float patienceTime = 0;
     private float patienceProgress = 0;
 
-    private CustomerUI customer = null;
+    private Customer customer = null;
 
     public bool isOpen = true;
 
@@ -88,7 +88,7 @@ public class HotbarSlot : MonoBehaviour
     }
 
     // Adds the order to the hotbar
-    public void AddOrder(CustomerUI c)
+    public void AddOrder(Customer c)
     {
         customer = c;
         timerLabel.text = "Patience";
@@ -150,7 +150,7 @@ public class HotbarSlot : MonoBehaviour
         slotBorder.color = Color.gray;
     }
 
-    public CustomerUI GetCustomerUI()
+    public Customer GetCustomer()
     {
         return customer;
     }
