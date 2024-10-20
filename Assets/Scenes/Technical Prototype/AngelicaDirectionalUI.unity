@@ -158,6 +158,18 @@ PrefabInstance:
       propertyPath: MapTiles.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1427376542774739505, guid: 2864ffea446eb4045a3e9cef5296f07a, type: 3}
+      propertyPath: MapTiles.Array.data[0].x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427376542774739505, guid: 2864ffea446eb4045a3e9cef5296f07a, type: 3}
+      propertyPath: MapTiles.Array.data[0].y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427376542774739505, guid: 2864ffea446eb4045a3e9cef5296f07a, type: 3}
+      propertyPath: MapTiles.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2914595998528719119, guid: 2864ffea446eb4045a3e9cef5296f07a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
