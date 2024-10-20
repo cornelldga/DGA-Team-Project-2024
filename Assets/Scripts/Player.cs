@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public float speed;
     public float oil;
+    public float oilConsumptionRate = 1f; // Oil consumption rate per second
+    public float cookingTime = 60f; // Total cooking time in seconds
 
     private Rigidbody rb;
     private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
@@ -13,13 +16,19 @@ public class Player : MonoBehaviour
     private bool turnPressed = false;
     private bool oilOut = false;
     private float oilTimer = 10f;
+
+    //New added private variables 
     private float timeOilOut;
+
+    private float cookingTimer;
+
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
+        cookingTimer = cookingTime;
     }
 
     // Update is called once per frame
@@ -28,6 +37,7 @@ public class Player : MonoBehaviour
         Drive();
         Turn();
         Nitro();
+        Cook();
     }
 
     void Nitro()
@@ -92,6 +102,29 @@ public class Player : MonoBehaviour
         else if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) && turnPressed)
         {
             turnPressed = false;
+        }
+    }
+
+    //Cook method continuously decreases the cookingTimer and oil 
+    void Cook()
+    {
+        if (cookingTimer > 0)
+        {
+            cookingTimer -= Time.deltaTime;
+            oil -= oilConsumptionRate * Time.deltaTime;
+
+            if (oil <= 0)
+            {
+                oil = 0;
+                oilOut = true;
+                Debug.Log("Oil depleted!");
+            }
+
+            if (cookingTimer <= 0)
+            {
+                cookingTimer = 0;
+                Debug.Log("Cooking complete!");
+            }
         }
     }
 }
