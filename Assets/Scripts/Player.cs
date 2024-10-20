@@ -6,6 +6,8 @@ using UnityEngine;
 // This script handles the inputs and manages the oil and cooking timers for the player
 public class Player : MonoBehaviour
 {
+
+    List<Customer> customers = new List<Customer>();
     public float speed;
     public float oil;
     public float oilConsumptionRate = 1f; // Oil consumption rate per second
@@ -114,5 +116,15 @@ public class Player : MonoBehaviour
                 Debug.Log("Cooking complete!");
             }
         }
+    }
+
+    public void TakeOrder(Customer customer)
+    {
+        customers.Add(customer);
+    }
+
+    public void RemoveOrder(Customer customer)
+    {
+        customers.Remove(customer);
     }
 }
