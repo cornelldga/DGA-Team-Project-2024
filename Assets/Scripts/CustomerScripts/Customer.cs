@@ -80,7 +80,6 @@ public class Customer : MonoBehaviour
                     // This is not going to work since I am not passing myself. 
                     // We should change this.
                     //GameManager.Instance.addCustomer();
-
                     GameManager.Instance.getPlayer().TakeOrder(this);
 
 

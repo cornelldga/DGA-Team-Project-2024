@@ -22,11 +22,11 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         GameManager gameManager = GameManager.Instance;
-        player = FindObjectOfType<Player>();
     }
 
     private void Start()
     {
+        player = FindObjectOfType<Player>();
         AddCustomers();
         InvokeRepeating(nameof(UpdateGameTimer), 1, 1);
     }

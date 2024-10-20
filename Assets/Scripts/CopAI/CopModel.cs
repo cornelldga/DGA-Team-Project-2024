@@ -32,7 +32,7 @@ public class CopModel : MonoBehaviour
     private int speed = 8;
 
     // TEMP - get from game manager
-    private GameObject player;
+    private Player player;
 
 
     public NavState getNavState()
@@ -43,7 +43,7 @@ public class CopModel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("PlayerModel");
+        player = FindObjectOfType<Player>();
     }
 
     // Update is called once per frame
@@ -58,7 +58,7 @@ public class CopModel : MonoBehaviour
         } 
         else if (State == NavState.HOTPURSUIT)
         {
-            SetTarget(player.transform.position);
+            SetTarget(player.gameObject.transform.position);
         }
 
         HandleMovement();
