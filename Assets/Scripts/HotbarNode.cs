@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// The HotbarNode class is essentially one hotbar item. This class is allows for easier getting and setting of the hotbar item's properties.
+/// </summary>
 public class HotbarNode : MonoBehaviour
 {
     [SerializeField] private GameObject orderTextField;
@@ -19,14 +20,15 @@ public class HotbarNode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
 
     /// <summary>
     /// Sets the order of the hotbar node.
     /// </summary>
-    public void setOrder(String order){
+    public void setOrder(String order)
+    {
         orderTextField.GetComponent<TMPro.TextMeshProUGUI>().text = order;
     }
 
@@ -34,7 +36,8 @@ public class HotbarNode : MonoBehaviour
     /// <summary>
     /// Sets the customer image of the hotbar node.
     /// </summary>
-    public void setCustomerImage(Sprite image){
+    public void setCustomerImage(Sprite image)
+    {
         customerImage.GetComponent<UnityEngine.UI.Image>().sprite = image;
     }
 
@@ -42,7 +45,8 @@ public class HotbarNode : MonoBehaviour
     /// <summary>
     /// Sets the cook time of the hotbar node.
     /// </summary>
-    public void setCookTime(int time){
+    public void setCookTime(float time)
+    {
         cookTime.GetComponent<TMPro.TextMeshProUGUI>().text = time.ToString();
     }
 
@@ -50,11 +54,13 @@ public class HotbarNode : MonoBehaviour
     /// <summary>
     /// Sets the patience time of the hotbar node.
     /// </summary>
-    public void setPatienceTime(int time){
+    public void setPatienceTime(float time)
+    {
         patienceTime.GetComponent<TMPro.TextMeshProUGUI>().text = time.ToString();
     }
 
-    public GameObject getSelectedBorder(){
+    public GameObject getSelectedBorder()
+    {
         return selectedBorder;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 
+// This script handles the inputs and manages the oil and cooking timers for the player
 public class Player : MonoBehaviour
 {
     public float speed;
@@ -10,15 +11,14 @@ public class Player : MonoBehaviour
     public float oilConsumptionRate = 1f; // Oil consumption rate per second
     public float cookingTime = 60f; // Total cooking time in seconds
 
+    [SerializeField] private KeyCode nitro = KeyCode.LeftShift;
+
     private Rigidbody rb;
     private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int curAngle = 0;
-    private bool turnPressed = false;
     private bool oilOut = false;
-    private float oilTimer = 10f;
 
     //New added private variables 
-    private float timeOilOut;
 
     private float cookingTimer;
 
@@ -31,34 +31,29 @@ public class Player : MonoBehaviour
         cookingTimer = cookingTime;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         Drive();
-        Turn();
         Nitro();
         Cook();
     }
 
+    private void Update()
+    {
+        Turn();
+    }
+
+    // While holding shift, the player uses oil to nitro boost.
     void Nitro()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && !oilOut)
+        if (Input.GetKey(nitro) && oil > 0)
         {
             rb.AddRelativeForce(Vector3.forward * 50);
             oil--;
-            if (oil == 0)
-            {
-                oilOut = true;
-                timeOilOut = Time.time;
-            }
-        }
-        if (oilOut && Time.time >= timeOilOut + oilTimer)
-        {
-            oil = 100;
-            oilOut = false;
         }
     }
 
+    // The player can press up and down arrows to drive forwards and backwards.
     void Drive()
     {
         if (Input.GetKey(KeyCode.UpArrow))
@@ -71,9 +66,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    // The player can use left or right arrow to turn to the next of 8 possible directions.
     void Turn()
     {
-        if (Input.GetKey(KeyCode.RightArrow) && !turnPressed)
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (curAngle == 7)
             {
@@ -84,9 +80,8 @@ public class Player : MonoBehaviour
                 curAngle++;
             }
             transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
-            turnPressed = true;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow) && !turnPressed)
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (curAngle == 0)
             {
@@ -97,11 +92,6 @@ public class Player : MonoBehaviour
                 curAngle--;
             }
             transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
-            turnPressed = true;
-        }
-        else if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) && turnPressed)
-        {
-            turnPressed = false;
         }
     }
 
