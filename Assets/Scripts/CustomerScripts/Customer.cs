@@ -1,14 +1,28 @@
 using UnityEngine;
 
+/// <summary>
+/// The Customer class is responsible for managing the customer's attributes, state, and behavior. 
+/// <para> NOTE: For now, the customer is not updating its timer. </para>
+/// <para> NOTE: For now, the customer is moving back and forth. </para>
+/// </summary>
 [RequireComponent(typeof(Renderer))]
-public class Customer2 : MonoBehaviour
+public class Customer : MonoBehaviour
 {
     [Header("Customer Attributes")]
     public string customerName;
+    public string orderName;
+    public Sprite customerImage;
+    /// <summary>
+    /// The time the customer will wait for their order, after which the order will fail. 
+    /// </summary>
     public float waitTime;
+
+    /// <summary>
+    /// The time it takes for the customer's order to be cooked.
+    /// </summary>
     public float cookTime;
-    public Transform player;
     public float interactionRange = 2f;
+    public GameObject detectionRange;
 
     [Header("Tentative Materials")]
     public Material grayMaterial; // order not taken yet
@@ -45,29 +59,36 @@ public class Customer2 : MonoBehaviour
 
     void Update()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        // float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         switch (currentState)
         {
             case CustomerState.WaitingForOrder:
-                if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E))
+                if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E))
                 {
                     Debug.Log(customerName + " placed an order.");
                     currentState = CustomerState.Cooking;
                     customerRenderer.material = greenMaterial;
                     timer = 0f;
                     orderTaken = true;
+
+                    // TODO: Pass self to Player 
+                    // NOTE: I used GameManager.Instance.AddCustomer() instead
+                    // This is not going to work since I am not passing myself. 
+                    // We should change this.
+                    GameManager.Instance.addCustomer();
                 }
                 break;
 
             case CustomerState.Cooking:
-                if (timer >= cookTime && !foodReady)
+                // NOTE: I removed the function of the timer for now.
+                if (cookTime <= 0 && !foodReady)
                 {
                     Debug.Log(customerName + "'s food is ready for delivery.");
                     foodReady = true;
                 }
 
-                if (timer >= waitTime)
+                if (waitTime <= 0)
                 {
                     if (!isOrderCompleted)
                     {
@@ -77,7 +98,7 @@ public class Customer2 : MonoBehaviour
                     }
                 }
 
-                if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E) && foodReady)
+                if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && foodReady)
                 {
                     CompleteOrder();
                 }
@@ -95,6 +116,11 @@ public class Customer2 : MonoBehaviour
         MoveCustomer();
     }
 
+    /// <summary>
+    /// Completes the order for the customer. 
+    /// For now, it will change the customer's material to blue.
+    /// It will call the GameManager to update the game status.
+    /// </summary>
     public void CompleteOrder()
     {
         Debug.Log(customerName + " received their order.");
@@ -103,7 +129,30 @@ public class Customer2 : MonoBehaviour
         isOrderCompleted = true;
     }
 
-    void MoveCustomer()
+    // GETTERS ----------------------------
+
+    /// <returns> If this customer's order is already taken. </returns>
+    public bool IsOrderTaken()
+    {
+        return orderTaken;
+    }
+
+    /// <returns> If this customer's food is ready for delivery. </returns>
+    public bool IsFoodReady()
+    {
+        return foodReady;
+    }
+
+    /// <returns> If this customer's order is completed. </returns>
+    public bool IsOrderCompleted()
+    {
+        return isOrderCompleted;
+    }
+
+
+    // PRIVATE METHODS ----------------------------
+
+    private void MoveCustomer()
     {
         // Calculate the movement offset using a sine wave
         float movementOffset = Mathf.Sin(Time.time * movementFrequency) * movementAmplitude;
@@ -115,7 +164,7 @@ public class Customer2 : MonoBehaviour
         transform.position = newPosition;
     }
 
-    void SetupInteractionRangeIndicator()
+    private void SetupInteractionRangeIndicator()
     {
         // Get or Add a LineRenderer component
         lineRenderer = GetComponent<LineRenderer>();
@@ -138,7 +187,7 @@ public class Customer2 : MonoBehaviour
         CreateCirclePoints();
     }
 
-    void CreateCirclePoints()
+    private void CreateCirclePoints()
     {
         int segments = 100; // Number of segments to make the circle smooth
         float angle = 0f;
@@ -154,22 +203,5 @@ public class Customer2 : MonoBehaviour
 
             angle += (360f / segments);
         }
-    }
-
-
-    // ---------------------------- Getters ----------------------------
-    public bool IsOrderTaken()
-    {
-        return orderTaken;
-    }
-
-    public bool IsFoodReady()
-    {
-        return foodReady;
-    }
-
-    public bool IsOrderCompleted()
-    {
-        return isOrderCompleted;
     }
 }
