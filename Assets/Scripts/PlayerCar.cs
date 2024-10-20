@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//This script iimplements a mouse based movement of the player
 public class PlayerCar : MonoBehaviour
 {
     //Speed that car turns 

@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 4852926324002718589}
   - component: {fileID: 3990540274960380682}
   - component: {fileID: 3837978546002499609}
-  - component: {fileID: 5212781798578842466}
+  - component: {fileID: 884428346791438588}
   - component: {fileID: 4074179547864516816}
   m_Layer: 0
-  m_Name: Customer
+  m_Name: UICustomer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,8 +33,7 @@ Transform:
   m_LocalPosition: {x: 10, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5971759413239886028}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4852926324002718589
@@ -108,7 +107,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5212781798578842466
+--- !u!114 &884428346791438588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,16 +116,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4543936700359820034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7031343289b80a648bc24af8afdca52c, type: 3}
+  m_Script: {fileID: 11500000, guid: 56face5fc32404befbe114d7139b61c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   customerName: 
-  orderName: 
-  customerImage: {fileID: 0}
   waitTime: 10
-  cookTime: 4
+  cookTime: 5
+  player: {fileID: 0}
   interactionRange: 2
-  detectionRange: {fileID: 5696436274596760233}
   grayMaterial: {fileID: 2100000, guid: 850bf0a0a77478243a22c8fcd24fcf54, type: 2}
   greenMaterial: {fileID: 2100000, guid: dfd8c9f2d2054f846882dfb6d05a900e, type: 2}
   redMaterial: {fileID: 2100000, guid: 0fc5e592b134a4b4687433e7e39aa46f, type: 2}
@@ -237,70 +234,3 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!1 &5696436274596760233
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5971759413239886028}
-  - component: {fileID: 6417651198357933010}
-  - component: {fileID: 1255551523362899590}
-  m_Layer: 0
-  m_Name: Range
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5971759413239886028
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5696436274596760233}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4229518997468610015}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6417651198357933010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5696436274596760233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5151be5bb806b4090adab9651c32b0b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInRange: 0
---- !u!135 &1255551523362899590
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5696436274596760233}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}

@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Called when an order is completed 
     /// </summary>
-    public void CompleteOrder()
+    public void CompleteOrder(Customer customer)
     {
         completedOrders++;
         if (completedOrders == numCustomers)
