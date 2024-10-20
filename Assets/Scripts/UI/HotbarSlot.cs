@@ -24,7 +24,7 @@ public class HotbarSlot : MonoBehaviour
     private float patienceTime = 0;
     private float patienceProgress = 0;
 
-    private CustomerUI customer;
+    private CustomerUI customer = null;
 
     public bool isOpen = true;
 
@@ -117,6 +117,7 @@ public class HotbarSlot : MonoBehaviour
         timerCount.enabled = false;
         state = OrderState.Empty;
         isOpen = true;
+        customer = null;
     }
 
     // Called when the order fails
