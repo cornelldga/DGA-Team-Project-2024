@@ -29,7 +29,10 @@ public class CopModel : MonoBehaviour
     private int CurrentIndex;
 
     // Movement speed multiplier towards the target
-    private int speed = 4;
+    private int speed = 8;
+
+    // TEMP - get from game manager
+    private GameObject player;
 
 
     public NavState getNavState()
@@ -40,7 +43,7 @@ public class CopModel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        player = GameObject.Find("PlayerModel");
     }
 
     // Update is called once per frame
@@ -52,6 +55,10 @@ public class CopModel : MonoBehaviour
             Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
 
             SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
+        } 
+        else if (State == NavState.HOTPURSUIT)
+        {
+            SetTarget(player.transform.position);
         }
 
         HandleMovement();
@@ -100,12 +107,12 @@ public class CopModel : MonoBehaviour
         //UnityEngine.Debug.Log(CurrentPath != null);
         if (CurrentPath != null && CurrentIndex < CurrentPath.Length)
         {
-            Vector2 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
+            Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
            
             if (Vector3.Distance(RB.transform.position, targetPosition) > 0.5f)
             {
-                Vector2 position = new Vector2(RB.transform.position.x, RB.transform.position.y);
-                Vector2 moveDir = (targetPosition - position).normalized;
+                Vector3 position = RB.transform.position;
+                Vector3 moveDir = (targetPosition - position).normalized;
 
                 // TODO change to vel once able to prevent cops from being knocked off the map. 
                 RB.transform.position = position + moveDir * speed * Time.deltaTime;

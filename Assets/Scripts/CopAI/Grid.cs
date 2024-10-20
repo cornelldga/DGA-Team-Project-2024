@@ -41,14 +41,14 @@ public class Grid<TGridObject>
     /** Convert grid coordinates to world coordinates */
     public Vector3 GetWorldPosition(float x, float y)
     {
-        return new Vector3(x, y) * CellSize + Origin;
+        return new Vector3(x, 0, y) * CellSize + Origin;
     }
 
     /** Convert world coordinates to grid coordinates */
     public void GetXY(Vector3 worldPosition, out int x, out int y)
     {
         x = Mathf.FloorToInt((worldPosition.x - Origin.x)/ CellSize);
-        y = Mathf.FloorToInt((worldPosition.y - Origin.y)/ CellSize);
+        y = Mathf.FloorToInt((worldPosition.z - Origin.z)/ CellSize);
     }
 
     /** Set the value stored at the grid position coordinates */
