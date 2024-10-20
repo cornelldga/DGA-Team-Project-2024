@@ -631,6 +631,36 @@ MonoBehaviour:
   - x: 2
     y: 3
     value: 1
+  - x: 4
+    y: 3
+    value: 2
+  - x: 4
+    y: 2
+    value: 2
+  - x: 7
+    y: 2
+    value: 2
+  - x: 7
+    y: 3
+    value: 2
+  - x: 8
+    y: 3
+    value: 1
+  - x: 8
+    y: 2
+    value: 1
+  - x: 15
+    y: 5
+    value: 1
+  - x: 16
+    y: 5
+    value: 1
+  - x: 15
+    y: 6
+    value: 1
+  - x: 16
+    y: 6
+    value: 1
 --- !u!114 &1854767169 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2142699969854059093, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
