@@ -30,11 +30,12 @@ public class Pathfinding
     private Vector2 start;
 
     public Vector2[] VectorPath;
-    public Pathfinding(Grid<int> map)
+
+    public Pathfinding()
     {
-        this.Height = map.getHeight();
-        this.Width = map.getWidth();
-        this.map = map;
+        map = Map.Instance.MapGrid;
+        Height = map.getHeight();
+        Width = map.getWidth();
     }
 
     /** Returns true if a path has been found between the points */
@@ -42,9 +43,6 @@ public class Pathfinding
     {
 
         this.start = src;
-
-        UnityEngine.Debug.Log("start: {" + src.x + ", " + src.y + "}");
-        UnityEngine.Debug.Log("end: {" + dst.x + ", " + dst.y + "}");
 
         //TODO: preintialize these so they are not reconstructed each call
         bool[,] ClosedList = new bool[Width, Height];
@@ -126,7 +124,7 @@ public class Pathfinding
                         // calculate costs
                         if (!ClosedList[NewX, NewY])
                         {
-                            double gNew = PathDetails[p.X, p.Y].gCost + 1.0; // 1 is the path cost, can be customized
+                            double gNew = PathDetails[p.X, p.Y].gCost + Map.getNavCost(p.X, p.Y, map); // 1 is the default path cost, variable based on tile type
                             double hNew = CalculateHValue(NewX, NewY, (int)dst.x, (int)dst.y);
                             double fNew = gNew + hNew;
 
@@ -161,7 +159,8 @@ public class Pathfinding
     /** Returns true of the given coordinates are within the bounds of the map */
     public bool isValid(int  x, int y)
     {
-        return (x >= 0 && y >= 0 && x < Width && y < Height);
+        bool canNav = map.GetValue(x, y) != 1;
+        return canNav && (x >= 0 && y >= 0 && x < Width && y < Height);
     }
 
     /** A Utility Function to calculate the 'h' heuristics. */
@@ -184,16 +183,11 @@ public class Pathfinding
         // find the path by traversing through each nodes parent
         while (!(PathDetails[x, y].ParentX == (int)this.start.x && PathDetails[x, y].ParentY == (int)this.start.y))
         {
-            UnityEngine.Debug.Log("{" + x + ", " + y + "}");
-
             PathNode CurrentNode = PathDetails[x, y];
 
             Path.Push(CurrentNode);
             int TempX = CurrentNode.ParentX;
-            UnityEngine.Debug.Log("tempX: " + TempX);
             int TempY = CurrentNode.ParentY;
-            UnityEngine.Debug.Log("tempY: " + TempY);
-
 
             x = TempX;
             y = TempY;
