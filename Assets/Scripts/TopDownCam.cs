@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//This script controls the PlayerCamera(Main Camera) and follows the movement of the player 
 public class TopDownContr : MonoBehaviour
 {
     //Target object camera follows 

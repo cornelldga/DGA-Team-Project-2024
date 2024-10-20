@@ -444,11 +444,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1243171513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7137c8fe61abd1e4fb5e5a827c2d5378, type: 3}
+  m_Script: {fileID: 11500000, guid: 729564c76a524f94a9102e965667bb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  oil: 100
+  speed: 5
+  oil: 20
+  oilConsumptionRate: 1
+  cookingTime: 60
 --- !u!54 &1243171515
 Rigidbody:
   m_ObjectHideFlags: 0
