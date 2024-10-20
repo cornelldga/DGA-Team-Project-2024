@@ -18,13 +18,13 @@ public class HotbarSlot : MonoBehaviour
     [SerializeField] Image slotBorder;
 
     // Timers
-    private int cookTime = 5;
-    private float cookProgress = 10;
+    private float cookTime = 0;
+    private float cookProgress = 0;
 
-    private int patienceTime = 7;
-    private float patienceProgress = 15;
+    private float patienceTime = 0;
+    private float patienceProgress = 0;
 
-    private Customer2 order;
+    private CustomerUI customer;
 
     public bool isOpen = true;
 
@@ -72,17 +72,19 @@ public class HotbarSlot : MonoBehaviour
     }
 
     // Adds the order to the hotbar
-    public void AddOrder()
+    public void AddOrder(CustomerUI c)
     {
+        customer = c;
         timerLabel.text = "Cook";
         timerLabel.enabled = true;
-        timerCount.text = "10";
-        timerCount.enabled = true;
-        //isOpen = false;
-        state = OrderState.Cooking;
-        patienceProgress = patienceTime;
+        cookTime = c.cookTime;
         cookProgress = cookTime;
-
+        timerCount.text = cookProgress.ToString();
+        timerCount.enabled = true;
+        isOpen = false;
+        state = OrderState.Cooking;
+        patienceTime = c.waitTime;
+        patienceProgress = patienceTime;
     }
 
     // Called when the order is finished cooking and transitions to patience phase
@@ -91,7 +93,7 @@ public class HotbarSlot : MonoBehaviour
         cookProgress = cookTime;
         state = OrderState.Delivering;
         timerLabel.text = "Patience";
-        timerCount.text = "15";
+        timerCount.text = patienceProgress.ToString();
     }
 
     // Updates the value being displayed in the timer
@@ -109,11 +111,12 @@ public class HotbarSlot : MonoBehaviour
     }
 
     // Removes the order from the hotbar
-    void RemoveOrder()
+    public void RemoveOrder()
     {
         timerLabel.enabled = false;
         timerCount.enabled = false;
         state = OrderState.Empty;
+        isOpen = true;
     }
 
     // Called when the order fails
@@ -132,5 +135,10 @@ public class HotbarSlot : MonoBehaviour
     public void Deselect()
     {
         slotBorder.color = Color.gray;
+    }
+
+    public CustomerUI GetCustomerUI()
+    {
+        return customer;
     }
 }

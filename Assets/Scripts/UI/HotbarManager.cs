@@ -33,11 +33,11 @@ public class HotbarManager : MonoBehaviour
 
         // If 'E' is pressed, add order to hotbar if possible
     
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            //FindNextSlot();
-            AddToHotbar();
-        }
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    //FindNextSlot();
+        //    AddToHotbar();
+        //}
 
         if (selectedIndex < (MAX_SIZE - 1) && Input.GetKeyDown(KeyCode.RightArrow)){
             ChangeSelection(increment);
@@ -51,15 +51,29 @@ public class HotbarManager : MonoBehaviour
     }
 
     // Adds an order to the hotbar if possible
-    void AddToHotbar()
+    public void AddToHotbar(CustomerUI c)
     {
         FindNextSlot();
         // Add to next availble slot
         if (canAddOrder)
         {
-            slots[openIndex].AddOrder();
+            slots[openIndex].AddOrder(c);
         }
 
+    }
+
+    public void RemoveFromHotBar(CustomerUI c)
+    {
+        foreach (HotbarSlot s in slots)
+        {
+            if (!s.isOpen)
+            {
+                if (s.GetCustomerUI() == c)
+                {
+                    s.RemoveOrder();
+                }
+            }
+        }
     }
 
     // Find the next open slot to put an order into
