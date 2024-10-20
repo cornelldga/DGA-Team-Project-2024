@@ -18,7 +18,6 @@ public enum NavState
  */
 public class CopModel : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D RB;
     [SerializeField] private NavState State;
 
     // Pathfinding parameters
@@ -52,7 +51,7 @@ public class CopModel : MonoBehaviour
         if (State == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
         {
             int sx, sy;
-            Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
+            Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
 
             SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
         } 
@@ -79,7 +78,7 @@ public class CopModel : MonoBehaviour
     public void SetTarget(int dx, int dy)
     {
         int sx, sy;
-        Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
+        Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
         //UnityEngine.Debug.Log("{" + x + "," + y + "}");
 
         if (pathfindingLogic == null)
@@ -109,20 +108,20 @@ public class CopModel : MonoBehaviour
         {
             Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
            
-            if (Vector3.Distance(RB.transform.position, targetPosition) > 0.5f)
+            if (Vector3.Distance(this.transform.position, targetPosition) > 0.5f)
             {
-                Vector3 position = RB.transform.position;
+                Vector3 position = this.transform.position;
                 Vector3 moveDir = (targetPosition - position).normalized;
 
                 // TODO change to vel once able to prevent cops from being knocked off the map. 
-                RB.transform.position = position + moveDir * speed * Time.deltaTime;
-                //RB.velocity = moveDir * speed;
+                this.transform.position = position + moveDir * speed * Time.deltaTime;
+                //this.velocity = moveDir * speed;
             }
             else
             {
                 CurrentIndex++;
 
-                //RB.velocity = Vector2.zero;
+                //this.velocity = Vector2.zero;
             }
         }
     }
