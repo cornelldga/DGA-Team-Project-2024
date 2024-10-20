@@ -274,7 +274,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 22f3fafe4ae9e47e0943b8763251be89, type: 2}
+  - {fileID: 2100000, guid: 4235342f315ef4a0aaf676bd9f989a3f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -368,11 +368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e336615b6134f46904a81d778589d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!50 &804921806 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 3921954499315539261, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
-  m_PrefabInstance: {fileID: 1884338536}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1323473956
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,8 +482,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.7282504, y: 6.5, z: -8.74}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -531,8 +526,8 @@ GameObject:
   - component: {fileID: 1379503704}
   - component: {fileID: 1379503703}
   - component: {fileID: 1379503702}
-  - component: {fileID: 1379503707}
   - component: {fileID: 1379503706}
+  - component: {fileID: 1379503707}
   m_Layer: 0
   m_Name: CopCar
   m_TagString: Untagged
@@ -619,13 +614,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1379503701}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 27.8, y: 6.5, z: -22.3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!114 &1379503706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,20 +633,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e336615b6134f46904a81d778589d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1379503707
-MonoBehaviour:
+--- !u!54 &1379503707
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1379503701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaedd48800a522c4a96f9aa9249b7837, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RB: {fileID: 804921806}
-  MapInstance: {fileID: 0}
+  serializedVersion: 4
+  m_Mass: 13
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1884338536
 PrefabInstance:
   m_ObjectHideFlags: 0
