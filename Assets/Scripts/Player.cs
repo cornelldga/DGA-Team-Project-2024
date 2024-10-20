@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int curAngle = 0;
-    private bool oilOut = false;
 
     //New added private variables 
 
@@ -106,7 +105,6 @@ public class Player : MonoBehaviour
             if (oil <= 0)
             {
                 oil = 0;
-                oilOut = true;
                 Debug.Log("Oil depleted!");
             }
 
