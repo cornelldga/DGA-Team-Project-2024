@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// The Customer class is responsible for managing the customer's attributes, state, and behavior. 
+/// <para> NOTE: For now, the customer is not updating its timer. </para>
+/// <para> NOTE: For now, the customer is moving back and forth. </para>
+/// </summary>
 [RequireComponent(typeof(Renderer))]
 public class Customer : MonoBehaviour
 {
