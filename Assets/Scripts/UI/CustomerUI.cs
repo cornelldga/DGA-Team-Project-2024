@@ -55,7 +55,7 @@ public class CustomerUI : MonoBehaviour
                 if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E))
                 {
                     Debug.Log(customerName + " placed an order.");
-                    hotbarManager.AddToHotbar(this);
+                    //hotbarManager.AddToHotbar(this);
                     currentState = CustomerState.Cooking;
                     customerRenderer.material = greenMaterial;
                     timer = 0f;
@@ -82,7 +82,7 @@ public class CustomerUI : MonoBehaviour
 
                 if (distanceToPlayer <= interactionRange && Input.GetKeyDown(KeyCode.E) && foodReady)
                 {
-                    hotbarManager.RemoveFromHotBar(this);
+                    //hotbarManager.RemoveFromHotBar(this);
                     CompleteOrder();
                 }
                 break;

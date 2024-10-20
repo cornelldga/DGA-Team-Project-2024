@@ -8,6 +8,8 @@ using UnityEngine;
 [RequireComponent(typeof(Renderer))]
 public class Customer : MonoBehaviour
 {
+    public HotbarManager hotbarManager;
+
     [Header("Customer Attributes")]
     public string customerName;
     public string orderName;
@@ -71,12 +73,15 @@ public class Customer : MonoBehaviour
                     customerRenderer.material = greenMaterial;
                     timer = 0f;
                     orderTaken = true;
+                    hotbarManager.AddToHotbar(this);
 
                     // TODO: Pass self to Player 
                     // NOTE: I used GameManager.Instance.AddCustomer() instead
                     // This is not going to work since I am not passing myself. 
                     // We should change this.
                     //GameManager.Instance.addCustomer();
+
+                    GameManager.Instance.getPlayer().TakeOrder(this);
 
 
                 }
@@ -97,13 +102,18 @@ public class Customer : MonoBehaviour
                         Debug.Log(customerName + " is upset! The order was not returned in time.");
                         currentState = CustomerState.Done;
                         customerRenderer.material = redMaterial;
+                        hotbarManager.RemoveFromHotBar(this);
                     }
+                    break;
                 }
 
                 if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && foodReady)
                 {
-                    CompleteOrder();
+                    ReceiveOrder();
                 }
+
+                waitTime -= Time.deltaTime;
+
                 break;
 
             case CustomerState.Done:
@@ -123,12 +133,14 @@ public class Customer : MonoBehaviour
     /// For now, it will change the customer's material to blue.
     /// It will call the GameManager to update the game status.
     /// </summary>
-    public void CompleteOrder()
+    public void ReceiveOrder()
     {
         Debug.Log(customerName + " received their order.");
         currentState = CustomerState.Done;
         customerRenderer.material = blueMaterial;
+        GameManager.Instance.CompleteOrder(this);
         isOrderCompleted = true;
+        hotbarManager.RemoveFromHotBar(this);
     }
 
     // GETTERS ----------------------------

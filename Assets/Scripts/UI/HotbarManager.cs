@@ -51,9 +51,9 @@ public class HotbarManager : MonoBehaviour
 
 
         // Check if directional arrow should show
-        if (selectedSlot.GetCustomerUI())
+        if (selectedSlot.GetCustomer())
         {
-            DI.SetIndicator(selectedSlot.GetCustomerUI().transform);
+            DI.SetIndicator(selectedSlot.GetCustomer().transform);
         }
         else
         {
@@ -65,7 +65,7 @@ public class HotbarManager : MonoBehaviour
     }
 
     // Adds an order to the hotbar if possible
-    public void AddToHotbar(CustomerUI c)
+    public void AddToHotbar(Customer c)
     {
         FindNextSlot();
         // Add to next availble slot
@@ -76,13 +76,13 @@ public class HotbarManager : MonoBehaviour
 
     }
 
-    public void RemoveFromHotBar(CustomerUI c)
+    public void RemoveFromHotBar(Customer c)
     {
         foreach (HotbarSlot s in slots)
         {
             if (!s.isOpen)
             {
-                if (s.GetCustomerUI() == c)
+                if (s.GetCustomer() == c)
                 {
                     s.RemoveOrder();
                 }
