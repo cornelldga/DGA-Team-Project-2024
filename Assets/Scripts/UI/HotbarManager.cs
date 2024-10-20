@@ -40,11 +40,11 @@ public class HotbarManager : MonoBehaviour
         //    AddToHotbar();
         //}
 
-        if (selectedIndex < (MAX_SIZE - 1) && Input.GetKeyDown(KeyCode.RightArrow)){
+        if (selectedIndex < (MAX_SIZE - 1) && Input.GetKeyDown(KeyCode.D)){
             ChangeSelection(increment);
         }
 
-        if (selectedIndex > 0 && Input.GetKeyDown(KeyCode.LeftArrow))
+        if (selectedIndex > 0 && Input.GetKeyDown(KeyCode.A))
         {
             ChangeSelection(-increment);
         }
@@ -95,7 +95,7 @@ public class HotbarManager : MonoBehaviour
     {
         for (int i = 0; i < MAX_SIZE; i++)
         {
-            if (slots[i].GetState() == HotbarSlot.OrderState.Empty)
+            if (slots[i].isOpen)
             {
                 openIndex = i;
                 canAddOrder = true;

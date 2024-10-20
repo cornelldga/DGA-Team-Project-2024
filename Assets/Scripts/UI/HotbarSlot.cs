@@ -6,15 +6,10 @@ using UnityEngine.UI;
 
 public class HotbarSlot : MonoBehaviour
 {
-    public enum OrderState
-    {
-        Empty,
-        Cooking,
-        Delivering
-    }
 
     [SerializeField] TextMeshProUGUI timerLabel;
-    [SerializeField] TextMeshProUGUI timerCount;
+    [SerializeField] TextMeshProUGUI cookTimerCount;
+    [SerializeField] TextMeshProUGUI patienceTimerCount;
     [SerializeField] Image slotBorder;
 
     // Timers
@@ -28,61 +23,82 @@ public class HotbarSlot : MonoBehaviour
 
     public bool isOpen = true;
 
-    private OrderState state = OrderState.Empty;
-
     // Start is called before the first frame update
     void Start()
     {
         timerLabel.enabled = false;
-        timerCount.enabled = false;
+        cookTimerCount.enabled = false;
+        patienceTimerCount.enabled = false;
         Deselect();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Update timers based on what state the order is in
-        switch (state)
+        //// Update timers based on what state the order is in
+        //switch (state)
+        //{
+        //    case OrderState.Cooking:
+        //        if (cookProgress > 0)
+        //        {
+        //            cookProgress -= Time.deltaTime;
+        //            UpdateTimer(cookProgress);
+        //        }
+        //        else
+        //        {
+        //            FinishCooking();
+        //        }
+
+        //        break;
+        //    case OrderState.Delivering:
+        //        if (patienceProgress > 0)
+        //        {
+        //            patienceProgress -= Time.deltaTime;
+        //            UpdateTimer(patienceProgress);
+        //        }
+        //        else
+        //        {
+        //            FailOrder();
+        //        }
+        //        break;
+        //}
+
+
+        if (cookProgress > 0)
         {
-            case OrderState.Cooking:
-                if (cookProgress > 0)
-                {
-                    cookProgress -= Time.deltaTime;
-                    UpdateTimer(cookProgress);
-                }
-                else
-                {
-                    FinishCooking();
-                }
-          
-                break;
-            case OrderState.Delivering:
-                if (patienceProgress > 0)
-                {
-                    patienceProgress -= Time.deltaTime;
-                    UpdateTimer(patienceProgress);
-                }
-                else
-                {
-                    FailOrder();
-                }
-                break;
+            cookProgress -= Time.deltaTime;
+            UpdateTimer(cookProgress, cookTimerCount);
+            if (cookProgress <= 0)
+            {
+                FinishCooking();
+            }
         }
-        
+
+
+        if (patienceProgress > 0)
+        {
+            patienceProgress -= Time.deltaTime;
+            UpdateTimer(patienceProgress, patienceTimerCount);
+        }
+        else
+        {
+            FailOrder();
+        }
+
     }
 
     // Adds the order to the hotbar
     public void AddOrder(CustomerUI c)
     {
         customer = c;
-        timerLabel.text = "Cook";
+        timerLabel.text = "Patience";
         timerLabel.enabled = true;
         cookTime = c.cookTime;
         cookProgress = cookTime;
-        timerCount.text = cookProgress.ToString();
-        timerCount.enabled = true;
+        cookTimerCount.text = cookProgress.ToString();
+        cookTimerCount.enabled = true;
+        patienceTimerCount.enabled = true;
         isOpen = false;
-        state = OrderState.Cooking;
         patienceTime = c.waitTime;
         patienceProgress = patienceTime;
     }
@@ -90,32 +106,28 @@ public class HotbarSlot : MonoBehaviour
     // Called when the order is finished cooking and transitions to patience phase
     public void FinishCooking()
     {
-        cookProgress = cookTime;
-        state = OrderState.Delivering;
-        timerLabel.text = "Patience";
-        timerCount.text = patienceProgress.ToString();
+        //cookProgress = cookTime;
+        //state = OrderState.Delivering;
+        //timerLabel.text = "Patience";
+        //timerCount.text = patienceProgress.ToString();
+        cookProgress = 0;
     }
 
     // Updates the value being displayed in the timer
-    void UpdateTimer(float time)
+    void UpdateTimer(float time, TextMeshProUGUI label)
     { 
         time += 1;
         float seconds = Mathf.FloorToInt(time % 60);
-        timerCount.text = seconds.ToString();
+        label.text = seconds.ToString();
     }
 
-    // Returns the state of the order
-    public OrderState GetState()
-    {
-        return state;
-    }
 
     // Removes the order from the hotbar
     public void RemoveOrder()
     {
         timerLabel.enabled = false;
-        timerCount.enabled = false;
-        state = OrderState.Empty;
+        cookTimerCount.enabled = false;
+        patienceTimerCount.enabled = false;
         isOpen = true;
         customer = null;
     }
