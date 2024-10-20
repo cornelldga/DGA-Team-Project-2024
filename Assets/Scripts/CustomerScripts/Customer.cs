@@ -81,7 +81,7 @@ public class Customer : MonoBehaviour
                     // We should change this.
                     //GameManager.Instance.addCustomer();
 
-                    GameManager.Instance.getPlayer().TakeCustomerOrder(this);
+                    GameManager.Instance.getPlayer().TakeOrder(this);
 
 
                 }
