@@ -81,6 +81,8 @@ public class Customer : MonoBehaviour
                     // We should change this.
                     //GameManager.Instance.addCustomer();
 
+                    GameManager.Instance.getPlayer().TakeCustomerOrder(this);
+
 
                 }
                 break;
@@ -102,12 +104,16 @@ public class Customer : MonoBehaviour
                         customerRenderer.material = redMaterial;
                         hotbarManager.RemoveFromHotBar(this);
                     }
+                    break;
                 }
 
                 if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && foodReady)
                 {
-                    CompleteOrder();
+                    ReceiveOrder();
                 }
+
+                waitTime -= Time.deltaTime;
+
                 break;
 
             case CustomerState.Done:
@@ -127,11 +133,12 @@ public class Customer : MonoBehaviour
     /// For now, it will change the customer's material to blue.
     /// It will call the GameManager to update the game status.
     /// </summary>
-    public void CompleteOrder()
+    public void ReceiveOrder()
     {
         Debug.Log(customerName + " received their order.");
         currentState = CustomerState.Done;
         customerRenderer.material = blueMaterial;
+        GameManager.Instance.CompleteOrder(this);
         isOrderCompleted = true;
         hotbarManager.RemoveFromHotBar(this);
     }
