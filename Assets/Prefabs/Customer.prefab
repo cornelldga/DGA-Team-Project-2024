@@ -120,12 +120,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7031343289b80a648bc24af8afdca52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customerName: 
+  hotbarManager: {fileID: 0}
+  customerName: Walker
   orderName: 
   customerImage: {fileID: 0}
-  waitTime: 10
-  cookTime: 4
-  interactionRange: 2
+  waitTime: 20
+  cookTime: 5
+  interactionRange: 5
   detectionRange: {fileID: 5696436274596760233}
   grayMaterial: {fileID: 2100000, guid: 850bf0a0a77478243a22c8fcd24fcf54, type: 2}
   greenMaterial: {fileID: 2100000, guid: dfd8c9f2d2054f846882dfb6d05a900e, type: 2}

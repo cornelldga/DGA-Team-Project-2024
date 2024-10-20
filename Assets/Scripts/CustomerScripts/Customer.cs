@@ -54,7 +54,8 @@ public class Customer : MonoBehaviour
         customerRenderer.material = grayMaterial;
         startingPosition = transform.position;
         Debug.Log(customerName + " is waiting for an order.");
-
+        // set the radius of the customer's detection range
+        detectionRange.GetComponent<SphereCollider>().radius = interactionRange / 2;
         // Initialize and configure the LineRenderer
         SetupInteractionRangeIndicator();
     }
