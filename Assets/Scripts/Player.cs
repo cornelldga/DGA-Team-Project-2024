@@ -30,13 +30,14 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
         cookingTimer = cookingTime;
+        InvokeRepeating(nameof(HandleOrders), 1, 1);
     }
 
     void FixedUpdate()
     {
         Drive();
         Nitro();
-        Cook();
+        //Cook();
     }
 
     private void Update()
@@ -97,7 +98,7 @@ public class Player : MonoBehaviour
     }
 
     //Cook method continuously decreases the cookingTimer and oil 
-    void Cook()
+    /*void Cook()
     {
         if (cookingTimer > 0)
         {
@@ -114,6 +115,18 @@ public class Player : MonoBehaviour
             {
                 cookingTimer = 0;
                 Debug.Log("Cooking complete!");
+            }
+        }
+    }*/
+
+    private void HandleOrders()
+    {
+        foreach(Customer customer in customers)
+        {
+            if (customer.cookTime > 0 && oil > 0)
+            {
+                customer.cookTime--;
+                oil--;
             }
         }
     }
