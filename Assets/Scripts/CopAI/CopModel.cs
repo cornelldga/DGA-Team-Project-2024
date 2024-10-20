@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // Navigation type
 public enum NavState
@@ -107,14 +108,20 @@ public class CopModel : MonoBehaviour
         if (CurrentPath != null && CurrentIndex < CurrentPath.Length)
         {
             Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
-           
+            // remove y to ignore it in the calculation
+            Vector3 position = this.transform.position;
+            targetPosition = new Vector3(targetPosition.x, position.y, targetPosition.z);
+
+
             if (Vector3.Distance(this.transform.position, targetPosition) > 0.5f)
             {
-                Vector3 position = this.transform.position;
+               
                 Vector3 moveDir = (targetPosition - position).normalized;
 
                 // TODO change to vel once able to prevent cops from being knocked off the map. 
-                this.transform.position = position + moveDir * speed * Time.deltaTime;
+                Vector3 newPosition = position + moveDir * speed * Time.deltaTime;
+                // y position is fixed, do not change
+                this.transform.position = new Vector3(newPosition.x, position.y, newPosition.z);
                 //this.velocity = moveDir * speed;
             }
             else
