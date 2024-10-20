@@ -7,15 +7,22 @@ public class HealthReplenish : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // Get the PlayerHealth component from the player
-        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-        if (playerHealth != null)
+        if (other.gameObject.tag == "Player")
         {
-            // Replenish the player's health
-            playerHealth.ReplenishHealth();
-        }
+            // Get the PlayerHealth component from the player
+            Player player = other.GetComponent<Player>();
+            if (player != null)
+            {
+                // Replenish the player's health
+                player.oil += 20;
+                if (player.oil > 100)
+                {
+                    player.oil = 100;
+                }
+            }
 
-        // Destroy the health object
-        Destroy(gameObject);
+            // Destroy the health object
+            Destroy(gameObject);
+        }
     }
 }

@@ -29,10 +29,11 @@ public class UIController : MonoBehaviour
     /// <summary>
     ///Start method.
     /// </summary>
-    void Start(){
+    void Start()
+    {
         updateOrdersUI();
     }
-    
+
     /// <summary>
     /// Update is called once per frame. This function updates the orders UI.
     /// </summary>
@@ -47,25 +48,29 @@ public class UIController : MonoBehaviour
     /// <summary>
     ///updates the orders UI by clearing the current hotbar nodes and populating it with new nodes based on the current customers.
     /// </summary>
-    public void updateOrdersUI(){
+    public void updateOrdersUI()
+    {
         //clear the current hotbar nodes
-        foreach(GameObject node in hotbarNodes){
+        foreach (GameObject node in hotbarNodes)
+        {
             Destroy(node);
         }
         hotbarNodes.Clear();
 
         //populate the hotbar with the current customers
-        foreach(GameObject customer in customers){
-            if(customer == null){
+        foreach (GameObject customer in customers)
+        {
+            if (customer == null)
+            {
                 continue;
             }
             GameObject node = Instantiate(hotbarNodePrefab, hotbar.transform);
             HotbarNode hotbarNode = node.GetComponent<HotbarNode>();
 
-            hotbarNode.setOrder(customer.GetComponent<Customer>().order);
+            hotbarNode.setOrder(customer.GetComponent<Customer>().orderName);
             hotbarNode.setCustomerImage(customer.GetComponent<Customer>().customerImage);
             hotbarNode.setCookTime(customer.GetComponent<Customer>().cookTime);
-            hotbarNode.setPatienceTime(customer.GetComponent<Customer>().patienceTime);
+            hotbarNode.setPatienceTime(customer.GetComponent<Customer>().waitTime);
 
             hotbarNodes.Add(node);
         }
@@ -73,10 +78,14 @@ public class UIController : MonoBehaviour
 
         //set the selected border of the hotbar node at the hotbarIndex
         //this is really hacky, but it's just to show off selection for now
-        for(int i = 0; i < hotbarNodes.Count; i++){
-            if(i == hotbarIndex){
+        for (int i = 0; i < hotbarNodes.Count; i++)
+        {
+            if (i == hotbarIndex)
+            {
                 hotbarNodes[i].GetComponent<HotbarNode>().getSelectedBorder().SetActive(true);
-            } else {
+            }
+            else
+            {
                 hotbarNodes[i].GetComponent<HotbarNode>().getSelectedBorder().SetActive(false);
             }
         }
