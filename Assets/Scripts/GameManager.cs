@@ -10,6 +10,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    //The customers the player is currently handling
+    List<Customer> customers = new List<Customer>();
+
+    [Header("Game Logic")]
     [Tooltip("How long the player has to complete the level")]
     [SerializeField] private int gameTimer;
     private Player player;
@@ -17,24 +21,35 @@ public class GameManager : MonoBehaviour
     [Tooltip("The minimum number of customers required to win")]
     [SerializeField] private int minCustomersToWin;
     private int completedOrders = 0;
+    [Space]
+    [Header("UI")]
+    public HotbarManager hotbarManager;
 
     private void Awake()
     {
         Instance = this;
         GameManager gameManager = GameManager.Instance;
+        player = FindObjectOfType<Player>();
+    }
+
+    private void Update()
+    {
+        if (customers.Count != 0)
+        {
+            player.HandleOrders(customers);
+        }
     }
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
-        AddCustomers();
+        CountCustomers();
         InvokeRepeating(nameof(UpdateGameTimer), 1, 1);
     }
 
     /// <summary>
     /// Counts customers in the scene to be used to track orders completed to the number of customers in that level
     /// </summary>
-    void AddCustomers()
+    void CountCustomers()
     {
         Customer[] customers = GameObject.FindObjectsOfType<Customer>();
         numCustomers = customers.Length;
@@ -72,7 +87,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Called when the player takes an order from a customer. Add the customer to the list of customers
+    /// </summary>
+    public void TakeOrder(Customer customer)
+    {
+        customers.Add(customer);
+    }
+    /// <summary>
+    /// Called when a customer should be removed from the list of customers
+    /// </summary>
+    /// <param name="customer"></param>
+    public void RemoveOrder(Customer customer) { 
+        customers.Remove(customer);
+    }
 
     /// <summary>
     /// Called when an order is completed 
@@ -80,6 +108,7 @@ public class GameManager : MonoBehaviour
     public void CompleteOrder(Customer customer)
     {
         completedOrders++;
+        customers.Remove(customer);
         if (completedOrders == numCustomers)
         {
             WinGame();

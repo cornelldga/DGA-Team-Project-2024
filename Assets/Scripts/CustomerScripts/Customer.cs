@@ -8,8 +8,6 @@ using UnityEngine;
 [RequireComponent(typeof(Renderer))]
 public class Customer : MonoBehaviour
 {
-    public HotbarManager hotbarManager;
-
     [Header("Customer Attributes")]
     public string customerName;
     public string orderName;
@@ -69,19 +67,17 @@ public class Customer : MonoBehaviour
             case CustomerState.WaitingForOrder:
                 if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E))
                 {
-                    Debug.Log(customerName + " placed an order.");
                     currentState = CustomerState.Cooking;
                     customerRenderer.material = greenMaterial;
                     timer = 0f;
                     orderTaken = true;
-                    hotbarManager.AddToHotbar(this);
 
                     // TODO: Pass self to Player 
                     // NOTE: I used GameManager.Instance.AddCustomer() instead
                     // This is not going to work since I am not passing myself. 
                     // We should change this.
                     //GameManager.Instance.addCustomer();
-                    GameManager.Instance.getPlayer().TakeOrder(this);
+                    GameManager.Instance.TakeOrder(this);
 
 
                 }
@@ -91,7 +87,6 @@ public class Customer : MonoBehaviour
                 // NOTE: I removed the function of the timer for now.
                 if (cookTime <= 0 && !foodReady)
                 {
-                    Debug.Log(customerName + "'s food is ready for delivery.");
                     foodReady = true;
                 }
 
@@ -99,10 +94,9 @@ public class Customer : MonoBehaviour
                 {
                     if (!isOrderCompleted)
                     {
-                        Debug.Log(customerName + " is upset! The order was not returned in time.");
                         currentState = CustomerState.Done;
                         customerRenderer.material = redMaterial;
-                        hotbarManager.RemoveFromHotBar(this);
+                        GameManager.Instance.RemoveOrder(this);
                     }
                     break;
                 }
@@ -135,7 +129,6 @@ public class Customer : MonoBehaviour
     /// </summary>
     public void ReceiveOrder()
     {
-        Debug.Log(customerName + " received their order.");
         currentState = CustomerState.Done;
         customerRenderer.material = blueMaterial;
         GameManager.Instance.CompleteOrder(this);

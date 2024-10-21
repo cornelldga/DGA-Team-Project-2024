@@ -13,6 +13,5 @@ public class PlayerHealth : MonoBehaviour
     public void ReplenishHealth()
     {
         health += healthReplenishAmount;
-        Debug.Log("Oil replenished! Current Oil Amount is: " + health);
     }
 }
