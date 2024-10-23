@@ -30,6 +30,9 @@ public class Map : MonoBehaviour
     // TODO: change this initalization read from a json rather than manually change each value. 
     [SerializeField] private MapTile[] MapTiles;
 
+    // Whether the debug grid lines are visible when gizmos are turned on 
+    [SerializeField] private bool showDebugInfo;
+
     public Grid<int> MapGrid;
 
     public static Map Instance;
@@ -40,28 +43,50 @@ public class Map : MonoBehaviour
     {
         MapGrid = new Grid<int>(Width, Height, CellSize, Origin);
 
+        // add special tiles
         for (int i = 0; i < MapTiles.Length; i++)
         {
             MapTile mp = MapTiles[i];
             MapGrid.SetValue(mp.x, mp.y, mp.value);
 
-            Color debugColor = Color.white;
-
-            if (mp.value == 1)
+            // color tile in debug view
+            if (showDebugInfo)
             {
-                // building
-                debugColor = Color.black;
+                Color debugColor = Color.white;
+
+                if (mp.value == 1)
+                {
+                    // building
+                    debugColor = Color.black;
+                }
+                else if (mp.value == 2)
+                {
+                    // sidewalk
+                    debugColor = Color.yellow;
+                }
+
+                Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x, mp.y + 1), debugColor, 100f);
+                Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y), debugColor, 100f);
+                Debug.DrawLine(MapGrid.GetWorldPosition(mp.x + 1, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
+                Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y + 1), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
             }
-            else if (mp.value == 2)
+        }
+
+        // draw lines of the grid into the scene for debugging
+        if (showDebugInfo)
+        {
+            for (int x = 0; x < Width; x++)
             {
-                // sidewalk
-                debugColor = Color.yellow;
+                for (int y = 0; y < Height; y++)
+                {
+                    Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x, y + 1), Color.white, 100f);
+                    Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x + 1, y), Color.white, 100f);
+
+                }
             }
 
-            Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x, mp.y + 1), debugColor, 100f);
-            Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y), debugColor, 100f);
-            Debug.DrawLine(MapGrid.GetWorldPosition(mp.x + 1, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
-            Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y + 1), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
+            Debug.DrawLine(MapGrid.GetWorldPosition(0, Height), MapGrid.GetWorldPosition(Width, Height), Color.white, 100f);
+            Debug.DrawLine(MapGrid.GetWorldPosition(Width, 0), MapGrid.GetWorldPosition(Width, Height), Color.white, 100f);
 
         }
     }
