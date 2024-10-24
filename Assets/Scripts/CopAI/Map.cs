@@ -28,14 +28,9 @@ public class Map : MonoBehaviour
     [SerializeField] private int CellSize;
     [SerializeField] private Vector3 Origin;
 
-
-
-    // TODO: change this initalization read from a json rather than manually change each value. 
-    [SerializeField] private MapTile[] MapTiles;
-
     [SerializeField] private Tilemap TileMap;
 
-    // Whether the debug grid lines are visible when gizmos are turned on 
+    // Whether the debug grid lines are visible when gizmos are turned on
     [SerializeField] private bool showDebugInfo;
 
     public Grid<int> MapGrid;
@@ -69,46 +64,6 @@ public class Map : MonoBehaviour
 
 
 
-
-
-        //for (int x = 0; x < Width; x++)
-        //{
-        //    for (int y = 0; y < Height; y++)
-        //    {
-        //        TileBase tile = TileMap.GetTile(Vector3Int.FloorToInt(MapGrid.GetWorldPosition(x, y)));
-               
-
-        //        if (tile != null)
-        //        {
-        //            Debug.Log("{" + x + ", " + y + "}");
-        //            Debug.Log(tile.name);
-        //            MapGrid.SetValue(x, y, 2);
-
-        //            Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x, y + 1), Color.yellow, 100f);
-        //            Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x + 1, y), Color.yellow, 100f);
-        //            Debug.DrawLine(MapGrid.GetWorldPosition(x + 1, y), MapGrid.GetWorldPosition(x + 1, y + 1), Color.yellow, 100f);
-        //            Debug.DrawLine(MapGrid.GetWorldPosition(x, y + 1), MapGrid.GetWorldPosition(x + 1, y + 1), Color.yellow, 100f);
-        //        }
-        //    }
-        //}
-
-
-        //working
-        //TileBase[] tiles = TileMap.GetTilesBlock(TileMap.cellBounds);
-
-        //Debug.Log(tiles.Length);
-
-        //for (int i = 0; i < tiles.Length; i++)
-        //{
-        //    if (tiles[i] != null)
-        //    {
-        //        TileBase tile = tiles[i];
-        //        Debug.Log(tile.name);
-                
-                
-        //    }
-        //}
-
         foreach (var pos in TileMap.cellBounds.allPositionsWithin)
         {
             
@@ -120,56 +75,45 @@ public class Map : MonoBehaviour
                 Vector3 worldPos = TileMap.CellToWorld(pos);
                 Debug.Log(tile.name);
 
-                MapGrid.SetValue(worldPos, 1);
+                Color debugColor;
 
-                int x = (int) worldPos.x;
-                int y = (int) worldPos.y;
-                int z = (int) worldPos.z;
+                switch (tile.name)
+                {
+                    case "Building":
+                        MapGrid.SetValue(worldPos, 1);
+                        debugColor = Color.black;
+                        break;
+                    case "Sidewalk":
+                        MapGrid.SetValue(worldPos, 2);
+                        debugColor = Color.yellow; 
+                        break;
+                    default:
+                        // street
+                        break;
+                }
 
-                Debug.DrawLine(worldPos, new Vector3(x, y, z + 1), Color.yellow, 100f);
-                Debug.DrawLine(worldPos, new Vector3(x + 1, y, z), Color.yellow, 100f);
-                Debug.DrawLine(new Vector3(x + 1, y, z), new Vector3(x + 1, y, z + 1), Color.yellow, 100f);
-                Debug.DrawLine(new Vector3(x, y, z + 1), new Vector3(x + 1, y, z + 1), Color.yellow, 100f);
+
+                if (showDebugInfo)
+                {
+                    int x = (int)worldPos.x;
+                    int y = (int)worldPos.y;
+                    int z = (int)worldPos.z;
+
+                    Debug.DrawLine(worldPos, new Vector3(x, y, z + 1), Color.yellow, 100f);
+                    Debug.DrawLine(worldPos, new Vector3(x + 1, y, z), Color.yellow, 100f);
+                    Debug.DrawLine(new Vector3(x + 1, y, z), new Vector3(x + 1, y, z + 1), Color.yellow, 100f);
+                    Debug.DrawLine(new Vector3(x, y, z + 1), new Vector3(x + 1, y, z + 1), Color.yellow, 100f);
+
+                    //Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x, mp.y + 1), debugColor, 100f);
+                    //Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y), debugColor, 100f);
+                    //Debug.DrawLine(MapGrid.GetWorldPosition(mp.x + 1, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
+                    //Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y + 1), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
+                }
+
+
             }
         }
 
-
-
-
-
-
-
-
-
-
-        // add special tiles
-        for (int i = 0; i < MapTiles.Length; i++)
-        {
-            MapTile mp = MapTiles[i];
-            MapGrid.SetValue(mp.x, mp.y, mp.value);
-
-            // color tile in debug view
-            if (showDebugInfo)
-            {
-                Color debugColor = Color.white;
-
-                if (mp.value == 1)
-                {
-                    // building
-                    debugColor = Color.black;
-                }
-                else if (mp.value == 2)
-                {
-                    // sidewalk
-                    debugColor = Color.yellow;
-                }
-
-                Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x, mp.y + 1), debugColor, 100f);
-                Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y), debugColor, 100f);
-                Debug.DrawLine(MapGrid.GetWorldPosition(mp.x + 1, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
-                Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y + 1), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
-            }
-        }
 
        
     }
