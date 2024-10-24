@@ -31,10 +31,6 @@ public class CopModel : MonoBehaviour
     // Movement speed multiplier towards the target
     private int speed = 8;
 
-    // TEMP - get from game manager
-    private Player player;
-
-
     public NavState getNavState()
     {
         return State;
@@ -52,7 +48,7 @@ public class CopModel : MonoBehaviour
         } 
         else if (State == NavState.HOTPURSUIT)
         {
-            SetTarget(player.gameObject.transform.position);
+            SetTarget(GameManager.Instance.getPlayer().transform.position);
         }
 
         HandleMovement();
