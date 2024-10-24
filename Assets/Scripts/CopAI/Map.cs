@@ -23,10 +23,10 @@ public struct MapTile
  */
 public class Map : MonoBehaviour
 {
-    [SerializeField] private int Width;
-    [SerializeField] private int Height;
-    [SerializeField] private int CellSize;
-    [SerializeField] private Vector3 Origin;
+    private int Width;
+    private int Height;
+    private int CellSize = 1;
+    private Vector3 Origin;
 
     [SerializeField] private Tilemap TileMap;
 
@@ -41,8 +41,23 @@ public class Map : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // TileMap.cellbounds returns the bounds of the tilemap that contain placed sprites/tiles. 
+        // Make the containing grid only as big as the used space. 
+
+        Debug.Log(TileMap.cellBounds.size);
+        Debug.Log(TileMap.cellBounds.max);
+
+        Vector3 TileMapOffset = TileMap.CellToWorld(Vector3Int.FloorToInt(TileMap.cellBounds.center));
+        Debug.Log(TileMap.CellToWorld(Vector3Int.FloorToInt(TileMap.cellBounds.center)));
+
+        Width = TileMap.cellBounds.size.x;
+        Height = TileMap.cellBounds.size.y;
+
+        // Origin the is position of the bottom left corner. 
+        Origin = new Vector3(-Mathf.Ceil((float)Width / 2), 0, -Mathf.Ceil((float) Height / 2)) + TileMapOffset;
 
         MapGrid = new Grid<int>(Width, Height, CellSize, Origin);
+        //MapGrid = new Grid<int>(, TileMap.cellBounds.size.y, CellSize, Origin);
 
         // draw lines of the grid into the scene for debugging
         if (showDebugInfo)
