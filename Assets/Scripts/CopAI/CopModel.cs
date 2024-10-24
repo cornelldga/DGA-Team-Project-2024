@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // Navigation type
 public enum NavState
@@ -18,7 +19,6 @@ public enum NavState
  */
 public class CopModel : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D RB;
     [SerializeField] private NavState State;
 
     // Pathfinding parameters
@@ -31,10 +31,6 @@ public class CopModel : MonoBehaviour
     // Movement speed multiplier towards the target
     private int speed = 8;
 
-    // TEMP - get from game manager
-    private Player player;
-
-
     public NavState getNavState()
     {
         return State;
@@ -46,13 +42,13 @@ public class CopModel : MonoBehaviour
         if (State == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
         {
             int sx, sy;
-            Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
+            Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
 
             SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
         } 
         else if (State == NavState.HOTPURSUIT)
         {
-            SetTarget(player.gameObject.transform.position);
+            SetTarget(GameManager.Instance.getPlayer().transform.position);
         }
 
         HandleMovement();
@@ -73,7 +69,7 @@ public class CopModel : MonoBehaviour
     public void SetTarget(int dx, int dy)
     {
         int sx, sy;
-        Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
+        Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
         //UnityEngine.Debug.Log("{" + x + "," + y + "}");
 
         if (pathfindingLogic == null)
@@ -102,21 +98,27 @@ public class CopModel : MonoBehaviour
         if (CurrentPath != null && CurrentIndex < CurrentPath.Length)
         {
             Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
-           
-            if (Vector3.Distance(RB.transform.position, targetPosition) > 0.5f)
+            // remove y to ignore it in the calculation
+            Vector3 position = this.transform.position;
+            targetPosition = new Vector3(targetPosition.x, position.y, targetPosition.z);
+
+
+            if (Vector3.Distance(this.transform.position, targetPosition) > 0.5f)
             {
-                Vector3 position = RB.transform.position;
+               
                 Vector3 moveDir = (targetPosition - position).normalized;
 
                 // TODO change to vel once able to prevent cops from being knocked off the map. 
-                RB.transform.position = position + moveDir * speed * Time.deltaTime;
-                //RB.velocity = moveDir * speed;
+                Vector3 newPosition = position + moveDir * speed * Time.deltaTime;
+                // y position is fixed, do not change
+                this.transform.position = new Vector3(newPosition.x, position.y, newPosition.z);
+                //this.velocity = moveDir * speed;
             }
             else
             {
                 CurrentIndex++;
 
-                //RB.velocity = Vector2.zero;
+                //this.velocity = Vector2.zero;
             }
         }
     }

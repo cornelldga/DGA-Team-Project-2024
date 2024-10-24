@@ -2,18 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-[Serializable]
-public struct MapTile
+// What each tile can represent. Each type has a different navigation cost. 
+public enum TileType
 {
-
-    public int x;
-    public int y;
-    public int value;
-    // values
-    // 0 - road (default)
-    // 1 - building
-    // 2 - sidewalk
+    ROAD = 0, // default. Road has the cheapest cost to travel. 
+    BUILDING, // cannot move be navigated through. (under normal circumstances)
+    SIDEWALK  // Placed around buildings. Less preferred path of travel but will be taken if necessary
 }
 
 /** 
@@ -22,61 +18,117 @@ public struct MapTile
  */
 public class Map : MonoBehaviour
 {
-    [SerializeField] private int Width;
-    [SerializeField] private int Height;
-    [SerializeField] private int CellSize;
-    [SerializeField] private Vector3 Origin;
-
-    // TODO: change this initalization read from a json rather than manually change each value. 
-    [SerializeField] private MapTile[] MapTiles;
-
-    public Grid<int> MapGrid;
-
     public static Map Instance;
     private void Awake() => Instance = this;
+
+    // Tilemap used to mark navigatable areas of the pathfinding.
+    [SerializeField] private Tilemap TileMap;
+
+    // Whether the debug grid lines are visible when gizmos are turned on
+    [SerializeField] private bool showDebugInfo;
+
+    // Map Grid initalization paramters
+    private int Width;
+    private int Height;
+    private int CellSize = 1;
+    private Vector3 Origin;
+
+    // Abstraction of the tilemap to be used for pathfinding a* calculations
+    public Grid<TileType> MapGrid;
 
     // Start is called before the first frame update
     void Start()
     {
-        MapGrid = new Grid<int>(Width, Height, CellSize, Origin);
+        // TileMap.cellbounds returns the bounds of the tilemap that contain placed sprites/tiles. 
+        // Make the containing grid only as big as the used space. 
+        Width = TileMap.cellBounds.size.x;
+        Height = TileMap.cellBounds.size.y;
 
-        for (int i = 0; i < MapTiles.Length; i++)
+        // Origin the is position of the bottom left corner
+        Vector3 bottomLeft = TileMap.cellBounds.min;
+        Vector3 TileMapOffset = TileMap.transform.position;
+
+        // rotate the axes to XZY
+        Origin = new Vector3(bottomLeft.x, 0, bottomLeft.y) + TileMapOffset;
+        MapGrid = new Grid<TileType>(Width, Height, CellSize, Origin);
+
+
+        if (showDebugInfo)
         {
-            MapTile mp = MapTiles[i];
-            MapGrid.SetValue(mp.x, mp.y, mp.value);
-
-            Color debugColor = Color.white;
-
-            if (mp.value == 1)
-            {
-                // building
-                debugColor = Color.black;
-            }
-            else if (mp.value == 2)
-            {
-                // sidewalk
-                debugColor = Color.yellow;
-            }
-
-            Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x, mp.y + 1), debugColor, 100f);
-            Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y), debugColor, 100f);
-            Debug.DrawLine(MapGrid.GetWorldPosition(mp.x + 1, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
-            Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y + 1), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
-
+            // Draw the perimeter of the grid
+ 
+            Debug.DrawLine(MapGrid.GetWorldPosition(0, 0), MapGrid.GetWorldPosition(0, Height), Color.white, 100f);
+            Debug.DrawLine(MapGrid.GetWorldPosition(0, 0), MapGrid.GetWorldPosition(Width, 0), Color.white, 100f);
+            Debug.DrawLine(MapGrid.GetWorldPosition(0, Height), MapGrid.GetWorldPosition(Width, Height), Color.white, 100f);
+            Debug.DrawLine(MapGrid.GetWorldPosition(Width, 0), MapGrid.GetWorldPosition(Width, Height), Color.white, 100f);
         }
+       
+
+        foreach (var pos in TileMap.cellBounds.allPositionsWithin)
+        {
+            // add placed tiles to the map representation as their correct type. 
+            if (TileMap.HasTile(pos))
+            {
+                TileBase tile = TileMap.GetTile(pos);
+                Vector3 worldPos = TileMap.CellToWorld(pos);
+                Color debugColor = Color.white;
+
+                switch (tile.name)
+                {
+                    case "Building":
+                        MapGrid.SetValue(worldPos, TileType.BUILDING);
+                        debugColor = Color.black;
+                        break;
+                    case "Sidewalk":
+                        MapGrid.SetValue(worldPos, TileType.SIDEWALK);
+                        debugColor = Color.yellow; 
+                        break;
+                    default:
+                        // street
+                        break;
+                }
+
+                // draw outline around tile square in scene 
+                if (showDebugInfo)
+                {
+                    float x = worldPos.x;
+                    float y = worldPos.y;
+                    float z = worldPos.z;
+                    
+                    Debug.DrawLine(new Vector3(x, y, z), new Vector3(x, y, z + 1), debugColor, 100f);
+                    Debug.DrawLine(new Vector3(x, y, z), new Vector3(x + 1, y, z), debugColor, 100f);
+                    Debug.DrawLine(new Vector3(x + 1, y, z), new Vector3(x + 1, y, z + 1), debugColor, 100f);
+                    Debug.DrawLine(new Vector3(x, y, z + 1), new Vector3(x + 1, y, z + 1), debugColor, 100f);
+
+                }
+
+            }
+        }
+
+
+       
     }
 
-    public static float getNavCost(int x, int y, Grid<int> mGrid)
+    // Returns the cost of navigation on the current tile represented by the given grid coordinates. 
+    public float getNavCost(int x, int y)
     {
-        int TileValue = mGrid.GetValue(x, y);
-
-        if (TileValue == 2)
+        switch (MapGrid.GetValue(x, y))
         {
-            // side walk has higher nav cost
-            return 3.0f;
+            case TileType.BUILDING:
+                // cost is high enough that it will not be traversed unless absolutely necessary.
+                // ie. the cop is caught and needs to free themselves
+                return 100f; 
+            
+            case TileType.SIDEWALK:
+                // sidewalk has a higher nav cost than the road.
+                return 3.0f; 
+            
+            default :
+                // road
+                return 1.0f;
         }
-        return 1.0f;
     }
+
 
     // Update is called once per frame
     void Update()

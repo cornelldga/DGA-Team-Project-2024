@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7031343289b80a648bc24af8afdca52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hotbarManager: {fileID: 0}
   customerName: 
   orderName: 
   customerImage: {fileID: 0}
@@ -153,8 +154,7 @@ LineRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
