@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [Serializable]
 public struct MapTile
@@ -27,8 +28,12 @@ public class Map : MonoBehaviour
     [SerializeField] private int CellSize;
     [SerializeField] private Vector3 Origin;
 
+
+
     // TODO: change this initalization read from a json rather than manually change each value. 
     [SerializeField] private MapTile[] MapTiles;
+
+    //[SerializeField] private Grid TileMap;
 
     // Whether the debug grid lines are visible when gizmos are turned on 
     [SerializeField] private bool showDebugInfo;
@@ -41,7 +46,34 @@ public class Map : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         MapGrid = new Grid<int>(Width, Height, CellSize, Origin);
+
+        //Tilemap TileMap = this.GetComponent<Tilemap>();
+        
+       
+
+        //for (int x = 0; x < Width; x++)
+        //{
+        //    for (int y = 0; y < Height; y++)
+        //    {
+        //        Sprite tile = TileMap.GetSprite(Vector3Int.FloorToInt(MapGrid.GetWorldPosition(x, y)));
+        //        if (tile != null)
+        //        {
+        //            Debug.Log(tile.name);
+        //        }
+        //    }
+        //}
+
+       
+
+
+
+
+
+
+
+
 
         // add special tiles
         for (int i = 0; i < MapTiles.Length; i++)

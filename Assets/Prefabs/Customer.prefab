@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7031343289b80a648bc24af8afdca52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hotbarManager: {fileID: 0}
   customerName: 
   orderName: 
   customerImage: {fileID: 0}
@@ -141,7 +142,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4543936700359820034}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
