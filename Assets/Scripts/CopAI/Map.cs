@@ -33,7 +33,7 @@ public class Map : MonoBehaviour
     // TODO: change this initalization read from a json rather than manually change each value. 
     [SerializeField] private MapTile[] MapTiles;
 
-    //[SerializeField] private Grid TileMap;
+    [SerializeField] private Tilemap TileMap;
 
     // Whether the debug grid lines are visible when gizmos are turned on 
     [SerializeField] private bool showDebugInfo;
@@ -49,23 +49,90 @@ public class Map : MonoBehaviour
 
         MapGrid = new Grid<int>(Width, Height, CellSize, Origin);
 
-        //Tilemap TileMap = this.GetComponent<Tilemap>();
-        
-       
+        // draw lines of the grid into the scene for debugging
+        if (showDebugInfo)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x, y + 1), Color.white, 100f);
+                    Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x + 1, y), Color.white, 100f);
+
+                }
+            }
+
+            Debug.DrawLine(MapGrid.GetWorldPosition(0, Height), MapGrid.GetWorldPosition(Width, Height), Color.white, 100f);
+            Debug.DrawLine(MapGrid.GetWorldPosition(Width, 0), MapGrid.GetWorldPosition(Width, Height), Color.white, 100f);
+
+        }
+
+
+
+
 
         //for (int x = 0; x < Width; x++)
         //{
         //    for (int y = 0; y < Height; y++)
         //    {
-        //        Sprite tile = TileMap.GetSprite(Vector3Int.FloorToInt(MapGrid.GetWorldPosition(x, y)));
+        //        TileBase tile = TileMap.GetTile(Vector3Int.FloorToInt(MapGrid.GetWorldPosition(x, y)));
+               
+
         //        if (tile != null)
         //        {
+        //            Debug.Log("{" + x + ", " + y + "}");
         //            Debug.Log(tile.name);
+        //            MapGrid.SetValue(x, y, 2);
+
+        //            Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x, y + 1), Color.yellow, 100f);
+        //            Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x + 1, y), Color.yellow, 100f);
+        //            Debug.DrawLine(MapGrid.GetWorldPosition(x + 1, y), MapGrid.GetWorldPosition(x + 1, y + 1), Color.yellow, 100f);
+        //            Debug.DrawLine(MapGrid.GetWorldPosition(x, y + 1), MapGrid.GetWorldPosition(x + 1, y + 1), Color.yellow, 100f);
         //        }
         //    }
         //}
 
-       
+
+        //working
+        //TileBase[] tiles = TileMap.GetTilesBlock(TileMap.cellBounds);
+
+        //Debug.Log(tiles.Length);
+
+        //for (int i = 0; i < tiles.Length; i++)
+        //{
+        //    if (tiles[i] != null)
+        //    {
+        //        TileBase tile = tiles[i];
+        //        Debug.Log(tile.name);
+                
+                
+        //    }
+        //}
+
+        foreach (var pos in TileMap.cellBounds.allPositionsWithin)
+        {
+            
+     
+            if (TileMap.HasTile(pos))
+            {
+                TileBase tile = TileMap.GetTile(pos);
+
+                Vector3 worldPos = TileMap.CellToWorld(pos);
+                Debug.Log(tile.name);
+
+                MapGrid.SetValue(worldPos, 1);
+
+                int x = (int) worldPos.x;
+                int y = (int) worldPos.y;
+                int z = (int) worldPos.z;
+
+                Debug.DrawLine(worldPos, new Vector3(x, y, z + 1), Color.yellow, 100f);
+                Debug.DrawLine(worldPos, new Vector3(x + 1, y, z), Color.yellow, 100f);
+                Debug.DrawLine(new Vector3(x + 1, y, z), new Vector3(x + 1, y, z + 1), Color.yellow, 100f);
+                Debug.DrawLine(new Vector3(x, y, z + 1), new Vector3(x + 1, y, z + 1), Color.yellow, 100f);
+            }
+        }
+
 
 
 
@@ -104,23 +171,7 @@ public class Map : MonoBehaviour
             }
         }
 
-        // draw lines of the grid into the scene for debugging
-        if (showDebugInfo)
-        {
-            for (int x = 0; x < Width; x++)
-            {
-                for (int y = 0; y < Height; y++)
-                {
-                    Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x, y + 1), Color.white, 100f);
-                    Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x + 1, y), Color.white, 100f);
-
-                }
-            }
-
-            Debug.DrawLine(MapGrid.GetWorldPosition(0, Height), MapGrid.GetWorldPosition(Width, Height), Color.white, 100f);
-            Debug.DrawLine(MapGrid.GetWorldPosition(Width, 0), MapGrid.GetWorldPosition(Width, Height), Color.white, 100f);
-
-        }
+       
     }
 
     public static float getNavCost(int x, int y, Grid<int> mGrid)
