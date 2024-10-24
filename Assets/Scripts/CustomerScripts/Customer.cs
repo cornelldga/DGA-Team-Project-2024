@@ -133,7 +133,6 @@ public class Customer : MonoBehaviour
         customerRenderer.material = blueMaterial;
         GameManager.Instance.CompleteOrder(this);
         isOrderCompleted = true;
-        hotbarManager.RemoveFromHotBar(this);
     }
 
     // GETTERS ----------------------------
