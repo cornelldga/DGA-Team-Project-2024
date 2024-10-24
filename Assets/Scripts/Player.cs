@@ -134,4 +134,12 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Adds oil to the player's vehichle, never exceeding the maxOil amount
+    /// </summary>
+    public void AddOil(int oilAmount)
+    {
+        oil = Mathf.Min(oil+oilAmount, maxOil);
+    }
 }

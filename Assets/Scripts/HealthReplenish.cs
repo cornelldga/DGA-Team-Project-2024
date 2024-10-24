@@ -9,18 +9,7 @@ public class HealthReplenish : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            // Get the PlayerHealth component from the player
-            Player player = other.GetComponent<Player>();
-            if (player != null)
-            {
-                // Replenish the player's health
-                player.oil += 20;
-                if (player.oil > 100)
-                {
-                    player.oil = 100;
-                }
-            }
-
+            GameManager.Instance.getPlayer().AddOil(20);
             // Destroy the health object
             Destroy(gameObject);
         }
