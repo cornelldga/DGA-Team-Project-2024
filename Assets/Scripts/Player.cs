@@ -6,10 +6,9 @@ using UnityEngine;
 // This script handles the inputs and manages the oil and cooking timers for the player
 public class Player : MonoBehaviour
 {
-
-    List<Customer> customers = new List<Customer>();
-    public float speed;
-    public float oil;
+    [SerializeField] float speed;
+    float oil;
+    [SerializeField] float maxOil;
     public float oilConsumptionRate = 1f; // Oil consumption rate per second
     public float cookingTime = 60f; // Total cooking time in seconds
 
@@ -31,6 +30,7 @@ public class Player : MonoBehaviour
         transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
         cookingTimer = cookingTime;
         InvokeRepeating(nameof(HandleOrders), 1, 1);
+        oil = maxOil;
     }
 
     void FixedUpdate()
@@ -119,25 +119,27 @@ public class Player : MonoBehaviour
         }
     }*/
 
-    private void HandleOrders()
+    /// <summary>
+    /// Called every frame to check through the list of customers and decrease cooking time and oil
+    /// </summary>
+    /// <param name="customers"></param>
+    public void HandleOrders(List<Customer> customers)
     {
         foreach(Customer customer in customers)
         {
             if (customer.cookTime > 0 && oil > 0)
             {
-                customer.cookTime--;
-                oil--;
+                customer.cookTime-=Time.deltaTime;
+                oil-=Time.deltaTime;
             }
         }
     }
 
-    public void TakeOrder(Customer customer)
+    /// <summary>
+    /// Adds oil to the player's vehichle, never exceeding the maxOil amount
+    /// </summary>
+    public void AddOil(int oilAmount)
     {
-        customers.Add(customer);
-    }
-
-    public void RemoveOrder(Customer customer)
-    {
-        customers.Remove(customer);
+        oil = Mathf.Min(oil+oilAmount, maxOil);
     }
 }

@@ -11,7 +11,6 @@ public class CustomerRange : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("[CustomerRange] Player entered range.");
             playerInRange = true;
         }
     }
