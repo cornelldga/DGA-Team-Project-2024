@@ -43,46 +43,36 @@ public class Map : MonoBehaviour
     {
         // TileMap.cellbounds returns the bounds of the tilemap that contain placed sprites/tiles. 
         // Make the containing grid only as big as the used space. 
-
-        Debug.Log(TileMap.cellBounds.size);
-        Debug.Log(TileMap.cellBounds.max);
-
-        Vector3 TileMapOffset = TileMap.CellToWorld(Vector3Int.FloorToInt(TileMap.cellBounds.center));
-        Debug.Log(TileMap.CellToWorld(Vector3Int.FloorToInt(TileMap.cellBounds.center)));
-
         Width = TileMap.cellBounds.size.x;
         Height = TileMap.cellBounds.size.y;
 
-        // Origin the is position of the bottom left corner. 
-        Origin = new Vector3(-Mathf.Ceil((float)Width / 2), 0, -Mathf.Ceil((float) Height / 2)) + TileMapOffset;
+        // Origin the is position of the bottom left corner
+        Vector3 bottomLeft = TileMap.cellBounds.min;
+        Vector3 TileMapOffset = TileMap.transform.position;
 
+        // rotate the axes to XZY
+        Origin = new Vector3(bottomLeft.x, 0, bottomLeft.y) + TileMapOffset;
         MapGrid = new Grid<int>(Width, Height, CellSize, Origin);
-        //MapGrid = new Grid<int>(, TileMap.cellBounds.size.y, CellSize, Origin);
 
-        // draw lines of the grid into the scene for debugging
         if (showDebugInfo)
         {
-            for (int x = 0; x < Width; x++)
-            {
-                for (int y = 0; y < Height; y++)
-                {
-                    Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x, y + 1), Color.white, 100f);
-                    Debug.DrawLine(MapGrid.GetWorldPosition(x, y), MapGrid.GetWorldPosition(x + 1, y), Color.white, 100f);
+            float y = this.transform.position.y;
+            Debug.Log(y);
+            // Draw the perimeter of the grid
+            //Debug.DrawLine(MapGrid.GetWorldPosition(0, 0, ), MapGrid.GetWorldPosition(0, Height, y), Color.white, 100f);
+            //Debug.DrawLine(MapGrid.GetWorldPosition(0, 0, y), MapGrid.GetWorldPosition(Width, 0, y), Color.white, 100f);
+            //Debug.DrawLine(MapGrid.GetWorldPosition(0, Height, y), MapGrid.GetWorldPosition(Width, Height, y), Color.white, 100f);
+            //Debug.DrawLine(MapGrid.GetWorldPosition(Width, 0, y), MapGrid.GetWorldPosition(Width, Height, y), Color.white, 100f);
 
-                }
-            }
-
+            Debug.DrawLine(MapGrid.GetWorldPosition(0, 0), MapGrid.GetWorldPosition(0, Height), Color.white, 100f);
+            Debug.DrawLine(MapGrid.GetWorldPosition(0, 0), MapGrid.GetWorldPosition(Width, 0), Color.white, 100f);
             Debug.DrawLine(MapGrid.GetWorldPosition(0, Height), MapGrid.GetWorldPosition(Width, Height), Color.white, 100f);
             Debug.DrawLine(MapGrid.GetWorldPosition(Width, 0), MapGrid.GetWorldPosition(Width, Height), Color.white, 100f);
-
         }
-
-
-
+       
         foreach (var pos in TileMap.cellBounds.allPositionsWithin)
         {
-            
-     
+          
             if (TileMap.HasTile(pos))
             {
                 TileBase tile = TileMap.GetTile(pos);
@@ -90,7 +80,7 @@ public class Map : MonoBehaviour
                 Vector3 worldPos = TileMap.CellToWorld(pos);
                 Debug.Log(tile.name);
 
-                Color debugColor;
+                Color debugColor = Color.white;
 
                 switch (tile.name)
                 {
@@ -107,23 +97,26 @@ public class Map : MonoBehaviour
                         break;
                 }
 
-
                 if (showDebugInfo)
                 {
-                    int x = (int)worldPos.x;
-                    int y = (int)worldPos.y;
-                    int z = (int)worldPos.z;
+                    float x = worldPos.x;
+                    float y = worldPos.y;
+                    float z = worldPos.z;
 
-                    Debug.DrawLine(worldPos, new Vector3(x, y, z + 1), Color.yellow, 100f);
-                    Debug.DrawLine(worldPos, new Vector3(x + 1, y, z), Color.yellow, 100f);
-                    Debug.DrawLine(new Vector3(x + 1, y, z), new Vector3(x + 1, y, z + 1), Color.yellow, 100f);
-                    Debug.DrawLine(new Vector3(x, y, z + 1), new Vector3(x + 1, y, z + 1), Color.yellow, 100f);
+                    //Debug.DrawLine(new Vector3(x, y + 1, z), new Vector3(x, y + 1, z + 1), debugColor, 100f);
+                    //Debug.DrawLine(new Vector3(x, y + 1, z), new Vector3(x + 1, y + 1, z), debugColor, 100f);
+                    //Debug.DrawLine(new Vector3(x + 1, y + 1, z), new Vector3(x + 1, y + 1, z + 1), debugColor, 100f);
+                    //Debug.DrawLine(new Vector3(x, y + 1, z + 1), new Vector3(x + 1, y + 1, z + 1), debugColor, 100f);
+                    
+                    Debug.DrawLine(new Vector3(x, y, z), new Vector3(x, y, z + 1), debugColor, 100f);
+                    Debug.DrawLine(new Vector3(x, y, z), new Vector3(x + 1, y, z), debugColor, 100f);
+                    Debug.DrawLine(new Vector3(x + 1, y, z), new Vector3(x + 1, y, z + 1), debugColor, 100f);
+                    Debug.DrawLine(new Vector3(x, y, z + 1), new Vector3(x + 1, y, z + 1), debugColor, 100f);
 
-                    //Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x, mp.y + 1), debugColor, 100f);
-                    //Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y), debugColor, 100f);
-                    //Debug.DrawLine(MapGrid.GetWorldPosition(mp.x + 1, mp.y), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
-                    //Debug.DrawLine(MapGrid.GetWorldPosition(mp.x, mp.y + 1), MapGrid.GetWorldPosition(mp.x + 1, mp.y + 1), debugColor, 100f);
                 }
+
+
+
 
 
             }

@@ -28,9 +28,9 @@ public class Grid<TGridObject>
         return new Vector3(x, 0, y) * CellSize + Origin;
     }
 
-    public Vector3 GetWorldPosition(float x, float y, float z)
+    public Vector3 GetWorldPosition(float x, float z, float y)
     {
-        return new Vector3(x, z, y) * CellSize + Origin;
+        return new Vector3(x, y, z) * CellSize + Origin;
     }
 
     /** Convert world coordinates to grid coordinates */
