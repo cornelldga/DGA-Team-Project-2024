@@ -18,7 +18,7 @@ public enum NavState
  */
 public class CopModel : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D RB;
+    [SerializeField] private Rigidbody RB;
     [SerializeField] private NavState State;
 
     // Pathfinding parameters
@@ -30,10 +30,6 @@ public class CopModel : MonoBehaviour
 
     // Movement speed multiplier towards the target
     private int speed = 8;
-
-    // TEMP - get from game manager
-    private Player player;
-
 
     public NavState getNavState()
     {
@@ -47,18 +43,20 @@ public class CopModel : MonoBehaviour
         {
             int sx, sy;
             Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
-
             SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
         } 
         else if (State == NavState.HOTPURSUIT)
         {
-            SetTarget(player.gameObject.transform.position);
+            SetTarget(GameManager.Instance.getPlayer().transform.position);
+            transform.LookAt(GameManager.Instance.getPlayer().transform.position);
         }
 
         HandleMovement();
 
-
     }
+  
+    
+
 
 
     public void SetTarget(Vector3 WorldPosition)
@@ -101,6 +99,7 @@ public class CopModel : MonoBehaviour
         //UnityEngine.Debug.Log(CurrentPath != null);
         if (CurrentPath != null && CurrentIndex < CurrentPath.Length)
         {
+            if (State == NavState.HOTPURSUIT){
             Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
            
             if (Vector3.Distance(RB.transform.position, targetPosition) > 0.5f)
@@ -109,17 +108,27 @@ public class CopModel : MonoBehaviour
                 Vector3 moveDir = (targetPosition - position).normalized;
 
                 // TODO change to vel once able to prevent cops from being knocked off the map. 
-                RB.transform.position = position + moveDir * speed * Time.deltaTime;
-                //RB.velocity = moveDir * speed;
+                //RB.transform.position = position + moveDir * speed * Time.deltaTime;
+                RB.velocity = moveDir * speed;
             }
             else
             {
                 CurrentIndex++;
-
                 //RB.velocity = Vector2.zero;
             }
         }
+        else if (State == NavState.WANDER){
+                Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
+                Vector3 position = RB.transform.position;
+                Vector3 moveDir = (targetPosition - position).normalized;
+                RB.velocity = moveDir * speed;
+            
+        }
+    }
+    
     }
 
-
+IEnumerator wanderWait(){
+        yield return new WaitForSeconds(2);
+}
 }
