@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ public enum NavState
  */
 public class CopModel : MonoBehaviour
 {
+    [SerializeField] private String copType;
+
     [SerializeField] private Rigidbody RB;
     [SerializeField] private NavState State;
 
@@ -31,10 +34,22 @@ public class CopModel : MonoBehaviour
     // Movement speed multiplier towards the target
     private int speed = 8;
 
+    //Damage associated with the type of vehicle
+    private int damage;
+
     public NavState getNavState()
     {
         return State;
     }
+    void Start(){
+        if (copType == "cruiser"){
+            damage = 1;
+        }
+        else if (copType == "truck"){
+            damage = 2;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -43,11 +58,11 @@ public class CopModel : MonoBehaviour
         {
             int sx, sy;
             Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
-            SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
+            SetTarget(sx + UnityEngine.Random.Range(-5, 5), sy + UnityEngine.Random.Range(-5, 5));
         } 
         else if (State == NavState.HOTPURSUIT)
         {
-            SetTarget(GameManager.Instance.getPlayer().transform.position);
+            findTarget(GameManager.Instance.getPlayer().transform.position);
             transform.LookAt(GameManager.Instance.getPlayer().transform.position);
         }
 
@@ -56,10 +71,8 @@ public class CopModel : MonoBehaviour
     }
   
     
-
-
-
-    public void SetTarget(Vector3 WorldPosition)
+//Changed from setTarget to avoid ambiguity. 2 changes here, 1 in CopMangaer
+    public void findTarget(Vector3 WorldPosition)
     {
         int x, y;
         Map.Instance.MapGrid.GetXY(WorldPosition, out x, out y);
@@ -126,6 +139,9 @@ public class CopModel : MonoBehaviour
         }
     }
     
+    }
+    private void damagePlayer(){
+
     }
 
 IEnumerator wanderWait(){
