@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Navigation type
@@ -48,7 +49,20 @@ public class CopModel : MonoBehaviour
         else if (copType == "truck"){
             damage = 2;
         }
+        State = NavState.WANDER;
     }
+    public void StateChanger(){
+        float distance = Vector3.Distance (this.transform.position, GameManager.Instance.getPlayer().transform.position);
+        if (distance < 5){
+            State = NavState.HOTPURSUIT;
+        }
+        else if (distance > 30)
+        {
+                        State = NavState.IDLE;
+        }
+
+        }
+
 
 
     // Update is called once per frame
@@ -67,8 +81,14 @@ public class CopModel : MonoBehaviour
         }
 
         HandleMovement();
+        StateChanger();
 
     }
+
+        //need access to the player's rigid body.
+        private void OnCollisionEnter(Collision collision){
+        }
+    
   
     
 //Changed from setTarget to avoid ambiguity. 2 changes here, 1 in CopMangaer
@@ -131,18 +151,17 @@ public class CopModel : MonoBehaviour
             }
         }
         else if (State == NavState.WANDER){
-                Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
-                Vector3 position = RB.transform.position;
-                Vector3 moveDir = (targetPosition - position).normalized;
-                RB.velocity = moveDir * speed;
+           //Vector3 leftcorner = transform.position
+                // Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
+                // Vector3 position = RB.transform.position;
+                // Vector3 moveDir = (targetPosition - position).normalized;
+                // RB.velocity = moveDir * speed;
             
         }
     }
     
     }
-    private void damagePlayer(){
 
-    }
 
 IEnumerator wanderWait(){
         yield return new WaitForSeconds(2);
