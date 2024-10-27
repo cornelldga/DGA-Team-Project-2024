@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
     public void TakeOrder(Customer customer)
     {
         customers.Add(customer);
+        hotbarManager.AddToHotbar(customer);
     }
     /// <summary>
     /// Called when a customer should be removed from the list of customers
@@ -100,6 +101,7 @@ public class GameManager : MonoBehaviour
     /// <param name="customer"></param>
     public void RemoveOrder(Customer customer) { 
         customers.Remove(customer);
+        hotbarManager.RemoveFromHotBar(customer);
     }
 
     /// <summary>
@@ -108,7 +110,8 @@ public class GameManager : MonoBehaviour
     public void CompleteOrder(Customer customer)
     {
         completedOrders++;
-        customers.Remove(customer);
+        //customers.Remove(customer);
+        RemoveOrder(customer);
         if (completedOrders == numCustomers)
         {
             WinGame();

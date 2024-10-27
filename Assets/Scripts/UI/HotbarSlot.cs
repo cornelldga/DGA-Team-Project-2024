@@ -150,7 +150,7 @@ public class HotbarSlot : MonoBehaviour
         slotBorder.color = Color.gray;
     }
 
-    public Customer GetCustomer()
+    public Customer GetCustomerUI()
     {
         return customer;
     }
