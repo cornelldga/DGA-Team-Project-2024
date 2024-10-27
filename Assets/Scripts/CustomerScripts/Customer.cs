@@ -1,3 +1,4 @@
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 /// <summary>
@@ -11,16 +12,24 @@ public class Customer : MonoBehaviour
     [Header("Customer Attributes")]
     public string customerName;
     public string orderName;
+    /// <summary>
+    /// The image that will be displayed in UI.
+    /// </summary>
+    [Tooltip("The image that will be displayed in UI.")]
     public Sprite customerImage;
     /// <summary>
     /// The time the customer will wait for their order, after which the order will fail. 
     /// </summary>
     public float waitTime;
-
     /// <summary>
     /// The time it takes for the customer's order to be cooked.
     /// </summary>
+    [Tooltip("The time it takes for the customer's order to be cooked.")]
     public float cookTime;
+    /// <summary>
+    /// The range within which the player can interact with the customer.
+    /// </summary>
+    [Tooltip("The range within which the player can interact with the customer.")]
     public float interactionRange = 2f;
     public GameObject detectionRange;
 
@@ -31,7 +40,7 @@ public class Customer : MonoBehaviour
     public Material blueMaterial; // order successfully complete
 
     [Header("Movement Settings")]
-    public float movementAmplitude = 0.5f; // Distance of movement from the starting position
+    public float movementAmplitude = 3f; // Distance of movement from the starting position
     public float movementFrequency = 1f; // Speed of the oscillation
 
     private Vector3 startingPosition;
@@ -41,7 +50,6 @@ public class Customer : MonoBehaviour
     private bool orderTaken = false;
     private bool foodReady = false;
     private bool isOrderCompleted = false;
-
     private enum CustomerState { WaitingForOrder, Cooking, Returning, Done }
     private CustomerState currentState;
 
@@ -60,8 +68,21 @@ public class Customer : MonoBehaviour
 
     void Update()
     {
-        // float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        // check if player is in range
+        if (detectionRange.GetComponent<CustomerRange>().playerInRange)
+        {
+            // change the color of the line renderer to green
+            lineRenderer.startColor = Color.green;
+            lineRenderer.endColor = Color.green;
+        }
+        else
+        {
+            // change the color of the line renderer to blue
+            lineRenderer.startColor = Color.blue;
+            lineRenderer.endColor = Color.blue;
+        }
 
+        // update the state of the customer
         switch (currentState)
         {
             case CustomerState.WaitingForOrder:
@@ -72,14 +93,7 @@ public class Customer : MonoBehaviour
                     timer = 0f;
                     orderTaken = true;
 
-                    // TODO: Pass self to Player 
-                    // NOTE: I used GameManager.Instance.AddCustomer() instead
-                    // This is not going to work since I am not passing myself. 
-                    // We should change this.
-                    //GameManager.Instance.addCustomer();
                     GameManager.Instance.TakeOrder(this);
-
-
                 }
                 break;
 
@@ -106,8 +120,8 @@ public class Customer : MonoBehaviour
                     ReceiveOrder();
                 }
 
+                // NOTE: nobody is updating the cookTime now. Supposedly, Game manager or Player should do this. Par requirement, I am updating the waitTime now. This will render the customer to go straight into the red state.
                 waitTime -= Time.deltaTime;
-
                 break;
 
             case CustomerState.Done:
@@ -119,6 +133,7 @@ public class Customer : MonoBehaviour
             timer += Time.deltaTime;
         }
 
+        // move the customer back and forth
         MoveCustomer();
     }
 

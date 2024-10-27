@@ -40,6 +40,11 @@ public class CopModel : MonoBehaviour
         return State;
     }
 
+    void Start()
+    {
+        player = GameManager.Instance.getPlayer();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -49,7 +54,7 @@ public class CopModel : MonoBehaviour
             Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
 
             SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
-        } 
+        }
         else if (State == NavState.HOTPURSUIT)
         {
             SetTarget(player.gameObject.transform.position);
@@ -66,7 +71,7 @@ public class CopModel : MonoBehaviour
         int x, y;
         Map.Instance.MapGrid.GetXY(WorldPosition, out x, out y);
 
-        SetTarget (x, y);
+        SetTarget(x, y);
 
     }
 
@@ -102,7 +107,7 @@ public class CopModel : MonoBehaviour
         if (CurrentPath != null && CurrentIndex < CurrentPath.Length)
         {
             Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
-           
+
             if (Vector3.Distance(RB.transform.position, targetPosition) > 0.5f)
             {
                 Vector3 position = RB.transform.position;
