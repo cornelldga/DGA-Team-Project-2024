@@ -35,55 +35,23 @@ public class HotbarSlot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //// Update timers based on what state the order is in
-        //switch (state)
-        //{
-        //    case OrderState.Cooking:
-        //        if (cookProgress > 0)
-        //        {
-        //            cookProgress -= Time.deltaTime;
-        //            UpdateTimer(cookProgress);
-        //        }
-        //        else
-        //        {
-        //            FinishCooking();
-        //        }
 
-        //        break;
-        //    case OrderState.Delivering:
-        //        if (patienceProgress > 0)
-        //        {
-        //            patienceProgress -= Time.deltaTime;
-        //            UpdateTimer(patienceProgress);
-        //        }
-        //        else
-        //        {
-        //            FailOrder();
-        //        }
-        //        break;
+        //if (cookProgress > 0)
+        //{
+        //    cookProgress -= Time.deltaTime;
+        //    UpdateTimer(cookProgress, cookTimerCount);
+        //    if (cookProgress <= 0)
+        //    {
+        //        FinishCooking();
+        //    }
         //}
 
-
-        if (cookProgress > 0)
+        if (customer)
         {
-            cookProgress -= Time.deltaTime;
-            UpdateTimer(cookProgress, cookTimerCount);
-            if (cookProgress <= 0)
-            {
-                FinishCooking();
-            }
+            UpdateTimer(customer.waitTime, patienceTimerCount);
+            UpdateTimer(customer.cookTime, cookTimerCount);
         }
 
-
-        if (patienceProgress > 0)
-        {
-            patienceProgress -= Time.deltaTime;
-            UpdateTimer(patienceProgress, patienceTimerCount);
-        }
-        else
-        {
-            FailOrder();
-        }
 
     }
 
@@ -150,7 +118,7 @@ public class HotbarSlot : MonoBehaviour
         slotBorder.color = Color.gray;
     }
 
-    public Customer GetCustomer()
+    public Customer GetCustomerUI()
     {
         return customer;
     }
