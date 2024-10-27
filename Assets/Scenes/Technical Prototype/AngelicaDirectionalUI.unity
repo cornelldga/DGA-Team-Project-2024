@@ -778,7 +778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   observe: {fileID: 1380772731}
-  aheadSpeed: 1
+  aheadSpeed: 2
   followDamping: 2
   cameraHeight: 30
 --- !u!1 &1306851394 stripped

@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     {
         Drive();
         Nitro();
-        //Cook();
+        Cook();
     }
 
     private void Update()
@@ -97,8 +97,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    //Cook method continuously decreases the cookingTimer and oil 
-    /*void Cook()
+    //Cook method continuously decreases the cookingTimer and oil (uncommented in order to operate oilbar)
+    void Cook()
     {
         if (cookingTimer > 0)
         {
@@ -117,7 +117,7 @@ public class Player : MonoBehaviour
                 Debug.Log("Cooking complete!");
             }
         }
-    }*/
+    }
 
     /// <summary>
     /// Called every frame to check through the list of customers and decrease cooking time and oil
@@ -125,12 +125,13 @@ public class Player : MonoBehaviour
     /// <param name="customers"></param>
     public void HandleOrders(List<Customer> customers)
     {
-        foreach(Customer customer in customers)
+        Debug.Log("HandleOrders called. Number of customers: " + customers.Count);
+        foreach (Customer customer in customers)
         {
             if (customer.cookTime > 0 && oil > 0)
             {
-                customer.cookTime-=Time.deltaTime;
-                oil-=Time.deltaTime;
+                customer.cookTime -= Time.deltaTime;
+                oil -= Time.deltaTime;
             }
         }
     }
@@ -140,6 +141,24 @@ public class Player : MonoBehaviour
     /// </summary>
     public void AddOil(int oilAmount)
     {
-        oil = Mathf.Min(oil+oilAmount, maxOil);
+        if (oil <= maxOil)
+        {
+            oil = oil + oilAmount; //Changed functionality old function was updating oil properly
+            Debug.Log("Oil replenished: " + oil);
+        }
+    }
+
+
+    // Public methods to access oil and maxOil
+    public float GetOil()
+    {
+        Debug.Log("Oil count " + oil);
+        return oil;
+
+    }
+
+    public float GetMaxOil()
+    {
+        return maxOil;
     }
 }
