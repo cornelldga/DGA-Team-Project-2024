@@ -35,34 +35,6 @@ public class HotbarSlot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //// Update timers based on what state the order is in
-        //switch (state)
-        //{
-        //    case OrderState.Cooking:
-        //        if (cookProgress > 0)
-        //        {
-        //            cookProgress -= Time.deltaTime;
-        //            UpdateTimer(cookProgress);
-        //        }
-        //        else
-        //        {
-        //            FinishCooking();
-        //        }
-
-        //        break;
-        //    case OrderState.Delivering:
-        //        if (patienceProgress > 0)
-        //        {
-        //            patienceProgress -= Time.deltaTime;
-        //            UpdateTimer(patienceProgress);
-        //        }
-        //        else
-        //        {
-        //            FailOrder();
-        //        }
-        //        break;
-        //}
-
 
         if (cookProgress > 0)
         {
@@ -74,16 +46,11 @@ public class HotbarSlot : MonoBehaviour
             }
         }
 
+        if (customer)
+        {
+            UpdateTimer(customer.waitTime, patienceTimerCount);
+        }
 
-        if (patienceProgress > 0)
-        {
-            patienceProgress -= Time.deltaTime;
-            UpdateTimer(patienceProgress, patienceTimerCount);
-        }
-        else
-        {
-            FailOrder();
-        }
 
     }
 
