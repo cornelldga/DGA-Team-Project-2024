@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     {
         Drive();
         Nitro();
+        Cook();
         Steer();
         Drift();
     }
@@ -119,8 +120,8 @@ public class Player : MonoBehaviour
                 {
                     curAngle = 0;
                 }
-                else 
-                { 
+                else
+                {
                     curAngle += 2;
                 }
                 transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
@@ -144,6 +145,27 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Cook method continuously decreases the cookingTimer and oil (uncommented in order to operate oilbar)
+    void Cook()
+    {
+        if (cookingTimer > 0)
+        {
+            cookingTimer -= Time.deltaTime;
+            oil -= oilConsumptionRate * Time.deltaTime;
+
+            if (oil <= 0)
+            {
+                oil = 0;
+                Debug.Log("Oil depleted!");
+            }
+
+            if (cookingTimer <= 0)
+            {
+                cookingTimer = 0;
+                Debug.Log("Cooking complete!");
+            }
+        }
+    }
     // Player can hold right and left arrows to steer left and right
     void Steer()
     {
@@ -178,12 +200,13 @@ public class Player : MonoBehaviour
     /// <param name="customers"></param>
     public void HandleOrders(List<Customer> customers)
     {
-        foreach(Customer customer in customers)
+        Debug.Log("HandleOrders called. Number of customers: " + customers.Count);
+        foreach (Customer customer in customers)
         {
             if (customer.cookTime > 0 && oil > 0)
             {
-                customer.cookTime-=Time.deltaTime;
-                oil-=Time.deltaTime;
+                customer.cookTime -= Time.deltaTime;
+                oil -= Time.deltaTime;
             }
         }
     }
@@ -193,6 +216,24 @@ public class Player : MonoBehaviour
     /// </summary>
     public void AddOil(int oilAmount)
     {
-        oil = Mathf.Min(oil+oilAmount, maxOil);
+        if (oil <= maxOil)
+        {
+            oil = oil + oilAmount; //Changed functionality old function was updating oil properly
+            Debug.Log("Oil replenished: " + oil);
+        }
+    }
+
+
+    // Public methods to access oil and maxOil
+    public float GetOil()
+    {
+        Debug.Log("Oil count " + oil);
+        return oil;
+
+    }
+
+    public float GetMaxOil()
+    {
+        return maxOil;
     }
 }
