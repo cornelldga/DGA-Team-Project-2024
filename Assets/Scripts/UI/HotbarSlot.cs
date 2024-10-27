@@ -36,19 +36,20 @@ public class HotbarSlot : MonoBehaviour
     void Update()
     {
 
-        if (cookProgress > 0)
-        {
-            cookProgress -= Time.deltaTime;
-            UpdateTimer(cookProgress, cookTimerCount);
-            if (cookProgress <= 0)
-            {
-                FinishCooking();
-            }
-        }
+        //if (cookProgress > 0)
+        //{
+        //    cookProgress -= Time.deltaTime;
+        //    UpdateTimer(cookProgress, cookTimerCount);
+        //    if (cookProgress <= 0)
+        //    {
+        //        FinishCooking();
+        //    }
+        //}
 
         if (customer)
         {
             UpdateTimer(customer.waitTime, patienceTimerCount);
+            UpdateTimer(customer.cookTime, cookTimerCount);
         }
 
 
