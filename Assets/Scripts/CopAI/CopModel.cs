@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 // Navigation type
@@ -38,6 +35,8 @@ public class CopModel : MonoBehaviour
     //Damage associated with the type of vehicle
     private int damage;
 
+    Player player;
+
     public NavState getNavState()
     {
         return State;
@@ -50,6 +49,7 @@ public class CopModel : MonoBehaviour
             damage = 2;
         }
         State = NavState.WANDER;
+        player = GameManager.Instance.getPlayer();
     }
     public void StateChanger(){
         float distance = Vector3.Distance (this.transform.position, GameManager.Instance.getPlayer().transform.position);
@@ -62,13 +62,6 @@ public class CopModel : MonoBehaviour
         }
 
         }
-
-
-
-    void Start()
-    {
-        player = GameManager.Instance.getPlayer();
-    }
 
     // Update is called once per frame
     void Update()
