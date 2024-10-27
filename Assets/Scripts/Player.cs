@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 // This script handles the inputs and manages the oil and cooking timers for the player
@@ -12,6 +13,8 @@ public class Player : MonoBehaviour
 
     //Player health var
     [SerializeField] float health;
+    [SerializeField] private float invincibilityDuration;
+    [SerializeField] private float invincibilityDeltaTime;
     public float oilConsumptionRate = 1f; // Oil consumption rate per second
     public float cookingTime = 60f; // Total cooking time in seconds
 
@@ -22,6 +25,10 @@ public class Player : MonoBehaviour
     private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int curAngle = 0;
     private bool movingForward = false;
+    private bool movingBackward = false;
+    private bool isDead = false;
+    private bool isInvincible = false;
+    private MaterialSwapper ms;
 
     //New added private variables 
 
@@ -32,6 +39,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        ms = GetComponent<MaterialSwapper>();
         transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
         cookingTimer = cookingTime;
         InvokeRepeating(nameof(HandleOrders), 1, 1);
@@ -69,15 +77,18 @@ public class Player : MonoBehaviour
         {
             rb.AddRelativeForce(Vector3.forward * speed * 10);
             movingForward = true;
+            movingBackward = false;
         }
         else if (Input.GetKey(KeyCode.S))
         {
             rb.AddRelativeForce(-Vector3.forward * speed * 10);
             movingForward = false;
+            movingBackward = true;
         }
         else
         {
             movingForward = false;
+            movingBackward = false;
         }
     }
 
@@ -172,7 +183,7 @@ public class Player : MonoBehaviour
     // Player can hold right and left arrows to steer left and right
     void Steer()
     {
-        if (rb.velocity.magnitude > 0.01f)
+        if (rb.velocity.magnitude > 0.01f && (movingForward || movingBackward))
         {
             if (Input.GetKey(KeyCode.RightArrow))
             {
@@ -226,6 +237,34 @@ public class Player : MonoBehaviour
         }
     }
 
+    private IEnumerator BecomeInvincible()
+    {
+        isInvincible = true;
+
+        for (float i = 0; i < invincibilityDuration; i += invincibilityDeltaTime)
+        {
+            ms.swapMaterial();
+            yield return new WaitForSeconds(invincibilityDeltaTime);
+        }
+
+        isInvincible = false;
+    }
+
+    // Decreases health of player and inititates invulnerability frames
+    public void TakeDamage(int amount)
+    {
+        if (isInvincible)
+        {
+            health -= amount;
+            if (health <= 0)
+            {
+                health = 0;
+                isDead = true;
+                return;
+            }
+        }
+
+    }
 
     // Public methods to access oil and maxOil
     public float GetOil()
