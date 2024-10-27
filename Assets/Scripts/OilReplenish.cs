@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthReplenish : MonoBehaviour
+public class OilReplenish : MonoBehaviour
 {
 
     void OnTriggerEnter(Collider other)

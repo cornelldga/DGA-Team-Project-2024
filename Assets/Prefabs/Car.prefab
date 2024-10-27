@@ -146,8 +146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729564c76a524f94a9102e965667bb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  oil: 100
+  speed: 4
+  maxOil: 0
   oilConsumptionRate: 1
   cookingTime: 60
   nitro: 304
+  drift: 32
