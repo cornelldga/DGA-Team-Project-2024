@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 // Navigation type
@@ -43,6 +40,8 @@ public class CopModel : MonoBehaviour
     //Damage associated with the type of vehicle
     private int damage;
 
+    Player player;
+
     public NavState getNavState()
     {
         return State;
@@ -59,6 +58,7 @@ public class CopModel : MonoBehaviour
             damage = 2;
         }
         State = NavState.WANDER;
+        player = GameManager.Instance.getPlayer();
     }
 
     public void StateChanger(){
@@ -85,8 +85,6 @@ public class CopModel : MonoBehaviour
         public void doDamage(GameObject hitObject){
         }
 
-
-
     // Update is called once per frame
     void Update()
     {
@@ -94,9 +92,10 @@ public class CopModel : MonoBehaviour
         {
             int sx, sy;
             Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
-            SetTarget(sx + UnityEngine.Random.Range(-5, 5), sy + UnityEngine.Random.Range(-5, 5));
-        } 
-        else if (getNavState() == NavState.HOTPURSUIT)
+
+            SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
+        }
+        else if (State == NavState.HOTPURSUIT)
         {
             findTarget(GameManager.Instance.getPlayer().transform.position);
             transform.LookAt(GameManager.Instance.getPlayer().transform.position);
@@ -115,7 +114,7 @@ public class CopModel : MonoBehaviour
         int x, y;
         Map.Instance.MapGrid.GetXY(WorldPosition, out x, out y);
 
-        SetTarget (x, y);
+        SetTarget(x, y);
 
     }
 
@@ -152,7 +151,7 @@ public class CopModel : MonoBehaviour
         {
             if (State == NavState.HOTPURSUIT){
             Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
-           
+
             if (Vector3.Distance(RB.transform.position, targetPosition) > 0.5f)
             {
                 Vector3 position = RB.transform.position;
