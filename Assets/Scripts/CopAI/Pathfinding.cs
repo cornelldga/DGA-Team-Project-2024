@@ -24,7 +24,7 @@ public struct PathNode
 /** A* Pathfinding algorithm on a rectangular grid. */
 public class Pathfinding
 {
-    private Grid<int> map;
+    private Grid<TileType> map;
     private int Height;
     private int Width;
     private Vector2 start;
@@ -124,7 +124,7 @@ public class Pathfinding
                         // calculate costs
                         if (!ClosedList[NewX, NewY])
                         {
-                            double gNew = PathDetails[p.X, p.Y].gCost + Map.getNavCost(p.X, p.Y, map); // 1 is the default path cost, variable based on tile type
+                            double gNew = PathDetails[p.X, p.Y].gCost + Map.Instance.getNavCost(p.X, p.Y); // 1 is the default path cost, variable based on tile type
                             double hNew = CalculateHValue(NewX, NewY, (int)dst.x, (int)dst.y);
                             double fNew = gNew + hNew;
 
@@ -156,11 +156,10 @@ public class Pathfinding
         return foundDest;
     }
 
-    /** Returns true of the given coordinates are within the bounds of the map */
+    /** Returns true of the given coordinates are within the bounds of the map and valid to navgate through*/
     public bool isValid(int  x, int y)
     {
-        bool canNav = map.GetValue(x, y) != 1;
-        return canNav && (x >= 0 && y >= 0 && x < Width && y < Height);
+        return (x >= 0 && y >= 0 && x < Width && y < Height);
     }
 
     /** A Utility Function to calculate the 'h' heuristics. */

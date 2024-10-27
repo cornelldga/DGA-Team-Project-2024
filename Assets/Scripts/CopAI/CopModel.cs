@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 // Navigation type
 public enum NavState
@@ -40,8 +41,6 @@ public class CopModel : MonoBehaviour
     //Damage associated with the type of vehicle
     private int damage;
 
-    Player player;
-
     public NavState getNavState()
     {
         return State;
@@ -50,40 +49,48 @@ public class CopModel : MonoBehaviour
     {
         return model;
     }
-    void Start(){
-        if (GetCopType() == CopType.CRUISER){
+    void Start()
+    {
+        if (GetCopType() == CopType.CRUISER)
+        {
             damage = 1;
         }
-        else if (GetCopType() == CopType.TRUCK){
+        else if (GetCopType() == CopType.TRUCK)
+        {
             damage = 2;
         }
         State = NavState.WANDER;
-        player = GameManager.Instance.getPlayer();
     }
 
-    public void StateChanger(){
-        float distance = Vector3.Distance (this.transform.position, GameManager.Instance.getPlayer().transform.position);
-        if (distance < 10){
+    public void StateChanger()
+    {
+        float distance = Vector3.Distance(this.transform.position, GameManager.Instance.getPlayer().transform.position);
+        if (distance < 10)
+        {
             State = NavState.HOTPURSUIT;
         }
         else if (distance > 30)
         {
-                        State = NavState.IDLE;
+            State = NavState.IDLE;
         }
-        }
+    }
 
-    public void OnCollisionEnter(Collision other){
+    public void OnCollisionEnter(Collision other)
+    {
         GameObject damagedObject = other.gameObject;
-        if (damagedObject.tag == "Player"){
-            if (RB.velocity.magnitude > 5){
+        if (damagedObject.tag == "Player")
+        {
+            if (RB.velocity.magnitude > 5)
+            {
                 doDamage(damagedObject);
             }
 
         }
-      //  else if(damagedObject.tag)
+        //  else if(damagedObject.tag)
     }
-        public void doDamage(GameObject hitObject){
-        }
+    public void doDamage(GameObject hitObject)
+    {
+    }
 
     // Update is called once per frame
     void Update()
@@ -91,13 +98,13 @@ public class CopModel : MonoBehaviour
         if (getNavState() == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
         {
             int sx, sy;
-            Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
+            Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
 
             SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
         }
         else if (State == NavState.HOTPURSUIT)
         {
-            findTarget(GameManager.Instance.getPlayer().transform.position);
+            SetTarget(GameManager.Instance.getPlayer().transform.position);
             transform.LookAt(GameManager.Instance.getPlayer().transform.position);
         }
 
@@ -106,10 +113,10 @@ public class CopModel : MonoBehaviour
 
     }
 
-  
-    
-//Changed from setTarget to avoid ambiguity. 2 changes here, 1 in CopMangaer
-    public void findTarget(Vector3 WorldPosition)
+
+
+    //Changed from setTarget to avoid ambiguity. 2 changes here, 1 in CopMangaer
+    public void SetTarget(Vector3 WorldPosition)
     {
         int x, y;
         Map.Instance.MapGrid.GetXY(WorldPosition, out x, out y);
@@ -121,7 +128,7 @@ public class CopModel : MonoBehaviour
     public void SetTarget(int dx, int dy)
     {
         int sx, sy;
-        Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
+        Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
         //UnityEngine.Debug.Log("{" + x + "," + y + "}");
 
         if (pathfindingLogic == null)
@@ -149,38 +156,40 @@ public class CopModel : MonoBehaviour
         //UnityEngine.Debug.Log(CurrentPath != null);
         if (CurrentPath != null && CurrentIndex < CurrentPath.Length)
         {
-            if (State == NavState.HOTPURSUIT){
-            Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
-
-            if (Vector3.Distance(RB.transform.position, targetPosition) > 0.5f)
+            if (State == NavState.HOTPURSUIT)
             {
-                Vector3 position = RB.transform.position;
-                Vector3 moveDir = (targetPosition - position).normalized;
+                Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
+                // remove y to ignore it in the calculation
+                Vector3 position = this.transform.position;
+                targetPosition = new Vector3(targetPosition.x, position.y, targetPosition.z);
 
-                // TODO change to vel once able to prevent cops from being knocked off the map. 
-                //RB.transform.position = position + moveDir * speed * Time.deltaTime;
-                RB.velocity = moveDir * speed;
+                if (Vector3.Distance(this.transform.position, targetPosition) > 0.5f)
+                {
+
+                    Vector3 moveDir = (targetPosition - position).normalized;
+                    RB.velocity = moveDir * speed;
+                }
+                else
+                {
+                    CurrentIndex++;
+                }
             }
-            else
+            else if (getNavState() == NavState.WANDER)
             {
-                CurrentIndex++;
-                //RB.velocity = Vector2.zero;
-            }
-        }
-        else if (getNavState() == NavState.WANDER){
-           //Vector3 leftcorner = transform.position
+                //Vector3 leftcorner = transform.position
                 // Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
                 // Vector3 position = RB.transform.position;
                 // Vector3 moveDir = (targetPosition - position).normalized;
                 // RB.velocity = moveDir * speed;
-            
+
+            }
         }
-    }
-    
+
     }
 
 
-IEnumerator wanderWait(){
+    IEnumerator wanderWait()
+    {
         yield return new WaitForSeconds(2);
-}
+    }
 }
