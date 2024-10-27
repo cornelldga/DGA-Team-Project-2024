@@ -22,14 +22,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int minCustomersToWin;
     private int completedOrders = 0;
     [Space]
-    [Header("UI")]
-    public HotbarManager hotbarManager;
+    //[Header("UI")]
+    private HotbarManager hotbarManager;
 
     private void Awake()
     {
         Instance = this;
         GameManager gameManager = GameManager.Instance;
         player = FindObjectOfType<Player>();
+        hotbarManager = FindObjectOfType<HotbarManager>();
     }
 
     private void Update()
