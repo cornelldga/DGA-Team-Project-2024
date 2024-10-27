@@ -60,7 +60,6 @@ public class CopModel : MonoBehaviour
             damage = 2;
         }
         State = NavState.WANDER;
-        player = GameManager.Instance.getPlayer();
     }
 
     public void StateChanger()
@@ -117,7 +116,7 @@ public class CopModel : MonoBehaviour
 
 
     //Changed from setTarget to avoid ambiguity. 2 changes here, 1 in CopMangaer
-    public void findTarget(Vector3 WorldPosition)
+    public void SetTarget(Vector3 WorldPosition)
     {
         int x, y;
         Map.Instance.MapGrid.GetXY(WorldPosition, out x, out y);
