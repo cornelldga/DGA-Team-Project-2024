@@ -120,19 +120,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7031343289b80a648bc24af8afdca52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hotbarManager: {fileID: 0}
-  customerName: 
+  customerName: Walker
   orderName: 
   customerImage: {fileID: 0}
-  waitTime: 10
-  cookTime: 4
-  interactionRange: 2
+  waitTime: 20
+  cookTime: 5
+  interactionRange: 5
   detectionRange: {fileID: 5696436274596760233}
   grayMaterial: {fileID: 2100000, guid: 850bf0a0a77478243a22c8fcd24fcf54, type: 2}
   greenMaterial: {fileID: 2100000, guid: dfd8c9f2d2054f846882dfb6d05a900e, type: 2}
   redMaterial: {fileID: 2100000, guid: 0fc5e592b134a4b4687433e7e39aa46f, type: 2}
   blueMaterial: {fileID: 2100000, guid: 6fc2e71c9a44c3a418db573bcb4218da, type: 2}
-  movementAmplitude: 0.5
+  movementAmplitude: 5
   movementFrequency: 1
 --- !u!120 &4074179547864516816
 LineRenderer:
@@ -154,7 +153,8 @@ LineRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
