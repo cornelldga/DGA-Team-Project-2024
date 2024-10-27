@@ -19,22 +19,6 @@ public class Grid<TGridObject>
         this.Origin = Origin;
 
         GridArray = new TGridObject[Width, Height];
-
-        // draw lines of the grid into the scene for debugging
-        for (int x = 0; x < Width; x++)
-        {
-            for (int y = 0; y < Height; y++)
-            {
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
-
-            }
-
-
-        }
-        Debug.DrawLine(GetWorldPosition(0, Height), GetWorldPosition(Width, Height), Color.white, 100f);
-        Debug.DrawLine(GetWorldPosition(Width, 0), GetWorldPosition(Width, Height), Color.white, 100f);
-
     }
 
 
@@ -42,6 +26,11 @@ public class Grid<TGridObject>
     public Vector3 GetWorldPosition(float x, float y)
     {
         return new Vector3(x, 0, y) * CellSize + Origin;
+    }
+
+    public Vector3 GetWorldPosition(float x, float z, float y)
+    {
+        return new Vector3(x, y, z) * CellSize + Origin;
     }
 
     /** Convert world coordinates to grid coordinates */
