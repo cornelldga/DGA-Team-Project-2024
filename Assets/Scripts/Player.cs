@@ -253,17 +253,15 @@ public class Player : MonoBehaviour
     // Decreases health of player and inititates invulnerability frames
     public void TakeDamage(int amount)
     {
-        if (isInvincible)
+        if (isInvincible) return;
+        health -= amount;
+        if (health <= 0)
         {
-            health -= amount;
-            if (health <= 0)
-            {
-                health = 0;
-                isDead = true;
-                return;
-            }
+            health = 0;
+            isDead = true;
+            return;
         }
-
+        StartCoroutine(BecomeInvincible());
     }
 
     // Public methods to access oil and maxOil
