@@ -28,7 +28,7 @@ public class CopManager : MonoBehaviour
             {
                 if (Cops[i].getNavState() == NavState.HOTPURSUIT)
                 {
-                    Cops[i].SetTarget(worldPosition);
+                    Cops[i].findTarget(worldPosition);
                 }
                 
             }

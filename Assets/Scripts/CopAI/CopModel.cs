@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 // Navigation type
@@ -10,6 +9,11 @@ public enum NavState
     WANDER,         // Drive through the streets to cover the most distance 
     IDLE            //  Cop is not moving and staying still in current location. 
 }
+public enum CopType
+{
+    CRUISER,
+    TRUCK
+}
 
 
 /** 
@@ -18,8 +22,10 @@ public enum NavState
  */
 public class CopModel : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D RB;
+    [SerializeField] private Rigidbody RB;
     [SerializeField] private NavState State;
+    [SerializeField] private CopType model;
+
 
     // Pathfinding parameters
     private Pathfinding pathfindingLogic;
@@ -31,42 +37,84 @@ public class CopModel : MonoBehaviour
     // Movement speed multiplier towards the target
     private int speed = 8;
 
-    // TEMP - get from game manager
-    private Player player;
+    //Damage associated with the type of vehicle
+    private int damage;
 
+    Player player;
 
     public NavState getNavState()
     {
         return State;
     }
+    public CopType GetCopType()
+    {
+        return model;
+    }
+    void Start(){
+        if (GetCopType() == CopType.CRUISER){
+            damage = 1;
+        }
+        else if (GetCopType() == CopType.TRUCK){
+            damage = 2;
+        }
+        State = NavState.WANDER;
+        player = GameManager.Instance.getPlayer();
+    }
+
+    public void StateChanger(){
+        float distance = Vector3.Distance (this.transform.position, GameManager.Instance.getPlayer().transform.position);
+        if (distance < 10){
+            State = NavState.HOTPURSUIT;
+        }
+        else if (distance > 30)
+        {
+                        State = NavState.IDLE;
+        }
+        }
+
+    public void OnCollisionEnter(Collision other){
+        GameObject damagedObject = other.gameObject;
+        if (damagedObject.tag == "Player"){
+            if (RB.velocity.magnitude > 5){
+                doDamage(damagedObject);
+            }
+
+        }
+      //  else if(damagedObject.tag)
+    }
+        public void doDamage(GameObject hitObject){
+        }
 
     // Update is called once per frame
     void Update()
     {
-        if (State == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
+        if (getNavState() == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
         {
             int sx, sy;
             Map.Instance.MapGrid.GetXY(RB.transform.position, out sx, out sy);
 
             SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
-        } 
+        }
         else if (State == NavState.HOTPURSUIT)
         {
-            SetTarget(player.gameObject.transform.position);
+            findTarget(GameManager.Instance.getPlayer().transform.position);
+            transform.LookAt(GameManager.Instance.getPlayer().transform.position);
         }
 
         HandleMovement();
-
+        StateChanger();
 
     }
 
-
-    public void SetTarget(Vector3 WorldPosition)
+  
+    
+//Changed from setTarget to avoid ambiguity. 2 changes here, 1 in CopMangaer
+    public void findTarget(Vector3 WorldPosition)
     {
         int x, y;
         Map.Instance.MapGrid.GetXY(WorldPosition, out x, out y);
 
-        SetTarget (x, y);
+        SetTarget(x, y);
 
     }
 
@@ -101,25 +149,38 @@ public class CopModel : MonoBehaviour
         //UnityEngine.Debug.Log(CurrentPath != null);
         if (CurrentPath != null && CurrentIndex < CurrentPath.Length)
         {
+            if (State == NavState.HOTPURSUIT){
             Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
-           
+
             if (Vector3.Distance(RB.transform.position, targetPosition) > 0.5f)
             {
                 Vector3 position = RB.transform.position;
                 Vector3 moveDir = (targetPosition - position).normalized;
 
                 // TODO change to vel once able to prevent cops from being knocked off the map. 
-                RB.transform.position = position + moveDir * speed * Time.deltaTime;
-                //RB.velocity = moveDir * speed;
+                //RB.transform.position = position + moveDir * speed * Time.deltaTime;
+                RB.velocity = moveDir * speed;
             }
             else
             {
                 CurrentIndex++;
-
                 //RB.velocity = Vector2.zero;
             }
         }
+        else if (getNavState() == NavState.WANDER){
+           //Vector3 leftcorner = transform.position
+                // Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
+                // Vector3 position = RB.transform.position;
+                // Vector3 moveDir = (targetPosition - position).normalized;
+                // RB.velocity = moveDir * speed;
+            
+        }
+    }
+    
     }
 
 
+IEnumerator wanderWait(){
+        yield return new WaitForSeconds(2);
+}
 }
