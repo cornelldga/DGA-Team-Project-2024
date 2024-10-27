@@ -51,9 +51,9 @@ public class HotbarManager : MonoBehaviour
 
 
         // Check if directional arrow should show
-        if (selectedSlot.GetCustomer())
+        if (selectedSlot.GetCustomerUI())
         {
-            DI.SetIndicator(selectedSlot.GetCustomer().transform);
+            DI.SetIndicator(selectedSlot.GetCustomerUI().transform);
         }
         else
         {
@@ -82,7 +82,7 @@ public class HotbarManager : MonoBehaviour
         {
             if (!s.isOpen)
             {
-                if (s.GetCustomer() == c)
+                if (s.GetCustomerUI() == c)
                 {
                     s.RemoveOrder();
                 }

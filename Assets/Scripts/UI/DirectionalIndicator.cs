@@ -28,6 +28,8 @@ public class DirectionalIndicator : MonoBehaviour
         if (target)
         {
             RotateToTheTarget();
+            // Debug.Log("Target pos: " + target.position);
+            // Debug.Log("Player pos: " + player.position);
         }
         
     }
@@ -47,18 +49,14 @@ public class DirectionalIndicator : MonoBehaviour
 
 
 
-    void RotateToTheTarget()
-    {
+    void RotateToTheTarget(){
+        Vector3 direction = (target.position - player.position);
+        direction.y = 0;
+        direction.Normalize();
 
-        // Calculate the direction from A to B
-        Vector3 direction = target.position - player.position;
+        float angle = Vector3.SignedAngle(Vector3.forward, direction, Vector3.up);
 
-        // Calculate the angle in degrees
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // Rotate the arrow around its Z-axis
-        rect.localRotation = Quaternion.Euler(0, 0, angle + 90);
-
+        rect.localRotation = Quaternion.Euler(0, 0, -angle);
 
     }
 }
