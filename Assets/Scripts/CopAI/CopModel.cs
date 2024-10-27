@@ -32,7 +32,7 @@ public class CopModel : MonoBehaviour
     private int speed = 8;
 
     // TEMP - get from game manager
-    private Player player;
+    [SerializeField] private Player player;
 
 
     public NavState getNavState()
