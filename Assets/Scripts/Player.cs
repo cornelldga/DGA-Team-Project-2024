@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
     [SerializeField] float speed;
     float oil;
     [SerializeField] float maxOil;
+
+    //Player health var
+    [SerializeField] float health;
     public float oilConsumptionRate = 1f; // Oil consumption rate per second
     public float cookingTime = 60f; // Total cooking time in seconds
 
@@ -160,5 +163,10 @@ public class Player : MonoBehaviour
     public float GetMaxOil()
     {
         return maxOil;
+    }
+
+    public float GetHealth()
+    {
+        return health;
     }
 }
