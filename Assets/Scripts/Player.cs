@@ -170,13 +170,11 @@ public class Player : MonoBehaviour
             if (oil <= 0)
             {
                 oil = 0;
-                Debug.Log("Oil depleted!");
             }
 
             if (cookingTimer <= 0)
             {
                 cookingTimer = 0;
-                Debug.Log("Cooking complete!");
             }
         }
     }
