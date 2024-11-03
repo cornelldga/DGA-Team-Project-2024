@@ -30,9 +30,11 @@ public class CopModel : MonoBehaviour
 
     // The behavior that determines a cops pathfinding target
     [SerializeField] private NavState State;
-    [SerializeField] private Rigidbody RB;
     [SerializeField] private CopType model;
-    
+
+    // reference to its own rigid body
+    private Rigidbody RB;
+
     // Pathfinding parameters
     private Pathfinding pathfindingLogic;
     // The path the cop is heading towards
@@ -40,7 +42,6 @@ public class CopModel : MonoBehaviour
     // Position along the path that cop is at
     private int CurrentIndex;
     
-
     // Movement speed multiplier towards the target
     private int speed = 8;
 
@@ -58,8 +59,11 @@ public class CopModel : MonoBehaviour
     {
         return model;
     }
+
     void Start()
     {
+        RB = GetComponent<Rigidbody>();
+
         // set the damage and speed amount based on cop model type
         // TODO: have cruiser and truck be their own prefabs. 
         switch (model)
@@ -114,20 +118,21 @@ public class CopModel : MonoBehaviour
         // calculate path towards current target
         if (getNavState() == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
         {
-            //  int copX, copY;
 
+
+            // Choose a random position to wander to
+            // ----
             int sx, sy;
-            Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
+            
+            // random position in radius of self
+             Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
+
+            // random position in radius of player
+            //Map.Instance.MapGrid.GetXY(GameManager.Instance.getPlayer().transform.position, out sx, out sy);
+            
             SetTarget(sx + UnityEngine.Random.Range(-WanderDistance, WanderDistance), sy + UnityEngine.Random.Range(-WanderDistance, WanderDistance));
-          
-            //Vector3 PlayerCenter = GameManager.Instance.getPlayer().transform.position;
-            //    float radius = 10;
-            //    float angle = UnityEngine.Random.Range(0,Mathf.PI);
-            //    float x = radius * Mathf.Cos(angle);
-            //    float y = radius * Mathf.Sin(angle);
-            //    Vector3 target = new Vector3(PlayerCenter.x + x,PlayerCenter.y+y);
-            //    SetTarget(target);
-        
+            // -----
+
         }
         else if (State == NavState.HOTPURSUIT)
         {
