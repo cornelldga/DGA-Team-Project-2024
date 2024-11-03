@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class OilMask : MonoBehaviour
 {
     private RectMask2D mask;
-    [SerializeField] private Player playerScript;
     private int oilAmount;
     private int oilUIHeight;
     // Start is called before the first frame update
@@ -21,7 +20,7 @@ public class OilMask : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        oilAmount = (int)playerScript.GetOil();
+        oilAmount = (int)GameManager.Instance.getPlayer().GetOil();
         Vector4 padding = mask.padding;
         //set the top padding to the oil amount, but invert the value so the mask will shrink as the oil amount increases
         int topPadding = oilUIHeight - oilAmount;
