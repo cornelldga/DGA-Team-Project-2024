@@ -484,7 +484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previousWaypoint: {fileID: 1515038661}
-  nextWaypoint: {fileID: 2077950405}
+  nextWaypoint: {fileID: 1497378123}
   width: 1.67
   branches:
   - {fileID: 41451294}
@@ -559,6 +559,10 @@ PrefabInstance:
     - target: {fileID: 8498858998442318803, guid: 236961037ec33054493d223b4dee2788, type: 3}
       propertyPath: m_Name
       value: Police Demo
+      objectReference: {fileID: 0}
+    - target: {fileID: 8498858998442318803, guid: 236961037ec33054493d223b4dee2788, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2818427175522752929, guid: 236961037ec33054493d223b4dee2788, type: 3}
@@ -1615,6 +1619,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1608072595}
+  - {fileID: 1497378124}
   - {fileID: 2077950406}
   - {fileID: 391226561}
   - {fileID: 922181114}
@@ -1881,6 +1886,55 @@ MonoBehaviour:
   branches:
   - {fileID: 390870469}
   branchRatio: 0.55
+--- !u!1 &1497378122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1497378124}
+  - component: {fileID: 1497378123}
+  m_Layer: 0
+  m_Name: Waypoint 17
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1497378123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497378122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0c97da6281d1475996f15c6d916bb2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  previousWaypoint: {fileID: 391226560}
+  nextWaypoint: {fileID: 2077950405}
+  width: 1
+  branches: []
+  branchRatio: 0.5
+--- !u!4 &1497378124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497378122}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.0699997, y: 0, z: -13.31}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1394850657}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1515038659
 GameObject:
   m_ObjectHideFlags: 0
@@ -2419,7 +2473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c97da6281d1475996f15c6d916bb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 391226560}
+  previousWaypoint: {fileID: 1497378123}
   nextWaypoint: {fileID: 1608072594}
   width: 1
   branches: []
@@ -2550,6 +2604,10 @@ PrefabInstance:
     - target: {fileID: 891760649934663090, guid: 7ae272a29be7f48c2bb452bf7d221b9e, type: 3}
       propertyPath: m_Name
       value: Walker
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796284116853647316, guid: 7ae272a29be7f48c2bb452bf7d221b9e, type: 3}
+      propertyPath: m_Mass
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4397536775025013367, guid: 7ae272a29be7f48c2bb452bf7d221b9e, type: 3}
       propertyPath: currentWaypoint
