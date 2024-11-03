@@ -25,9 +25,14 @@ public class Player : MonoBehaviour
     private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int curAngle = 0;
     private bool movingForward = false;
-    private bool movingBackward = false;
     private bool isDead = false;
     private bool isInvincible = false;
+
+    // Input booleans
+    private bool pressForward;
+    private bool pressBackward;
+    private bool pressNitro;
+    private bool pressDrift;
 
     //New added private variables 
 
@@ -49,19 +54,50 @@ public class Player : MonoBehaviour
         Drive();
         Nitro();
         Cook();
-        Steer();
         Drift();
     }
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        {
+            pressForward = true;
+        }
+        else
+        {
+            pressForward = false;
+        }
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        {
+            pressBackward = true;
+        }
+        else
+        {
+            pressBackward = false;
+        }
+        if (Input.GetKey(nitro))
+        {
+            pressNitro = true;
+        }
+        else
+        {
+            pressNitro = false;
+        }
+        if (Input.GetKey(drift))
+        {
+            pressDrift = true;
+        }
+        else
+        {
+            pressDrift = false;
+        }
         Turn();
     }
 
     // While holding shift, the player uses oil to nitro boost.
     void Nitro()
     {
-        if (Input.GetKey(nitro) && oil > 0)
+        if (pressNitro && oil > 0)
         {
             rb.AddRelativeForce(Vector3.forward * 50);
             oil--;
@@ -71,31 +107,28 @@ public class Player : MonoBehaviour
     // The player can press W and S to drive forwards and backwards.
     void Drive()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (pressForward)
         {
             rb.AddRelativeForce(Vector3.forward * speed * 10);
             movingForward = true;
-            movingBackward = false;
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (pressBackward)
         {
             rb.AddRelativeForce(-Vector3.forward * speed * 10);
             movingForward = false;
-            movingBackward = true;
         }
         else
         {
             movingForward = false;
-            movingBackward = false;
         }
     }
 
     // The player can use A and D to turn to the next of 8 possible directions.
     void Turn()
     {
-        if (!Input.GetKey(drift))
+        if (!pressDrift)
         {
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 if (curAngle == 7)
                 {
@@ -107,7 +140,7 @@ public class Player : MonoBehaviour
                 }
                 transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
             }
-            else if (Input.GetKeyDown(KeyCode.A))
+            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 if (curAngle == 0)
                 {
@@ -120,9 +153,9 @@ public class Player : MonoBehaviour
                 transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
             }
         }
-        else if (Input.GetKey(drift))
+        else if (pressDrift)
         {
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 if (curAngle == 7)
                 {
@@ -138,7 +171,7 @@ public class Player : MonoBehaviour
                 }
                 transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
             }
-            else if (Input.GetKeyDown(KeyCode.A))
+            else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 if (curAngle == 0)
                 {
@@ -176,26 +209,11 @@ public class Player : MonoBehaviour
             }
         }
     }
-    // Player can hold right and left arrows to steer left and right
-    void Steer()
-    {
-        if (rb.velocity.magnitude > 0.01f && (movingForward || movingBackward))
-        {
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                rb.AddRelativeForce(Vector3.right * 10);
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                rb.AddRelativeForce(Vector3.left * 10);
-            }
-        }
-    }
 
     // Player can hold the spacebar to brake and turn while braking to drift
     void Drift()
     {
-        if (Input.GetKey(drift))
+        if (pressDrift)
         {
             if (movingForward && rb.velocity.magnitude > 0.01f)
             {
@@ -257,6 +275,7 @@ public class Player : MonoBehaviour
         {
             health = 0;
             isDead = true;
+            Debug.Log("player is dead, 0 health remaining");
             return;
         }
         StartCoroutine(BecomeInvincible());
