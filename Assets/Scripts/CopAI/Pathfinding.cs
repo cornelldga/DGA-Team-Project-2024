@@ -156,10 +156,10 @@ public class Pathfinding
         return foundDest;
     }
 
-    /** Returns true of the given coordinates are within the bounds of the map and valid to navgate through*/
+    /** Returns true of the given coordinates are within the bounds of the map and valid to navgate through */
     public bool isValid(int  x, int y)
     {
-        return (x >= 0 && y >= 0 && x < Width && y < Height);
+        return (x >= 0 && y >= 0 && x < Width && y < Height) && Map.Instance.MapGrid.GetValue(x, y) != TileType.BUILDING;
     }
 
     /** A Utility Function to calculate the 'h' heuristics. */
