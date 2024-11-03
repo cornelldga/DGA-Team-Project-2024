@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -40,6 +40,9 @@ public class CopModel : MonoBehaviour
 
     //Damage associated with the type of vehicle
     private int damage;
+    public const int WANDERTIME = 2;
+    private float wanderTimer;
+
 
     public NavState getNavState()
     {
@@ -62,7 +65,7 @@ public class CopModel : MonoBehaviour
         State = NavState.WANDER;
     }
 
-    public void StateChanger()
+    private void StateChanger()
     {
         float distance = Vector3.Distance(this.transform.position, GameManager.Instance.getPlayer().transform.position);
         if (distance < 10)
@@ -75,35 +78,56 @@ public class CopModel : MonoBehaviour
         }
     }
 
-    public void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision other)
     {
         GameObject damagedObject = other.gameObject;
         if (damagedObject.tag == "Player")
         {
             if (RB.velocity.magnitude > 5)
             {
-                doDamage(damagedObject);
+                GameManager.Instance.getPlayer().TakeDamage(DamageAmount(damagedObject));
             }
 
         }
         //  else if(damagedObject.tag)
     }
-    public void doDamage(GameObject hitObject)
+    private int DamageAmount(GameObject hitObject)
     {
+        return damage;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //TODO add accelerant.
         if (getNavState() == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
         {
-            int sx, sy;
-            Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
+          //  int copX, copY;
 
-            SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
+          //  int sx, sy;
+         //   Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
+
+         //   SetTarget(sx + Random.Range(-5, 5), sy + Random.Range(-5, 5));
+         if (wanderTimer <= 0){
+         //|| RB.velocity.magnitude == 0){ //what if we get there early?
+            wanderTimer = WANDERTIME;
+            Vector3 PlayerCenter = GameManager.Instance.getPlayer().transform.position;
+                float radius = 10;
+                float angle = UnityEngine.Random.Range(0,Mathf.PI);
+                float x = radius * Mathf.Cos(angle);
+                float y = radius * Mathf.Sin(angle);
+                Vector3 target = new Vector3(PlayerCenter.x + x,PlayerCenter.y+y);
+                SetTarget(target);
+
+        
+         }
+         else{
+            wanderTimer -= Time.deltaTime;
+         }
         }
         else if (State == NavState.HOTPURSUIT)
         {
+
             SetTarget(GameManager.Instance.getPlayer().transform.position);
             transform.LookAt(GameManager.Instance.getPlayer().transform.position);
         }
@@ -115,7 +139,6 @@ public class CopModel : MonoBehaviour
 
 
 
-    //Changed from setTarget to avoid ambiguity. 2 changes here, 1 in CopMangaer
     public void SetTarget(Vector3 WorldPosition)
     {
         int x, y;
@@ -125,7 +148,7 @@ public class CopModel : MonoBehaviour
 
     }
 
-    public void SetTarget(int dx, int dy)
+    private void SetTarget(int dx, int dy)
     {
         int sx, sy;
         Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
@@ -176,6 +199,27 @@ public class CopModel : MonoBehaviour
             }
             else if (getNavState() == NavState.WANDER)
             {
+                
+                Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
+                // remove y to ignore it in the calculation
+                Vector3 position = transform.position;
+                targetPosition = new Vector3(targetPosition.x, position.y, targetPosition.z);
+
+                if (Vector3.Distance(this.transform.position, targetPosition) > 0.5f)
+                {
+
+                    Vector3 moveDir = (targetPosition - position).normalized;
+                    RB.velocity = moveDir * speed;
+               //     transform.LookAt(transform.forward);
+
+                }
+                else
+                {
+                    CurrentIndex++;
+                }
+
+
+
                 //Vector3 leftcorner = transform.position
                 // Vector3 targetPosition = Map.Instance.MapGrid.GetWorldPosition(CurrentPath[CurrentIndex].x + 0.5f, CurrentPath[CurrentIndex].y + 0.5f);
                 // Vector3 position = RB.transform.position;
@@ -188,8 +232,4 @@ public class CopModel : MonoBehaviour
     }
 
 
-    IEnumerator wanderWait()
-    {
-        yield return new WaitForSeconds(2);
-    }
 }
