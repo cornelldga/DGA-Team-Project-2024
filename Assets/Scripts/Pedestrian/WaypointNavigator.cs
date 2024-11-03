@@ -8,6 +8,7 @@ public class WaypointNavigator : MonoBehaviour
 {
     PedestrianNavigationController navigationController;
     public Waypoint currentWaypoint;
+    int direction;
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class WaypointNavigator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        direction = Mathf.RoundToInt(Random.Range(0, 1));
         navigationController.SetDestination(currentWaypoint.GetPosition());
     }
 
@@ -24,18 +26,46 @@ public class WaypointNavigator : MonoBehaviour
     {
         if (navigationController.hasReachedDestination)
         {
-            SetNextDestination();
+            SelectNextDestination();
+            navigationController.SetDestination(currentWaypoint.GetPosition());
         }
     }
 
-    private void SetNextDestination()
+    private void SelectNextDestination()
     {
-        if (currentWaypoint.nextWaypoint != null)
+        if (currentWaypoint.branches != null && currentWaypoint.branches.Count > 0)
         {
-            currentWaypoint = currentWaypoint.nextWaypoint;
-            navigationController.SetDestination(currentWaypoint.GetPosition());
+            if (Random.Range(0f, 1f) <= currentWaypoint.branchRatio)
+            {
+                currentWaypoint = currentWaypoint.branches[Random.Range(0, currentWaypoint.branches.Count)];
+                return;
+            }
         }
-        else { }
+        if (currentWaypoint.nextWaypoint == null && currentWaypoint.previousWaypoint == null)
+        {
+            Debug.LogWarning("Waypoint has no next or previous waypoint, something is wrong.");
+            return;
+        }
+        if (direction == 0)
+        {
+            if (currentWaypoint.nextWaypoint == null)
+            {
+                currentWaypoint = currentWaypoint.previousWaypoint;
+                direction = 1;
+                return;
+            }
+            currentWaypoint = currentWaypoint.nextWaypoint;
+        }
+        else if (direction == 1)
+        {
+            if (currentWaypoint.previousWaypoint == null)
+            {
+                currentWaypoint = currentWaypoint.nextWaypoint;
+                direction = 0;
+                return;
+            }
+            currentWaypoint = currentWaypoint.previousWaypoint;
+        }
     }
 }
 

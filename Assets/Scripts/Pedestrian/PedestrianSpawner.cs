@@ -24,7 +24,7 @@ public class PedestrianSpawner : MonoBehaviour
             pedestrian.GetComponent<WaypointNavigator>().currentWaypoint = draw.GetComponent<Waypoint>();
             pedestrian.transform.position = draw.position;
             pedestrian.GetComponent<PedestrianNavigationController>().movementSpeed = Random.Range(1, 3);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
 
             count++;
         }

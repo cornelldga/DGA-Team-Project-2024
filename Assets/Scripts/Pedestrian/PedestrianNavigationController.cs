@@ -9,11 +9,6 @@ public class PedestrianNavigationController : MonoBehaviour
     public float stopDistance = 2.0f;
     public Vector3 destination;
     public bool hasReachedDestination = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -27,10 +22,12 @@ public class PedestrianNavigationController : MonoBehaviour
         {
             hasReachedDestination = false;
 
+            // Rotate towards destination
             Vector3 direction = destination - transform.position;
             direction.y = 0;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
 
+            // Move towards destination
             transform.Translate(0, 0, movementSpeed * Time.deltaTime);
         }
         else
