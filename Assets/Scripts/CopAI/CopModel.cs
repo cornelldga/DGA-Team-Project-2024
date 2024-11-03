@@ -125,10 +125,10 @@ public class CopModel : MonoBehaviour
             int sx, sy;
             
             // random position in radius of self
-             Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
+             //Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
 
             // random position in radius of player
-            //Map.Instance.MapGrid.GetXY(GameManager.Instance.getPlayer().transform.position, out sx, out sy);
+            Map.Instance.MapGrid.GetXY(GameManager.Instance.getPlayer().transform.position, out sx, out sy);
             
             SetTarget(sx + UnityEngine.Random.Range(-WanderDistance, WanderDistance), sy + UnityEngine.Random.Range(-WanderDistance, WanderDistance));
             // -----
