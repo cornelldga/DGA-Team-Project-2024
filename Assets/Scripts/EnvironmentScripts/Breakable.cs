@@ -10,14 +10,16 @@ public class Breakable : MonoBehaviour
     private Color myColor;
     private bool isRespawning = false;
     private float respawnTimer = 0f;
-    private Vector3 startPosition;
+    private Vector3 startPosition; // In case we implement physics-based movement/explosions
     private Collider myCollider;
+    private Player myPlayer;
 
     public void Start()
     {
         myColor = myMaterial.color;
         startPosition = transform.position;
         myCollider = GetComponent<Collider>(); // Only called on creation so it's ok to use GetComponent
+        myPlayer = GameManager.Instance.getPlayer();
     }
 
     private void Update()
@@ -60,7 +62,7 @@ public class Breakable : MonoBehaviour
 
             if (minBreakSpeed <= 0f || collisionSpeed >= minBreakSpeed)
             {
-                GameManager.Instance.getPlayer().AddOil(oilAmount);
+                myPlayer.AddOil(oilAmount);
                 StartRespawn();
             }
         }
