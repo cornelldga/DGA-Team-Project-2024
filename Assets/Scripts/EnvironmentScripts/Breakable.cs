@@ -3,14 +3,40 @@ using UnityEngine;
 public class Breakable : MonoBehaviour
 {
     [SerializeField] private float minBreakSpeed = 0f;
-    [SerializeField] private int oilAmount = 25; // Oil amount should be 0 if not oil box/barrel
+    [SerializeField] private int oilAmount = 25;
+    [SerializeField] private Material myMaterial;
+    [SerializeField] private float respawnTime = 10f;
+
+    private Color myColor;
+    private bool isRespawning = false;
+    private float respawnTimer = 0f;
+    private Vector3 startPosition;
+    private Collider myCollider;
+
+    public void Start()
+    {
+        myColor = myMaterial.color;
+        startPosition = transform.position;
+        myCollider = GetComponent<Collider>(); // Only called on creation so it's ok to use GetComponent
+    }
 
     private void Update()
     {
-        
+        if (isRespawning)
+        {
+            respawnTimer += Time.deltaTime;
+            float progress = respawnTimer / respawnTime;
+
+            myColor.a = Mathf.Lerp(0f, 1f, progress);
+            myMaterial.color = myColor;
+
+            if (progress >= 1f)
+            {
+                isRespawning = false;
+                myCollider.enabled = true;
+            }
+        }
     }
-
-
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -30,20 +56,23 @@ public class Breakable : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            //print("here2");
             float collisionSpeed = collision.relativeVelocity.magnitude;
-            //print("collisionSpeed:" + (collisionSpeed));
-            // Break if either:
-            // 1. minBreakSpeed is 0 (break on any collision)
-            // 2. collision speed is above the minimum threshold
+
             if (minBreakSpeed <= 0f || collisionSpeed >= minBreakSpeed)
             {
-                //print("here3");
                 GameManager.Instance.getPlayer().AddOil(oilAmount);
-
-                gameObject.SetActive(false);
-
+                StartRespawn();
             }
         }
+    }
+
+    private void StartRespawn()
+    {
+        myCollider.enabled = false;
+        myColor.a = 0f;
+        myMaterial.color = myColor;
+        transform.position = startPosition;
+        isRespawning = true;
+        respawnTimer = 0f;
     }
 }

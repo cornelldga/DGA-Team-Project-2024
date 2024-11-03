@@ -7,17 +7,19 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CarColor
+  m_Name: OilBarrelColor
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 2100000, guid: 6fc2e71c9a44c3a418db573bcb4218da, type: 2}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ModifiedSerializedProperties: 18
+  m_ValidKeywords:
+  - _ALPHAPREMULTIPLY_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -25,7 +27,12 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
+    - _DstBlend: 10
     - _Metallic: 0
+    - _Mode: 3
+    - _SmoothnessTextureChannel: 0
+    - _UVSec: 0
+    - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.8867924, g: 0.13218217, b: 0.13218217, a: 1}
+    - _Color: {r: 0.7176471, g: 0, b: 0, a: 0.85874766}
   m_BuildTextureStacks: []
