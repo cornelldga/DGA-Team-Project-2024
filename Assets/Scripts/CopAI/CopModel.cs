@@ -28,9 +28,9 @@ public enum CopType
 public class CopModel : MonoBehaviour
 {
     // Internal Constants
-    private const float VisionRadius = 10; // how close the player has to be to start a pursuit
-    private const float MaxPursuitRadius = 30; // The distance where the cop will lose sight of the target
-    private const int WanderDistance = 5; // the max distance that the cop will wander to per re-route
+    private const float VisionRadius = 15; // how close the player has to be to start a pursuit
+    private const float MaxPursuitRadius = 35; // The distance where the cop will lose sight of the target
+    private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
 
     // The behavior that determines a cops pathfinding target
     [SerializeField] private NavState State;
@@ -99,14 +99,12 @@ public class CopModel : MonoBehaviour
         {
             if (RB.velocity.magnitude > 5)
             {
-                doDamage(damagedObject);
+                Debug.Log("contact!");
+                damagedObject.GetComponent<Player>().TakeDamage(damage);
             }
 
         }
         //  else if(damagedObject.tag)
-    }
-    public void doDamage(GameObject hitObject)
-    {
     }
 
     // Update is called once per frame
