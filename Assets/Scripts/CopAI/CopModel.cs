@@ -1,11 +1,7 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-
-
-
-
 
 // Navigation type
 public enum NavState
@@ -50,6 +46,9 @@ public class CopModel : MonoBehaviour
 
     //Damage associated with the type of vehicle
     private int damage;
+    public const int WANDERTIME = 2;
+    private float wanderTimer;
+
 
     public NavState getNavState()
     {
@@ -78,7 +77,7 @@ public class CopModel : MonoBehaviour
     }
 
     /** Change the navigation state of the cop based on proximity to player **/
-    public void StateChanger()
+    private void StateChanger()
     {
         // distance is given as a magnitude
         float distanceFromPlayer = Vector3.Distance(this.transform.position, GameManager.Instance.getPlayer().transform.position);
@@ -92,7 +91,7 @@ public class CopModel : MonoBehaviour
         }
     }
 
-    public void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision other)
     {
         GameObject damagedObject = other.gameObject;
         if (damagedObject.tag == "Player")
@@ -115,13 +114,24 @@ public class CopModel : MonoBehaviour
         // calculate path towards current target
         if (getNavState() == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
         {
+            //  int copX, copY;
+
             int sx, sy;
             Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
-
-            SetTarget(sx + Random.Range(-WanderDistance, WanderDistance), sy + Random.Range(-WanderDistance, WanderDistance));
+            SetTarget(sx + UnityEngine.Random.Range(-WanderDistance, WanderDistance), sy + UnityEngine.Random.Range(-WanderDistance, WanderDistance));
+          
+            //Vector3 PlayerCenter = GameManager.Instance.getPlayer().transform.position;
+            //    float radius = 10;
+            //    float angle = UnityEngine.Random.Range(0,Mathf.PI);
+            //    float x = radius * Mathf.Cos(angle);
+            //    float y = radius * Mathf.Sin(angle);
+            //    Vector3 target = new Vector3(PlayerCenter.x + x,PlayerCenter.y+y);
+            //    SetTarget(target);
+        
         }
         else if (State == NavState.HOTPURSUIT)
         {
+
             SetTarget(GameManager.Instance.getPlayer().transform.position);
             transform.LookAt(GameManager.Instance.getPlayer().transform.position);
         }
@@ -180,7 +190,6 @@ public class CopModel : MonoBehaviour
 
             if (Vector3.Distance(this.transform.position, targetPosition) > 0.5f)
             {
-
                 Vector3 moveDir = (targetPosition - position).normalized;
                 RB.velocity = moveDir * speed;
             }
@@ -194,8 +203,4 @@ public class CopModel : MonoBehaviour
     }
 
 
-    IEnumerator wanderWait()
-    {
-        yield return new WaitForSeconds(2);
-    }
 }
