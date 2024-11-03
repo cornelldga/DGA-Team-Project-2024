@@ -28,7 +28,7 @@ public class Breakable : MonoBehaviour
 
     private void CheckCollision(Collision collision)
     {
-        if (collision.gameObject.GetComponent<Player>() != null)
+        if (collision.gameObject.CompareTag("Player"))
         {
             //print("here2");
             float collisionSpeed = collision.relativeVelocity.magnitude;
