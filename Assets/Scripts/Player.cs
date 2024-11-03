@@ -275,6 +275,7 @@ public class Player : MonoBehaviour
         {
             health = 0;
             isDead = true;
+            Debug.Log("player is dead, 0 health remaining");
             return;
         }
         StartCoroutine(BecomeInvincible());

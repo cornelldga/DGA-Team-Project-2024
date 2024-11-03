@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a542c40f295d96849b2f04008af93106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RB: {fileID: 0}
-  State: 1
+  State: 0
+  RB: {fileID: 8872929183569478298}
   model: 0
 --- !u!23 &8657452538794174973
 MeshRenderer:
