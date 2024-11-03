@@ -234,7 +234,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameTimer: 200
   minCustomersToWin: 2
-  hotbarManager: {fileID: 0}
 --- !u!4 &321352938
 Transform:
   m_ObjectHideFlags: 0
@@ -297,6 +296,10 @@ PrefabInstance:
     - target: {fileID: 1127823044001205888, guid: 236961037ec33054493d223b4dee2788, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2818427175522752929, guid: 236961037ec33054493d223b4dee2788, type: 3}
+      propertyPath: health
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8498858998442318803, guid: 236961037ec33054493d223b4dee2788, type: 3}
       propertyPath: m_Name
@@ -389,9 +392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a542c40f295d96849b2f04008af93106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  copType: 
   RB: {fileID: 527186760}
-  State: 0
+  State: 1
+  model: 0
 --- !u!54 &527186760 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 3281241723500394206, guid: 236961037ec33054493d223b4dee2788, type: 3}
@@ -452,11 +455,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!50 &548395651 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 3921954499315539261, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
-  m_PrefabInstance: {fileID: 1462190120}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &645323154
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +560,7 @@ PrefabInstance:
     - target: {fileID: 2142699969854059093, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
       propertyPath: RB
       value: 
-      objectReference: {fileID: 1306851398}
+      objectReference: {fileID: 0}
     - target: {fileID: 2142699969854059093, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
       propertyPath: State
       value: 0
@@ -935,11 +933,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!50 &1306851398 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 3921954499315539261, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
-  m_PrefabInstance: {fileID: 893445235}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1331225412 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7766638833031876969, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
@@ -1206,7 +1199,7 @@ PrefabInstance:
     - target: {fileID: 2142699969854059093, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
       propertyPath: RB
       value: 
-      objectReference: {fileID: 548395651}
+      objectReference: {fileID: 0}
     - target: {fileID: 2142699969854059093, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
       propertyPath: State
       value: 1
