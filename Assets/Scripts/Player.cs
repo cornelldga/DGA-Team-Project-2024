@@ -233,6 +233,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Counts amount of time that player should be invincible after taking damage
+    /// </summary>
     private IEnumerator BecomeInvincible()
     {
         isInvincible = true;
