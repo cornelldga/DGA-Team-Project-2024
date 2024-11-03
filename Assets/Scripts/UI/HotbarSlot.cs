@@ -83,7 +83,7 @@ public class HotbarSlot : MonoBehaviour
 
     // Updates the value being displayed in the timer
     void UpdateTimer(float time, TextMeshProUGUI label)
-    { 
+    {
         time += 1;
         float seconds = Mathf.FloorToInt(time % 60);
         label.text = seconds.ToString();
