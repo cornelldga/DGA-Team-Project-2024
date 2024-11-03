@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
     private bool movingBackward = false;
     private bool isDead = false;
     private bool isInvincible = false;
-    private MaterialSwapper ms;
 
     //New added private variables 
 
@@ -39,7 +38,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        ms = GetComponent<MaterialSwapper>();
         transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
         cookingTimer = cookingTime;
         InvokeRepeating(nameof(HandleOrders), 1, 1);
@@ -235,13 +233,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Counts amount of time that player should be invincible after taking damage
+    /// </summary>
     private IEnumerator BecomeInvincible()
     {
         isInvincible = true;
 
         for (float i = 0; i < invincibilityDuration; i += invincibilityDeltaTime)
         {
-            ms.swapMaterial();
             yield return new WaitForSeconds(invincibilityDeltaTime);
         }
 
@@ -265,7 +265,7 @@ public class Player : MonoBehaviour
     // Public methods to access oil and maxOil
     public float GetOil()
     {
-        Debug.Log("Oil count " + oil);
+        //Debug.Log("Oil count " + oil);
         return oil;
 
     }
