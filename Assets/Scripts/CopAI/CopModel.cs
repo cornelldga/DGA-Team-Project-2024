@@ -17,15 +17,13 @@ public enum CopType
     TRUCK
 }
 
-
 /** 
- * Represents a cop that navs towards the given postion 
- * TODO: add different cop behaviors rather than following a point 
+ * Represents a cop that navs towards the given postion, with the goal of damaging the player. 
  */
 public class CopModel : MonoBehaviour
 {
     // Internal Constants
-    private const float RamRadius = 5; // how close the player has to be to start a pursuit
+    private const float RamRadius = 5; // how close the cop has to be to the cop to start a ram
     private const float VisionRadius = 15; // how close the player has to be to start a pursuit
     private const float MaxPursuitRadius = 35; // The distance where the cop will lose sight of the target
     private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
@@ -130,7 +128,6 @@ public class CopModel : MonoBehaviour
             }
 
         }
-        //  else if(damagedObject.tag)
     }
 
     // Update is called once per frame
@@ -187,6 +184,7 @@ public class CopModel : MonoBehaviour
 
     }
 
+
     /** Set the pathfinding target to the given world position in grid coordinates */
     public void SetPathfindingTarget(int dx, int dy)
     {
@@ -210,7 +208,6 @@ public class CopModel : MonoBehaviour
         }
 
     }
-
 
 
     /** Transform the cops position along their pathing finding path towards their current target */
