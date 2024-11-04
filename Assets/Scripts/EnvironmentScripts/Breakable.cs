@@ -3,9 +3,10 @@ using UnityEngine;
 public class Breakable : MonoBehaviour
 {
     [SerializeField] private float minBreakSpeed = 0f;
-    [SerializeField] private int oilAmount = 25;
+    [SerializeField] private int oilAmount = 25; // Add oil (0 if not an oil barrel)
     [SerializeField] private Material myMaterial;
     [SerializeField] private float respawnTime = 10f;
+    [SerializeField] private int damageAmount = 10; // Deal damage (0 if not damaging)
 
     private Color myColor;
     private bool isRespawning = false;
@@ -14,6 +15,7 @@ public class Breakable : MonoBehaviour
     private Collider myCollider;
     private Player myPlayer;
 
+    // Grab the player instance and materials/position for this Breakable object
     public void Start()
     {
         myColor = myMaterial.color;
@@ -22,6 +24,7 @@ public class Breakable : MonoBehaviour
         myPlayer = GameManager.Instance.getPlayer();
     }
 
+    // Update the respawning (MAY CHANGE TO COROUTINE)
     private void Update()
     {
         if (isRespawning)
@@ -40,11 +43,13 @@ public class Breakable : MonoBehaviour
         }
     }
 
+    // Check when entering a collision
     private void OnCollisionEnter(Collision collision)
     {
         CheckCollision(collision);
     }
 
+    // Check during the collision (not just when entered)
     private void OnCollisionStay(Collision collision)
     {
         if (minBreakSpeed != 0)
@@ -54,6 +59,7 @@ public class Breakable : MonoBehaviour
         CheckCollision(collision);
     }
 
+    // Checks if the player and Breakable object collided and call methods as necessary (add oil, take damage)
     private void CheckCollision(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -63,11 +69,13 @@ public class Breakable : MonoBehaviour
             if (minBreakSpeed <= 0f || collisionSpeed >= minBreakSpeed)
             {
                 myPlayer.AddOil(oilAmount);
+                myPlayer.TakeDamage(damageAmount);
                 StartRespawn();
             }
         }
     }
 
+    // Respawn the Breakable (called when the object is first broken) 
     private void StartRespawn()
     {
         myCollider.enabled = false;
