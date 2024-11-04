@@ -24,7 +24,7 @@ public class HotbarManager : MonoBehaviour
     void Start()
     {
         selectedSlot = slots[0];
-        selectedSlot.Select();
+        //selectedSlot.Select();
 
     }
 
@@ -107,10 +107,10 @@ public class HotbarManager : MonoBehaviour
 
     void ChangeSelection(int amount)
     {
-        selectedSlot.Deselect();
+        //selectedSlot.Deselect();
         selectedIndex += amount;
         selectedSlot = slots[selectedIndex];
-        selectedSlot.Select();
+        //selectedSlot.Select();
 
        
     }
