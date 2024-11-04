@@ -52,12 +52,6 @@ public class Player : MonoBehaviour
     private bool pressNitro;
     private bool pressDrift;
 
-    // Input booleans
-    private bool pressForward;
-    private bool pressBackward;
-    private bool pressNitro;
-    private bool pressDrift;
-
     //New added private variables 
 
     private float cookingTimer;
