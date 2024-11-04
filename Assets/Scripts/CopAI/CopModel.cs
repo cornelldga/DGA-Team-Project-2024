@@ -27,7 +27,7 @@ public class CopModel : MonoBehaviour
     private const float VisionRadius = 15; // how close the player has to be to start a pursuit
     private const float MaxPursuitRadius = 35; // The distance where the cop will lose sight of the target
     private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
-    private const int BaseSpeed = 8; // base movement speed while patrolling
+    private const int BaseSpeed = 12; // base movement speed while patrolling
     private const int RamSpeed = 20; // revved up speed barreling towards the player. 
     
     // The behavior that determines a cops pathfinding target
@@ -124,7 +124,10 @@ public class CopModel : MonoBehaviour
             if (RB.velocity.magnitude > 5)
             {
                 Debug.Log("contact!");
-                damagedObject.GetComponent<Player>().TakeDamage(damage);
+                if (damagedObject.TryGetComponent<Player>(out Player player))
+                {
+                    player.TakeDamage(damage);
+                }
             }
 
         }
