@@ -95,7 +95,6 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            Debug.Log(Time.time + " " + turnDelay);
             pressRight = true;
         }
         else
