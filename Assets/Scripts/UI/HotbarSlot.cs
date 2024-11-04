@@ -109,13 +109,13 @@ public class HotbarSlot : MonoBehaviour
     // Selects this slot as the player's active order slot to track
     public void Select()
     {
-        slotBorder.color = Color.green;
+        //slotBorder.color = Color.green;
     }
 
     // Deselects this slot as the player's active order slot to track
     public void Deselect()
     {
-        slotBorder.color = Color.gray;
+        //slotBorder.color = Color.gray;
     }
 
     public Customer GetCustomerUI()
