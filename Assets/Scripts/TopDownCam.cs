@@ -17,9 +17,25 @@ public class TopDownContr : MonoBehaviour
     //Used to get target's velocity
     Rigidbody observeRigidBody;
     // Start is called before the first frame update
+
+    // Camera pivot transform
+    [SerializeField] Transform cameraPivot;
+
     void Start()
     {
-        observeRigidBody = observe.GetComponent<Rigidbody>();
+        if (observe != null)
+        {
+            observeRigidBody = observe.GetComponent<Rigidbody>();
+        }
+        else
+        {
+            Debug.LogError("Observe target is not assigned.");
+        }
+
+        if (cameraPivot == null)
+        {
+            Debug.LogError("Camera pivot is not assigned.");
+        }
 
     }
 
@@ -29,8 +45,9 @@ public class TopDownContr : MonoBehaviour
         if (observe == null)
             return;
 
+        // Calculate the target position for the camera pivot
         Vector3 targetPosition = observe.position + Vector3.up * cameraHeight + observeRigidBody.velocity * aheadSpeed;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, followDamping * Time.deltaTime);
+        cameraPivot.position = Vector3.Lerp(cameraPivot.position, targetPosition, followDamping * Time.deltaTime);
 
     }
 }
