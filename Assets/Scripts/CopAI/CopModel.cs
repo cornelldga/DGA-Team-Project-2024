@@ -29,6 +29,8 @@ public class CopModel : MonoBehaviour
     private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
     private const int BaseSpeed = 12; // base movement speed while patrolling
     private const int RamSpeed = 20; // revved up speed barreling towards the player. 
+    private const float RamCooldown = 1; // the amount of time spend on a ram attack until returning to normal navigation
+    private const int WanderRerouteTime = 5; // max time spend on a single wander path to prevent getting stuck
     
     // The behavior that determines a cops pathfinding target
     [SerializeField] private NavState State;
@@ -51,9 +53,12 @@ public class CopModel : MonoBehaviour
     private int speed = BaseSpeed;
 
     // Parameters managing cooldown for ramming, in seconds
-    private const float RamCooldown = 1;
     private float RamTimer = 0;
     private bool IsRamming = false;
+
+    // parameters for managing wandering rerouting
+    private float WanderTime = 0;
+
 
     public NavState getNavState()
     {
@@ -109,10 +114,10 @@ public class CopModel : MonoBehaviour
             State = NavState.HOTPURSUIT;
         }
 
-
         else if (State == NavState.HOTPURSUIT && distanceFromPlayer > MaxPursuitRadius)
         {
             State = NavState.WANDER;
+            WanderTime = 0;
         }
     }
 
@@ -149,21 +154,32 @@ public class CopModel : MonoBehaviour
 
         }
 
-        // calculate path towards current target
-        else if (getNavState() == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
-        {
-            // Choose a random position to wander to
-            // ----
-            int sx, sy;
-            
-            // random position in radius of self
-            //Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
 
-            // random position in radius of player
-            Map.Instance.MapGrid.GetXY(GameManager.Instance.getPlayer().transform.position, out sx, out sy);
-            
-            SetPathfindingTarget(sx + UnityEngine.Random.Range(-WanderDistance, WanderDistance), sy + UnityEngine.Random.Range(-WanderDistance, WanderDistance));
-            // -----
+
+        // calculate path towards current target
+        else if (getNavState() == NavState.WANDER)
+        {
+
+            WanderTime += Time.deltaTime;
+
+            if ((CurrentPath == null || CurrentIndex >= CurrentPath.Length) || WanderTime >= WanderRerouteTime)
+            {
+                // Choose a random position to wander to
+                // ----
+                int sx, sy;
+
+                // random position in radius of self
+                //Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
+
+                // random position in radius of player
+                Map.Instance.MapGrid.GetXY(GameManager.Instance.getPlayer().transform.position, out sx, out sy);
+
+                SetPathfindingTarget(sx + UnityEngine.Random.Range(-WanderDistance, WanderDistance), sy + UnityEngine.Random.Range(-WanderDistance, WanderDistance));
+                // -----
+
+                WanderTime = 0;
+            }
+
 
         }
         else if (State == NavState.HOTPURSUIT)
