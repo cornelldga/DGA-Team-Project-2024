@@ -7,27 +7,50 @@ using UnityEngine;
 // This script handles the inputs and manages the oil and cooking timers for the player
 public class Player : MonoBehaviour
 {
-    [SerializeField] float speed;
-    float oil;
-    [SerializeField] float maxOil;
+    [Tooltip("Player moves forward by a product of this speed")]
+    [SerializeField] float speed = 4f;
 
     //Player health var
-    [SerializeField] float health;
-    [SerializeField] private float invincibilityDuration;
-    [SerializeField] private float invincibilityDeltaTime;
-    public float oilConsumptionRate = 1f; // Oil consumption rate per second
-    public float cookingTime = 60f; // Total cooking time in seconds
+    [Tooltip("Number of health points that player starts with")]
+    [SerializeField] float health = 3f;
 
+    [Header("Invincibility Frames")]
+    [Tooltip("Number of seconds player is invincible after being hit")]
+    [SerializeField] private float invincibilityDuration = 1.5f;
+    [Tooltip("Splits invincibility duration into individual frames to inform blinking")]
+    [SerializeField] private float invincibilityDeltaTime = 0.15f;
+
+    [Header("Oil Values")]
+    [Tooltip("Max amount of oil that player starts with")]
+    [SerializeField] float maxOil = 100f;
+    [Tooltip("Oil consumption rate per second")]
+    [SerializeField] float oilConsumptionRate = 1f;
+    [Tooltip("Total cooking time in seconds")]
+    [SerializeField] float cookingTime = 60f;
+
+    [Header("Input Key Codes")]
+    [Tooltip("Button for nitro")]
     [SerializeField] private KeyCode nitro = KeyCode.LeftShift;
+    [Tooltip("Button for drifting")]
     [SerializeField] private KeyCode drift = KeyCode.Space;
 
     private Rigidbody rb;
+    private float oil;
     private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int curAngle = 0;
     private bool movingForward = false;
-    private bool movingBackward = false;
     private bool isDead = false;
     private bool isInvincible = false;
+    private float turnDelay = 0;
+    private float turnRate = 0.25f;
+
+    // Input booleans
+    private bool pressForward;
+    private bool pressBackward;
+    private bool pressRight;
+    private bool pressLeft;
+    private bool pressNitro;
+    private bool pressDrift;
 
     //New added private variables 
 
@@ -49,19 +72,71 @@ public class Player : MonoBehaviour
         Drive();
         Nitro();
         Cook();
-        Steer();
         Drift();
     }
 
     private void Update()
     {
-        Turn();
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        {
+            pressForward = true;
+        }
+        else
+        {
+            pressForward = false;
+        }
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        {
+            pressBackward = true;
+        }
+        else
+        {
+            pressBackward = false;
+        }
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        {
+            Debug.Log(Time.time + " " + turnDelay);
+            pressRight = true;
+        }
+        else
+        {
+            pressRight = false;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        {
+            pressLeft = true;
+        }
+        else
+        {
+            pressLeft = false;
+        }
+        if (Input.GetKey(nitro))
+        {
+            pressNitro = true;
+        }
+        else
+        {
+            pressNitro = false;
+        }
+        if (Input.GetKey(drift))
+        {
+            pressDrift = true;
+        }
+        else
+        {
+            pressDrift = false;
+        }
+        if ((pressRight || pressLeft) && Time.time > turnDelay)
+        { 
+            turnDelay = Time.time + turnRate;
+            Turn(); 
+        }
     }
 
     // While holding shift, the player uses oil to nitro boost.
     void Nitro()
     {
-        if (Input.GetKey(nitro) && oil > 0)
+        if(pressNitro && oil > 0)
         {
             rb.AddRelativeForce(Vector3.forward * 50);
             oil--;
@@ -71,31 +146,28 @@ public class Player : MonoBehaviour
     // The player can press W and S to drive forwards and backwards.
     void Drive()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (pressForward)
         {
             rb.AddRelativeForce(Vector3.forward * speed * 10);
             movingForward = true;
-            movingBackward = false;
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (pressBackward)
         {
             rb.AddRelativeForce(-Vector3.forward * speed * 10);
             movingForward = false;
-            movingBackward = true;
         }
         else
         {
             movingForward = false;
-            movingBackward = false;
         }
     }
 
     // The player can use A and D to turn to the next of 8 possible directions.
     void Turn()
     {
-        if (!Input.GetKey(drift))
+        if (!pressDrift)
         {
-            if (Input.GetKeyDown(KeyCode.D))
+            if (pressRight)
             {
                 if (curAngle == 7)
                 {
@@ -107,7 +179,7 @@ public class Player : MonoBehaviour
                 }
                 transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
             }
-            else if (Input.GetKeyDown(KeyCode.A))
+            else if (pressLeft)
             {
                 if (curAngle == 0)
                 {
@@ -120,9 +192,9 @@ public class Player : MonoBehaviour
                 transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
             }
         }
-        else if (Input.GetKey(drift))
+        else if (pressDrift)
         {
-            if (Input.GetKeyDown(KeyCode.D))
+            if (pressRight)
             {
                 if (curAngle == 7)
                 {
@@ -138,7 +210,7 @@ public class Player : MonoBehaviour
                 }
                 transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
             }
-            else if (Input.GetKeyDown(KeyCode.A))
+            else if (pressLeft)
             {
                 if (curAngle == 0)
                 {
@@ -176,26 +248,11 @@ public class Player : MonoBehaviour
             }
         }
     }
-    // Player can hold right and left arrows to steer left and right
-    void Steer()
-    {
-        if (rb.velocity.magnitude > 0.01f && (movingForward || movingBackward))
-        {
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                rb.AddRelativeForce(Vector3.right * 10);
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                rb.AddRelativeForce(Vector3.left * 10);
-            }
-        }
-    }
 
     // Player can hold the spacebar to brake and turn while braking to drift
     void Drift()
     {
-        if (Input.GetKey(drift))
+        if (pressDrift)
         {
             if (movingForward && rb.velocity.magnitude > 0.01f)
             {
@@ -278,5 +335,17 @@ public class Player : MonoBehaviour
     public float GetHealth()
     {
         return health;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.relativeVelocity.magnitude);
+        if (collision.gameObject.tag == "Wall")
+        {
+            if (collision.relativeVelocity.magnitude >= 15.0f)
+            {
+                TakeDamage(1);
+            }
+        }
     }
 }
