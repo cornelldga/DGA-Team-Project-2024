@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 // Navigation type
 public enum NavState
 {
-    HOTPURSUIT,     // Travel directly towards the target position via the most direct path. 
+    HOTPURSUIT,     // Travel towards the target position via the most direct path. Ram attack the player when in range.
     WANDER,         // Drive through the streets to cover the most distance, looking for the player
     IDLE            // Cop is not moving and staying still in current location. 
 }
@@ -16,18 +17,19 @@ public enum CopType
     TRUCK
 }
 
-
 /** 
- * Represents a cop that navs towards the given postion 
- * TODO: add different cop behaviors rather than following a point 
+ * Represents a cop that navs towards the given postion, with the goal of damaging the player. 
  */
 public class CopModel : MonoBehaviour
 {
     // Internal Constants
+    private const float RamRadius = 5; // how close the cop has to be to the cop to start a ram
     private const float VisionRadius = 15; // how close the player has to be to start a pursuit
     private const float MaxPursuitRadius = 35; // The distance where the cop will lose sight of the target
     private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
-
+    private const int BaseSpeed = 12; // base movement speed while patrolling
+    private const int RamSpeed = 20; // revved up speed barreling towards the player. 
+    
     // The behavior that determines a cops pathfinding target
     [SerializeField] private NavState State;
     [SerializeField] private CopType model;
@@ -42,14 +44,16 @@ public class CopModel : MonoBehaviour
     // Position along the path that cop is at
     private int CurrentIndex;
     
-    // Movement speed multiplier towards the target
-    private int speed = 8;
-
     //Damage associated with the type of vehicle
     private int damage;
-    public const int WANDERTIME = 2;
-    private float wanderTimer;
 
+    // Movement speed multiplier towards the target
+    private int speed = BaseSpeed;
+
+    // Parameters managing cooldown for ramming, in seconds
+    private const float RamCooldown = 1;
+    private float RamTimer = 0;
+    private bool IsRamming = false;
 
     public NavState getNavState()
     {
@@ -85,10 +89,27 @@ public class CopModel : MonoBehaviour
     {
         // distance is given as a magnitude
         float distanceFromPlayer = Vector3.Distance(this.transform.position, GameManager.Instance.getPlayer().transform.position);
-        if (distanceFromPlayer < VisionRadius)
+        
+        // set attacking state
+        if (!IsRamming && distanceFromPlayer < RamRadius)
+        {
+            IsRamming = true;
+            RamTimer = 0;
+           
+            Vector3 moveDir = (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
+            RB.velocity = moveDir * RamSpeed;
+            CurrentPath = null;
+
+            Debug.Log("RAM!");
+        } 
+
+        // set navigation state
+        else if (distanceFromPlayer < VisionRadius)
         {
             State = NavState.HOTPURSUIT;
         }
+
+
         else if (State == NavState.HOTPURSUIT && distanceFromPlayer > MaxPursuitRadius)
         {
             State = NavState.WANDER;
@@ -103,11 +124,13 @@ public class CopModel : MonoBehaviour
             if (RB.velocity.magnitude > 5)
             {
                 Debug.Log("contact!");
-                damagedObject.GetComponent<Player>().TakeDamage(damage);
+                if (damagedObject.TryGetComponent<Player>(out Player player))
+                {
+                    player.TakeDamage(damage);
+                }
             }
 
         }
-        //  else if(damagedObject.tag)
     }
 
     // Update is called once per frame
@@ -115,48 +138,58 @@ public class CopModel : MonoBehaviour
     {
         StateChanger();
 
-        // calculate path towards current target
-        if (getNavState() == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
+        // resolve the attack before doing anything
+        if (IsRamming)
         {
+            RamTimer += Time.deltaTime;
+            if (RamTimer >= RamCooldown)
+            {
+                IsRamming = false;
+            }
 
+        }
 
+        // calculate path towards current target
+        else if (getNavState() == NavState.WANDER && (CurrentPath == null || CurrentIndex >= CurrentPath.Length))
+        {
             // Choose a random position to wander to
             // ----
             int sx, sy;
             
             // random position in radius of self
-             //Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
+            //Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
 
             // random position in radius of player
             Map.Instance.MapGrid.GetXY(GameManager.Instance.getPlayer().transform.position, out sx, out sy);
             
-            SetTarget(sx + UnityEngine.Random.Range(-WanderDistance, WanderDistance), sy + UnityEngine.Random.Range(-WanderDistance, WanderDistance));
+            SetPathfindingTarget(sx + UnityEngine.Random.Range(-WanderDistance, WanderDistance), sy + UnityEngine.Random.Range(-WanderDistance, WanderDistance));
             // -----
 
         }
         else if (State == NavState.HOTPURSUIT)
         {
-
-            SetTarget(GameManager.Instance.getPlayer().transform.position);
+            SetPathfindingTarget(GameManager.Instance.getPlayer().transform.position);
             transform.LookAt(GameManager.Instance.getPlayer().transform.position);
         }
 
+        // move cop along pathfinding
         HandleMovement();
     }
 
 
     /** Set the pathfinding target to the given world position */
-    public void SetTarget(Vector3 WorldPosition)
+    public void SetPathfindingTarget(Vector3 WorldPosition)
     {
         int x, y;
         Map.Instance.MapGrid.GetXY(WorldPosition, out x, out y);
 
-        SetTarget(x, y);
+        SetPathfindingTarget(x, y);
 
     }
 
+
     /** Set the pathfinding target to the given world position in grid coordinates */
-    public void SetTarget(int dx, int dy)
+    public void SetPathfindingTarget(int dx, int dy)
     {
         int sx, sy;
         Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
@@ -178,7 +211,6 @@ public class CopModel : MonoBehaviour
         }
 
     }
-
 
 
     /** Transform the cops position along their pathing finding path towards their current target */
