@@ -52,6 +52,12 @@ public class Player : MonoBehaviour
     private bool pressNitro;
     private bool pressDrift;
 
+    // Input booleans
+    private bool pressForward;
+    private bool pressBackward;
+    private bool pressNitro;
+    private bool pressDrift;
+
     //New added private variables 
 
     private float cookingTimer;
@@ -135,7 +141,7 @@ public class Player : MonoBehaviour
     // While holding shift, the player uses oil to nitro boost.
     void Nitro()
     {
-        if(pressNitro && oil > 0)
+        if (pressNitro && oil > 0)
         {
             rb.AddRelativeForce(Vector3.forward * 50);
             oil--;
@@ -313,6 +319,7 @@ public class Player : MonoBehaviour
         {
             health = 0;
             isDead = true;
+            Debug.Log("player is dead, 0 health remaining");
             return;
         }
         StartCoroutine(BecomeInvincible());

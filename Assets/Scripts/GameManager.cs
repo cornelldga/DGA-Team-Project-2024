@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,13 +18,19 @@ public class GameManager : MonoBehaviour
     [Tooltip("How long the player has to complete the level")]
     [SerializeField] private int gameTimer;
     private Player player;
-    private int numCustomers = 0;
+    private int numCustomers;
+    bool gameOver = false;
+
     [Tooltip("The minimum number of customers required to win")]
     [SerializeField] private int minCustomersToWin;
     private int completedOrders = 0;
     [Space]
-    //[Header("UI")]
+    [Header("GameManager UI")]
     private HotbarManager hotbarManager;
+    [SerializeField] TMP_Text gameTimerText;
+    [SerializeField] TMP_Text numCustomersText;
+    [SerializeField] GameObject loseScreen;
+    [SerializeField] GameObject winScreen;
 
     private void Awake()
     {
@@ -35,15 +42,20 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (customers.Count != 0)
+        if (!gameOver)
         {
-            player.HandleOrders(customers);
+            if (customers.Count != 0)
+            {
+                player.HandleOrders(customers);
+            }
         }
     }
 
     private void Start()
     {
+        gameTimerText.text = gameTimer.ToString();
         CountCustomers();
+        numCustomersText.text = completedOrders.ToString() + "/" + numCustomers.ToString();
         InvokeRepeating(nameof(UpdateGameTimer), 1, 1);
     }
 
@@ -70,6 +82,7 @@ public class GameManager : MonoBehaviour
     private void UpdateGameTimer()
     {
         gameTimer--;
+        gameTimerText.text = gameTimer.ToString();
         if (gameTimer <= 0)
         {
             StopGame();
@@ -78,6 +91,8 @@ public class GameManager : MonoBehaviour
 
     void StopGame()
     {
+        player.enabled = false;
+        Time.timeScale = 0;
         if (completedOrders >= minCustomersToWin)
         {
             WinGame();
@@ -111,6 +126,12 @@ public class GameManager : MonoBehaviour
     public void CompleteOrder(Customer customer)
     {
         completedOrders++;
+        numCustomersText.text = completedOrders.ToString() + "/" + numCustomers.ToString();
+        if (completedOrders == minCustomersToWin) {
+            //indicator that the minimum amount of customers you must serve to win has been fufilled
+            numCustomersText.color = Color.green;
+            Debug.Log("minimum customers met!");
+        }
         //customers.Remove(customer);
         RemoveOrder(customer);
         if (completedOrders == numCustomers)
@@ -123,15 +144,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void WinGame()
     {
-        Debug.Log("You Win!");
-        Time.timeScale = 0;
+        winScreen.SetActive(true);
     }
     /// <summary>
     /// Ends the game and triggers the lose condition for that level.
     /// </summary>
     public void LoseGame()
     {
-        Debug.Log("You Lose!");
-        Time.timeScale = 0;
+        loseScreen.SetActive(true);
     }
 }
