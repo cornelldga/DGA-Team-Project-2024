@@ -9,7 +9,7 @@ public class PedestrianNavigationController : MonoBehaviour
     public float stopDistance = 0.1f;
     public Vector3 destination;
     public bool hasReachedDestination = false;
-    public float knockbackScale = 0.03f;
+    public float knockbackScale = 3f;
 
     private bool isKnockedBack = false;
     private bool isInvincible = false;

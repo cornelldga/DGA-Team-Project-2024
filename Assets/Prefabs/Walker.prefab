@@ -127,7 +127,7 @@ MonoBehaviour:
   stopDistance: 2
   destination: {x: 0, y: -10, z: 0}
   hasReachedDestination: 0
-  knockbackScale: 1
+  knockbackScale: 3
 --- !u!114 &4397536775025013367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 891760649934663090}
   serializedVersion: 4
-  m_Mass: 0.1
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
