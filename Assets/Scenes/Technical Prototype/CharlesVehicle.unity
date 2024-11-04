@@ -661,6 +661,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2818427175522752929, guid: 236961037ec33054493d223b4dee2788, type: 3}
+      propertyPath: drift
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2818427175522752929, guid: 236961037ec33054493d223b4dee2788, type: 3}
       propertyPath: health
       value: 3
       objectReference: {fileID: 0}
