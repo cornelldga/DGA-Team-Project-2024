@@ -79298,7 +79298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3281241723500394206, guid: 236961037ec33054493d223b4dee2788, type: 3}
       propertyPath: m_Interpolate
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8498858998442318803, guid: 236961037ec33054493d223b4dee2788, type: 3}
       propertyPath: m_Name
@@ -80428,8 +80428,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1380772731}
   offset: {x: 0, y: 20, z: -20}
-  smoothTime: 0.1
-  maxSpeed: 30
 --- !u!1 &1203883767
 GameObject:
   m_ObjectHideFlags: 0
