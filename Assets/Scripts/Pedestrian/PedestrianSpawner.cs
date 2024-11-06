@@ -19,12 +19,13 @@ public class PedestrianSpawner : MonoBehaviour
         int count = 0;
         while (count < pedestriansToSpawn)
         {
+            yield return new WaitForSeconds(0.5f);
             GameObject pedestrian = Instantiate(pedestrianPrefab);
             Transform draw = transform.GetChild(Random.Range(0, transform.childCount - 1));
             pedestrian.GetComponent<WaypointNavigator>().currentWaypoint = draw.GetComponent<Waypoint>();
             pedestrian.transform.position = draw.position;
-            pedestrian.GetComponent<PedestrianNavigationController>().movementSpeed = Random.Range(1, 3);
-            yield return new WaitForSeconds(0.5f);
+            pedestrian.GetComponent<PedestrianNavigationController>().movementSpeed = Random.Range(3, 7);
+            Debug.Log("Pedestrian spawned at " + draw.position);
 
             count++;
         }

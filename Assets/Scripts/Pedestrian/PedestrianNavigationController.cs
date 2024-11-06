@@ -12,8 +12,8 @@ using UnityEngine;
 public class PedestrianNavigationController : MonoBehaviour
 {
     public float movementSpeed = 1.0f;
-    public float rotationSpeed = 120;
-    public float stopDistance = 0.1f;
+    public float rotationSpeed = 150;
+    public float stopDistance = 0.05f;
     public Vector3 destination;
     public bool hasReachedDestination = false;
     public float knockbackScale = 3f;
