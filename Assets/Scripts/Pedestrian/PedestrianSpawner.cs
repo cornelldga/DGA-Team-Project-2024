@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
+/// <summary>
+/// This class spawns pedestrians at random waypoints at the start of the game.
+/// </summary>
 public class PedestrianSpawner : MonoBehaviour
 {
     public GameObject pedestrianPrefab;

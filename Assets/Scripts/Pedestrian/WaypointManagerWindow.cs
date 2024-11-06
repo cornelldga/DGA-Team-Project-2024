@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// The waypoint manager window allows the user to create, remove, and modify waypoints in the scene more easily. To open the window, go to Tools > Waypoint Manager. To initialize, create a root object in the scene and assign it to the Waypoint Root field in the window. Then, use "Create Waypoint" to create a new waypoint. If a waypoint is selected, you can create a new waypoint before or after it, create a branch waypoint, or remove the waypoint. Complete a path by manually connecting the final waypoint to the first waypoint.
+/// </summary>
+/// <remarks>
+/// There is another branching function that allows the pedestrian to choose to go to a different waypoint, e.g., crossing the street. The branch ratio determines the probability of the pedestrian choosing the branch waypoint. The higher the ratio, the more likely the pedestrian will choose the branch waypoint.
+/// </remarks>
 public class WaypointManagerWindow : EditorWindow
 {
     [MenuItem("Tools/Waypoint Manager")]
