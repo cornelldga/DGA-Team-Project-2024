@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class controls the movement of a pedestrian.
+/// </summary>
+/// <remarks>
+/// Without getting crashed, the pedestrian will move towards the destination. When it reaches the destination, it selects a new one based on 1) its walking direction and 2) if there is a branch from the current waypoint. 
+/// If the pedestrian collides with the player, it will be knocked back based on the player's speed and ped-play direction.
+/// </remarks>
 public class PedestrianNavigationController : MonoBehaviour
 {
     public float movementSpeed = 1.0f;
@@ -11,14 +18,13 @@ public class PedestrianNavigationController : MonoBehaviour
     public bool hasReachedDestination = false;
     public float knockbackScale = 3f;
 
-    private bool isKnockedBack = false;
-    private bool isInvincible = false;
-    private float invincibilityDuration = 3.0f; // Duration of invincibility in seconds
-    private float invincibilityTimer = 0f;
-    private float knockbackCooldown = 0.5f; // Delay before rechecking for kinematic state
-    private float knockbackTimer = 0f;
-
-    private Rigidbody rb;
+    bool isKnockedBack = false;
+    bool isInvincible = false;
+    float invincibilityDuration = 3.0f; // Duration of invincibility in seconds
+    float invincibilityTimer = 0f;
+    float knockbackCooldown = 0.5f; // Delay before rechecking for kinematic state
+    float knockbackTimer = 0f;
+    Rigidbody rb;
 
     void Start()
     {
