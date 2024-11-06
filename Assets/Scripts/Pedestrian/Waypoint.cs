@@ -7,7 +7,7 @@ using UnityEngine;
 /// Represents a waypoint in a navigation path for a pedestrian or object.
 /// </summary>
 /// <remarks>
-/// A waypoint is a point in space with references to the previous and next waypoints, allowing for linked navigation along a path. Each waypoint also has a width range, within which a random position can be calculated for movement or spawning purposes.
+/// A waypoint is a point in space with references to the previous and next waypoints, allowing for linked navigation along a path. Each waypoint also has a width range, within which a random position can be calculated for movement or spawning purposes. The branch of a waypoint is a list of waypoints that the pedestrian can choose to navigate to, based on a branch ratio probability.
 /// </remarks>
 public class Waypoint : MonoBehaviour
 {
