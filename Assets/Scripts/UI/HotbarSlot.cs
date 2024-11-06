@@ -83,7 +83,7 @@ public class HotbarSlot : MonoBehaviour
 
     // Updates the value being displayed in the timer
     void UpdateTimer(float time, TextMeshProUGUI label)
-    { 
+    {
         time += 1;
         float seconds = Mathf.FloorToInt(time % 60);
         label.text = seconds.ToString();
@@ -109,13 +109,13 @@ public class HotbarSlot : MonoBehaviour
     // Selects this slot as the player's active order slot to track
     public void Select()
     {
-        slotBorder.color = Color.green;
+        //slotBorder.color = Color.green;
     }
 
     // Deselects this slot as the player's active order slot to track
     public void Deselect()
     {
-        slotBorder.color = Color.gray;
+        //slotBorder.color = Color.gray;
     }
 
     public Customer GetCustomerUI()
