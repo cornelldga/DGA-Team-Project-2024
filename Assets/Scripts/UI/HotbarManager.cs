@@ -8,7 +8,6 @@ public class HotbarManager : MonoBehaviour
     // List of images to be used as timer placeholders
     [SerializeField] Sprite[] timerImages = new Sprite[2];
     [SerializeField] Sprite emptySlotSprite;
-    [SerializeField] DirectionalIndicator DI;
 
     [SerializeField] HotbarSlot[] slots = new HotbarSlot[3];  // Hotbar slots
     private int openIndex = 0;  // The index of the next available slot
@@ -62,16 +61,6 @@ public class HotbarManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             ChangeSelection(2);
-        }
-
-        // Check if directional arrow should show
-        if (selectedSlot.GetCustomerUI())
-        {
-            DI.SetIndicator(selectedSlot.GetCustomerUI().transform);
-        }
-        else
-        {
-            DI.RemoveIndicator();
         }
 
 
