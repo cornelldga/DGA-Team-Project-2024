@@ -100,10 +100,14 @@ public class CopModel : MonoBehaviour
         {
             IsRamming = true;
             RamTimer = 0;
-           
+
+            transform.LookAt(GameManager.Instance.getPlayer().transform.position);
+
             Vector3 moveDir = (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
             RB.velocity = moveDir * RamSpeed;
             CurrentPath = null;
+
+            
 
             Debug.Log("RAM!");
         } 
@@ -122,7 +126,13 @@ public class CopModel : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision other)
-    {
+    {   
+        if (other.gameObject.GetComponent<ICrashable>() != null)
+        {
+            other.gameObject.GetComponent<ICrashable>().Crash(RB.velocity);
+        } 
+
+        // remove once player implements ICrashable
         GameObject damagedObject = other.gameObject;
         if (damagedObject.tag == "Player")
         {
@@ -185,7 +195,6 @@ public class CopModel : MonoBehaviour
         else if (State == NavState.HOTPURSUIT)
         {
             SetPathfindingTarget(GameManager.Instance.getPlayer().transform.position);
-            transform.LookAt(GameManager.Instance.getPlayer().transform.position);
         }
 
         // move cop along pathfinding
@@ -245,6 +254,7 @@ public class CopModel : MonoBehaviour
             {
                 Vector3 moveDir = (targetPosition - position).normalized;
                 RB.velocity = moveDir * speed;
+                transform.LookAt(targetPosition);
             }
             else
             {

@@ -339,7 +339,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.relativeVelocity.magnitude);
+        //Debug.Log(collision.relativeVelocity.magnitude);
         if (collision.gameObject.tag == "Wall")
         {
             if (collision.relativeVelocity.magnitude >= 15.0f)
