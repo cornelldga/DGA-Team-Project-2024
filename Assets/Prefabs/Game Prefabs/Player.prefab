@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 3281241723500394206}
   - component: {fileID: 2818427175522752929}
   m_Layer: 0
-  m_Name: Car
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,11 +253,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  health: 5
+  health: 10
   invincibilityDuration: 5
   invincibilityDeltaTime: 0.15
   maxOil: 100
   oilConsumptionRate: 1
-  cookingTime: 60
   nitro: 304
   drift: 32
