@@ -17,6 +17,7 @@ public class HotbarManager : MonoBehaviour
     private HotbarSlot selectedSlot;
     private int selectedIndex = 0;
     private int increment = 1;
+    private int numOrders = 0;
 
     private const int MAX_SIZE = 3;
 
@@ -24,6 +25,7 @@ public class HotbarManager : MonoBehaviour
     void Start()
     {
         selectedSlot = slots[0];
+        //slots[0].isSelected = true;
         //selectedSlot.Select();
 
     }
@@ -33,22 +35,34 @@ public class HotbarManager : MonoBehaviour
     {
 
         // If 'E' is pressed, add order to hotbar if possible
-    
+
         //if (Input.GetKeyDown(KeyCode.E))
         //{
         //    //FindNextSlot();
         //    AddToHotbar();
         //}
 
-        if (selectedIndex < (MAX_SIZE - 1) && Input.GetKeyDown(KeyCode.D)){
-            ChangeSelection(increment);
-        }
+        //if (selectedIndex < (MAX_SIZE - 1) && Input.GetKeyDown(KeyCode.D)){
+        //    ChangeSelection(increment);
+        //}
 
-        if (selectedIndex > 0 && Input.GetKeyDown(KeyCode.A))
+        //if (selectedIndex > 0 && Input.GetKeyDown(KeyCode.A))
+        //{
+        //    ChangeSelection(-increment);
+        //}
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            ChangeSelection(-increment);
+            ChangeSelection(0);
         }
-
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ChangeSelection(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            ChangeSelection(2);
+        }
 
         // Check if directional arrow should show
         if (selectedSlot.GetCustomerUI())
@@ -72,6 +86,16 @@ public class HotbarManager : MonoBehaviour
         if (canAddOrder)
         {
             slots[openIndex].AddOrder(c);
+            if (numOrders == 0)
+            {
+                selectedSlot = slots[0];
+                slots[0].isSelected = true;
+            }
+            numOrders += 1;
+            if (slots[openIndex].isSelected)
+            {
+                slots[openIndex].Select();
+            }
         }
 
     }
@@ -85,6 +109,7 @@ public class HotbarManager : MonoBehaviour
                 if (s.GetCustomerUI() == c)
                 {
                     s.RemoveOrder();
+                    numOrders -= 1;
                 }
             }
         }
@@ -107,10 +132,14 @@ public class HotbarManager : MonoBehaviour
 
     void ChangeSelection(int amount)
     {
-        //selectedSlot.Deselect();
-        selectedIndex += amount;
-        selectedSlot = slots[selectedIndex];
-        //selectedSlot.Select();
+        if (!slots[amount].isOpen && !slots[amount].isSelected)
+        {
+            selectedSlot.Deselect();
+            selectedIndex = amount;
+            selectedSlot = slots[selectedIndex];
+            selectedSlot.Select();
+        }
+        
 
        
     }

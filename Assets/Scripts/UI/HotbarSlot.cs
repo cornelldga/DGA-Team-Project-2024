@@ -10,7 +10,12 @@ public class HotbarSlot : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerLabel;
     [SerializeField] TextMeshProUGUI cookTimerCount;
     [SerializeField] TextMeshProUGUI patienceTimerCount;
+    [SerializeField] TextMeshProUGUI orderInfo;
     [SerializeField] Image slotBorder;
+    [SerializeField] Image slotIcon;
+    [SerializeField] Image shadow;
+
+    [SerializeField] string orderNum;
 
     // Timers
     private float cookTime = 0;
@@ -22,6 +27,11 @@ public class HotbarSlot : MonoBehaviour
     private Customer customer = null;
 
     public bool isOpen = true;
+    public bool isSelected;
+    private int moveX = 50;
+
+    private int sMoveX = -3;
+    private int sMoveY = -20;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +39,8 @@ public class HotbarSlot : MonoBehaviour
         timerLabel.enabled = false;
         cookTimerCount.enabled = false;
         patienceTimerCount.enabled = false;
-        Deselect();
+        slotBorder.enabled = false;
+        //Deselect();
     }
 
     // Update is called once per frame
@@ -59,7 +70,8 @@ public class HotbarSlot : MonoBehaviour
     public void AddOrder(Customer c)
     {
         customer = c;
-        timerLabel.text = "Patience";
+        //timerLabel.text = "Patience";
+        orderInfo.text = orderNum;
         timerLabel.enabled = true;
         cookTime = c.cookTime;
         cookProgress = cookTime;
@@ -98,6 +110,12 @@ public class HotbarSlot : MonoBehaviour
         patienceTimerCount.enabled = false;
         isOpen = true;
         customer = null;
+        orderInfo.text = "";
+        if (isSelected)
+        {
+            Deselect();
+        }
+        
     }
 
     // Called when the order fails
@@ -109,13 +127,79 @@ public class HotbarSlot : MonoBehaviour
     // Selects this slot as the player's active order slot to track
     public void Select()
     {
-        //slotBorder.color = Color.green;
+        
+        slotBorder.enabled = true;
+        isSelected = true;
+        
+
+        // Move the icon
+        RectTransform rectTransform = slotIcon.rectTransform;
+            
+        // Get current position
+        Vector3 currentPosition = rectTransform.anchoredPosition;
+        // Add 10 units to x position
+        Vector3 newPosition = new Vector3(currentPosition.x + moveX, currentPosition.y, currentPosition.z);
+        // Set the new position
+        rectTransform.anchoredPosition = newPosition;
+
+        // Move the outline
+        RectTransform rectTransform2 = slotBorder.rectTransform;
+
+        // Get current position
+        Vector3 currentPosition2 = rectTransform2.anchoredPosition;
+        // Add 10 units to x position
+        Vector3 newPosition2 = new Vector3(currentPosition2.x + moveX, currentPosition2.y, currentPosition2.z);
+        // Set the new position
+        rectTransform2.anchoredPosition = newPosition2;
+
+        // Move the shadow
+        RectTransform rectTransform3 = shadow.rectTransform;
+        // Get current position
+        Vector3 currentPosition3 = rectTransform3.anchoredPosition;
+        // Add 10 units to x position
+        Vector3 newPosition3 = new Vector3(currentPosition3.x + sMoveX, currentPosition3.y + sMoveY, currentPosition3.z);
+        // Set the new position
+        rectTransform3.anchoredPosition = newPosition3;
+
+
+
     }
 
     // Deselects this slot as the player's active order slot to track
     public void Deselect()
     {
-        //slotBorder.color = Color.gray;
+        
+        slotBorder.enabled = false;
+        isSelected = false;
+        
+
+        RectTransform rectTransform = slotIcon.rectTransform;
+
+        // Get current position
+        Vector3 currentPosition = rectTransform.anchoredPosition;
+        // Sub 10 units to x position
+        Vector3 newPosition = new Vector3(currentPosition.x - moveX, currentPosition.y, currentPosition.z);
+        // Set the new position
+        rectTransform.anchoredPosition = newPosition;
+
+        // Move the outline
+        RectTransform rectTransform2 = slotBorder.rectTransform;
+        // Get current position
+        Vector3 currentPosition2 = rectTransform2.anchoredPosition;
+        // Add 10 units to x position
+        Vector3 newPosition2 = new Vector3(currentPosition2.x - moveX, currentPosition2.y, currentPosition2.z);
+        // Set the new position
+        rectTransform2.anchoredPosition = newPosition2;
+
+        // Move the shadow
+        RectTransform rectTransform3 = shadow.rectTransform;
+        // Get current position
+        Vector3 currentPosition3 = rectTransform3.anchoredPosition;
+        // Add 10 units to x position
+        Vector3 newPosition3 = new Vector3(currentPosition3.x - sMoveX, currentPosition3.y - sMoveY, currentPosition3.z);
+        // Set the new position
+        rectTransform3.anchoredPosition = newPosition3;
+
     }
 
     public Customer GetCustomerUI()
