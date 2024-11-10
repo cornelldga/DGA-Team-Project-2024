@@ -7,7 +7,7 @@ public class DirectionalIndicator : MonoBehaviour
 {
     //[SerializeField] private Transform target;
     private Transform target;
-    [SerializeField] private Transform player;
+    Transform player;
 
     private Quaternion tRot = Quaternion.identity;
     private Vector3 tPos = Vector3.zero;
@@ -20,6 +20,7 @@ public class DirectionalIndicator : MonoBehaviour
     {
         arrow = this.transform.GetComponentInChildren<Image>();
         arrow.enabled = false;
+        player = GameManager.Instance.getPlayer().transform;
     }
 
     // Update is called once per frame

@@ -253,10 +253,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  maxOil: 0
-  health: 0
-  invincibilityDuration: 0
-  invincibilityDeltaTime: 0
+  health: 5
+  invincibilityDuration: 5
+  invincibilityDeltaTime: 0.15
+  maxOil: 100
   oilConsumptionRate: 1
   cookingTime: 60
   nitro: 304
