@@ -24,7 +24,7 @@ public class IsometricCameraSetup : MonoBehaviour
 {
 
     Transform player; // The player or object to follow
-    public Vector3 offset = new Vector3(0, 0, 0); // The offset from the player to the camera
+    [SerializeField] Vector3 offset = new Vector3(-20, 20, -20); // The offset from the player to the camera
 
 
     void Start()
