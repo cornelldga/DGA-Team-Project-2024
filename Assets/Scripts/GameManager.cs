@@ -16,10 +16,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Logic")]
     [Tooltip("How long the player has to complete the level")]
-    [SerializeField] private int gameTimer;
+    [SerializeField] private float gameTimer;
     private Player player;
     private int numCustomers;
-    bool gameOver = false;
+    bool pauseGame = false;
 
     [Tooltip("The minimum number of customers required to win")]
     [SerializeField] private int minCustomersToWin;
@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject loseScreen;
     [SerializeField] GameObject winScreen;
 
+    [Space]
+    [Header("GameManager Inputs")]
+    [SerializeField] KeyCode pauseKey;
+
     private void Awake()
     {
         Instance = this;
@@ -39,16 +43,28 @@ public class GameManager : MonoBehaviour
         player = FindObjectOfType<Player>();
         hotbarManager = FindObjectOfType<HotbarManager>();
     }
-
+    /// <summary>
+    /// Check if game is paused. Update the game timer and handle orders
+    /// </summary>
     private void Update()
     {
-        if (!gameOver)
+        if (Input.GetKeyDown(pauseKey))
         {
-            if (customers.Count != 0)
+            pauseGame = !pauseGame;
+            if (pauseGame)
             {
-                player.HandleOrders(customers);
+                PauseGame();
+            }
+            else
+            {
+                ResumeGame();
             }
         }
+        if (pauseGame)
+        {
+            return;
+        }
+        UpdateGameTimer();
     }
 
     private void Start()
@@ -56,7 +72,6 @@ public class GameManager : MonoBehaviour
         gameTimerText.text = gameTimer.ToString();
         CountCustomers();
         numCustomersText.text = completedOrders.ToString() + "/" + numCustomers.ToString();
-        InvokeRepeating(nameof(UpdateGameTimer), 1, 1);
     }
 
     /// <summary>
@@ -76,20 +91,55 @@ public class GameManager : MonoBehaviour
             return player;
         }
 
+    public List<Customer> GetCustomers()
+    {
+        return customers;
+    }
+
     /// <summary>
     /// Called every 
     /// </summary>
     private void UpdateGameTimer()
     {
-        gameTimer--;
-        gameTimerText.text = gameTimer.ToString();
+        gameTimer-=Time.deltaTime;
+        gameTimerText.text = gameTimer.ToString("F2");
         if (gameTimer <= 0)
         {
-            StopGame();
+            EndGame();
+        }
+    }
+    /// <summary>
+    /// Pauses the game, setting timeScale to 0 and disables the player controller and customers
+    /// </summary>
+    public void PauseGame()
+    {
+        pauseGame = true;
+        player.enabled = false;
+        Time.timeScale = 0;
+        foreach(Customer customer in customers)
+        {
+            customer.enabled = false;
+        }
+    }
+    /// <summary>
+    /// Resumes the game, setting timeScale to 1 and enables the player controller
+    /// </summary>
+    public void ResumeGame()
+    {
+        pauseGame = false;
+        player.enabled = true;
+        Time.timeScale = 1;
+        foreach (Customer customer in customers)
+        {
+            customer.enabled = true;
         }
     }
 
-    void StopGame()
+    /// <summary>
+    /// Ends the game, triggering WinGame if the minimum customers served was met,
+    /// otherwise trigggering EndGame if it is not met
+    /// </summary>
+    void EndGame()
     {
         player.enabled = false;
         Time.timeScale = 0;

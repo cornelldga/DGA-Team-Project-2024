@@ -23,13 +23,14 @@ Far: 1000
 public class IsometricCameraSetup : MonoBehaviour
 {
 
-    public Transform player; // The player or object to follow
-    public Vector3 offset = new Vector3(0, 0, 0); // The offset from the player to the camera
+    Transform player; // The player or object to follow
+    [SerializeField] Vector3 offset = new Vector3(-20, 20, -20); // The offset from the player to the camera
 
 
     void Start()
     {
         // Set the initial position of the camera based on the offset
+        player = GameManager.Instance.getPlayer().transform;
         transform.position = player.position + offset;
 
     }

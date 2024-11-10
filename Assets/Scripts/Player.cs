@@ -56,6 +56,8 @@ public class Player : MonoBehaviour, ICrashable
 
     private float cookingTimer;
 
+    private List<Customer> customers;
+
 
     // Start is called before the first frame update
     void Start()
@@ -63,8 +65,8 @@ public class Player : MonoBehaviour, ICrashable
         rb = GetComponent<Rigidbody>();
         transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
         cookingTimer = cookingTime;
-        InvokeRepeating(nameof(HandleOrders), 1, 1);
         oil = maxOil;
+        customers = GameManager.Instance.GetCustomers();
     }
 
     void FixedUpdate()
@@ -129,6 +131,10 @@ public class Player : MonoBehaviour, ICrashable
         { 
             turnDelay = Time.time + turnRate;
             Turn(); 
+        }
+        if (customers.Count != 0)
+        {
+            HandleOrders();
         }
     }
 
@@ -263,10 +269,8 @@ public class Player : MonoBehaviour, ICrashable
     /// <summary>
     /// Called every frame to check through the list of customers and decrease cooking time and oil
     /// </summary>
-    /// <param name="customers"></param>
-    public void HandleOrders(List<Customer> customers)
+    void HandleOrders()
     {
-        Debug.Log("HandleOrders called. Number of customers: " + customers.Count);
         foreach (Customer customer in customers)
         {
             if (customer.cookTime > 0 && oil > 0)

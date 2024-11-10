@@ -123,6 +123,7 @@ MonoBehaviour:
   numCustomersText: {fileID: 6389651831943328027}
   loseScreen: {fileID: 2133578081533789098}
   winScreen: {fileID: 1227599742102206150}
+  pauseKey: 27
 --- !u!1 &3112150694233831743
 GameObject:
   m_ObjectHideFlags: 0
