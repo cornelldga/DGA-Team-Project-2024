@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 6545440873622897603}
   - component: {fileID: 4690556911543526742}
   - component: {fileID: 2696599820253606858}
+  - component: {fileID: 5867847389865397708}
   m_Layer: 5
   m_Name: Progress
   m_TagString: Untagged
@@ -285,6 +286,27 @@ MonoBehaviour:
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &5867847389865397708
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4074748597513761164}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e9e521f3cd30d44c9b209a4e204268b7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5685357936626583116
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,6 +575,7 @@ MonoBehaviour:
   slotIcon: {fileID: 6307762857295135524}
   shadow: {fileID: 3938318100470363088}
   progress: {fileID: 2696599820253606858}
+  cookDoneAnim: {fileID: 5867847389865397708}
   orderNum: 
   isOpen: 1
   isSelected: 0
