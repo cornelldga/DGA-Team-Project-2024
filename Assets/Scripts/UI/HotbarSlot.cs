@@ -24,10 +24,14 @@ public class HotbarSlot : MonoBehaviour
     private float patienceTime = 0;
     private float patienceProgress = 0;
 
+    private Color readyColor = new Color(184, 233, 173);
+    private Color normColor;
+
     private Customer customer = null;
 
     public bool isOpen = true;
     public bool isSelected;
+    private bool isReady = false;
     private int moveX = 50;
 
     private int sMoveX = -3;
@@ -40,6 +44,7 @@ public class HotbarSlot : MonoBehaviour
         cookTimerCount.enabled = false;
         patienceTimerCount.enabled = false;
         slotBorder.enabled = false;
+        normColor = slotIcon.color;
         //Deselect();
     }
 
@@ -61,6 +66,12 @@ public class HotbarSlot : MonoBehaviour
         {
             UpdateTimer(customer.waitTime, patienceTimerCount);
             UpdateTimer(customer.cookTime, cookTimerCount);
+
+            if (customer.cookTime < 0 && !isReady)
+            {
+                isReady = true;
+                slotIcon.color = readyColor;
+            }
         }
 
 
@@ -111,6 +122,8 @@ public class HotbarSlot : MonoBehaviour
         isOpen = true;
         customer = null;
         orderInfo.text = "";
+        isReady = false;
+        slotIcon.color = normColor;
         if (isSelected)
         {
             Deselect();
