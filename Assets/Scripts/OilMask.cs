@@ -5,26 +5,26 @@ using UnityEngine.UI;
 
 public class OilMask : MonoBehaviour
 {
-    private RectMask2D mask;
     private int oilAmount;
-    private int oilUIHeight;
-    // Start is called before the first frame update
+    
+    private float initialYPosition;
+    private float initialXPosition;
+    private float initialZPosition;
+    [SerializeField] private float finalYPosition;
     void Start()
     {
-        mask = GetComponent<RectMask2D>();
-        mask.enabled = true;
-        //the height of this gameobject is the height of the oil UI
-        oilUIHeight = (int)GetComponent<RectTransform>().rect.height;
+
+        //get its local position
+        initialYPosition = transform.localPosition.y;
+        initialXPosition = transform.localPosition.x;
+        initialZPosition = transform.localPosition.z;
+        Debug.Log("Initial Y Position: " + initialYPosition);
     }
 
     // Update is called once per frame
     void Update()
     {
-        oilAmount = (int)GameManager.Instance.getPlayer().GetOil();
-        Vector4 padding = mask.padding;
-        //set the top padding to the oil amount, but invert the value so the mask will shrink as the oil amount increases
-        int topPadding = oilUIHeight - oilAmount;
-        padding.w = topPadding;
-        mask.padding = padding;
+        oilAmount = (int)GameManager.Instance.getPlayer().GetOil() - (int)GameManager.Instance.getPlayer().GetMaxOil();
+        transform.localPosition = new Vector3(initialXPosition, initialYPosition + oilAmount, initialZPosition);
     }
 }
