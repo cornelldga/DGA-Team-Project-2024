@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+/// <summary>
+/// This class navigates the pedestrian through the waypoints.
+/// Upon arriving at a waypoint, the pedestrian selects the next waypoint based on its walking direction and the branch ratio. 
+/// </summary>
 [RequireComponent(typeof(PedestrianNavigationController))]
 public class WaypointNavigator : MonoBehaviour
 {
@@ -17,7 +21,8 @@ public class WaypointNavigator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        direction = Mathf.RoundToInt(Random.Range(0, 1));
+        int draw = Random.Range(0, 2);
+        direction = Mathf.RoundToInt(draw);
         navigationController.SetDestination(currentWaypoint.GetPosition());
     }
 

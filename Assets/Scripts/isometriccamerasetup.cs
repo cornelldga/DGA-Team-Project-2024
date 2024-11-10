@@ -29,8 +29,8 @@ public class IsometricCameraSetup : MonoBehaviour
 
     void Start()
     {
-        player = GameManager.Instance.getPlayer().transform;
         // Set the initial position of the camera based on the offset
+        player = GameManager.Instance.getPlayer().transform;
         transform.position = player.position + offset;
 
     }
