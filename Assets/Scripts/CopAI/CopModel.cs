@@ -36,6 +36,8 @@ public class CopModel : MonoBehaviour
     [SerializeField] private NavState State;
     [SerializeField] private CopType model;
 
+    [SerializeField] private Billboard Sprite;
+
     // reference to its own rigid body
     private Rigidbody RB;
 
@@ -146,6 +148,11 @@ public class CopModel : MonoBehaviour
             }
 
         }
+    }
+
+    private void FixedUpdate()
+    {
+        Sprite.UpdateSpriteToRotation(this.transform.eulerAngles.y);
     }
 
     // Update is called once per frame
