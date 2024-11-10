@@ -25,8 +25,6 @@ public class Player : MonoBehaviour, ICrashable
     [SerializeField] float maxOil = 100f;
     [Tooltip("Oil consumption rate per second")]
     [SerializeField] float oilConsumptionRate = 1f;
-    [Tooltip("Total cooking time in seconds")]
-    [SerializeField] float cookingTime = 60f;
 
     [Header("Input Key Codes")]
     [Tooltip("Button for nitro")]
@@ -54,8 +52,6 @@ public class Player : MonoBehaviour, ICrashable
 
     //New added private variables 
 
-    private float cookingTimer;
-
     private List<Customer> customers;
 
 
@@ -64,7 +60,6 @@ public class Player : MonoBehaviour, ICrashable
     {
         rb = GetComponent<Rigidbody>();
         transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
-        cookingTimer = cookingTime;
         oil = maxOil;
         customers = GameManager.Instance.GetCustomers();
     }
@@ -73,7 +68,6 @@ public class Player : MonoBehaviour, ICrashable
     {
         Drive();
         Nitro();
-        Cook();
         Drift();
     }
 
@@ -233,27 +227,6 @@ public class Player : MonoBehaviour, ICrashable
             }
         }
     }
-
-    //Cook method continuously decreases the cookingTimer and oil (uncommented in order to operate oilbar)
-    void Cook()
-    {
-        if (cookingTimer > 0)
-        {
-            cookingTimer -= Time.deltaTime;
-            oil -= oilConsumptionRate * Time.deltaTime;
-
-            if (oil <= 0)
-            {
-                oil = 0;
-            }
-
-            if (cookingTimer <= 0)
-            {
-                cookingTimer = 0;
-            }
-        }
-    }
-
     // Player can hold the spacebar to brake and turn while braking to drift
     void Drift()
     {

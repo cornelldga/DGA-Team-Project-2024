@@ -3,38 +3,42 @@ using UnityEngine;
 public class Breakable : MonoBehaviour
 {
     [SerializeField] private float minBreakSpeed = 0f;
-    [SerializeField] private int oilAmount = 25; // Add oil (0 if not an oil barrel)
+    [SerializeField] private int oilAmount = 25; // add oil, 0 if not an oil barrel
     [SerializeField] private Material myMaterial;
     [SerializeField] private float respawnTime = 10f;
-    [SerializeField] private int damageAmount = 10; // Deal damage (0 if not damaging)
+    [SerializeField] private int damageAmount = 0; // should be 0 for oil 
 
     private Color myColor;
     private bool isRespawning = false;
     private float respawnTimer = 0f;
-    private Vector3 startPosition; // In case we implement physics-based movement/explosions
+    private Vector3 startPosition;
     private Collider myCollider;
     private Player myPlayer;
+    private Material materialInstance;
 
-    // Grab the player instance and materials/position for this Breakable object
     public void Start()
     {
-        myColor = myMaterial.color;
+        materialInstance = new Material(myMaterial);
+        GetComponent<Renderer>().material = materialInstance;
+
+        // make completely opaque
+        myColor = materialInstance.color;
+        myColor.a = 1f;
+        materialInstance.color = myColor;
+
         startPosition = transform.position;
-        myCollider = GetComponent<Collider>(); // Only called on creation so it's ok to use GetComponent
+        myCollider = GetComponent<Collider>();
         myPlayer = GameManager.Instance.getPlayer();
     }
 
-    // Update the respawning (MAY CHANGE TO COROUTINE)
     private void Update()
     {
         if (isRespawning)
         {
             respawnTimer += Time.deltaTime;
             float progress = respawnTimer / respawnTime;
-
             myColor.a = Mathf.Lerp(0f, 1f, progress);
-            myMaterial.color = myColor;
-
+            materialInstance.color = myColor;
             if (progress >= 1f)
             {
                 isRespawning = false;
@@ -43,13 +47,11 @@ public class Breakable : MonoBehaviour
         }
     }
 
-    // Check when entering a collision
     private void OnCollisionEnter(Collision collision)
     {
         CheckCollision(collision);
     }
 
-    // Check during the collision (not just when entered)
     private void OnCollisionStay(Collision collision)
     {
         if (minBreakSpeed != 0)
@@ -59,13 +61,11 @@ public class Breakable : MonoBehaviour
         CheckCollision(collision);
     }
 
-    // Checks if the player and Breakable object collided and call methods as necessary (add oil, take damage)
     private void CheckCollision(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             float collisionSpeed = collision.relativeVelocity.magnitude;
-
             if (minBreakSpeed <= 0f || collisionSpeed >= minBreakSpeed)
             {
                 myPlayer.AddOil(oilAmount);
@@ -75,14 +75,21 @@ public class Breakable : MonoBehaviour
         }
     }
 
-    // Respawn the Breakable (called when the object is first broken) 
     private void StartRespawn()
     {
         myCollider.enabled = false;
         myColor.a = 0f;
-        myMaterial.color = myColor;
+        materialInstance.color = myColor;
         transform.position = startPosition;
         isRespawning = true;
         respawnTimer = 0f;
+    }
+
+    private void OnDestroy()
+    {
+        if (materialInstance != null)
+        {
+            Destroy(materialInstance);
+        }
     }
 }

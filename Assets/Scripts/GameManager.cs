@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     private Player player;
     private int numCustomers;
     bool pauseGame = false;
+    bool gameOver = false;
 
     [Tooltip("The minimum number of customers required to win")]
     [SerializeField] private int minCustomersToWin;
@@ -48,6 +49,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if (gameOver)
+        {
+            return;
+        }
         if (Input.GetKeyDown(pauseKey))
         {
             pauseGame = !pauseGame;
@@ -194,6 +199,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void WinGame()
     {
+        gameOver = true;
+        PauseGame();
         winScreen.SetActive(true);
     }
     /// <summary>
@@ -201,6 +208,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoseGame()
     {
+        gameOver = true;
+        PauseGame();
         loseScreen.SetActive(true);
     }
 }

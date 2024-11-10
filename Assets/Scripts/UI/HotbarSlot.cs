@@ -15,6 +15,7 @@ public class HotbarSlot : MonoBehaviour
     [SerializeField] Image slotIcon;
     [SerializeField] Image shadow;
     [SerializeField] Image progress;
+    [SerializeField] Animator cookDoneAnim;
 
     [SerializeField] string orderNum;
 
@@ -47,6 +48,7 @@ public class HotbarSlot : MonoBehaviour
         slotBorder.enabled = false;
         normColor = slotIcon.color;
         progress.fillAmount = 0;
+        cookDoneAnim.enabled = false;
         //Deselect();
     }
 
@@ -72,6 +74,7 @@ public class HotbarSlot : MonoBehaviour
             {
                 isReady = true;
                 slotIcon.color = readyColor;
+                cookDoneAnim.enabled = true;
             }
 
             //Debug.Log("Cook Progress: " + customer.cookTime);
@@ -122,6 +125,7 @@ public class HotbarSlot : MonoBehaviour
     public void RemoveOrder()
     {
         timerLabel.enabled = false;
+        cookDoneAnim.enabled = false;
         //cookTimerCount.enabled = false;
         patienceTimerCount.enabled = false;
         isOpen = true;

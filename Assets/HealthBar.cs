@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class HealthBar : MonoBehaviour
 {
 
@@ -14,6 +15,8 @@ public class HealthBar : MonoBehaviour
 
     [SerializeField] private float shakeAmount = 2.0f;
     [SerializeField] private float shakeSpeed = 10.0f;
+    [SerializeField] private Animator lowHealthAnim;
+    
     private float baseRotation;
     private float currentTime;
 
@@ -29,6 +32,7 @@ public class HealthBar : MonoBehaviour
         minRotZ = 360-maxRotZ;
         totalRange = (360 - maxRotZ) + minRotZ;
         maxHealth = player.GetHealth();
+        lowHealthAnim.enabled = false;
     }
 
     // Update is called once per frame
@@ -47,6 +51,16 @@ public class HealthBar : MonoBehaviour
 
         rectTransform.localRotation = Quaternion.Euler(0, 0, currRotation + randomRotation);
         baseRotation = currRotation;
+
+        // Check if should warn about low player health
+        if (currPercentage < 0.3)
+        {
+            lowHealthAnim.enabled = true;
+        }
+        else
+        {
+            lowHealthAnim.enabled = false;
+        }
 
     }
 }
