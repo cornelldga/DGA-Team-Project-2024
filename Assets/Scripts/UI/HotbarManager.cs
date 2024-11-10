@@ -14,7 +14,7 @@ public class HotbarManager : MonoBehaviour
     private int openIndex = 0;  // The index of the next available slot
     private bool canAddOrder = true;
 
-    private HotbarSlot selectedSlot;
+    public HotbarSlot selectedSlot {get; set;}
     private int selectedIndex = 0;
     private int increment = 1;
     private int numOrders = 0;
