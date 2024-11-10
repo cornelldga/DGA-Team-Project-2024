@@ -100,10 +100,14 @@ public class CopModel : MonoBehaviour
         {
             IsRamming = true;
             RamTimer = 0;
-           
+
+            transform.LookAt(GameManager.Instance.getPlayer().transform.position);
+
             Vector3 moveDir = (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
             RB.velocity = moveDir * RamSpeed;
             CurrentPath = null;
+
+            
 
             Debug.Log("RAM!");
         } 
@@ -185,7 +189,6 @@ public class CopModel : MonoBehaviour
         else if (State == NavState.HOTPURSUIT)
         {
             SetPathfindingTarget(GameManager.Instance.getPlayer().transform.position);
-            transform.LookAt(GameManager.Instance.getPlayer().transform.position);
         }
 
         // move cop along pathfinding
@@ -245,6 +248,7 @@ public class CopModel : MonoBehaviour
             {
                 Vector3 moveDir = (targetPosition - position).normalized;
                 RB.velocity = moveDir * speed;
+                transform.LookAt(targetPosition);
             }
             else
             {
