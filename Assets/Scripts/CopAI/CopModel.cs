@@ -126,7 +126,13 @@ public class CopModel : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision other)
-    {
+    {   
+        if (other.gameObject.GetComponent<ICrashable>() != null)
+        {
+            other.gameObject.GetComponent<ICrashable>().Crash(RB.velocity);
+        } 
+
+        // remove once player implements ICrashable
         GameObject damagedObject = other.gameObject;
         if (damagedObject.tag == "Player")
         {
