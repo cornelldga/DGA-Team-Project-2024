@@ -36,15 +36,11 @@ public class HealthBar : MonoBehaviour
     {
         currPercentage = player.GetHealth() / maxHealth;
         //Debug.Log("Current health: " + currPercentage);
-        Debug.Log("MaxRot: " + maxRotZ);
-        Debug.Log("MinRot: " + minRotZ);
-        Debug.Log("TotalRange: " + totalRange);
+
         //rectTransform.localRotation = Quaternion.Euler(0, 0, maxRotZ);
         float currRange = totalRange * currPercentage;
         float currRotation = minRotZ - currRange;
-        Debug.Log("Current range: " + currRange);
-        Debug.Log("Current rotation: " + currRotation);
-        Debug.Log("Curr Health: " + currPercentage);
+
 
         currentTime += Time.deltaTime * shakeSpeed;
         float randomRotation = (Mathf.PerlinNoise(currentTime, 0) * 2 - 1) * shakeAmount;

@@ -8,17 +8,18 @@ public class HotbarSlot : MonoBehaviour
 {
 
     [SerializeField] TextMeshProUGUI timerLabel;
-    [SerializeField] TextMeshProUGUI cookTimerCount;
+    //[SerializeField] TextMeshProUGUI cookTimerCount;
     [SerializeField] TextMeshProUGUI patienceTimerCount;
     [SerializeField] TextMeshProUGUI orderInfo;
     [SerializeField] Image slotBorder;
     [SerializeField] Image slotIcon;
     [SerializeField] Image shadow;
+    [SerializeField] Image progress;
 
     [SerializeField] string orderNum;
 
     // Timers
-    private float cookTime = 0;
+    private float maxCookTime = 0;
     private float cookProgress = 0;
 
     private float patienceTime = 0;
@@ -41,17 +42,17 @@ public class HotbarSlot : MonoBehaviour
     void Start()
     {
         timerLabel.enabled = false;
-        cookTimerCount.enabled = false;
+        //cookTimerCount.enabled = false;
         patienceTimerCount.enabled = false;
         slotBorder.enabled = false;
         normColor = slotIcon.color;
+        progress.fillAmount = 0;
         //Deselect();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         //if (cookProgress > 0)
         //{
         //    cookProgress -= Time.deltaTime;
@@ -65,13 +66,17 @@ public class HotbarSlot : MonoBehaviour
         if (customer)
         {
             UpdateTimer(customer.waitTime, patienceTimerCount);
-            UpdateTimer(customer.cookTime, cookTimerCount);
+            //UpdateTimer(customer.cookTime, cookTimerCount);
 
             if (customer.cookTime < 0 && !isReady)
             {
                 isReady = true;
                 slotIcon.color = readyColor;
             }
+
+            //Debug.Log("Cook Progress: " + customer.cookTime);
+            // Update cook fill bar
+            progress.fillAmount = 1 - (customer.cookTime / maxCookTime);
         }
 
 
@@ -84,10 +89,10 @@ public class HotbarSlot : MonoBehaviour
         //timerLabel.text = "Patience";
         orderInfo.text = orderNum;
         timerLabel.enabled = true;
-        cookTime = c.cookTime;
-        cookProgress = cookTime;
-        cookTimerCount.text = cookProgress.ToString();
-        cookTimerCount.enabled = true;
+        maxCookTime = c.cookTime;
+        cookProgress = maxCookTime;
+        //cookTimerCount.text = cookProgress.ToString();
+        //cookTimerCount.enabled = true;
         patienceTimerCount.enabled = true;
         isOpen = false;
         patienceTime = c.waitTime;
@@ -117,13 +122,14 @@ public class HotbarSlot : MonoBehaviour
     public void RemoveOrder()
     {
         timerLabel.enabled = false;
-        cookTimerCount.enabled = false;
+        //cookTimerCount.enabled = false;
         patienceTimerCount.enabled = false;
         isOpen = true;
         customer = null;
         orderInfo.text = "";
         isReady = false;
         slotIcon.color = normColor;
+        progress.fillAmount = 0;
         if (isSelected)
         {
             Deselect();

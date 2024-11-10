@@ -134,7 +134,10 @@ public class HotbarManager : MonoBehaviour
     {
         if (!slots[amount].isOpen && !slots[amount].isSelected)
         {
-            selectedSlot.Deselect();
+            if (!selectedSlot.isOpen)
+            {
+                selectedSlot.Deselect();
+            }
             selectedIndex = amount;
             selectedSlot = slots[selectedIndex];
             selectedSlot.Select();
