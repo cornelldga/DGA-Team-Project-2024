@@ -5,7 +5,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 
 // This script handles the inputs and manages the oil and cooking timers for the player
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ICrashable
 {
     [Tooltip("Player moves forward by a product of this speed")]
     [SerializeField] float speed = 4f;
@@ -313,6 +313,7 @@ public class Player : MonoBehaviour
         {
             health = 0;
             isDead = true;
+            GameManager.Instance.LoseGame();
             Debug.Log("player is dead, 0 health remaining");
             return;
         }
@@ -337,15 +338,7 @@ public class Player : MonoBehaviour
         return health;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void Crash(Vector3 speedVector)
     {
-        //Debug.Log(collision.relativeVelocity.magnitude);
-        if (collision.gameObject.tag == "Wall")
-        {
-            if (collision.relativeVelocity.magnitude >= 15.0f)
-            {
-                TakeDamage(1);
-            }
-        }
     }
 }
