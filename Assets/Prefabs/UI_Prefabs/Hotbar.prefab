@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5711224017979091753}
   - component: {fileID: 859885523209384625}
+  - component: {fileID: 5057569701539394886}
   m_Layer: 5
   m_Name: Hotbar
   m_TagString: Untagged
@@ -60,6 +61,29 @@ MonoBehaviour:
   - {fileID: 2420478925983714491}
   - {fileID: 1186179406592022783}
   - {fileID: 5050334274427476027}
+--- !u!223 &5057569701539394886
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8537343492682444887}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: -452068009
+  m_SortingOrder: 1
+  m_TargetDisplay: 0
 --- !u!1001 &3917056819414442970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -155,6 +179,10 @@ PrefabInstance:
     - target: {fileID: 6007374226351292918, guid: ca360fea3434d45e0b204338b49028f9, type: 3}
       propertyPath: m_Name
       value: Slot3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091361249302084577, guid: ca360fea3434d45e0b204338b49028f9, type: 3}
+      propertyPath: orderNum
+      value: '#3'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -269,6 +297,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slot1
       objectReference: {fileID: 0}
+    - target: {fileID: 8091361249302084577, guid: ca360fea3434d45e0b204338b49028f9, type: 3}
+      propertyPath: orderNum
+      value: '#1'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -381,6 +413,10 @@ PrefabInstance:
     - target: {fileID: 6007374226351292918, guid: ca360fea3434d45e0b204338b49028f9, type: 3}
       propertyPath: m_Name
       value: Slot2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091361249302084577, guid: ca360fea3434d45e0b204338b49028f9, type: 3}
+      propertyPath: orderNum
+      value: '#2'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
