@@ -403,6 +403,7 @@ GameObject:
   - component: {fileID: 209261745}
   - component: {fileID: 209261744}
   - component: {fileID: 209261743}
+  - component: {fileID: 209261746}
   m_Layer: 0
   m_Name: Building
   m_TagString: Untagged
@@ -420,7 +421,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 14.9, y: 0, z: -23.6}
-  m_LocalScale: {x: 12, y: 3, z: 41}
+  m_LocalScale: {x: 12, y: 20.86, z: 41}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 501717419}
@@ -496,6 +497,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 209261741}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &209261746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209261741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8de3b60475640bd489d7b407ed4f9390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeSpeed: 10
+  fadeAmount: 0.25
+  doFade: 0
 --- !u!1001 &220615419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81376,6 +81392,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2818427175522752929, guid: 236961037ec33054493d223b4dee2788, type: 3}
+      propertyPath: speed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8498858998442318803, guid: 236961037ec33054493d223b4dee2788, type: 3}
       propertyPath: m_Name
       value: Player
@@ -81654,6 +81674,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1448109605332285161, guid: 23ed0bf63f127064eb44a68650253024, type: 3}
+      propertyPath: offset.x
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1448109605332285161, guid: 23ed0bf63f127064eb44a68650253024, type: 3}
+      propertyPath: offset.y
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1448109605332285161, guid: 23ed0bf63f127064eb44a68650253024, type: 3}
+      propertyPath: offset.z
+      value: -40
+      objectReference: {fileID: 0}
     - target: {fileID: 2017321981322704398, guid: 23ed0bf63f127064eb44a68650253024, type: 3}
       propertyPath: m_Name
       value: Game Camera
