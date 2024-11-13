@@ -1,5 +1,9 @@
 using UnityEngine;
 
+
+/// <summary>
+/// Controls bounce pad behavior to provide upward and forward force to the player upon collision.
+/// </summary>
 public class BouncePad : MonoBehaviour
 {
     [SerializeField] private float upwardForce = 20f;     // Vertical boost
@@ -10,6 +14,9 @@ public class BouncePad : MonoBehaviour
     private Rigidbody playerRb;
 
 
+    /// <summary>
+    /// Initializes the bounce pad by getting references to the player and its rigidbody.
+    /// </summary>
     public void Start()
     {
         myPlayer = GameManager.Instance.getPlayer();
@@ -19,6 +26,10 @@ public class BouncePad : MonoBehaviour
         }
 
     }
+
+    /// <summary>
+    /// Applies bounce force to the player when they collide with the pad.
+    /// </summary>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
