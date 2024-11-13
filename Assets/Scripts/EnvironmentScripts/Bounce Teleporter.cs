@@ -1,5 +1,9 @@
 using UnityEngine;
 
+
+/// <summary>
+/// Controls a teleport pad that launches the player in an arc towards a target position with a bounce effect.
+/// </summary>
 public class TeleportPad : MonoBehaviour
 {
     [SerializeField] private float upwardForce = 20f;
@@ -15,6 +19,10 @@ public class TeleportPad : MonoBehaviour
     private float teleportTimer = 0f;
     private Vector3 startPosition;
 
+
+    /// <summary>
+    /// Initializes the teleport pad by getting references to the player components (rigid body and collider).
+    /// </summary>
     public void Start()
     {
         myPlayer = GameManager.Instance.getPlayer();
@@ -25,6 +33,11 @@ public class TeleportPad : MonoBehaviour
         }
     }
 
+
+
+    /// <summary>
+    /// Updates the player's position along a sine curve during teleportation.
+    /// </summary>
     private void Update()
     {
         if (isTeleporting)
@@ -55,6 +68,10 @@ public class TeleportPad : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Initiates the teleportation sequence when player collides with the pad.
+    /// </summary>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
