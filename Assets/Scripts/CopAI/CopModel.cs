@@ -23,7 +23,7 @@ public enum CopType
 public class CopModel : MonoBehaviour
 {
     // Internal Constants
-    private const float RamRadius = 5; // how close the cop has to be to the cop to start a ram
+    private const float RamRadius = 10; // how close the cop has to be to the cop to start a ram
     private const float VisionRadius = 15; // how close the player has to be to start a pursuit
     private const float MaxPursuitRadius = 35; // The distance where the cop will lose sight of the target
     private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
@@ -35,6 +35,8 @@ public class CopModel : MonoBehaviour
     // The behavior that determines a cops pathfinding target
     [SerializeField] private NavState State;
     [SerializeField] private CopType model;
+
+    [SerializeField] private Billboard Sprite;
 
     // reference to its own rigid body
     private Rigidbody RB;
@@ -101,13 +103,11 @@ public class CopModel : MonoBehaviour
             IsRamming = true;
             RamTimer = 0;
 
-            transform.LookAt(GameManager.Instance.getPlayer().transform.position);
+            RB.transform.LookAt(GameManager.Instance.getPlayer().transform.position);
 
             Vector3 moveDir = (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
             RB.velocity = moveDir * RamSpeed;
             CurrentPath = null;
-
-            
 
             Debug.Log("RAM!");
         } 
@@ -146,6 +146,11 @@ public class CopModel : MonoBehaviour
             }
 
         }
+    }
+
+    private void FixedUpdate()
+    {
+        Sprite.UpdateSpriteToRotation(this.transform.localRotation.eulerAngles.y);
     }
 
     // Update is called once per frame

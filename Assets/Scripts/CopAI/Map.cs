@@ -121,7 +121,7 @@ public class Map : MonoBehaviour
             
             case TileType.SIDEWALK:
                 // sidewalk has a higher nav cost than the road.
-                return 3.0f; 
+                return 5.0f; 
             
             default :
                 // road
