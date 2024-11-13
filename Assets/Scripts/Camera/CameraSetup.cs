@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Camera Following Script
+/*This Script handles the Camera Movement and Setup*/
 
 /*
 Camera Settings :) 
@@ -24,9 +24,10 @@ public class IsometricCameraSetup : MonoBehaviour
 {
 
     Transform player; // The player or object to follow
-    [SerializeField] Vector3 offset = new Vector3(-20, 20, -20); // The offset from the player to the camera
+    [Tooltip("The offset from the player to the camera")]
+    [SerializeField] Vector3 offset = new Vector3(-20, 20, -20); 
 
-
+    // Start is called before the first frame update
     void Start()
     {
         // Set the initial position of the camera based on the offset
@@ -35,13 +36,14 @@ public class IsometricCameraSetup : MonoBehaviour
 
     }
 
+    //LateUpdate is called every frame, if the Behaviour is enabled (after all Update functions have been called)
     void LateUpdate()
     {
 
-        // calculating  target position based on the player's position and offset
+        //calculating  target position based on the player's position and offset
         Vector3 targetPosition = player.position + offset;
 
-        //  move the camera to the target position 
+        // move the camera to the target position 
         transform.position = targetPosition;
 
 
