@@ -96,6 +96,9 @@ public class GameManager : MonoBehaviour
             return player;
         }
 
+    /// <summary>
+    /// Returns the list of customers that are being handled in the game
+    /// </summary>
     public List<Customer> GetCustomers()
     {
         return customers;
@@ -185,7 +188,6 @@ public class GameManager : MonoBehaviour
         if (completedOrders == minCustomersToWin) {
             //indicator that the minimum amount of customers you must serve to win has been fufilled
             numCustomersText.color = Color.green;
-            Debug.Log("minimum customers met!");
         }
         //customers.Remove(customer);
         RemoveOrder(customer);

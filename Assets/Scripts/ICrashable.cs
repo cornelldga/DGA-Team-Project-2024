@@ -8,5 +8,6 @@ public interface ICrashable
     /// Called when an object "crashes" into this object
     /// </summary>
     /// <param name="speedVector">The speed vector of the object that crashed into this object. Should usually be rb.velocity vector</param>
-    public void Crash(Vector3 speedVector);
+    /// <param name="position">The position of the object that crashed into this object</param>
+    public void Crash(Vector3 speedVector, Vector3 position);
 }

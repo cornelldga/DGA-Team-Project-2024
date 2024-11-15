@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CopCruiser
       objectReference: {fileID: 0}
+    - target: {fileID: 7766638833031876969, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -79094,6 +79098,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CopCruiser
       objectReference: {fileID: 0}
+    - target: {fileID: 7766638833031876969, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -79447,63 +79455,6 @@ Transform:
   - {fileID: 1438257927}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &579013159
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7762214288339112326, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -2.1553497
-      objectReference: {fileID: 0}
-    - target: {fileID: 7762214288339112326, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7762214288339112326, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 15.385849
-      objectReference: {fileID: 0}
-    - target: {fileID: 7762214288339112326, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7762214288339112326, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7762214288339112326, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7762214288339112326, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7762214288339112326, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7762214288339112326, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7762214288339112326, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7766638833031876969, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
-      propertyPath: m_Name
-      value: CopTruck
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f5406891f0df9b24fbc6416fb0147b51, type: 3}
 --- !u!1001 &611550696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81893,7 +81844,6 @@ SceneRoots:
   - {fileID: 836422672}
   - {fileID: 305523766}
   - {fileID: 61182011}
-  - {fileID: 579013159}
   - {fileID: 973688352}
   - {fileID: 1368461427}
   - {fileID: 2026629789}

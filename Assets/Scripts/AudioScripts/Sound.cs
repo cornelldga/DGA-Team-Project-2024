@@ -24,7 +24,9 @@ public class Sound
     //Is this music?
     public bool music;
 
-    //Is this sound a music clip?
+    /// <summary>
+    /// Returns if music clip
+    /// </summary>
     public bool isMusic() {
         return music;
     }

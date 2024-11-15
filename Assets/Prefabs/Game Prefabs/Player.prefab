@@ -260,3 +260,4 @@ MonoBehaviour:
   oilConsumptionRate: 1
   nitro: 304
   drift: 32
+  minCrashSpeed: 3

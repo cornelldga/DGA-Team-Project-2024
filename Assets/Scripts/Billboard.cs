@@ -29,22 +29,18 @@ public class Billboard : MonoBehaviour
         if (isFacingNorth(angle) && isFacingWest(angle))
         {
 
-            Debug.Log("NW: cop rotation angle: " + angle);
-
             SR.sprite = northwest;
             SR.flipX = true;
 
         }
         else if (isFacingNorth(angle) && isFacingEast(angle))
         {
-            Debug.Log("NE: cop rotation angle: " + angle);
 
             SR.sprite = northwest;
             SR.flipX = false;
         }
         else if (isFacingSouth(angle) && isFacingWest(angle))
         {
-            Debug.Log("SW: cop rotation angle: " + angle);
 
             SR.sprite = southwest;
             SR.flipX = true;
@@ -53,35 +49,30 @@ public class Billboard : MonoBehaviour
         else if (isFacingSouth(angle) && isFacingEast(angle))
         {
 
-            Debug.Log("SE: cop rotation angle: " + angle);
 
             SR.sprite = southwest;
             SR.flipX = false;
         }
         else if (isFacingNorth(angle))
         {
-            Debug.Log("NORTH: cop rotation angle: " + angle);
 
             SR.sprite = north;
             SR.flipX = false;
         }
         else if (isFacingSouth(angle))
         {
-            Debug.Log("SOUTH: cop rotation angle: " + angle);
 
             SR.sprite = south;
             SR.flipX = false;
         }
         else if (isFacingEast(angle))
         {
-            Debug.Log("EAST: cop rotation angle: " + angle);
 
             SR.sprite = west;
             SR.flipX = false;
         }
         else if (isFacingWest(angle))
         {
-            Debug.Log("WEST: cop rotation angle: " + angle);
 
             SR.sprite = west;
             SR.flipX = true;

@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1012340524743814274}
   - component: {fileID: 383466136172214631}
   m_Layer: 0
-  m_Name: DirectionalAnchor
+  m_Name: Directional Anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

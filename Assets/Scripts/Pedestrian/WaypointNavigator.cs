@@ -48,7 +48,6 @@ public class WaypointNavigator : MonoBehaviour
         }
         if (currentWaypoint.nextWaypoint == null && currentWaypoint.previousWaypoint == null)
         {
-            Debug.LogWarning("Waypoint has no next or previous waypoint, something is wrong.");
             return;
         }
         if (direction == 0)

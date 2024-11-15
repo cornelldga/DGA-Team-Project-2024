@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 8872929183569478298}
   - component: {fileID: 8614885688319681663}
   m_Layer: 0
-  m_Name: CopCruiser
+  m_Name: Cop Cruiser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

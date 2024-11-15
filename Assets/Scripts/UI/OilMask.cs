@@ -18,6 +18,8 @@ public class OilMask : MonoBehaviour
 
     //reference to the low oil warning image
     [SerializeField] Image lowOilWarning;
+    [Tooltip("The percentage the oil must be at or lower to show the low warning image")]
+    [SerializeField] float warningPercentage = .5f;
 
     private Player player;
     void Start()
@@ -44,7 +46,7 @@ public class OilMask : MonoBehaviour
 
         //if the oil is less than 50% of the max oil, display the low oil warning
         float oilPercent = player.GetOil() / player.GetMaxOil();
-        if (oilPercent < 0.5)
+        if (oilPercent < warningPercentage)
         {
             lowOilWarning.enabled = true;
         }

@@ -42,7 +42,10 @@ public class AudioManager : MonoBehaviour
         LoadVolume();
     }
 
-    //Find the sound in the array of sounds and play it if it exists
+    /// <summary>
+    /// Find the sound in the array of sounds and play it if it exists
+    /// </summary>
+    /// <param name="name"></param>
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -53,8 +56,10 @@ public class AudioManager : MonoBehaviour
         }
         s.source.Play();
     }
-
-    //Find the sound in the array of sounds and stop it if it exists
+    /// <summary>
+    /// Find the sound in the array of sounds and stop it if it exists
+    /// </summary>
+    /// <param name="name"></param>
     public void Stop(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -68,8 +73,10 @@ public class AudioManager : MonoBehaviour
             s.source.Stop();
         }
     }
-    
-    //Stop all other music and play the music with the name passed in
+    /// <summary>
+    /// Stop all other music and play the music with the name passed in
+    /// </summary>
+    /// <param name="name"></param>
     public void PlayMusic(string name)
     {
         if (bgm != null)
@@ -90,7 +97,9 @@ public class AudioManager : MonoBehaviour
         Play(name);
     }
 
-    //Stop all music
+    /// <summary>
+    /// Stop all music
+    /// </summary>
     private void StopMusic()
     {
         foreach (Sound s in sounds)
@@ -102,7 +111,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    //Load the volume from the player prefs
+    /// <summary>
+    /// Load the volume from the player prefs
+    /// </summary>
     public void LoadVolume()
     {
         float musicVolume = PlayerPrefs.GetFloat("MusicKey", 1f);

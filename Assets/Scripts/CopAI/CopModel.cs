@@ -17,9 +17,9 @@ public enum CopType
     TRUCK
 }
 
-/** 
- * Represents a cop that navs towards the given postion, with the goal of damaging the player. 
- */
+/// <summary>
+/// Represents a cop that navs towards the given postion, with the goal of damaging the player. 
+/// </summary>
 public class CopModel : MonoBehaviour
 {
     // Internal Constants
@@ -91,7 +91,9 @@ public class CopModel : MonoBehaviour
         }
     }
 
-    /** Change the navigation state of the cop based on proximity to player **/
+    /// <summary>
+    /// Change the navigation state of the cop based on proximity to player
+    /// </summary>
     private void StateChanger()
     {
         // distance is given as a magnitude
@@ -109,7 +111,6 @@ public class CopModel : MonoBehaviour
             RB.velocity = moveDir * RamSpeed;
             CurrentPath = null;
 
-            Debug.Log("RAM!");
         } 
 
         // set navigation state
@@ -129,23 +130,8 @@ public class CopModel : MonoBehaviour
     {   
         if (other.gameObject.GetComponent<ICrashable>() != null)
         {
-            other.gameObject.GetComponent<ICrashable>().Crash(RB.velocity);
+            other.gameObject.GetComponent<ICrashable>().Crash(RB.velocity, transform.position);
         } 
-
-        // remove once player implements ICrashable
-        GameObject damagedObject = other.gameObject;
-        if (damagedObject.tag == "Player")
-        {
-            if (RB.velocity.magnitude > 5)
-            {
-                Debug.Log("contact!");
-                if (damagedObject.TryGetComponent<Player>(out Player player))
-                {
-                    player.TakeDamage(damage);
-                }
-            }
-
-        }
     }
 
     private void FixedUpdate()
@@ -207,7 +193,10 @@ public class CopModel : MonoBehaviour
     }
 
 
-    /** Set the pathfinding target to the given world position */
+    /// <summary>
+    /// Set the pathfinding target to the given world position
+    /// </summary>
+    /// <param name="WorldPosition"></param>
     public void SetPathfindingTarget(Vector3 WorldPosition)
     {
         int x, y;
@@ -218,7 +207,11 @@ public class CopModel : MonoBehaviour
     }
 
 
-    /** Set the pathfinding target to the given world position in grid coordinates */
+    /// <summary>
+    /// Set the pathfinding target to the given world position in grid coordinates
+    /// </summary>
+    /// <param name="dx"></param>
+    /// <param name="dy"></param>
     public void SetPathfindingTarget(int dx, int dy)
     {
         int sx, sy;
@@ -243,7 +236,9 @@ public class CopModel : MonoBehaviour
     }
 
 
-    /** Transform the cops position along their pathing finding path towards their current target */
+    /// <summary>
+    /// Transform the cops position along their pathing finding path towards their current target
+    /// </summary>
     private void HandleMovement()
     {
         //UnityEngine.Debug.Log(CurrentPath != null);

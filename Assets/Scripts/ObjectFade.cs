@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This script will change the opacity of this gameObject's material whenever it
+/// is in front of the game camera
+/// </summary>
+
 public class ObjectFade : MonoBehaviour
 {
     [SerializeField] float fadeSpeed;
+    [Tooltip("The value the alpha of the material will reach when fading")]
     [SerializeField] float fadeAmount;
     float originalOpacity;
     Material mat;
@@ -21,22 +27,25 @@ public class ObjectFade : MonoBehaviour
     {
         if (doFade)
         {
-            StartFade();
+            Fade();
         }
         else
         {
             ResetFade();
         }
     }
-
-    void StartFade()
+    /// <summary>
+    /// Smoothly lower the alpha to the fadeAmount
+    /// </summary>
+    void Fade()
     {
         Color currentColor = mat.color;
         Color smoothColor = new Color(currentColor.r, currentColor.g, currentColor.b, Mathf.Lerp(currentColor.a, fadeAmount, fadeSpeed));
         mat.color = smoothColor;
-        print(mat.color.a);
     }
-
+    /// <summary>
+    /// Smoothly increase the alpha to the originalOpacity
+    /// </summary>
     void ResetFade()
     {
         Color currentColor = mat.color;

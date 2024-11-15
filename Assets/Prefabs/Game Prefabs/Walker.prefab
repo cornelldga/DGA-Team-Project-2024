@@ -128,6 +128,7 @@ MonoBehaviour:
   destination: {x: 0, y: -10, z: 0}
   hasReachedDestination: 0
   knockbackScale: 3
+  maxKnockback: 25
 --- !u!114 &4397536775025013367
 MonoBehaviour:
   m_ObjectHideFlags: 0

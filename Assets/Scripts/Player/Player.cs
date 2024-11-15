@@ -54,6 +54,8 @@ public class Player : MonoBehaviour, ICrashable
 
     private List<Customer> customers;
 
+    [SerializeField] float minCrashSpeed;
+
 
     // Start is called before the first frame update
     void Start()
@@ -262,7 +264,6 @@ public class Player : MonoBehaviour, ICrashable
         if (oil <= maxOil)
         {
             oil = oil + oilAmount; //Changed functionality old function was updating oil properly
-            Debug.Log("Oil replenished: " + oil);
         }
     }
 
@@ -282,16 +283,15 @@ public class Player : MonoBehaviour, ICrashable
     }
 
     // Decreases health of player and inititates invulnerability frames
-    public void TakeDamage(int amount)
+    public void TakeDamage()
     {
         if (isInvincible) return;
-        health -= amount;
+        health --;
         if (health <= 0)
         {
             health = 0;
             isDead = true;
             GameManager.Instance.LoseGame();
-            Debug.Log("player is dead, 0 health remaining");
             return;
         }
         StartCoroutine(BecomeInvincible());
@@ -300,7 +300,6 @@ public class Player : MonoBehaviour, ICrashable
     // Public methods to access oil and maxOil
     public float GetOil()
     {
-        //Debug.Log("Oil count " + oil);
         return oil;
 
     }
@@ -315,7 +314,19 @@ public class Player : MonoBehaviour, ICrashable
         return health;
     }
 
-    public void Crash(Vector3 speedVector)
+    public void Crash(Vector3 speedVector, Vector3 position)
     {
+        if(speedVector.magnitude >= minCrashSpeed){
+            Debug.Log("crashed into player");
+            TakeDamage();
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.GetComponent<ICrashable>() != null)
+        {
+            other.gameObject.GetComponent<ICrashable>().Crash(rb.velocity, transform.position);
+        }
     }
 }

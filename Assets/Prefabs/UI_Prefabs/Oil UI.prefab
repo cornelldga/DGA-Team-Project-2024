@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 4141604244159404433}
   - component: {fileID: 710375709909749694}
   m_Layer: 5
-  m_Name: OilUI
+  m_Name: Oil UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

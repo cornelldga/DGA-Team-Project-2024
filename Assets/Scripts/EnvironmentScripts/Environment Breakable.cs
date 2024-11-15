@@ -69,7 +69,6 @@ public class Breakable : MonoBehaviour
             if (minBreakSpeed <= 0f || collisionSpeed >= minBreakSpeed)
             {
                 myPlayer.AddOil(oilAmount);
-                myPlayer.TakeDamage(damageAmount);
                 StartRespawn();
             }
         }
