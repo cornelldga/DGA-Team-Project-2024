@@ -32,10 +32,12 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
     {
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true; // Ensure the Rigidbody is kinematic initially
+        Debug.Log("PedestrianNavigationController Start, position: " + transform.position);
     }
 
     void Update()
     {
+        Debug.Log("PedestrianNavigationController Update, position: " + transform.position + " name: " + gameObject.name);
         if (isKnockedBack)
         {
             knockbackTimer -= Time.deltaTime;
@@ -47,7 +49,14 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
         }
         else
         {
-            MoveToDestination();
+            if (destination != null)
+            {
+                MoveToDestination();
+            }
+            else
+            {
+                Debug.Log("Destination is null for pedestrian: " + gameObject.name);
+            }
 
             if (isInvincible)
             {
@@ -89,6 +98,7 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
         this.destination = destination;
         hasReachedDestination = false;
     }
+
     public void Crash(Vector3 speedVector, Vector3 position)
     {
         if (!isInvincible)
@@ -98,7 +108,7 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
 
             if (magnitude > knockbackThreshold)
             {
-                Vector3 knockbackDirection = (transform.position-position).normalized;
+                Vector3 knockbackDirection = (transform.position - position).normalized;
                 float knockbackForce = Mathf.Min(magnitude * knockbackScale, maxKnockback);
 
                 knockbackDirection += Vector3.up * 0.2f;

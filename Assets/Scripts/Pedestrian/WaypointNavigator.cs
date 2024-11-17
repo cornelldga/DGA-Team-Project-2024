@@ -14,21 +14,24 @@ public class WaypointNavigator : MonoBehaviour
     public Waypoint currentWaypoint;
     int direction;
 
-    private void Awake()
+    void Awake()
     {
         navigationController = GetComponent<PedestrianNavigationController>();
     }
+
     // Start is called before the first frame update
     void Start()
     {
         int draw = Random.Range(0, 2);
         direction = Mathf.RoundToInt(draw);
         navigationController.SetDestination(currentWaypoint.GetPosition());
+        Debug.Log("WaypointNavigator Start, position: " + transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("WaypointNavigator Update, position: " + transform.position + " name: " + gameObject.name);
         if (navigationController.hasReachedDestination)
         {
             SelectNextDestination();
