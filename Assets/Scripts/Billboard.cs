@@ -24,6 +24,9 @@ public class Billboard : MonoBehaviour
     /** The sprite that should be drawn when facing southwest (225 degrees) */
     [SerializeField] Sprite southwest;
 
+    // When true prints direction data to the log
+    [SerializeField] bool showDebugLogs = false;
+
 
     private SpriteRenderer SR;
     private float cameraRotation;
@@ -50,7 +53,7 @@ public class Billboard : MonoBehaviour
         // Facing NorthWest
         if (isFacingNorth(angle) && isFacingWest(angle))
         {
-            Debug.Log("NW: " + angle);
+            if (showDebugLogs) Debug.Log("NW: " + angle);
             SR.sprite = northwest;
             SR.flipX = true;
 
@@ -58,14 +61,14 @@ public class Billboard : MonoBehaviour
         // Facing NorthEast
         else if (isFacingNorth(angle) && isFacingEast(angle))
         {
-            Debug.Log("NE: " + angle);
+            if (showDebugLogs) Debug.Log("NE: " + angle);
             SR.sprite = northwest;
             SR.flipX = false;
         }
         // Facing SouthWest
         else if (isFacingSouth(angle) && isFacingWest(angle))
         {
-            Debug.Log("SW: " + angle);
+            if (showDebugLogs)  Debug.Log("SW: " + angle);
             SR.sprite = southwest;
             SR.flipX = true;
 
@@ -73,35 +76,35 @@ public class Billboard : MonoBehaviour
         // Facing SouthEast
         else if (isFacingSouth(angle) && isFacingEast(angle))
         {
-            Debug.Log("SE: " + angle);
+            if (showDebugLogs) Debug.Log("SE: " + angle);
             SR.sprite = southwest;
             SR.flipX = false;
         }
         // Facing North
         else if (isFacingNorth(angle))
         {
-            Debug.Log("N: " + angle);
+            if (showDebugLogs) Debug.Log("N: " + angle);
             SR.sprite = north;
             SR.flipX = false;
         }
         // Facing South
         else if (isFacingSouth(angle))
         {
-            Debug.Log("S: " + angle);
+            if (showDebugLogs) Debug.Log("S: " + angle);
             SR.sprite = south;
             SR.flipX = false;
         }
         // Facing East
         else if (isFacingEast(angle))
         {
-            Debug.Log("E: " + angle);
+            if (showDebugLogs) Debug.Log("E: " + angle);
             SR.sprite = west;
             SR.flipX = false;
         }
         // Facing West
         else if (isFacingWest(angle))
         {
-            Debug.Log("W: " + angle);
+            if (showDebugLogs) Debug.Log("W: " + angle);
             SR.sprite = west;
             SR.flipX = true;
         }
