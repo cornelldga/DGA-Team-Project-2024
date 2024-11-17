@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -102,6 +103,7 @@ public class CopModel : MonoBehaviour
         // set attacking state
         if (!IsRamming && distanceFromPlayer < RamRadius)
         {
+            
             IsRamming = true;
             RamTimer = 0;
 
