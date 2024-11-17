@@ -24,6 +24,9 @@ public class Sound
     //Is this music?
     private bool music;
 
+    //Does this have reverb?
+    public bool reverb;
+
     /// <summary>
     /// Returns if music clip
     /// </summary>
@@ -35,5 +38,13 @@ public class Sound
     public bool isMusic()
     {
         return music;
+    }
+
+    /// <summary>
+    /// Returns if has reverb
+    /// </summary>
+    public bool hasReverb()
+    {
+        return reverb;
     }
 }
