@@ -32,6 +32,11 @@ public class AudioManager : MonoBehaviour
                 s.source.volume = s.volume;
                 s.source.pitch = s.pitch;
                 s.source.loop = s.loop;
+                if (s.hasReverb())
+                {
+                    //s.source.clip.AddComponent<AudioReverbFilter>();
+                    gameObject.AddComponent<AudioReverbFilter>();
+                }
             }
         }
         else
