@@ -132,4 +132,28 @@ public class AudioManager : MonoBehaviour
         }
 
     }
+
+    public void SetMusicVolume(float volume)
+    {
+        foreach (Sound s in sounds)
+        {
+            if (s.isMusic())
+            {
+                s.source.volume = volume * s.volume;
+            }
+        }
+        PlayerPrefs.SetFloat("MusicKey", volume);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        foreach (Sound s in sounds)
+        {
+            if (!s.isMusic())
+            {
+                s.source.volume = volume * s.volume;
+            }
+        }
+        PlayerPrefs.SetFloat("SFXKey", volume);
+    }
 }
