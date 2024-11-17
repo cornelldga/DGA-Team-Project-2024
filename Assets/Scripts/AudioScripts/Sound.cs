@@ -22,7 +22,7 @@ public class Sound
     public AudioSource source;
 
     //Is this music?
-    public bool music;
+    private bool music;
 
     //Does this have reverb?
     public bool reverb;
@@ -30,7 +30,13 @@ public class Sound
     /// <summary>
     /// Returns if music clip
     /// </summary>
-    public bool isMusic() {
+    
+    public void setMusic(bool v)
+    {
+        music = v;
+    }
+    public bool isMusic()
+    {
         return music;
     }
 
