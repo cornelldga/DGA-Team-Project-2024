@@ -1,6 +1,6 @@
 using UnityEngine;
 /// <summary>
-/// Controls a teleport pad that launches the player in an arc towards a target position with a bounce effect.
+/// Controls a teleport pad that launches the player in an arc towards a target position with a bounce effect (not yet implemented). 
 /// </summary>
 public class TeleportPad : MonoBehaviour
 {
@@ -40,7 +40,6 @@ public class TeleportPad : MonoBehaviour
         }
         triggerCollider.isTrigger = true;
 
-        // Adjust the trigger collider to be above the pad
         Vector3 size = triggerCollider.size;
         size.y = triggerHeight;
         triggerCollider.size = size;
@@ -89,7 +88,6 @@ public class TeleportPad : MonoBehaviour
         {
             if (playerRb != null && targetPosition != null && !isTeleporting)
             {
-                // Calculate teleport duration based on distance
                 float distance = Vector3.Distance(transform.position, targetPosition.position);
                 teleportDuration = distance / baseSpeed;
 
@@ -133,13 +131,13 @@ public class TeleportPad : MonoBehaviour
             Gizmos.DrawWireCube(triggerCenter, scaledSize);
         }
 
-        // Draw path to target
+        // draw path
         if (targetPosition != null)
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(transform.position, targetPosition.position);
 
-            // Draw a few points along the arc
+            // draw points
             const int segments = 20;
             Vector3 lastPoint = transform.position;
             float distance = Vector3.Distance(transform.position, targetPosition.position);
