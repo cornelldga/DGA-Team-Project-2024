@@ -52,6 +52,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
     music: 0
+    reverb: 0
   - name: music_TheSizzle
     clip: {fileID: 8300000, guid: df8f3396adc1b484db7425e454e102d8, type: 3}
     volume: 0.3
@@ -59,3 +60,4 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
     music: 0
+    reverb: 0

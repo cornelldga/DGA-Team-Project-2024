@@ -24,10 +24,21 @@ public class Sound
     //Is this music?
     public bool music;
 
+    //Does this have reverb?
+    public bool reverb;
+
     /// <summary>
     /// Returns if music clip
     /// </summary>
     public bool isMusic() {
         return music;
+    }
+
+    /// <summary>
+    /// Returns if has reverb
+    /// </summary>
+    public bool hasReverb()
+    {
+        return reverb;
     }
 }
