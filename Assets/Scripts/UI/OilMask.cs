@@ -18,18 +18,13 @@ public class OilMask : MonoBehaviour
 
     //reference to the low oil warning image
     [SerializeField] Image lowOilWarning;
+    [SerializeField] Image oilImage;
     [Tooltip("The percentage the oil must be at or lower to show the low warning image")]
     [SerializeField] float warningPercentage = .5f;
 
     private Player player;
     void Start()
     {
-
-        //initial mask position
-        initialYPosition = transform.localPosition.y;
-        initialXPosition = transform.localPosition.x;
-        initialZPosition = transform.localPosition.z;
-
         player = GameManager.Instance.getPlayer();
         lowOilWarning.enabled = false;
     }
@@ -41,12 +36,9 @@ public class OilMask : MonoBehaviour
         //we are putting the mask on top of the oil bar, so it looks like the oil is decreasing.
 
         //get the difference between the player's oil and the player's max oil (use this to determine how much the mask should move)
-        oilAmount = (int)player.GetOil() - (int)player.GetMaxOil();
-        transform.localPosition = new Vector3(initialXPosition, initialYPosition + oilAmount, initialZPosition);
+        oilImage.fillAmount = player.GetOil() / player.GetMaxOil();
 
-        //if the oil is less than 50% of the max oil, display the low oil warning
-        float oilPercent = player.GetOil() / player.GetMaxOil();
-        if (oilPercent < warningPercentage)
+        if(oilImage.fillAmount < warningPercentage)
         {
             lowOilWarning.enabled = true;
         }
@@ -54,5 +46,6 @@ public class OilMask : MonoBehaviour
         {
             lowOilWarning.enabled = false;
         }
+        
     }
 }

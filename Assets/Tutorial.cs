@@ -9,6 +9,7 @@ using UnityEngine;
 public class Tutorial : MonoBehaviour
 {
     [SerializeField] GameObject tutorialUI;
+    GameObject UICanvas;
     bool toggle = false;
     void Start()
     {

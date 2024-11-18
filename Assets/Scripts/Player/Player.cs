@@ -62,6 +62,9 @@ public class Player : MonoBehaviour, ICrashable
 
     public ParticleSystem smokeParticle;
 
+    [Tooltip("The maximum amount of force applied when colliding")]
+    [SerializeField] float maxCollisionForce;
+
 
 
     // Start is called before the first frame update
@@ -361,7 +364,7 @@ public class Player : MonoBehaviour, ICrashable
         }
         float curSpeed = lastVelocity.magnitude;
         Vector3 direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
-        GetComponent<Rigidbody>().velocity = direction * Mathf.Max(curSpeed, 2f);
+        GetComponent<Rigidbody>().velocity = direction * Mathf.Max(curSpeed, maxCollisionForce);
     }
 
 

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 409938213325812432}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6313500550521984349}
@@ -59,6 +59,7 @@ MonoBehaviour:
   minCrashSpeed: 3
   Sprite: {fileID: 7051094709918193244}
   smokeParticle: {fileID: 4909140721607116632, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
+  maxCollisionForce: 1
 --- !u!54 &-3585756424289968986
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -177,8 +178,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.17364816, z: 0, w: 0.9848078}
   m_LocalPosition: {x: 0, y: 0.48, z: 0}
-  m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.065, y: 0.086666666, z: 0.086666666}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6340811529274514996}
   m_LocalEulerAnglesHint: {x: 0, y: 20, z: 0}
@@ -222,7 +223,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ea2655b355e5041d78246f4648401e49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -251,4 +252,3 @@ MonoBehaviour:
   west: {fileID: 21300000, guid: ea2655b355e5041d78246f4648401e49, type: 3}
   northwest: {fileID: 21300000, guid: 0ee47134c5de64076a482701a5bc1c29, type: 3}
   southwest: {fileID: 21300000, guid: d9e9966679f414583b29184c81c75294, type: 3}
-  showDebugLogs: 0
