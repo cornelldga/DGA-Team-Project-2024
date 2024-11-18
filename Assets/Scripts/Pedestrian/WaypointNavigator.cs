@@ -25,13 +25,11 @@ public class WaypointNavigator : MonoBehaviour
         int draw = Random.Range(0, 2);
         direction = Mathf.RoundToInt(draw);
         navigationController.SetDestination(currentWaypoint.GetPosition());
-        Debug.Log("WaypointNavigator Start, position: " + transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("WaypointNavigator Update, position: " + transform.position + " name: " + gameObject.name);
         if (navigationController.hasReachedDestination)
         {
             SelectNextDestination();

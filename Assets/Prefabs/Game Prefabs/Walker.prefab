@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3
-  rotationSpeed: 120
+  rotationSpeed: 500
   stopDistance: 2
   destination: {x: 0, y: -10, z: 0}
   hasReachedDestination: 0

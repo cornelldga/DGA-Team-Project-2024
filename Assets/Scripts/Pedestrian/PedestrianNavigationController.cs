@@ -12,7 +12,7 @@ using UnityEngine;
 public class PedestrianNavigationController : MonoBehaviour, ICrashable
 {
     public float movementSpeed = 1.0f;
-    public float rotationSpeed = 150;
+    public float rotationSpeed = 5000;
     public float stopDistance = 0.05f;
     public Vector3 destination;
     public bool hasReachedDestination = false;
@@ -32,12 +32,10 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
     {
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true; // Ensure the Rigidbody is kinematic initially
-        Debug.Log("PedestrianNavigationController Start, position: " + transform.position);
     }
 
     void Update()
     {
-        Debug.Log("PedestrianNavigationController Update, position: " + transform.position + " name: " + gameObject.name);
         if (isKnockedBack)
         {
             knockbackTimer -= Time.deltaTime;

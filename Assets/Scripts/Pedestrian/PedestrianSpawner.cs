@@ -33,7 +33,6 @@ public class PedestrianSpawner : MonoBehaviour
             // Note the change here: if we don't pass in position, the pedestrian will spawn at the origin of the prefab for unknown reason, even if we set the position later and we actually correctly set it (I've looked at it by adding Debug.Logs to Start methods, and they print the correct positions. However, as long as Update() is called, the pedestrian will be teleported to the origin of the prefab.)
             GameObject pedestrian = Instantiate(pedestrianPrefab, draw.position, Quaternion.identity);
             pedestrian.GetComponent<WaypointNavigator>().currentWaypoint = draw.GetComponent<Waypoint>();
-            Debug.Log("Draw: " + draw + " " + draw.position + " " + pedestrian.transform.position);
             pedestrian.GetComponent<PedestrianNavigationController>().movementSpeed = Random.Range(3, 7);
             count++;
         }
