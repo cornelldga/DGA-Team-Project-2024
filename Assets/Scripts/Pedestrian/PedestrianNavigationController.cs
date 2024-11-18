@@ -12,11 +12,11 @@ using UnityEngine;
 public class PedestrianNavigationController : MonoBehaviour, ICrashable
 {
     public float movementSpeed = 1.0f;
-    public float rotationSpeed = 150;
-    public float stopDistance = 0.05f;
-    public Vector3 destination;
+    [SerializeField] float rotationSpeed = 5000;
+    [SerializeField] float stopDistance = 0.05f;
+    [SerializeField] Vector3 destination;
     public bool hasReachedDestination = false;
-    public float knockbackScale = 3f;
+    [SerializeField] float knockbackScale = 3f;
     [Tooltip("The maximum force that can be applied to a pedestrian")]
     [SerializeField] float maxKnockback;
 
@@ -47,7 +47,14 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
         }
         else
         {
-            MoveToDestination();
+            if (destination != null)
+            {
+                MoveToDestination();
+            }
+            else
+            {
+                Debug.Log("Destination is null for pedestrian: " + gameObject.name);
+            }
 
             if (isInvincible)
             {
@@ -89,6 +96,7 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
         this.destination = destination;
         hasReachedDestination = false;
     }
+
     public void Crash(Vector3 speedVector, Vector3 position)
     {
         if (!isInvincible)
@@ -98,7 +106,7 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
 
             if (magnitude > knockbackThreshold)
             {
-                Vector3 knockbackDirection = (transform.position-position).normalized;
+                Vector3 knockbackDirection = (transform.position - position).normalized;
                 float knockbackForce = Mathf.Min(magnitude * knockbackScale, maxKnockback);
 
                 knockbackDirection += Vector3.up * 0.2f;

@@ -14,10 +14,11 @@ public class WaypointNavigator : MonoBehaviour
     public Waypoint currentWaypoint;
     int direction;
 
-    private void Awake()
+    void Awake()
     {
         navigationController = GetComponent<PedestrianNavigationController>();
     }
+
     // Start is called before the first frame update
     void Start()
     {
