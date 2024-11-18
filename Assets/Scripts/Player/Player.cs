@@ -141,6 +141,7 @@ public class Player : MonoBehaviour, ICrashable
         {
             rb.AddRelativeForce(Vector3.forward * 50);
             oil--;
+            AudioManager.Instance.Play("sfx_Boost");
         }
     }
 
@@ -287,6 +288,17 @@ public class Player : MonoBehaviour, ICrashable
     {
         if (isInvincible) return;
         health --;
+        int random = Random.Range(0, 2);
+        switch(random)
+        {
+            case 0:
+                AudioManager.Instance.Play("sfx_Crash1");
+                break;
+            case 1:
+                AudioManager.Instance.Play("sfx_Crash2");
+                break;
+        }
+
         if (health <= 0)
         {
             health = 0;
