@@ -3,24 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// This class manages the UI for how the player keeps track of orders currently picked up.
-/// </summary>
 public class HotbarManager : MonoBehaviour
 {
     // List of images to be used as timer placeholders
-    //[SerializeField] Sprite[] timerImages = new Sprite[2];
-
-    [Header("Hotbar Inputs")]
+    [SerializeField] Sprite[] timerImages = new Sprite[2];
     [SerializeField] Sprite emptySlotSprite;
+
     [SerializeField] HotbarSlot[] slots = new HotbarSlot[3];  // Hotbar slots
-
-
     private int openIndex = 0;  // The index of the next available slot
     private bool canAddOrder = true;
 
     public HotbarSlot selectedSlot {get; set;}
     private int selectedIndex = 0;
+    private int increment = 1;
     private int numOrders = 0;
 
     private const int MAX_SIZE = 3;
@@ -38,6 +33,22 @@ public class HotbarManager : MonoBehaviour
     void Update()
     {
 
+        // If 'E' is pressed, add order to hotbar if possible
+
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    //FindNextSlot();
+        //    AddToHotbar();
+        //}
+
+        //if (selectedIndex < (MAX_SIZE - 1) && Input.GetKeyDown(KeyCode.D)){
+        //    ChangeSelection(increment);
+        //}
+
+        //if (selectedIndex > 0 && Input.GetKeyDown(KeyCode.A))
+        //{
+        //    ChangeSelection(-increment);
+        //}
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -52,11 +63,11 @@ public class HotbarManager : MonoBehaviour
             ChangeSelection(2);
         }
 
+
+
     }
 
-    /// <summary>
-    /// Adds an order to the hotbar if possible
-    /// </summary>
+    // Adds an order to the hotbar if possible
     public void AddToHotbar(Customer c)
     {
         FindNextSlot();
@@ -78,9 +89,6 @@ public class HotbarManager : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// Removes an order from the hotbar based on customer reference.
-    /// </summary>
     public void RemoveFromHotBar(Customer c)
     {
         foreach (HotbarSlot s in slots)
@@ -96,9 +104,7 @@ public class HotbarManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Finds the next open slot to put an order into.
-    /// </summary>
+    // Find the next open slot to put an order into
     void FindNextSlot()
     {
         for (int i = 0; i < MAX_SIZE; i++)
@@ -113,11 +119,6 @@ public class HotbarManager : MonoBehaviour
         canAddOrder = false;
     }
 
-    /// <summary>
-    /// Changes the selection of which slot of player is actively tracking.
-    /// Will only successfully select a slot with an order associated to it.
-    /// </summary>
-    /// <param name="amount"></param>
     void ChangeSelection(int amount)
     {
         if (!slots[amount].isOpen && !slots[amount].isSelected)

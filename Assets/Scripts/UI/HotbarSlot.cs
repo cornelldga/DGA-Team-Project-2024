@@ -4,15 +4,11 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-
-/// <summary>
-/// This class is used to define the individual Hotbar nodes. Each node is
-/// associated to a customer's order picked up by the player.
-/// </summary>
 public class HotbarSlot : MonoBehaviour
 {
-    [Header("Hotbar Slot Inputs")]
+
     [SerializeField] TextMeshProUGUI timerLabel;
+    //[SerializeField] TextMeshProUGUI cookTimerCount;
     [SerializeField] TextMeshProUGUI patienceTimerCount;
     [SerializeField] TextMeshProUGUI orderInfo;
     [SerializeField] Image slotBorder;
@@ -59,10 +55,20 @@ public class HotbarSlot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if (cookProgress > 0)
+        //{
+        //    cookProgress -= Time.deltaTime;
+        //    UpdateTimer(cookProgress, cookTimerCount);
+        //    if (cookProgress <= 0)
+        //    {
+        //        FinishCooking();
+        //    }
+        //}
 
         if (customer)
         {
             UpdateTimer(customer.waitTime, patienceTimerCount);
+            //UpdateTimer(customer.cookTime, cookTimerCount);
 
             if (customer.cookTime < 0 && !isReady)
             {
@@ -71,6 +77,7 @@ public class HotbarSlot : MonoBehaviour
                 cookDoneAnim.enabled = true;
             }
 
+            //Debug.Log("Cook Progress: " + customer.cookTime);
             // Update cook fill bar
             progress.fillAmount = 1 - (customer.cookTime / maxCookTime);
         }
@@ -78,28 +85,34 @@ public class HotbarSlot : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// Adds the order to the hotbar.
-    /// </summary>
-    /// <param name="c"></param>
+    // Adds the order to the hotbar
     public void AddOrder(Customer c)
     {
         customer = c;
+        //timerLabel.text = "Patience";
         orderInfo.text = orderNum;
         timerLabel.enabled = true;
         maxCookTime = c.cookTime;
         cookProgress = maxCookTime;
+        //cookTimerCount.text = cookProgress.ToString();
+        //cookTimerCount.enabled = true;
         patienceTimerCount.enabled = true;
         isOpen = false;
         patienceTime = c.waitTime;
         patienceProgress = patienceTime;
     }
 
-    /// <summary>
-    /// Updates the value being displayed in the timer.
-    /// </summary>
-    /// <param name="time"></param>
-    /// <param name="label"></param>
+    // Called when the order is finished cooking and transitions to patience phase
+    public void FinishCooking()
+    {
+        //cookProgress = cookTime;
+        //state = OrderState.Delivering;
+        //timerLabel.text = "Patience";
+        //timerCount.text = patienceProgress.ToString();
+        cookProgress = 0;
+    }
+
+    // Updates the value being displayed in the timer
     void UpdateTimer(float time, TextMeshProUGUI label)
     {
         time += 1;
@@ -107,9 +120,8 @@ public class HotbarSlot : MonoBehaviour
         label.text = seconds.ToString();
     }
 
-    /// <summary>
-    /// Removes the order from the hotbar.
-    /// </summary>
+
+    // Removes the order from the hotbar
     public void RemoveOrder()
     {
         timerLabel.enabled = false;
@@ -129,18 +141,13 @@ public class HotbarSlot : MonoBehaviour
         
     }
 
-    /// <summary>
-    /// Called when the order fails.
-    /// </summary>
-
+    // Called when the order fails
     void FailOrder()
     {
         RemoveOrder();
     }
 
-    /// <summary>
-    ///  Selects this slot as the player's active order slot to track.
-    /// </summary>
+    // Selects this slot as the player's active order slot to track
     public void Select()
     {
         
@@ -150,29 +157,38 @@ public class HotbarSlot : MonoBehaviour
 
         // Move the icon
         RectTransform rectTransform = slotIcon.rectTransform;
+            
+        // Get current position
         Vector3 currentPosition = rectTransform.anchoredPosition;
+        // Add 10 units to x position
         Vector3 newPosition = new Vector3(currentPosition.x + moveX, currentPosition.y, currentPosition.z);
+        // Set the new position
         rectTransform.anchoredPosition = newPosition;
 
         // Move the outline
         RectTransform rectTransform2 = slotBorder.rectTransform;
+
+        // Get current position
         Vector3 currentPosition2 = rectTransform2.anchoredPosition;
+        // Add 10 units to x position
         Vector3 newPosition2 = new Vector3(currentPosition2.x + moveX, currentPosition2.y, currentPosition2.z);
+        // Set the new position
         rectTransform2.anchoredPosition = newPosition2;
 
         // Move the shadow
         RectTransform rectTransform3 = shadow.rectTransform;
+        // Get current position
         Vector3 currentPosition3 = rectTransform3.anchoredPosition;
+        // Add 10 units to x position
         Vector3 newPosition3 = new Vector3(currentPosition3.x + sMoveX, currentPosition3.y + sMoveY, currentPosition3.z);
+        // Set the new position
         rectTransform3.anchoredPosition = newPosition3;
 
 
 
     }
 
-    /// <summary>
-    /// Deselects this slot as the player's active order slot to track.
-    /// </summary>
+    // Deselects this slot as the player's active order slot to track
     public void Deselect()
     {
         
@@ -181,28 +197,34 @@ public class HotbarSlot : MonoBehaviour
         
 
         RectTransform rectTransform = slotIcon.rectTransform;
+
+        // Get current position
         Vector3 currentPosition = rectTransform.anchoredPosition;
+        // Sub 10 units to x position
         Vector3 newPosition = new Vector3(currentPosition.x - moveX, currentPosition.y, currentPosition.z);
+        // Set the new position
         rectTransform.anchoredPosition = newPosition;
 
         // Move the outline
         RectTransform rectTransform2 = slotBorder.rectTransform;
+        // Get current position
         Vector3 currentPosition2 = rectTransform2.anchoredPosition;
+        // Add 10 units to x position
         Vector3 newPosition2 = new Vector3(currentPosition2.x - moveX, currentPosition2.y, currentPosition2.z);
+        // Set the new position
         rectTransform2.anchoredPosition = newPosition2;
 
         // Move the shadow
         RectTransform rectTransform3 = shadow.rectTransform;
+        // Get current position
         Vector3 currentPosition3 = rectTransform3.anchoredPosition;
+        // Add 10 units to x position
         Vector3 newPosition3 = new Vector3(currentPosition3.x - sMoveX, currentPosition3.y - sMoveY, currentPosition3.z);
+        // Set the new position
         rectTransform3.anchoredPosition = newPosition3;
 
     }
 
-    /// <summary>
-    /// Returns the customer associated with this slot.
-    /// </summary>
-    /// <returns></returns>
     public Customer GetCustomerUI()
     {
         return customer;
