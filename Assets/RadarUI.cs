@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RadarUI : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class RadarUI : MonoBehaviour
 
     // Scaling variables
     [SerializeField] private float maxDistance = 50; // The maximum distance to track from the player
-    private float radarRadius = 140;
+    [SerializeField] private float radarRadius = 140;
+
+    private float borderPad = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +31,7 @@ public class RadarUI : MonoBehaviour
             dots.Add(dotInstance);
             dotInstance.SetCop(c);
         }
-
+        
 
     }
 
@@ -48,11 +51,22 @@ public class RadarUI : MonoBehaviour
             //rd.transform.localPosition = distance;
             Vector3 ratioDistance = distance / maxDistance;
             float xPos = ratioDistance.x * radarRadius;
-            xPos = Mathf.Clamp(xPos, -radarRadius, radarRadius);
             float yPos = ratioDistance.z * radarRadius;
-            yPos = Mathf.Clamp(yPos, -radarRadius, radarRadius);
-            //Debug.Log("xPos clamped: " + );
-            rd.transform.localPosition = new Vector3(xPos, yPos, 0);
+            float bound = radarRadius + borderPad;
+            if (xPos > bound || yPos > bound)
+            {
+                rd.GetComponent<Image>().enabled = false;
+            }
+            else
+            {
+                rd.GetComponent<Image>().enabled = true;
+                xPos = Mathf.Clamp(xPos, -radarRadius, radarRadius);
+                yPos = Mathf.Clamp(yPos, -radarRadius, radarRadius);
+                //Debug.Log("xPos clamped: " + xPos);
+                rd.transform.localPosition = new Vector3(xPos, yPos, 0);
+            }
+            
+
         }
 
     }

@@ -81822,6 +81822,10 @@ PrefabInstance:
       propertyPath: m_ReferenceResolution.y
       value: 1080
       objectReference: {fileID: 0}
+    - target: {fileID: 8981761309336559355, guid: 7d530e5a1f68f4b48ae246ef6846e6b3, type: 3}
+      propertyPath: radarRadius
+      value: 120
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
