@@ -545,6 +545,10 @@ PrefabInstance:
       value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 1427376542774739505, guid: 2864ffea446eb4045a3e9cef5296f07a, type: 3}
+      propertyPath: showDebugInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427376542774739505, guid: 2864ffea446eb4045a3e9cef5296f07a, type: 3}
       propertyPath: MapTiles.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -78971,6 +78975,14 @@ PrefabInstance:
     - target: {fileID: 4054837727560438282, guid: 2864ffea446eb4045a3e9cef5296f07a, type: 3}
       propertyPath: m_Tiles.Array.data[4769].second.m_TileObjectToInstantiateIndex
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111953567272250722, guid: 2864ffea446eb4045a3e9cef5296f07a, type: 3}
+      propertyPath: m_SortingLayer
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4111953567272250722, guid: 2864ffea446eb4045a3e9cef5296f07a, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1075137275
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

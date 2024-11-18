@@ -29,17 +29,18 @@ public class Billboard : MonoBehaviour
 
 
     private SpriteRenderer SR;
-    private float cameraRotation;
+    private Vector3 cameraRotation;
 
     private void Start()
     {
         SR = GetComponent<SpriteRenderer>();
-        cameraRotation = Camera.main.transform.rotation.eulerAngles.y;
+        cameraRotation = Camera.main.transform.rotation.eulerAngles;
     }
     void Update()
     {
         // set sprite renderer plane parallel with the camera's plane. 
-        transform.LookAt(Camera.main.transform.position, Vector3.up);
+        transform.eulerAngles = Camera.main.transform.eulerAngles;
+        
     }
 
     /** Sets the rendered sprite corresponding to the body's angle of rotation */
@@ -47,7 +48,14 @@ public class Billboard : MonoBehaviour
     {
 
         // account for the rotation angle of the camera
-        angle = (angle - cameraRotation) % 360;
+        //angle = (angle - cameraRotation) % 360;
+        angle = (angle-cameraRotation.y);
+
+        if (angle < 0)
+        {
+            angle = 360 + angle;
+        }
+
 
         // check diagonal angles first
         // Facing NorthWest
@@ -55,7 +63,7 @@ public class Billboard : MonoBehaviour
         {
             if (showDebugLogs) Debug.Log("NW: " + angle);
             SR.sprite = northwest;
-            SR.flipX = true;
+            SR.flipX = false;
 
         }
         // Facing NorthEast
@@ -63,14 +71,14 @@ public class Billboard : MonoBehaviour
         {
             if (showDebugLogs) Debug.Log("NE: " + angle);
             SR.sprite = northwest;
-            SR.flipX = false;
+            SR.flipX = true;
         }
         // Facing SouthWest
         else if (isFacingSouth(angle) && isFacingWest(angle))
         {
             if (showDebugLogs)  Debug.Log("SW: " + angle);
             SR.sprite = southwest;
-            SR.flipX = true;
+            SR.flipX = false;
 
         }
         // Facing SouthEast
@@ -78,7 +86,7 @@ public class Billboard : MonoBehaviour
         {
             if (showDebugLogs) Debug.Log("SE: " + angle);
             SR.sprite = southwest;
-            SR.flipX = false;
+            SR.flipX = true;
         }
         // Facing North
         else if (isFacingNorth(angle))
@@ -99,40 +107,43 @@ public class Billboard : MonoBehaviour
         {
             if (showDebugLogs) Debug.Log("E: " + angle);
             SR.sprite = west;
-            SR.flipX = false;
+            SR.flipX = true;
         }
         // Facing West
         else if (isFacingWest(angle))
         {
             if (showDebugLogs) Debug.Log("W: " + angle);
             SR.sprite = west;
-            SR.flipX = true;
+            SR.flipX = false;
         }
         
     }
 
-    /** Returns true if the body is facing East */
-    bool isFacingEast(float angle)
-    {
-        return angle >= 22.5 && angle < 157.5;
-    }
 
     /** Returns true if the body is facing North */
     bool isFacingNorth(float angle)
     {
-        return angle >= 292.5 && angle < 360 || angle >= 0 && angle < 67.5;
+        return angle >= 290 && angle < 360 || angle >= 0 && angle < 70;
     }
 
+
+    /** Returns true if the body is facing East */
+    bool isFacingEast(float angle)
+    {
+        return angle >= 30 && angle < 160;
+    }
+
+    
     /** Returns true if the body is facing South */
     bool isFacingSouth(float angle)
     {
-        return angle >= 157.5 && angle < 247.5;
+        return angle >= 110 && angle < 250;
     }
 
     /** Returns true if the body is facing West */
     bool isFacingWest(float angle)
     {
-        return angle >= 202.5 && angle < 337.5;
+        return angle >= 200 && angle < 340;
     }
 
 }
