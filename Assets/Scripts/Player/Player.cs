@@ -23,8 +23,6 @@ public class Player : MonoBehaviour, ICrashable
     [Header("Oil Values")]
     [Tooltip("Max amount of oil that player starts with")]
     [SerializeField] float maxOil = 100f;
-    [Tooltip("Oil consumption rate per second")]
-    [SerializeField] float oilConsumptionRate = 1f;
 
     [Header("Input Key Codes")]
     [Tooltip("Left button for nitro")]
@@ -41,7 +39,6 @@ public class Player : MonoBehaviour, ICrashable
     private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int curAngle = 0;
     private bool movingForward = false;
-    private bool isDead = false;
     private bool isInvincible = false;
     private float turnDelay = 0;
     private float turnRate = 0.25f;
@@ -324,7 +321,6 @@ public class Player : MonoBehaviour, ICrashable
         if (health <= 0)
         {
             health = 0;
-            isDead = true;
             GameManager.Instance.LoseGame();
             return;
         }
