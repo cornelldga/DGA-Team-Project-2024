@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     [Space]
     [Header("GameManager Inputs")]
     [SerializeField] KeyCode pauseKey;
+    [SerializeField] GameObject pauseScreen;
 
     private void Awake()
     {
@@ -123,6 +124,7 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         pauseGame = true;
+        this.pauseScreen.SetActive(true);
         player.enabled = false;
         Time.timeScale = 0;
         foreach(Customer customer in customers)
@@ -136,6 +138,7 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         pauseGame = false;
+        this.pauseScreen.SetActive(false);
         player.enabled = true;
         Time.timeScale = 1;
         foreach (Customer customer in customers)
