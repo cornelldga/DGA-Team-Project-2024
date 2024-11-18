@@ -4,13 +4,13 @@ using UnityEngine;
 
 
 
-public class NewBehaviourScript : MonoBehaviour
+public class sfxPlay : MonoBehaviour
 {
-    [SerializeField] string musicName;
+    [SerializeField] string soundName;
     // Start is called before the first frame update
     void Start()
     {
         //Play the music
-        AudioManager.Instance.PlayMusic(musicName);
+        FindObjectOfType<AudioManager>().Play(soundName);
     }
 }
