@@ -51,12 +51,14 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    reverb: 0
   - name: music_TheSizzle
     clip: {fileID: 8300000, guid: 02710fc0fad933748b5656f5b8b30619, type: 3}
     volume: 0.3
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    reverb: 0
   soundEffects:
   - name: sfx_Crash1
     clip: {fileID: 8300000, guid: 3702e8e8a7454db43acf3443e69c07d4, type: 3}
@@ -64,27 +66,39 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    reverb: 0
   - name: sfx_Crash2
     clip: {fileID: 8300000, guid: a5e0708311a1fb94cbb0d79e9f24701f, type: 3}
     volume: 0.3
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    reverb: 0
   - name: sfx_Boost
     clip: {fileID: 8300000, guid: bbc812acd8e24414fae91adcce9f806c, type: 3}
     volume: 0.3
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    reverb: 0
   - name: sfx_BarrelBreak
     clip: {fileID: 8300000, guid: 6967e1480a3ea7641a58e84f7556feea, type: 3}
     volume: 0.3
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    reverb: 0
   - name: sfx_TimeUp
     clip: {fileID: 8300000, guid: 6967e1480a3ea7641a58e84f7556feea, type: 3}
     volume: 0.3
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    reverb: 0
+  - name: sfx_Boost
+    clip: {fileID: 8300000, guid: bbc812acd8e24414fae91adcce9f806c, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0

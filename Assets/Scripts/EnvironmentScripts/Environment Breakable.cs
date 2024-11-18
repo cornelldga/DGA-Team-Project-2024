@@ -9,7 +9,6 @@ public class Breakable : MonoBehaviour
     [SerializeField] private int oilAmount = 25;       // Amount of oil to add, 0 if not an oil barrel
     [SerializeField] private Material myMaterial;
     [SerializeField] private float respawnTime = 10f;
-    [SerializeField] private int damageAmount = 0;     // Should be 0 for oil barrels (subject to change)
 
     private Color objectColor;
     private bool isRespawning = false;
