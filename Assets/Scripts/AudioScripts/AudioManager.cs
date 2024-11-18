@@ -182,19 +182,16 @@ public class AudioManager : MonoBehaviour
 
     public void SetMusicVolume(float volume)
     {
-        foreach (Sound s in sounds)
+        foreach (Sound s in musicTracks)
         {
-            if (s.isMusic())
-            {
-                s.source.volume = volume * s.volume;
-            }
+            s.source.volume = volume * s.volume;
         }
         PlayerPrefs.SetFloat("MusicKey", volume);
     }
 
     public void SetSFXVolume(float volume)
     {
-        foreach (Sound s in sounds)
+        foreach (Sound s in soundEffects)
         {
             if (!s.isMusic())
             {

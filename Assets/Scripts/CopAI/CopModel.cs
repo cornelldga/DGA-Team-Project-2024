@@ -49,9 +49,6 @@ public class CopModel : MonoBehaviour
     private Vector2[] CurrentPath;
     // Position along the path that cop is at
     private int CurrentIndex;
-    
-    //Damage associated with the type of vehicle
-    private int damage;
 
     // Movement speed multiplier towards the target
     private int speed = BaseSpeed;
@@ -76,21 +73,6 @@ public class CopModel : MonoBehaviour
     void Start()
     {
         RB = GetComponent<Rigidbody>();
-
-        // set the damage and speed amount based on cop model type
-        // TODO: have cruiser and truck be their own prefabs. 
-        switch (model)
-        {
-            case (CopType.CRUISER):
-                damage = 1;
-                break;
-            case (CopType.TRUCK):
-                damage = 2;
-                break;
-            default:
-                damage = 1;
-                break;
-        }
     }
 
     /// <summary>
