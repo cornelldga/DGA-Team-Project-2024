@@ -80601,33 +80601,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2706778918902263010, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.89239913
-      objectReference: {fileID: 0}
-    - target: {fileID: 2706778918902263010, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.23911765
-      objectReference: {fileID: 0}
-    - target: {fileID: 2706778918902263010, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.3696438
-      objectReference: {fileID: 0}
-    - target: {fileID: 2706778918902263010, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.09904577
-      objectReference: {fileID: 0}
-    - target: {fileID: 2706778918902263010, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2706778918902263010, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 5415605010644725904, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
-      propertyPath: showDebugLogs
-      value: 1
+    - target: {fileID: 6104927108436614769, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
+      propertyPath: m_Name
+      value: ShadowDriver
       objectReference: {fileID: 0}
     - target: {fileID: 7762214288339112326, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
       propertyPath: m_LocalPosition.x
@@ -80672,10 +80648,6 @@ PrefabInstance:
     - target: {fileID: 7766638833031876969, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
       propertyPath: m_Name
       value: Cop Cruiser_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8614885688319681663, guid: 09949703fb24cf341a6f509fb4e4bf34, type: 3}
-      propertyPath: m_Direction
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
