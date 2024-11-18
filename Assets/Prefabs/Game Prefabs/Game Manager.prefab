@@ -118,7 +118,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTimer: 100
-  pauseMenu: {fileID: 6851327169149092835, guid: 4fef20058a89c446c9b2158a5cb56c61, type: 3}
   minCustomersToWin: 1
   gameTimerText: {fileID: 3186808591723334804}
   numCustomersText: {fileID: 6389651831943328027}

@@ -126,7 +126,7 @@ public class Pathfinding
                         {
                             double gNew = PathDetails[p.X, p.Y].gCost + Map.Instance.getNavCost(p.X, p.Y); // 1 is the default path cost, variable based on tile type
                             double hNew = CalculateHValue(NewX, NewY, (int)dst.x, (int)dst.y);
-                            double fNew = gNew + hNew;
+                            double fNew = gNew + 1.5 * hNew;
 
                             // update the value of the cell the current path to this node is cheaper
                             if (PathDetails[NewX, NewY].fCost == double.MaxValue || PathDetails[NewX, NewY].fCost > fNew)
@@ -205,7 +205,7 @@ public class Pathfinding
         {
             PathNode p = Path.Pop();
             // draw the debug lines of the path onto the map
-            Debug.DrawLine(map.GetWorldPosition(p.ParentX + 0.5f, p.ParentY + 0.5f), map.GetWorldPosition(p.X + 0.5f, p.Y + 0.5f), Color.green, 2f);
+            Debug.DrawLine(map.GetWorldPosition(p.ParentX + 0.5f, p.ParentY + 0.5f), map.GetWorldPosition(p.X + 0.5f, p.Y + 0.5f), Color.green, 0.5f);
             VectorPath[i] = new Vector2(p.X, p.Y);
             i++;
         }

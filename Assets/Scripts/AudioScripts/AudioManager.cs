@@ -1,159 +1,182 @@
-using UnityEngine.Audio;
-using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 using Unity.VisualScripting;
-
-//This class is used to manage sound effects and music 
 
 public class AudioManager : MonoBehaviour
 {
-    public Sound[] sounds;
-    public static AudioManager instance;
-    Sound bgm;
+    private static AudioManager instance;
+    public static AudioManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<AudioManager>();
+                if (instance == null)
+                {
+                    GameObject go = new GameObject("AudioManager");
+                    instance = go.AddComponent<AudioManager>();
+                }
+            }
+            return instance;
+        }
+    }
 
-    //Vestiges of the summer project, might be important later
-    //
-    //[SerializeField] public List<AudioClip> SFXClips = new List<AudioClip>();
-    //[SerializeField] public List<AudioClip> MusicClips = new List<AudioClip>();
+    public Sound[] musicTracks;
+    public Sound[] soundEffects;
 
-    // Start is called before the first frame update
+    private Sound currentMusic;
+    private Dictionary<string, Sound> soundDictionary = new Dictionary<string, Sound>();
+
     void Awake()
     {
-        //If there is no instance of the AudioManager, make this the instance
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            foreach (Sound s in sounds)
-            {
-                s.source = gameObject.AddComponent<AudioSource>();
-                s.source.clip = s.clip;
-                s.source.volume = s.volume;
-                s.source.pitch = s.pitch;
-                s.source.loop = s.loop;
-            }
-        }
-        else
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        LoadVolume();
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        // Initialize all audio sources
+        InitializeAudioSources();
     }
 
-    /// <summary>
-    /// Find the sound in the array of sounds and play it if it exists
-    /// </summary>
-    /// <param name="name"></param>
+    private void InitializeAudioSources()
+    {
+        // Initialize music tracks
+        foreach (Sound s in musicTracks)
+        {
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+            s.source.volume = s.volume;
+            s.source.pitch = s.pitch;
+            s.source.loop = s.loop;
+            s.setMusic(true);
+            soundDictionary[s.name] = s;
+        }
+
+        // Initialize sound effects
+        foreach (Sound s in soundEffects)
+        {
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+            s.source.volume = s.volume;
+            s.source.pitch = s.pitch;
+            s.source.loop = s.loop;
+            s.setMusic(false);
+            soundDictionary[s.name] = s;
+        }
+    }
+
+    public void PlayMusic(string name, float fadeInDuration = 0f)
+    {
+        if (!soundDictionary.TryGetValue(name, out Sound newMusic))
+        {
+            Debug.LogWarning($"Music track '{name}' not found!");
+            return;
+        }
+
+        // If there's currently playing music, fade it out
+        if (currentMusic != null && currentMusic.source.isPlaying)
+        {
+            StartCoroutine(FadeOut(currentMusic.source, fadeInDuration));
+        }
+
+        // Start playing new music
+        StartCoroutine(FadeIn(newMusic.source, newMusic.volume, fadeInDuration));
+        currentMusic = newMusic;
+    }
+
+    public void PlaySound(string name)
+    {
+        if (!soundDictionary.TryGetValue(name, out Sound sound))
+        {
+            Debug.LogWarning($"Sound effect '{name}' not found!");
+            return;
+        }
+
+        sound.source.Play();
+    }
+
+    //Deprecated way of playing sfx
     public void Play(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-        {
-            Debug.LogWarning("Sound: " + name + " not found!");
-            return;
-        }
-        s.source.Play();
-    }
-    /// <summary>
-    /// Find the sound in the array of sounds and stop it if it exists
-    /// </summary>
-    /// <param name="name"></param>
-    public void Stop(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-        {
-            Debug.LogWarning("Sound: " + name + " not found!");
-            return;
-        }
-        if (s != null)
-        {
-            s.source.Stop();
-        }
-    }
-    /// <summary>
-    /// Stop all other music and play the music with the name passed in
-    /// </summary>
-    /// <param name="name"></param>
-    public void PlayMusic(string name)
-    {
-        if (bgm != null)
-        {
-            if (bgm.name == name)
-            {
-                return;
-            }
-        }
-        foreach (Sound s in sounds)
-        {
-            if (s.name == name)
-            {
-                bgm = s;
-            }
-        }
-        StopMusic();
-        Play(name);
+        PlaySound(name);
     }
 
-    /// <summary>
-    /// Stop all music
-    /// </summary>
-    private void StopMusic()
+    public void StopMusic(float fadeOutDuration = 0f)
     {
-        foreach (Sound s in sounds)
+        if (currentMusic != null && currentMusic.source.isPlaying)
         {
-            if (s.isMusic())
-            {
-                s.source.Stop();
-            }
+            StartCoroutine(FadeOut(currentMusic.source, fadeOutDuration));
         }
     }
 
-    /// <summary>
-    /// Load the volume from the player prefs
-    /// </summary>
+    public void StopSound(string name)
+    {
+        if (!soundDictionary.TryGetValue(name, out Sound sound))
+        {
+            Debug.LogWarning($"Sound effect '{name}' not found!");
+            return;
+        }
+
+        sound.source.Stop();
+    }
+
+    private System.Collections.IEnumerator FadeIn(AudioSource audioSource, float targetVolume, float duration)
+    {
+        audioSource.volume = 0f;
+        audioSource.Play();
+
+        float startTime = Time.time;
+        float startVolume = 0f;
+
+        while (Time.time < startTime + duration)
+        {
+            float elapsed = Time.time - startTime;
+            float normalizedTime = elapsed / duration;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, normalizedTime);
+            yield return null;
+        }
+
+        audioSource.volume = targetVolume;
+    }
+
+    private System.Collections.IEnumerator FadeOut(AudioSource audioSource, float duration)
+    {
+        float startTime = Time.time;
+        float startVolume = audioSource.volume;
+
+        while (Time.time < startTime + duration)
+        {
+            float elapsed = Time.time - startTime;
+            float normalizedTime = elapsed / duration;
+            audioSource.volume = Mathf.Lerp(startVolume, 0f, normalizedTime);
+            yield return null;
+        }
+
+        audioSource.Stop();
+        audioSource.volume = startVolume;
+    }
+
+    // Utility methods for volume control
     public void LoadVolume()
     {
         float musicVolume = PlayerPrefs.GetFloat("MusicKey", 1f);
         float sfxVolume = PlayerPrefs.GetFloat("SFXKey", 1f);
-
-        foreach (Sound s in sounds)
+        foreach (KeyValuePair<string, Sound> s in soundDictionary)
         {
-            if (s.isMusic())
+            if (s.Value.isMusic())
             {
-                s.source.volume = musicVolume * s.volume;
+                s.Value.source.volume = musicVolume * s.Value.volume;
             }
             else
             {
-                s.source.volume = sfxVolume * s.volume;
+                s.Value.source.volume = sfxVolume * s.Value.volume;
             }
         }
-
-    }
-
-    public void SetMusicVolume(float volume)
-    {
-        foreach (Sound s in sounds)
-        {
-            if (s.isMusic())
-            {
-                s.source.volume = volume * s.volume;
-            }
-        }
-        PlayerPrefs.SetFloat("MusicKey", volume);
-    }
-
-    public void SetSFXVolume(float volume)
-    {
-        foreach (Sound s in sounds)
-        {
-            if (!s.isMusic())
-            {
-                s.source.volume = volume * s.volume;
-            }
-        }
-        PlayerPrefs.SetFloat("SFXKey", volume);
     }
 }

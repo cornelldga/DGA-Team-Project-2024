@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     [Header("Game Logic")]
     [Tooltip("How long the player has to complete the level")]
     [SerializeField] private float gameTimer;
-    [SerializeField] private GameObject pauseMenu;
     private Player player;
     private int numCustomers;
     bool pauseGame = false;
@@ -114,6 +113,7 @@ public class GameManager : MonoBehaviour
         gameTimerText.text = gameTimer.ToString("F2");
         if (gameTimer <= 0)
         {
+            AudioManager.Instance.Play("sfx_TimeUp");
             EndGame();
         }
     }
@@ -122,7 +122,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PauseGame()
     {
-        pauseMenu.SetActive(true);
         pauseGame = true;
         player.enabled = false;
         Time.timeScale = 0;
@@ -136,7 +135,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResumeGame()
     {
-        pauseMenu.SetActive(false);
         pauseGame = false;
         player.enabled = true;
         Time.timeScale = 1;

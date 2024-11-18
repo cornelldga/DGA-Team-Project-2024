@@ -222,7 +222,7 @@ Rigidbody:
   m_GameObject: {fileID: 8498858998442318803}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 1
+  m_Drag: 2
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -252,12 +252,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729564c76a524f94a9102e965667bb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 5
   health: 10
   invincibilityDuration: 5
   invincibilityDeltaTime: 0.15
   maxOil: 100
   oilConsumptionRate: 1
-  nitro: 304
+  nitro1: 304
+  nitro2: 303
   drift: 32
   minCrashSpeed: 3
