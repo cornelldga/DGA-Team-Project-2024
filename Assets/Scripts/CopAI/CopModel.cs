@@ -134,11 +134,6 @@ public class CopModel : MonoBehaviour
         } 
     }
 
-    private void FixedUpdate()
-    {
-        Sprite.UpdateSpriteToRotation(this.transform.localRotation.eulerAngles.y);
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -190,6 +185,9 @@ public class CopModel : MonoBehaviour
 
         // move cop along pathfinding
         HandleMovement();
+
+        Sprite.UpdateSpriteToRotation(this.transform.localRotation.eulerAngles.y);
+
     }
 
 
