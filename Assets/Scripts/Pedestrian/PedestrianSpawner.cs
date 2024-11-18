@@ -8,8 +8,8 @@ using UnityEngine;
 /// </summary>
 public class PedestrianSpawner : MonoBehaviour
 {
-    public GameObject pedestrianPrefab;
-    public int pedestriansToSpawn = 10;
+    [SerializeField] GameObject pedestrianPrefab;
+    [SerializeField] int pedestriansToSpawn = 10;
 
     // Update is called once per frame
     void Start()

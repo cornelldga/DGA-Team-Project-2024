@@ -12,11 +12,11 @@ using UnityEngine;
 public class PedestrianNavigationController : MonoBehaviour, ICrashable
 {
     public float movementSpeed = 1.0f;
-    public float rotationSpeed = 5000;
-    public float stopDistance = 0.05f;
-    public Vector3 destination;
+    [SerializeField] float rotationSpeed = 5000;
+    [SerializeField] float stopDistance = 0.05f;
+    [SerializeField] Vector3 destination;
     public bool hasReachedDestination = false;
-    public float knockbackScale = 3f;
+    [SerializeField] float knockbackScale = 3f;
     [Tooltip("The maximum force that can be applied to a pedestrian")]
     [SerializeField] float maxKnockback;
 

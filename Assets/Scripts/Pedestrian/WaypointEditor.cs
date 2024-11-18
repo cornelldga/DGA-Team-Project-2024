@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// Waypoint editor class for drawing gizmos in the scene view.
+/// </summary>
 [InitializeOnLoad]
 public class WaypointEditor
 {
