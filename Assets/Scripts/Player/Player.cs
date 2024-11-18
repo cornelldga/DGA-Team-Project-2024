@@ -61,6 +61,11 @@ public class Player : MonoBehaviour, ICrashable
 
     [SerializeField] float minCrashSpeed;
 
+    [SerializeField] private Billboard Sprite;
+
+    public ParticleSystem smokeParticle;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +82,8 @@ public class Player : MonoBehaviour, ICrashable
         Drive();
         Nitro();
         Drift();
+
+        Sprite.UpdateSpriteToRotation(this.transform.localRotation.eulerAngles.y); //Update sprite rotation
     }
 
     private void Update()
@@ -152,8 +159,10 @@ public class Player : MonoBehaviour, ICrashable
         {
             rb.AddRelativeForce(Vector3.forward * 50);
             oil--;
+            smokeParticle.Play();
             AudioManager.Instance.Play("sfx_Boost");
         }
+
     }
 
     // The player can press W and S to drive forwards and backwards.
@@ -341,7 +350,8 @@ public class Player : MonoBehaviour, ICrashable
 
     public void Crash(Vector3 speedVector, Vector3 position)
     {
-        if(speedVector.magnitude >= minCrashSpeed){
+        if (speedVector.magnitude >= minCrashSpeed)
+        {
             Debug.Log("crashed into player");
             TakeDamage();
         }
@@ -357,4 +367,6 @@ public class Player : MonoBehaviour, ICrashable
         Vector3 direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
         GetComponent<Rigidbody>().velocity = direction * Mathf.Max(curSpeed, 2f);
     }
+
+
 }
