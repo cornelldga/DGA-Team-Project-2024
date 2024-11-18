@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// This class manages the player health UI display.
-/// </summary>
+
 public class HealthBar : MonoBehaviour
 {
 

@@ -27,16 +27,12 @@ public class Player : MonoBehaviour, ICrashable
     [SerializeField] float oilConsumptionRate = 1f;
 
     [Header("Input Key Codes")]
-    [Tooltip("Left button for nitro")]
-    [SerializeField] private KeyCode nitro1 = KeyCode.LeftShift;
-    [Tooltip("Right button for nitro")]
-    [SerializeField] private KeyCode nitro2 = KeyCode.RightShift;
+    [Tooltip("Button for nitro")]
+    [SerializeField] private KeyCode nitro = KeyCode.LeftShift;
     [Tooltip("Button for drifting")]
     [SerializeField] private KeyCode drift = KeyCode.Space;
 
-
     private Rigidbody rb;
-    private Vector3 lastVelocity;
     private float oil;
     private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
     private int curAngle = 0;
@@ -45,7 +41,6 @@ public class Player : MonoBehaviour, ICrashable
     private bool isInvincible = false;
     private float turnDelay = 0;
     private float turnRate = 0.25f;
-    private float driftTime = 0;
 
     // Input booleans
     private bool pressForward;
@@ -61,11 +56,6 @@ public class Player : MonoBehaviour, ICrashable
 
     [SerializeField] float minCrashSpeed;
 
-    [SerializeField] private Billboard Sprite;
-
-    public ParticleSystem smokeParticle;
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -78,12 +68,9 @@ public class Player : MonoBehaviour, ICrashable
 
     void FixedUpdate()
     {
-        lastVelocity = rb.velocity;
         Drive();
         Nitro();
         Drift();
-
-        Sprite.UpdateSpriteToRotation(this.transform.localRotation.eulerAngles.y); //Update sprite rotation
     }
 
     private void Update()
@@ -120,7 +107,7 @@ public class Player : MonoBehaviour, ICrashable
         {
             pressLeft = false;
         }
-        if (Input.GetKey(nitro1) || Input.GetKey(nitro2))
+        if (Input.GetKey(nitro))
         {
             pressNitro = true;
         }
@@ -136,21 +123,16 @@ public class Player : MonoBehaviour, ICrashable
         {
             pressDrift = false;
         }
-        if (!pressRight && !pressLeft)
-        {
-            turnDelay = 0;
-        }
         if ((pressRight || pressLeft) && Time.time > turnDelay)
-        {
+        { 
             turnDelay = Time.time + turnRate;
-            Turn();
+            Turn(); 
         }
         if (customers.Count != 0)
         {
             HandleOrders();
         }
     }
-
 
     // While holding shift, the player uses oil to nitro boost.
     void Nitro()
@@ -159,10 +141,7 @@ public class Player : MonoBehaviour, ICrashable
         {
             rb.AddRelativeForce(Vector3.forward * 50);
             oil--;
-            smokeParticle.Play();
-            AudioManager.Instance.Play("sfx_Boost");
         }
-
     }
 
     // The player can press W and S to drive forwards and backwards.
@@ -253,16 +232,14 @@ public class Player : MonoBehaviour, ICrashable
     // Player can hold the spacebar to brake and turn while braking to drift
     void Drift()
     {
-        if (pressDrift && (pressLeft || pressRight))
+        if (pressDrift)
         {
-            driftTime = Time.time + 0.5f;
-        }
-        if (!pressDrift && driftTime > Time.time && movingForward)
-        {
-            rb.AddRelativeForce(Vector3.forward * 50);
+            if (movingForward && rb.velocity.magnitude > 0.01f)
+            {
+                rb.AddRelativeForce(-Vector3.forward * speed * 10);
+            }
         }
     }
-
 
     /// <summary>
     /// Called every frame to check through the list of customers and decrease cooking time and oil
@@ -310,17 +287,6 @@ public class Player : MonoBehaviour, ICrashable
     {
         if (isInvincible) return;
         health --;
-        int random = Random.Range(0, 2);
-        switch(random)
-        {
-            case 0:
-                AudioManager.Instance.Play("sfx_Crash1");
-                break;
-            case 1:
-                AudioManager.Instance.Play("sfx_Crash2");
-                break;
-        }
-
         if (health <= 0)
         {
             health = 0;
@@ -350,8 +316,7 @@ public class Player : MonoBehaviour, ICrashable
 
     public void Crash(Vector3 speedVector, Vector3 position)
     {
-        if (speedVector.magnitude >= minCrashSpeed)
-        {
+        if(speedVector.magnitude >= minCrashSpeed){
             Debug.Log("crashed into player");
             TakeDamage();
         }
@@ -363,10 +328,5 @@ public class Player : MonoBehaviour, ICrashable
         {
             other.gameObject.GetComponent<ICrashable>().Crash(rb.velocity, transform.position);
         }
-        float curSpeed = lastVelocity.magnitude;
-        Vector3 direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
-        GetComponent<Rigidbody>().velocity = direction * Mathf.Max(curSpeed, 2f);
     }
-
-
 }

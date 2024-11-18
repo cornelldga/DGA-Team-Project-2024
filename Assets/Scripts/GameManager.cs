@@ -114,7 +114,6 @@ public class GameManager : MonoBehaviour
         gameTimerText.text = gameTimer.ToString("F2");
         if (gameTimer <= 0)
         {
-            AudioManager.Instance.Play("sfx_TimeUp");
             EndGame();
         }
     }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -32,8 +31,7 @@ public class CopModel : MonoBehaviour
     private const int RamSpeed = 20; // revved up speed barreling towards the player. 
     private const float RamCooldown = 1; // the amount of time spend on a ram attack until returning to normal navigation
     private const int WanderRerouteTime = 5; // max time spend on a single wander path to prevent getting stuck
-    private const int PursuitRerouteTime = 1; // max time spend on a single hot pursuit path to prevent getting stuck
-
+    
     // The behavior that determines a cops pathfinding target
     [SerializeField] private NavState State;
     [SerializeField] private CopType model;
@@ -60,8 +58,8 @@ public class CopModel : MonoBehaviour
     private float RamTimer = 0;
     private bool IsRamming = false;
 
-    // parameters for managing rerouting
-    private float NavTime = 0;
+    // parameters for managing wandering rerouting
+    private float WanderTime = 0;
 
 
     public NavState getNavState()
@@ -104,7 +102,6 @@ public class CopModel : MonoBehaviour
         // set attacking state
         if (!IsRamming && distanceFromPlayer < RamRadius)
         {
-            
             IsRamming = true;
             RamTimer = 0;
 
@@ -125,6 +122,7 @@ public class CopModel : MonoBehaviour
         else if (State == NavState.HOTPURSUIT && distanceFromPlayer > MaxPursuitRadius)
         {
             State = NavState.WANDER;
+            WanderTime = 0;
         }
     }
 
@@ -134,6 +132,11 @@ public class CopModel : MonoBehaviour
         {
             other.gameObject.GetComponent<ICrashable>().Crash(RB.velocity, transform.position);
         } 
+    }
+
+    private void FixedUpdate()
+    {
+        Sprite.UpdateSpriteToRotation(this.transform.localRotation.eulerAngles.y);
     }
 
     // Update is called once per frame
@@ -158,9 +161,9 @@ public class CopModel : MonoBehaviour
         else if (getNavState() == NavState.WANDER)
         {
 
-            NavTime += Time.deltaTime;
+            WanderTime += Time.deltaTime;
 
-            if ((CurrentPath == null || CurrentIndex >= CurrentPath.Length) || NavTime >= WanderRerouteTime)
+            if ((CurrentPath == null || CurrentIndex >= CurrentPath.Length) || WanderTime >= WanderRerouteTime)
             {
                 // Choose a random position to wander to
                 // ----
@@ -175,28 +178,18 @@ public class CopModel : MonoBehaviour
                 SetPathfindingTarget(sx + UnityEngine.Random.Range(-WanderDistance, WanderDistance), sy + UnityEngine.Random.Range(-WanderDistance, WanderDistance));
                 // -----
 
-                NavTime = 0;
+                WanderTime = 0;
             }
 
 
         }
         else if (State == NavState.HOTPURSUIT)
         {
-            NavTime += Time.deltaTime;
-
-            if (NavTime >= PursuitRerouteTime)
-            {
-                SetPathfindingTarget(GameManager.Instance.getPlayer().transform.position);
-                NavTime = 0;
-            }
-            
+            SetPathfindingTarget(GameManager.Instance.getPlayer().transform.position);
         }
 
         // move cop along pathfinding
         HandleMovement();
-
-        Sprite.UpdateSpriteToRotation(this.transform.localRotation.eulerAngles.y);
-
     }
 
 
