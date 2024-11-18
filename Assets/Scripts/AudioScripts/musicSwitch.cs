@@ -11,6 +11,6 @@ public class NewBehaviourScript : MonoBehaviour
     void Start()
     {
         //Play the music
-        FindObjectOfType<AudioManager>().PlayMusic(musicName);
+        AudioManager.Instance.PlayMusic(musicName);
     }
 }
