@@ -23,6 +23,7 @@ public class Map : MonoBehaviour
 
     // Tilemap used to mark navigatable areas of the pathfinding.
     [SerializeField] private Tilemap TileMap;
+    [SerializeField] private TilemapRenderer TilemapRenderer;
 
     // Whether the debug grid lines are visible when gizmos are turned on
     [SerializeField] private bool showDebugInfo;
@@ -39,6 +40,8 @@ public class Map : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TilemapRenderer.enabled = false;
+
         // TileMap.cellbounds returns the bounds of the tilemap that contain placed sprites/tiles. 
         // Make the containing grid only as big as the used space. 
         Width = TileMap.cellBounds.size.x;

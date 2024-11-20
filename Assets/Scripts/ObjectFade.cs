@@ -9,47 +9,35 @@ using UnityEngine;
 
 public class ObjectFade : MonoBehaviour
 {
+    [SerializeField] Material opaqueMaterial;
+    [SerializeField] Material fadeMaterial;
+
     [SerializeField] float fadeSpeed;
     [Tooltip("The value the alpha of the material will reach when fading")]
     [SerializeField] float fadeAmount;
-    float originalOpacity;
-    Material mat;
-    public bool doFade = false;
+    Renderer r;
     // Start is called before the first frame update
     void Start()
     {
-        mat = GetComponent<Renderer>().material;
-        originalOpacity = mat.color.a;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (doFade)
-        {
-            Fade();
-        }
-        else
-        {
-            ResetFade();
-        }
+        r = GetComponent<Renderer>();
     }
     /// <summary>
     /// Smoothly lower the alpha to the fadeAmount
     /// </summary>
-    void Fade()
+    public void Fade()
     {
-        Color currentColor = mat.color;
+        if(r.material != fadeMaterial)
+        {
+            r.material = fadeMaterial;
+        }
+        Color currentColor = r.material.color;
         Color smoothColor = new Color(currentColor.r, currentColor.g, currentColor.b, Mathf.Lerp(currentColor.a, fadeAmount, fadeSpeed));
-        mat.color = smoothColor;
+        r.material.color = smoothColor;
+        print(r.material.color.a);
     }
-    /// <summary>
-    /// Smoothly increase the alpha to the originalOpacity
-    /// </summary>
-    void ResetFade()
+
+    public void Reset()
     {
-        Color currentColor = mat.color;
-        Color smoothColor = new Color(currentColor.r, currentColor.g, currentColor.b, Mathf.Lerp(currentColor.a, originalOpacity, fadeSpeed));
-        mat.color = smoothColor;
+        r.material = opaqueMaterial;
     }
 }

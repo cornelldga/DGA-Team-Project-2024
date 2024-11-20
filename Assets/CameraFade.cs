@@ -4,38 +4,21 @@ using UnityEngine;
 
 public class CameraFade : MonoBehaviour
 {
-    private ObjectFade fade;
-    private Transform player;
-
-    private void Start()
+    private void OnTriggerStay(Collider other)
     {
-        player = GameManager.Instance.getPlayer().transform;
+        Debug.Log("hello");
+        if (other.gameObject.TryGetComponent(out ObjectFade fade))
+        {
+            Debug.Log("FADE");
+            fade.Fade();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        Vector3 dir = player.position - transform.position;
-        Ray ray = new Ray(transform.position, dir.normalized);
-        float distance = dir.magnitude;
-
-        RaycastHit[] hits = Physics.RaycastAll(ray, distance);
-
-        // Reset fade at the start of each frame
-        if (fade != null)
+        if (other.gameObject.TryGetComponent(out ObjectFade fade))
         {
-            fade.doFade = false;
-        }
-        foreach (RaycastHit hit in hits)
-        {
-            if (hit.collider != null && !hit.collider.CompareTag("Player"))
-            {
-                fade = hit.collider.gameObject.GetComponent<ObjectFade>();
-                if (fade != null)
-                {
-                    fade.doFade = true;
-                }
-            }
+            fade.Reset();
         }
     }
 }
