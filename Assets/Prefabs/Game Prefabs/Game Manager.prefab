@@ -417,8 +417,9 @@ GameObject:
   - component: {fileID: 5910280791486253166}
   - component: {fileID: 8827074023871442337}
   - component: {fileID: 8132437037758023464}
+  - component: {fileID: 7578739474984248240}
   m_Layer: 0
-  m_Name: Image_2
+  m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,9 +441,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -128, y: -37}
+  m_AnchoredPosition: {x: -128, y: -153.92004}
   m_SizeDelta: {x: 88, y: 316}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.13}
 --- !u!222 &8827074023871442337
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -481,6 +482,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7578739474984248240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3761254671794786327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c03102c6848f4c819b95b25f5cf691c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeAmount: 5
+  shakeSpeed: 5
+  lowHealthAnim: {fileID: 1359250591575518176}
 --- !u!1 &4345051369434330628
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,6 +822,7 @@ GameObject:
   - component: {fileID: 1166178074426158502}
   - component: {fileID: 421097580132349039}
   - component: {fileID: 8579760237295109411}
+  - component: {fileID: 1359250591575518176}
   m_Layer: 0
   m_Name: HealthBg
   m_TagString: Untagged
@@ -870,6 +887,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &1359250591575518176
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8438617085331086380}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4f402f02f96104ca1987ede6676f819a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &3354099565462518574
 PrefabInstance:
   m_ObjectHideFlags: 0
