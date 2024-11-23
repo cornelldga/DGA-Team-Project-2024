@@ -11,14 +11,15 @@ public class DirectionIndicator : MonoBehaviour
     private Customer selectedCustomer;
 
     //reference to the hotbar manager, later this should be done through the GameManager, but it's fine for now
-    [SerializeField] private HotbarManager hotbarManager;
+    private CookBarManager cookbarManager;
 
     void Start()
     {
         player = GameManager.Instance.getPlayer();
+        cookbarManager = FindObjectOfType<CookBarManager>();
         //if (somehow) there is already a selected customer, set the selectedCustomer to that customer
-        if(hotbarManager.selectedSlot != null){
-            selectedCustomer = hotbarManager.selectedSlot.GetCustomerUI();
+        if (cookbarManager.selectedSlot != null){
+            selectedCustomer = cookbarManager.selectedSlot.GetCustomerUI();
         }
     }
 
@@ -28,12 +29,12 @@ public class DirectionIndicator : MonoBehaviour
         transform.position = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
 
         //if a customer is selected
-        if(hotbarManager.selectedSlot.GetCustomerUI() != null){
+        if(cookbarManager.selectedSlot.GetCustomerUI() != null){
             //get the sprite renderer of the direction indicator, and enable it
             SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             spriteRenderer.enabled = true;
 
-            selectedCustomer = hotbarManager.selectedSlot.GetCustomerUI();
+            selectedCustomer = cookbarManager.selectedSlot.GetCustomerUI();
 
             //get the direction from the player to the selected customer
             Vector3 direction = selectedCustomer.transform.position - player.transform.position;
