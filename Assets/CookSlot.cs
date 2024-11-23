@@ -12,14 +12,20 @@ using UnityEngine.UI;
 public class CookSlot : MonoBehaviour
 {
     [Header("Cook Slot Inputs")]
-    [SerializeField] TextMeshProUGUI timerLabel;
-    [SerializeField] TextMeshProUGUI patienceTimerCount;
-    [SerializeField] TextMeshProUGUI orderInfo;
+    //[SerializeField] TextMeshProUGUI timerLabel;
+    //[SerializeField] TextMeshProUGUI patienceTimerCount;
+    //[SerializeField] TextMeshProUGUI orderInfo;
+    [SerializeField] Image pan;
+    [SerializeField] Image food;
     [SerializeField] Image slotBorder;
+    [SerializeField] Image customerFace;
     [SerializeField] Image slotIcon;
-    [SerializeField] Image shadow;
-    [SerializeField] Image progress;
+    [SerializeField] Image numShadow;
+    [SerializeField] Image panShadow;
+    [SerializeField] Image patienceFill;
+    [SerializeField] Image cookFill;
     [SerializeField] Animator cookDoneAnim;
+    [SerializeField] Animator patienceLowAnim;
 
     [SerializeField] string orderNum;
 
@@ -27,7 +33,7 @@ public class CookSlot : MonoBehaviour
     private float maxCookTime = 0;
     private float cookProgress = 0;
 
-    private float patienceTime = 0;
+    private float maxPatienceTime = 0;
     private float patienceProgress = 0;
 
     private Color readyColor = new Color(184, 233, 173);
@@ -46,13 +52,19 @@ public class CookSlot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timerLabel.enabled = false;
+        //timerLabel.enabled = false;
         //cookTimerCount.enabled = false;
-        patienceTimerCount.enabled = false;
+        //patienceTimerCount.enabled = false;
         slotBorder.enabled = false;
-        normColor = slotIcon.color;
-        progress.fillAmount = 0;
+        customerFace.enabled = false;
+        panShadow.enabled = false;
+        pan.enabled = false;
+        food.enabled = false;
+        //normColor = slotIcon.color;
+        cookFill.fillAmount = 0;
+        patienceFill.fillAmount = 0;
         cookDoneAnim.enabled = false;
+        patienceLowAnim.enabled = false;
         //Deselect();
     }
 
@@ -62,17 +74,23 @@ public class CookSlot : MonoBehaviour
 
         if (customer)
         {
-            UpdateTimer(customer.waitTime, patienceTimerCount);
+            //UpdateTimer(customer.waitTime, patienceTimerCount);
 
             if (customer.cookTime < 0 && !isReady)
             {
                 isReady = true;
-                slotIcon.color = readyColor;
+                //slotIcon.color = readyColor;
                 cookDoneAnim.enabled = true;
             }
 
-            // Update cook fill bar
-            progress.fillAmount = 1 - (customer.cookTime / maxCookTime);
+            // Update patience and cook bars
+            patienceFill.fillAmount = customer.waitTime / maxPatienceTime;
+            cookFill.fillAmount = 1 - (customer.cookTime / maxCookTime);
+
+            if (customer && patienceFill.fillAmount < 0.45)
+            {
+                patienceLowAnim.enabled = true;
+            }
         }
 
 
@@ -85,14 +103,18 @@ public class CookSlot : MonoBehaviour
     public void AddOrder(Customer c)
     {
         customer = c;
-        orderInfo.text = orderNum;
-        timerLabel.enabled = true;
+        //orderInfo.text = orderNum;
+        //timerLabel.enabled = true;
+        pan.enabled = true;
+        food.enabled = true;
+        panShadow.enabled = true;
+        customerFace.enabled = true;
         maxCookTime = c.cookTime;
         cookProgress = maxCookTime;
-        patienceTimerCount.enabled = true;
+        //patienceTimerCount.enabled = true;
         isOpen = false;
-        patienceTime = c.waitTime;
-        patienceProgress = patienceTime;
+        maxPatienceTime = c.waitTime;
+        patienceProgress = 0;
     }
 
     /// <summary>
@@ -112,16 +134,22 @@ public class CookSlot : MonoBehaviour
     /// </summary>
     public void RemoveOrder()
     {
-        timerLabel.enabled = false;
+        //timerLabel.enabled = false;
         cookDoneAnim.enabled = false;
+        patienceLowAnim.enabled = false;
         //cookTimerCount.enabled = false;
-        patienceTimerCount.enabled = false;
+        //patienceTimerCount.enabled = false;
+        customerFace.enabled = false;
+        panShadow.enabled = false;
+        pan.enabled = false;
+        food.enabled = false;
         isOpen = true;
         customer = null;
-        orderInfo.text = "";
+        //orderInfo.text = "";
         isReady = false;
-        slotIcon.color = normColor;
-        progress.fillAmount = 0;
+        //slotIcon.color = normColor;
+        patienceFill.fillAmount = 0;
+        cookFill.fillAmount = 0;
         if (isSelected)
         {
             Deselect();
@@ -161,7 +189,7 @@ public class CookSlot : MonoBehaviour
         rectTransform2.anchoredPosition = newPosition2;
 
         // Move the shadow
-        RectTransform rectTransform3 = shadow.rectTransform;
+        RectTransform rectTransform3 = numShadow.rectTransform;
         Vector3 currentPosition3 = rectTransform3.anchoredPosition;
         Vector3 newPosition3 = new Vector3(currentPosition3.x + sMoveX, currentPosition3.y + sMoveY, currentPosition3.z);
         rectTransform3.anchoredPosition = newPosition3;
@@ -192,7 +220,7 @@ public class CookSlot : MonoBehaviour
         rectTransform2.anchoredPosition = newPosition2;
 
         // Move the shadow
-        RectTransform rectTransform3 = shadow.rectTransform;
+        RectTransform rectTransform3 = numShadow.rectTransform;
         Vector3 currentPosition3 = rectTransform3.anchoredPosition;
         Vector3 newPosition3 = new Vector3(currentPosition3.x - sMoveX, currentPosition3.y - sMoveY, currentPosition3.z);
         rectTransform3.anchoredPosition = newPosition3;
