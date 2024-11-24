@@ -124,7 +124,9 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         pauseGame = true;
-        this.pauseScreen.SetActive(true);
+        if(gameOver != true){
+            this.pauseScreen.SetActive(true);
+        }
         player.enabled = false;
         Time.timeScale = 0;
         foreach(Customer customer in customers)
