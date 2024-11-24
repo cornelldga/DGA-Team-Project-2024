@@ -9,6 +9,7 @@ public class Breakable : MonoBehaviour
     [SerializeField] private int oilAmount = 25;       // Amount of oil to add, 0 if not an oil barrel
     [SerializeField] private Material myMaterial;
     [SerializeField] private float respawnTime = 10f;
+    [SerializeField] private float animationDuration = 0.5f; // Add this to set animation length
 
     private Color objectColor;
     private bool isRespawning = false;
@@ -18,6 +19,8 @@ public class Breakable : MonoBehaviour
     private Player myPlayer;
     private Material materialInstance;
     private Animator animator;
+    private bool isAnimating = false;
+    private float animationTimer = 0f;
 
     /// <summary>
     /// Initializes the breakable object's material, position, and component references
@@ -33,7 +36,16 @@ public class Breakable : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (isRespawning)
+        if (isAnimating)
+        {
+            animationTimer += Time.deltaTime;
+            if (animationTimer >= animationDuration)
+            {
+                isAnimating = false;
+                StartFade();
+            }
+        }
+        else if (isRespawning)
         {
             UpdateRespawnProgress();
         }
@@ -81,20 +93,31 @@ public class Breakable : MonoBehaviour
     /// </summary>
     private void StartRespawn()
     {
-        // Play the animation
+        // Start animation first
         if (animator != null)
         {
-            print("animator is present");
             animator.SetTrigger("Break");
+            isAnimating = true;
+            animationTimer = 0f;
         }
 
+        // Disable collider immediately
         objectCollider.enabled = false;
+    }
+
+    /// <summary>
+    /// Initiates the fading once the animation has finished
+    /// </summary>
+    private void StartFade()
+    {
+        // Now start the fade after animation
         objectColor.a = 0f;
         materialInstance.color = objectColor;
         transform.position = startPosition;
         isRespawning = true;
         respawnTimer = 0f;
     }
+
 
     /// <summary>
     /// Cleans up material instance when object is destroyed
@@ -113,14 +136,18 @@ public class Breakable : MonoBehaviour
     private void InitializeComponents()
     {
         materialInstance = new Material(myMaterial);
-        GetComponent<Renderer>().material = materialInstance;
-
+        // Get sprite renderer from child
+        SpriteRenderer renderer = GetComponentInChildren<SpriteRenderer>();
+        if (renderer != null)
+        {
+            renderer.material = materialInstance;
+        }
         objectColor = materialInstance.color;
         objectColor.a = 1f;
         materialInstance.color = objectColor;
-
         startPosition = transform.position;
         objectCollider = GetComponent<Collider>();
+        animator = GetComponentInChildren<Animator>();  // Get animator from child
         myPlayer = GameManager.Instance.getPlayer();
     }
 
