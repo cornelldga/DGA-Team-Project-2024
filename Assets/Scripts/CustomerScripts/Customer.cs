@@ -186,8 +186,8 @@ public class Customer : MonoBehaviour
         // Calculate the movement offset using a sine wave
         float movementOffset = Mathf.Sin(Time.time * movementFrequency) * movementAmplitude;
 
-        // Apply the movement along the desired axis (e.g., z-axis)
-        Vector3 newPosition = startingPosition + new Vector3(0f, 0f, movementOffset);
+        // Apply the movement along the SELF's Z-axis
+        Vector3 newPosition = startingPosition + transform.forward * movementOffset;
 
         // Update the customer's position
         transform.position = newPosition;
