@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     private int completedOrders = 0;
     [Space]
     [Header("GameManager UI")]
-    private HotbarManager hotbarManager;
+    private CookBarManager cookBarManager;
     [SerializeField] TMP_Text gameTimerText;
     [SerializeField] TMP_Text numCustomersText;
     [SerializeField] GameObject loseScreen;
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         GameManager gameManager = GameManager.Instance;
         player = FindObjectOfType<Player>();
-        hotbarManager = FindObjectOfType<HotbarManager>();
+        cookBarManager = FindObjectOfType<CookBarManager>();
     }
     /// <summary>
     /// Check if game is paused. Update the game timer and handle orders
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
     public void TakeOrder(Customer customer)
     {
         customers.Add(customer);
-        hotbarManager.AddToHotbar(customer);
+        cookBarManager.AddToHotbar(customer);
     }
     /// <summary>
     /// Called when a customer should be removed from the list of customers
@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
     /// <param name="customer"></param>
     public void RemoveOrder(Customer customer) { 
         customers.Remove(customer);
-        hotbarManager.RemoveFromHotBar(customer);
+        cookBarManager.RemoveFromHotBar(customer);
     }
 
     /// <summary>
