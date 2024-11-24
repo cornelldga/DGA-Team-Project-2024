@@ -42,17 +42,7 @@ public class Player : MonoBehaviour, ICrashable
     private bool isInvincible = false;
     private float turnDelay = 0;
     private float turnRate = 0.25f;
-
     private float driftTime = 0;
-    private float driftLimit = 0;
-    private bool driftOut = false;
-    private float rightDriftNum = 0;
-    private float leftDriftNum = 0;
-    private float driftNum = 0;
-    private bool drifting = false;
-    private bool startDrift = false;
-    private int driftAngle = 0;
-    private bool canDrift = true;
 
     // Input booleans
     private bool pressForward;
@@ -61,7 +51,6 @@ public class Player : MonoBehaviour, ICrashable
     private bool pressLeft;
     private bool pressNitro;
     private bool pressDrift;
-    private bool downDrift;
 
     //New added private variables 
 
@@ -147,14 +136,6 @@ public class Player : MonoBehaviour, ICrashable
         {
             pressDrift = false;
         }
-        if (Input.GetKeyDown(drift))
-        {
-            downDrift = true;
-        }
-        else
-        {
-            downDrift = false;
-        }
         if (!pressRight && !pressLeft)
         {
             turnDelay = 0;
@@ -206,39 +187,34 @@ public class Player : MonoBehaviour, ICrashable
     // The player can use A and D to turn to the next of 8 possible directions.
     void Turn()
     {
-        if (pressRight)
+        if (!pressDrift)
         {
-            if (curAngle == 7)
+            if (pressRight)
             {
-                curAngle = 0;
+                if (curAngle == 7)
+                {
+                    curAngle = 0;
+                }
+                else
+                {
+                    curAngle++;
+                }
+                transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
             }
-            else
+            else if (pressLeft)
             {
-                curAngle++;
-            }
-            transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
-            if (startDrift){
-                leftDriftNum = 0;
-                rightDriftNum++;
+                if (curAngle == 0)
+                {
+                    curAngle = 7;
+                }
+                else
+                {
+                    curAngle--;
+                }
+                transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
             }
         }
-        else if (pressLeft)
-        {
-            if (curAngle == 0)
-            {
-                curAngle = 7;
-            }
-            else
-            {
-                curAngle--;
-            }
-            transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
-            if (startDrift){
-                rightDriftNum = 0;
-                leftDriftNum++;
-            }
-        }
-        /*else if (pressDrift)
+        else if (pressDrift)
         {
             if (pressRight)
             {
@@ -272,95 +248,19 @@ public class Player : MonoBehaviour, ICrashable
                 }
                 transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
             }
-        }*/
+        }
     }
-
     // Player can hold the spacebar to brake and turn while braking to drift
     void Drift()
     {
-        if (downDrift && canDrift)
+        if (pressDrift && (pressLeft || pressRight))
         {
-            driftAngle = curAngle;
-            driftLimit = Time.time + 1;
+            driftTime = Time.time + 0.5f;
         }
-        if (pressDrift && canDrift && !driftOut)
+        if (!pressDrift && driftTime > Time.time && movingForward)
         {
-            drifting = true;
-            startDrift = true;
-            Time.timeScale = 0.5f;
-            if (Time.time >= driftLimit)
-            {
-                driftOut = true;
-            }
+            rb.AddRelativeForce(Vector3.forward * 50);
         }
-        else if ((!pressDrift || driftOut) && drifting)
-        {
-            if (startDrift)
-            {
-                driftTime = Time.time + 0.5f;
-                startDrift = false;
-                if (rightDriftNum > 0)
-                {
-                    if (driftAngle + 2 == curAngle || driftAngle - 6 == curAngle) {
-                        driftNum = 2;
-                    }
-                    else if (driftAngle + 3 == curAngle || driftAngle - 5 == curAngle)
-                    {
-                        driftNum = 3;
-                    }
-                    else if (driftAngle + 4 == curAngle || driftAngle - 4 == curAngle)
-                    {
-                        driftNum = 4;
-                    }
-                }
-                if (leftDriftNum > 0)
-                {
-                    if (driftAngle - 2 == curAngle || driftAngle + 6 == curAngle)
-                    {
-                        driftNum = 2;
-                    }
-                    else if (driftAngle - 3 == curAngle || driftAngle + 5 == curAngle)
-                    {
-                        driftNum = 3;
-                    }
-                    else if (driftAngle - 4 == curAngle || driftAngle + 4 == curAngle)
-                    {
-                        driftNum = 4;
-                    }
-                }
-                rightDriftNum = 0;
-                leftDriftNum = 0;
-                StartCoroutine(DriftCooldown());
-            }
-            if (driftNum == 2)
-            {
-                rb.AddRelativeForce(Vector3.forward * 20);
-            }
-            if (driftNum == 3)
-            {
-                rb.AddRelativeForce(Vector3.forward * 25);
-            }
-            if (driftNum == 4)
-            {
-                rb.AddRelativeForce(Vector3.forward * 30);
-            }
-            if (Time.time >= driftTime)
-            {
-                drifting = false;
-                driftNum = 0;
-                driftOut = false;
-            }
-            Time.timeScale = 1;
-        }
-    }
-
-    private IEnumerator DriftCooldown()
-    {
-        canDrift = false;
-
-        yield return new WaitForSeconds(1f);
-
-        canDrift = true;
     }
 
 
