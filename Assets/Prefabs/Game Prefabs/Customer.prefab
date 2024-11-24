@@ -56,8 +56,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.9681966, z: 1}
-  m_Center: {x: 0, y: 0.015901715, z: 0}
+  m_Size: {x: 0.5002886, y: 0.5741955, z: 0.75465727}
+  m_Center: {x: -0.53584695, y: -0.07477676, z: 0.25585532}
 --- !u!114 &5212781798578842466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +215,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.24, y: 0.12, z: 0.16}
+  m_LocalScale: {x: 0.15, y: 0.075, z: 0.10000001}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4229518997468610015}
@@ -367,7 +367,6 @@ GameObject:
   - component: {fileID: 8238507828846755103}
   - component: {fileID: 5119250474175963455}
   - component: {fileID: 4032093274054396700}
-  - component: {fileID: 6561070455249883990}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -384,9 +383,9 @@ Transform:
   m_GameObject: {fileID: 8450852664889649489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.706, y: 0, z: 0.129}
-  m_LocalScale: {x: 1, y: 0.5, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0.333, y: -0.06, z: 0.129}
+  m_LocalScale: {x: 0.54, y: 0.27, z: 0.54}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4229518997468610015}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -440,26 +439,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6561070455249883990
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8450852664889649489}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
