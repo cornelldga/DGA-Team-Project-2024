@@ -1976,6 +1976,7 @@ GameObject:
   - component: {fileID: 7819210886475074767}
   - component: {fileID: 9138922719749175784}
   - component: {fileID: 6036857775256097834}
+  - component: {fileID: 3990666206343396622}
   m_Layer: 5
   m_Name: NextButton
   m_TagString: Untagged
@@ -2084,7 +2085,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9138922719749175784}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3990666206343396622}
+        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
+        m_MethodName: loadNextScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3990666206343396622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3797917779611021922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63003f9b51d9b4ed3b406aeda84695b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelSelectIndex: 0
+  alphaIndex: 0
 --- !u!1 &4266965098219784701
 GameObject:
   m_ObjectHideFlags: 0
