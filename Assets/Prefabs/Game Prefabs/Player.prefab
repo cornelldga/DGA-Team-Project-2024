@@ -224,12 +224,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: ea2655b355e5041d78246f4648401e49, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 26fae352a29d2a54db1d4f85a722787f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 26.470568, y: 19.84}
+  m_Size: {x: 1.5, y: 1.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -247,8 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2288dd41db344b49b20e79a67242369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  north: {fileID: 21300000, guid: 1dd8ecf32230049d68be50ee8596f1dd, type: 3}
-  south: {fileID: 21300000, guid: f4805517f23974e979c157fc4d60c805, type: 3}
-  west: {fileID: 21300000, guid: ea2655b355e5041d78246f4648401e49, type: 3}
-  northwest: {fileID: 21300000, guid: 0ee47134c5de64076a482701a5bc1c29, type: 3}
-  southwest: {fileID: 21300000, guid: d9e9966679f414583b29184c81c75294, type: 3}
+  north: {fileID: 21300000, guid: a4c125e02954a8e488dcb911d159f13d, type: 3}
+  south: {fileID: 21300000, guid: b40fc5d7f07bee1409e745740d529584, type: 3}
+  west: {fileID: 21300000, guid: 070e31eab1b70144e8d8674b81273471, type: 3}
+  northwest: {fileID: 21300000, guid: db7c2133589f4694a8994f942ae1c8a3, type: 3}
+  southwest: {fileID: 21300000, guid: 8764a636e3154634385d7c873e79b9ae, type: 3}

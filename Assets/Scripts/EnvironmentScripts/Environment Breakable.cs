@@ -17,12 +17,14 @@ public class Breakable : MonoBehaviour
     private Collider objectCollider;
     private Player myPlayer;
     private Material materialInstance;
+    private Animator animator;
 
     /// <summary>
     /// Initializes the breakable object's material, position, and component references
     /// </summary>
     public void Start()
     {
+        animator = GetComponent<Animator>();
         InitializeComponents();
     }
 
@@ -69,7 +71,7 @@ public class Breakable : MonoBehaviour
             {
                 myPlayer.AddOil(oilAmount);
                 StartRespawn();
-                AudioManager.Instance.Play("sfx_BarrelBreak");
+                //AudioManager.Instance.Play("sfx_BarrelBreak");
             }
         }
     }
@@ -79,6 +81,13 @@ public class Breakable : MonoBehaviour
     /// </summary>
     private void StartRespawn()
     {
+        // Play the animation
+        if (animator != null)
+        {
+            print("animator is present");
+            animator.SetTrigger("Break");
+        }
+
         objectCollider.enabled = false;
         objectColor.a = 0f;
         materialInstance.color = objectColor;

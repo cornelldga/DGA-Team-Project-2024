@@ -414,6 +414,7 @@ GameObject:
   - component: {fileID: 2707849180014586492}
   - component: {fileID: 270678668565269513}
   - component: {fileID: 4395660900694973945}
+  - component: {fileID: 4976635255694512088}
   m_Layer: 5
   m_Name: RetryButton
   m_TagString: Untagged
@@ -522,7 +523,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 270678668565269513}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4976635255694512088}
+        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
+        m_MethodName: reloadCurrentScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4976635255694512088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385049202847638955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63003f9b51d9b4ed3b406aeda84695b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelSelectIndex: 0
+  alphaIndex: 0
 --- !u!1 &704734731538095434
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,6 +562,7 @@ GameObject:
   - component: {fileID: 5613852872819847819}
   - component: {fileID: 6359693643140385234}
   - component: {fileID: 5844547190809153526}
+  - component: {fileID: 6849107655623746205}
   m_Layer: 5
   m_Name: RetryButton
   m_TagString: Untagged
@@ -643,7 +671,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6359693643140385234}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6849107655623746205}
+        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
+        m_MethodName: reloadCurrentScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6849107655623746205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704734731538095434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63003f9b51d9b4ed3b406aeda84695b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelSelectIndex: 0
+  alphaIndex: 0
 --- !u!1 &1382191763973980484
 GameObject:
   m_ObjectHideFlags: 0
@@ -2692,6 +2746,7 @@ GameObject:
   - component: {fileID: 6959268843567050339}
   - component: {fileID: 1150782071020740919}
   - component: {fileID: 1086431681576637100}
+  - component: {fileID: 1022307561621856764}
   m_Layer: 5
   m_Name: RetryButton
   m_TagString: Untagged
@@ -2800,7 +2855,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1150782071020740919}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1022307561621856764}
+        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
+        m_MethodName: reloadCurrentScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1022307561621856764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7518053512308310141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63003f9b51d9b4ed3b406aeda84695b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelSelectIndex: 0
+  alphaIndex: 0
 --- !u!1 &7519124466078730865
 GameObject:
   m_ObjectHideFlags: 0
