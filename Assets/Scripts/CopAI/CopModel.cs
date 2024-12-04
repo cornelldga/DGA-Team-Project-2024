@@ -180,8 +180,6 @@ public class CopModel : MonoBehaviour
         // move cop along pathfinding
         HandleMovement();
 
-        Sprite.UpdateSpriteToRotation(this.transform.localRotation.eulerAngles.y);
-
     }
 
 

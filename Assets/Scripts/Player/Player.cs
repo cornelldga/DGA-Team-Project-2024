@@ -36,8 +36,16 @@ public class Player : MonoBehaviour, ICrashable
     private Rigidbody rb;
     private Vector3 lastVelocity;
     private float oil;
-    private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
-    private int curAngle = 0;
+    private Vector3[] directionVector = {
+        Vector3.forward,
+        Vector3.forward+Vector3.right,
+        Vector3.right,
+        Vector3.right+Vector3.back,
+        Vector3.back,
+        Vector3.back+Vector3.left,
+        Vector3.left,
+        Vector3.forward+Vector3.left};
+    private int curDirection = 0;
     private bool movingForward = false;
     private bool isInvincible = false;
     private float turnDelay = 0;
@@ -69,7 +77,7 @@ public class Player : MonoBehaviour, ICrashable
 
     [SerializeField] float minCrashSpeed;
 
-    [SerializeField] private Billboard Sprite;
+    [SerializeField] private Billboard billBoard;
 
     public ParticleSystem smokeParticle;
 
@@ -82,7 +90,6 @@ public class Player : MonoBehaviour, ICrashable
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
         oil = maxOil;
         customers = GameManager.Instance.GetCustomers();
     }
@@ -93,12 +100,11 @@ public class Player : MonoBehaviour, ICrashable
         Drive();
         Nitro();
         Drift();
-
-        Sprite.UpdateSpriteToRotation(this.transform.localRotation.eulerAngles.y); //Update sprite rotation
     }
 
     private void Update()
     {
+        billBoard.movingNorth = billBoard.movingEast = billBoard.movingSouth = billBoard.movingWest = false;
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             pressForward = true;
@@ -162,12 +168,60 @@ public class Player : MonoBehaviour, ICrashable
         if ((pressRight || pressLeft) && Time.time > turnDelay)
         {
             turnDelay = Time.time + turnRate;
+            billBoard.turningNorth = billBoard.turningEast = billBoard.turningSouth = billBoard.turningWest = false;
             Turn();
+            if (curDirection == 0 || curDirection == 1 || curDirection == 2)
+            {
+                billBoard.turningNorth = true;
+            }
+            if (curDirection == 2 || curDirection == 3 || curDirection == 4)
+            {
+                billBoard.turningEast = true;
+            }
+            if (curDirection == 4 || curDirection == 5 || curDirection == 6)
+            {
+                billBoard.turningSouth = true;
+            }
+            if (curDirection == 6 || curDirection == 7 || curDirection == 0)
+            {
+                billBoard.turningWest = true;
+            }
         }
         if (customers.Count != 0)
         {
             HandleOrders();
         }
+
+        //0, 45, 90 is N
+        //90, 135, 180 is E
+        //180, 225, 270 is S
+        //270, 315, 0 is W
+        if(pressForward ^ pressBackward)
+        {
+            if (curDirection == 0 || curDirection == 1 || curDirection == 2)
+            {
+                Debug.Log("Moving north");
+                billBoard.movingNorth = true;
+            }
+            if (curDirection == 2 || curDirection == 3 || curDirection == 4)
+            {
+                billBoard.movingEast = true;
+            }
+            if (curDirection == 4 || curDirection == 5 || curDirection == 6)
+            {
+                billBoard.movingSouth = true;
+            }
+            if (curDirection == 6 || curDirection == 7 || curDirection == 0)
+            {
+                billBoard.movingWest = true;
+            }
+        }
+        else
+        {
+            //turning variables set above
+            
+        }
+
     }
 
 
@@ -176,7 +230,7 @@ public class Player : MonoBehaviour, ICrashable
     {
         if (pressNitro && oil > 0)
         {
-            rb.AddRelativeForce(Vector3.forward * 50);
+            rb.AddRelativeForce(directionVector[curDirection] * 50);
             oil--;
             smokeParticle.Play();
             AudioManager.Instance.Play("sfx_Boost");
@@ -189,12 +243,12 @@ public class Player : MonoBehaviour, ICrashable
     {
         if (pressForward)
         {
-            rb.AddRelativeForce(Vector3.forward * speed * 10);
+            rb.AddRelativeForce(directionVector[curDirection] * speed * 10);
             movingForward = true;
         }
         else if (pressBackward)
         {
-            rb.AddRelativeForce(-Vector3.forward * speed * 10);
+            rb.AddRelativeForce(-directionVector[curDirection] * speed * 10);
             movingForward = false;
         }
         else
@@ -208,15 +262,14 @@ public class Player : MonoBehaviour, ICrashable
     {
         if (pressRight)
         {
-            if (curAngle == 7)
+            if (curDirection == 7)
             {
-                curAngle = 0;
+                curDirection = 0;
             }
             else
             {
-                curAngle++;
+                curDirection++;
             }
-            transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
             if (startDrift){
                 leftDriftNum = 0;
                 rightDriftNum++;
@@ -224,15 +277,14 @@ public class Player : MonoBehaviour, ICrashable
         }
         else if (pressLeft)
         {
-            if (curAngle == 0)
+            if (curDirection == 0)
             {
-                curAngle = 7;
+                curDirection = 7;
             }
             else
             {
-                curAngle--;
+                curDirection--;
             }
-            transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
             if (startDrift){
                 rightDriftNum = 0;
                 leftDriftNum++;
@@ -280,7 +332,7 @@ public class Player : MonoBehaviour, ICrashable
     {
         if (downDrift && canDrift)
         {
-            driftAngle = curAngle;
+            driftAngle = curDirection;
             driftLimit = Time.time + 1;
         }
         if (pressDrift && canDrift && !driftOut)
@@ -301,29 +353,29 @@ public class Player : MonoBehaviour, ICrashable
                 startDrift = false;
                 if (rightDriftNum > 0)
                 {
-                    if (driftAngle + 2 == curAngle || driftAngle - 6 == curAngle) {
+                    if (driftAngle + 2 == curDirection || driftAngle - 6 == curDirection) {
                         driftNum = 2;
                     }
-                    else if (driftAngle + 3 == curAngle || driftAngle - 5 == curAngle)
+                    else if (driftAngle + 3 == curDirection || driftAngle - 5 == curDirection)
                     {
                         driftNum = 3;
                     }
-                    else if (driftAngle + 4 == curAngle || driftAngle - 4 == curAngle)
+                    else if (driftAngle + 4 == curDirection || driftAngle - 4 == curDirection)
                     {
                         driftNum = 4;
                     }
                 }
                 if (leftDriftNum > 0)
                 {
-                    if (driftAngle - 2 == curAngle || driftAngle + 6 == curAngle)
+                    if (driftAngle - 2 == curDirection || driftAngle + 6 == curDirection)
                     {
                         driftNum = 2;
                     }
-                    else if (driftAngle - 3 == curAngle || driftAngle + 5 == curAngle)
+                    else if (driftAngle - 3 == curDirection || driftAngle + 5 == curDirection)
                     {
                         driftNum = 3;
                     }
-                    else if (driftAngle - 4 == curAngle || driftAngle + 4 == curAngle)
+                    else if (driftAngle - 4 == curDirection || driftAngle + 4 == curDirection)
                     {
                         driftNum = 4;
                     }
@@ -334,15 +386,15 @@ public class Player : MonoBehaviour, ICrashable
             }
             if (driftNum == 2)
             {
-                rb.AddRelativeForce(Vector3.forward * 20);
+                rb.AddRelativeForce(directionVector[curDirection] * 20);
             }
             if (driftNum == 3)
             {
-                rb.AddRelativeForce(Vector3.forward * 25);
+                rb.AddRelativeForce(directionVector[curDirection] * 25);
             }
             if (driftNum == 4)
             {
-                rb.AddRelativeForce(Vector3.forward * 30);
+                rb.AddRelativeForce(directionVector[curDirection] * 30);
             }
             if (Time.time >= driftTime)
             {
