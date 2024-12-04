@@ -46,7 +46,6 @@ public class Player : MonoBehaviour, ICrashable
         Vector3.left,
         Vector3.forward+Vector3.left};
     private int curDirection = 0;
-    private bool movingForward = false;
     private bool isInvincible = false;
     private float turnDelay = 0;
     private float turnRate = 0.25f;
@@ -168,23 +167,23 @@ public class Player : MonoBehaviour, ICrashable
         if ((pressRight || pressLeft) && Time.time > turnDelay)
         {
             turnDelay = Time.time + turnRate;
-            billBoard.turningNorth = billBoard.turningEast = billBoard.turningSouth = billBoard.turningWest = false;
+            billBoard.facingNorth = billBoard.facingEast = billBoard.facingSouth = billBoard.facingWest = false;
             Turn();
             if (curDirection == 0 || curDirection == 1 || curDirection == 2)
             {
-                billBoard.turningNorth = true;
+                billBoard.facingNorth = true;
             }
             if (curDirection == 2 || curDirection == 3 || curDirection == 4)
             {
-                billBoard.turningEast = true;
+                billBoard.facingEast = true;
             }
             if (curDirection == 4 || curDirection == 5 || curDirection == 6)
             {
-                billBoard.turningSouth = true;
+                billBoard.facingSouth = true;
             }
             if (curDirection == 6 || curDirection == 7 || curDirection == 0)
             {
-                billBoard.turningWest = true;
+                billBoard.facingWest = true;
             }
         }
         if (customers.Count != 0)
@@ -200,7 +199,6 @@ public class Player : MonoBehaviour, ICrashable
         {
             if (curDirection == 0 || curDirection == 1 || curDirection == 2)
             {
-                Debug.Log("Moving north");
                 billBoard.movingNorth = true;
             }
             if (curDirection == 2 || curDirection == 3 || curDirection == 4)
@@ -241,19 +239,17 @@ public class Player : MonoBehaviour, ICrashable
     // The player can press W and S to drive forwards and backwards.
     void Drive()
     {
+        if(pressForward && pressBackward)
+        {
+            return;
+        }
         if (pressForward)
         {
             rb.AddRelativeForce(directionVector[curDirection] * speed * 10);
-            movingForward = true;
         }
         else if (pressBackward)
         {
             rb.AddRelativeForce(-directionVector[curDirection] * speed * 10);
-            movingForward = false;
-        }
-        else
-        {
-            movingForward = false;
         }
     }
 
@@ -503,7 +499,6 @@ public class Player : MonoBehaviour, ICrashable
     {
         if (speedVector.magnitude >= minCrashSpeed)
         {
-            Debug.Log("crashed into player");
             TakeDamage();
         }
     }

@@ -12,7 +12,6 @@ using UnityEngine;
 public class PedestrianNavigationController : MonoBehaviour, ICrashable
 {
     public float movementSpeed = 1.0f;
-    [SerializeField] float rotationSpeed = 5000;
     [SerializeField] float stopDistance = 0.05f;
     [SerializeField] Vector3 destination;
     public bool hasReachedDestination = false;
@@ -69,21 +68,10 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
 
     public void MoveToDestination()
     {
+        transform.position = Vector3.MoveTowards(transform.position, destination, movementSpeed * Time.deltaTime);
         if (Vector3.Distance(transform.position, destination) > stopDistance)
         {
             hasReachedDestination = false;
-
-            // Rotate towards destination
-            Vector3 direction = destination - transform.position;
-            direction.y = 0;
-            if (direction != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            }
-
-            // Move towards destination
-            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
         }
         else
         {

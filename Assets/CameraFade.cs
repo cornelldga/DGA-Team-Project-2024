@@ -9,7 +9,6 @@ public class CameraFade : MonoBehaviour
         //Debug.Log("hello");
         if (other.gameObject.TryGetComponent(out ObjectFade fade))
         {
-            Debug.Log("FADE");
             fade.Fade();
         }
     }

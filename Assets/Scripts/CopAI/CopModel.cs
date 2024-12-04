@@ -27,7 +27,7 @@ public class CopModel : MonoBehaviour
     [SerializeField] private NavState State;
     [SerializeField] private CopType model;
 
-    [SerializeField] private Billboard Sprite;
+    [SerializeField] private Billboard billBoard;
 
     // Internal Constants
     [SerializeField] private float RamRadius = 10; // how close the cop has to be to the cop to start a ram
@@ -92,9 +92,6 @@ public class CopModel : MonoBehaviour
             
             IsRamming = true;
             RamTimer = 0;
-
-            RB.transform.LookAt(GameManager.Instance.getPlayer().transform.position);
-
             Vector3 moveDir = (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
             RB.velocity = moveDir * RamSpeed;
             CurrentPath = null;
@@ -244,7 +241,6 @@ public class CopModel : MonoBehaviour
             {
                 Vector3 moveDir = (targetPosition - position).normalized;
                 RB.velocity = moveDir * speed;
-                transform.LookAt(targetPosition);
             }
             else
             {

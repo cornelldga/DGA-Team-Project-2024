@@ -17,10 +17,10 @@ public class Billboard : MonoBehaviour
     [HideInInspector] public bool movingSouth;
     [HideInInspector] public bool movingWest;
     [HideInInspector] public bool movingEast;
-    [HideInInspector] public bool turningNorth;
-    [HideInInspector] public bool turningSouth;
-    [HideInInspector] public bool turningWest;
-    [HideInInspector] public bool turningEast;
+    [HideInInspector] public bool facingNorth;
+    [HideInInspector] public bool facingSouth;
+    [HideInInspector] public bool facingWest;
+    [HideInInspector] public bool facingEast;
     Animator anim;
 
     private void Start()
@@ -41,10 +41,10 @@ public class Billboard : MonoBehaviour
         anim.SetBool("Moving South", movingSouth);
         anim.SetBool("Moving East", movingEast);
         anim.SetBool("Moving West", movingWest);
-        anim.SetBool("Turning North", turningNorth);
-        anim.SetBool("Turning South", turningSouth);
-        anim.SetBool("Turning East", turningEast);
-        anim.SetBool("Turning West", turningWest);
+        anim.SetBool("Facing North", facingNorth);
+        anim.SetBool("Facing South", facingSouth);
+        anim.SetBool("Facing East", facingEast);
+        anim.SetBool("Facing West", facingWest);
     }
 
 }

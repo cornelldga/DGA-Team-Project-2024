@@ -34,7 +34,6 @@ public class CookSlot : MonoBehaviour
     private float cookProgress = 0;
 
     private float maxPatienceTime = 0;
-    private float patienceProgress = 0;
 
     private Color readyColor = new Color(184, 233, 173);
     private Color normColor;
@@ -114,7 +113,6 @@ public class CookSlot : MonoBehaviour
         //patienceTimerCount.enabled = true;
         isOpen = false;
         maxPatienceTime = c.waitTime;
-        patienceProgress = 0;
     }
 
     /// <summary>
