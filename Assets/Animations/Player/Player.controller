@@ -36,10 +36,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Turning North
+    m_ConditionEvent: Facing North
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: Turning West
+    m_ConditionEvent: Facing West
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7927860847246051918}
@@ -141,25 +141,25 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Turning North
+  - m_Name: Facing North
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Turning South
+  - m_Name: Facing South
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Turning East
+  - m_Name: Facing East
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Turning West
+  - m_Name: Facing West
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -274,10 +274,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Turning North
+    m_ConditionEvent: Facing North
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: Turning West
+    m_ConditionEvent: Facing West
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5516884250650825210}

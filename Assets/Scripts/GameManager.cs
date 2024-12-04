@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// This class is used to manage the game logic and game state in each level.
@@ -21,9 +19,11 @@ public class GameManager : MonoBehaviour
     private int numCustomers;
     bool pauseGame = false;
     bool gameOver = false;
-
-    [Tooltip("The minimum number of customers required to win")]
-    [SerializeField] private int minCustomersToWin;
+    
+    [Tooltip("The minimum number of customers required to win and earn 1 star")]
+    [SerializeField] private int oneStarRating;
+    [Tooltip("The minimum number of customers required to earn 2 stars")]
+    [SerializeField] private int twoStarRating;
     private int completedOrders = 0;
     [Space]
     [Header("GameManager UI")]
@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text numCustomersText;
     [SerializeField] GameObject loseScreen;
     [SerializeField] GameObject winScreen;
+    [SerializeField] GameObject oneStar;
+    [SerializeField] GameObject twoStar;
+    [SerializeField] GameObject threeStar;
 
     [Space]
     [Header("GameManager Inputs")]
@@ -111,12 +114,13 @@ public class GameManager : MonoBehaviour
     private void UpdateGameTimer()
     {
         gameTimer-=Time.deltaTime;
-        gameTimerText.text = gameTimer.ToString("F2");
         if (gameTimer <= 0)
         {
+            gameTimerText.text = "0.00";
             AudioManager.Instance.Play("sfx_TimeUp");
             EndGame();
         }
+        gameTimerText.text = gameTimer.ToString("F2");
     }
     /// <summary>
     /// Pauses the game, setting timeScale to 0 and disables the player controller and customers
@@ -157,7 +161,7 @@ public class GameManager : MonoBehaviour
     {
         player.enabled = false;
         Time.timeScale = 0;
-        if (completedOrders >= minCustomersToWin)
+        if (completedOrders >= oneStarRating)
         {
             WinGame();
         }
@@ -191,14 +195,21 @@ public class GameManager : MonoBehaviour
     {
         completedOrders++;
         numCustomersText.text = completedOrders.ToString() + "/" + numCustomers.ToString();
-        if (completedOrders == minCustomersToWin) {
+        if (completedOrders == oneStarRating)
+        {
             //indicator that the minimum amount of customers you must serve to win has been fufilled
             numCustomersText.color = Color.green;
+            oneStar.SetActive(true);
+        }
+        else if (completedOrders == twoStarRating)
+        {
+            twoStar.SetActive(true);
         }
         //customers.Remove(customer);
         RemoveOrder(customer);
         if (completedOrders == numCustomers)
         {
+            threeStar.SetActive(true);
             WinGame();
         }
     }
