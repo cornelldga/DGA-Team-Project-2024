@@ -102,3 +102,10 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
     reverb: 0
+  - name: sfx_SirenLong
+    clip: {fileID: 8300000, guid: 4ae455adcf8c9cb499c5207177c0990d, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+    reverb: 1

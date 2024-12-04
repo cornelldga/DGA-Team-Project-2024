@@ -105,11 +105,21 @@ public class CopModel : MonoBehaviour
         else if (distanceFromPlayer < VisionRadius)
         {
             State = NavState.HOTPURSUIT;
+            if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
+            {
+                //FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
+                FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
+            }
         }
 
         else if (State == NavState.HOTPURSUIT && distanceFromPlayer > MaxPursuitRadius)
         {
             State = NavState.WANDER;
+            /*if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
+            {
+                FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
+                FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
+            }*/
         }
     }
 
