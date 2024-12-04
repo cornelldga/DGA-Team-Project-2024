@@ -27,6 +27,27 @@ public class Sound
     //Does this have reverb?
     public bool reverb;
 
+    [Range(-10000, 0)]
+    public int dryLevel = 0;
+
+    [Range(-10000, 0)]
+    public int room = 0;
+
+    [Range(0.1f, 20f)]
+    public float decayTime = 1f;
+
+    [Range(-10000, 1000)]
+    public float reflectionsLevel = 0f;
+
+    [Range(0f, 0.3f)]
+    public int reflectionsDelay = 0;
+
+    [Range(-10000, 2000)]
+    public int reverbLevel = 0;
+
+    [Range(0f, 0.1f)]
+    public float reverbDelay = 0f;
+
     /// <summary>
     /// Returns if music clip
     /// </summary>

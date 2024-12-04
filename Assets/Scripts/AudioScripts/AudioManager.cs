@@ -29,6 +29,8 @@ public class AudioManager : MonoBehaviour
     private Sound currentMusic;
     private Dictionary<string, Sound> soundDictionary = new Dictionary<string, Sound>();
 
+    private GameObject tempChildObj;
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -61,13 +63,30 @@ public class AudioManager : MonoBehaviour
         // Initialize sound effects
         foreach (Sound s in soundEffects)
         {
-            s.source = gameObject.AddComponent<AudioSource>();
+            if (!s.hasReverb())
+            {
+                s.source = gameObject.AddComponent<AudioSource>();
+            }
+            else
+            {
+                tempChildObj = new GameObject();
+                tempChildObj.transform.SetParent(gameObject.transform);
+                s.source = tempChildObj.AddComponent<AudioSource>();
+            }
             s.source.clip = s.clip;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
             s.setMusic(false);
             soundDictionary[s.name] = s;
+
+        }
+        foreach (Sound s in soundEffects)
+        {
+            if (s.hasReverb())
+            {
+                soundDictionary[s.name].source.AddComponent<AudioReverbFilter>();
+            }
         }
     }
 
@@ -117,6 +136,10 @@ public class AudioManager : MonoBehaviour
 
     public void StopSound(string name)
     {
+        foreach (string key in soundDictionary.Keys) {
+            Debug.Log("key: " + key);
+        }
+        Debug.Log(soundDictionary.Keys.Count);
         if (!soundDictionary.TryGetValue(name, out Sound sound))
         {
             Debug.LogWarning($"Sound effect '{name}' not found!");
@@ -124,6 +147,17 @@ public class AudioManager : MonoBehaviour
         }
 
         sound.source.Stop();
+    }
+
+    // Returns whether or not this sound is currently playing
+    public bool IsSoundPlaying(string name)
+    {
+        if (!soundDictionary.TryGetValue(name, out Sound sound))
+        {
+            Debug.LogWarning($"Sound effect '{name}' not found!");
+            return false;
+        }
+        return soundDictionary[name].source.isPlaying;
     }
 
     private System.Collections.IEnumerator FadeIn(AudioSource audioSource, float targetVolume, float duration)
