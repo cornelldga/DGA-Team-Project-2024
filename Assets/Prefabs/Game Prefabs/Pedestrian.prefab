@@ -99,12 +99,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3
-  rotationSpeed: 500
   stopDistance: 0.5
   destination: {x: 0, y: 0, z: 0}
   hasReachedDestination: 0
   knockbackScale: 3
   maxKnockback: 25
+  animController: {fileID: 5109388603625514691}
 --- !u!114 &4397536775025013367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,10 +220,10 @@ MonoBehaviour:
   movingSouth: 0
   movingWest: 0
   movingEast: 0
-  faceNorth: 0
-  faceSouth: 0
-  faceWest: 0
-  faceEast: 0
+  facingNorth: 0
+  facingSouth: 0
+  facingWest: 0
+  facingEast: 0
 --- !u!95 &3910523949179086265
 Animator:
   serializedVersion: 5
@@ -234,7 +234,7 @@ Animator:
   m_GameObject: {fileID: 8682799155138007177}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8392a5e43eaa94a43a49cae18c7304af, type: 2}
+  m_Controller: {fileID: 9100000, guid: b0798779ecc02476e88a502f212db82a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
