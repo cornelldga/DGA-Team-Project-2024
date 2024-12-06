@@ -60,6 +60,7 @@ public class Player : MonoBehaviour, ICrashable
     private bool startDrift = false;
     private int driftAngle = 0;
     private bool canDrift = true;
+    private bool downDrift = false;
 
     // Input booleans
     private bool pressForward;
@@ -68,7 +69,6 @@ public class Player : MonoBehaviour, ICrashable
     private bool pressLeft;
     private bool pressNitro;
     private bool pressDrift;
-    private bool downDrift;
 
     //New added private variables 
 
@@ -151,14 +151,6 @@ public class Player : MonoBehaviour, ICrashable
         else
         {
             pressDrift = false;
-        }
-        if (Input.GetKeyDown(drift))
-        {
-            downDrift = true;
-        }
-        else
-        {
-            downDrift = false;
         }
         if (!pressRight && !pressLeft)
         {
@@ -286,56 +278,23 @@ public class Player : MonoBehaviour, ICrashable
                 leftDriftNum++;
             }
         }
-        /*else if (pressDrift)
-        {
-            if (pressRight)
-            {
-                if (curAngle == 7)
-                {
-                    curAngle = 1;
-                }
-                else if (curAngle == 6)
-                {
-                    curAngle = 0;
-                }
-                else
-                {
-                    curAngle += 2;
-                }
-                transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
-            }
-            else if (pressLeft)
-            {
-                if (curAngle == 0)
-                {
-                    curAngle = 6;
-                }
-                else if (curAngle == 1)
-                {
-                    curAngle = 7;
-                }
-                else
-                {
-                    curAngle -= 2;
-                }
-                transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
-            }
-        }*/
     }
 
     // Player can hold the spacebar to brake and turn while braking to drift
     void Drift()
     {
-        if (downDrift && canDrift)
-        {
-            driftAngle = curDirection;
-            driftLimit = Time.time + 1;
-        }
         if (pressDrift && canDrift && !driftOut)
         {
+            if (!downDrift)
+            {
+                driftAngle = curDirection;
+                driftLimit = Time.time + 1;
+                downDrift = true;
+            }
             drifting = true;
             startDrift = true;
             Time.timeScale = 0.5f;
+            Camera.main.orthographicSize = 5f;
             if (Time.time >= driftLimit)
             {
                 driftOut = true;
@@ -399,6 +358,8 @@ public class Player : MonoBehaviour, ICrashable
                 driftOut = false;
             }
             Time.timeScale = 1;
+            Camera.main.orthographicSize = 7.5f;
+            downDrift = false;
         }
     }
 
@@ -419,10 +380,9 @@ public class Player : MonoBehaviour, ICrashable
     {
         foreach (Customer customer in customers)
         {
-            if (customer.cookTime > 0 && oil > 0)
+            if (customer.cookTime > 0)
             {
                 customer.cookTime -= Time.deltaTime;
-                oil -= Time.deltaTime;
             }
         }
     }
@@ -510,8 +470,12 @@ public class Player : MonoBehaviour, ICrashable
             other.gameObject.GetComponent<ICrashable>().Crash(rb.velocity, transform.position);
         }
         float curSpeed = lastVelocity.magnitude;
-        Vector3 direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
-        GetComponent<Rigidbody>().velocity = direction * Mathf.Max(curSpeed, maxCollisionForce);
+        if (curSpeed >= 7f)
+        {
+            Vector3 direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
+            GetComponent<Rigidbody>().velocity = direction * 0.5f * Mathf.Max(curSpeed, maxCollisionForce);
+        }
+        
     }
 
 
