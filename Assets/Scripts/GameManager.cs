@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     List<Customer> customers = new List<Customer>();
 
     [Header("Game Logic")]
+    [Tooltip("Determines what levels should be unlocked when completing this level")]
+    [SerializeField] int levelNumber = -1;
     [Tooltip("How long the player has to complete the level")]
     [SerializeField] private float gameTimer;
     private Player player;
@@ -78,6 +80,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if(levelNumber == -1)
+        {
+            throw new System.Exception("You must set the level number based on its chronological order." +
+                " Set to 0 if test level or endless level");
+        }
+
         gameTimerText.text = gameTimer.ToString();
         CountCustomers();
         numCustomersText.text = completedOrders.ToString() + "/" + numCustomers.ToString();
@@ -220,6 +228,7 @@ public class GameManager : MonoBehaviour
     {
         gameOver = true;
         PauseGame();
+        PlayerPrefs.SetInt("Levels Completed", Mathf.Max(PlayerPrefs.GetInt("Levels Completed", 0), levelNumber));
         winScreen.SetActive(true);
     }
     /// <summary>
