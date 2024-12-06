@@ -45,7 +45,9 @@ public class LevelSelectModal : MonoBehaviour
         int minutes = bestTime / 60;
         int seconds = bestTime % 60;
         this.bestTimeText.GetComponent<TMP_Text>().text = minutes.ToString() + ":" + seconds.ToString("00");
-        this.customesServedText.GetComponent<TMP_Text>().text = "Customers Served: " + customesServed.ToString();
+        
+        //TODO: Adjust the customers served placeholder text
+
         this.levelIndex = levelIndex;
         playUpAnimation();
     }

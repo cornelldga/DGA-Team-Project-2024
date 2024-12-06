@@ -11,7 +11,7 @@ public class LevelSelectOrderer : MonoBehaviour
         //get every level select button in the scene
         levelSelectButtons = GameObject.FindGameObjectsWithTag("LevelSelectButton");
 
-        //sort the level select buttons by level number
+        //sort the level select buttons by level number just for good measure
         for(int i = 0; i < levelSelectButtons.Length; i++){
             for(int j = 0; j < levelSelectButtons.Length - 1; j++){
                 if(levelSelectButtons[j].GetComponent<LevelSelectButton>().GetLevelNumber() > levelSelectButtons[j+1].GetComponent<LevelSelectButton>().GetLevelNumber()){
