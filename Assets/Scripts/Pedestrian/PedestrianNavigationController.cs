@@ -9,6 +9,7 @@ using UnityEngine;
 /// Without getting crashed, the pedestrian will move towards the destination. When it reaches the destination, it selects a new one based on 1) its walking direction and 2) if there is a branch from the current waypoint. 
 /// If the pedestrian collides with the player, it will be knocked back based on the player's speed and ped-play direction.
 /// </remarks>
+[RequireComponent(typeof(Rigidbody))]
 public class PedestrianNavigationController : MonoBehaviour, ICrashable
 {
     public float movementSpeed = 1.0f;
@@ -26,6 +27,8 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
     float knockbackCooldown = 0.5f; // Delay before rechecking for kinematic state
     float knockbackTimer = 0f;
     Rigidbody rb;
+
+    [SerializeField] Billboard animController;
 
     void Start()
     {
@@ -64,6 +67,15 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
                 }
             }
         }
+
+        // line up the rotation angle with the camera
+        animController.transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0);
+
+        // Check facing direction and update animator
+        Vector3 movingDirection = destination - transform.position;
+        bool isFacingWest = movingDirection.x < 0;
+        animController.facingWest = isFacingWest;
+        animController.facingEast = !isFacingWest;
     }
 
     public void MoveToDestination()
