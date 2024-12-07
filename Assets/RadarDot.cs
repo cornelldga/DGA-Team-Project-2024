@@ -26,7 +26,6 @@ public class RadarDot : MonoBehaviour
     {
 
         blipAnim.SetBool("OrderTaken", customer.IsOrderTaken());
-        Debug.Log("OrderTaken: " + customer.IsOrderTaken()); // Verify it changed
 
         if (customer.IsInactive())
         {
