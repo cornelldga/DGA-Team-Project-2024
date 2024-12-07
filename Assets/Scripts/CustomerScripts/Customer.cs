@@ -87,12 +87,14 @@ public class Customer : MonoBehaviour
         switch (currentState)
         {
             case CustomerState.WaitingForOrder:
-                if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E))
+                float oil = GameManager.Instance.getPlayer().GetOil();
+                if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && oil >= 20)
                 {
                     currentState = CustomerState.Cooking;
                     customerRenderer.material = greenMaterial;
                     timer = 0f;
                     orderTaken = true;
+                    GameManager.Instance.getPlayer().AddOil(-20);
 
                     // TODO: Pass self to Player 
                     // NOTE: I used GameManager.Instance.AddCustomer() instead
