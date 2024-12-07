@@ -178,6 +178,16 @@ public class Customer : MonoBehaviour
         return isOrderCompleted;
     }
 
+    /// <returns> If this customer is active. Becomes inactive once order is completed or failed. </returns>
+    public bool IsInactive()
+    {
+        if (currentState == CustomerState.Done)
+        {
+            return true;
+        }
+        return false;
+    }
+
 
     // PRIVATE METHODS ----------------------------
 
