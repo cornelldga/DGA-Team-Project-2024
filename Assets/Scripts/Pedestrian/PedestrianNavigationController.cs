@@ -73,9 +73,14 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
 
         // Check facing direction and update animator
         Vector3 movingDirection = destination - transform.position;
-        bool isFacingWest = movingDirection.x < 0;
-        animController.facingWest = isFacingWest;
-        animController.facingEast = !isFacingWest;
+        bool isWalkingWest = movingDirection.x < 0;
+        bool isWalkingEast = movingDirection.x > 0;
+        bool isWalkingSouth = movingDirection.z < 0;
+        bool isWalkingNorth = movingDirection.z > 0;
+        animController.movingWest = isWalkingWest;
+        animController.movingEast = isWalkingEast;
+        animController.movingNorth = isWalkingNorth;
+        animController.movingSouth = isWalkingSouth;
     }
 
     public void MoveToDestination()

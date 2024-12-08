@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor.EditorTools;
 using UnityEngine;
 
@@ -46,8 +47,19 @@ public class Customer : MonoBehaviour
     public Material blueMaterial; // order successfully complete
 
     [Header("Movement Settings")]
-    public float movementAmplitude = 3f; // Distance of movement from the starting position
-    public float movementFrequency = 1f; // Speed of the oscillation
+    /// <summary>
+    /// if the customer is moving back and forth along the Z-axis. If unchecked, the customer will move along the X-axis (West and East).
+    /// </summary>
+    public bool isMovingNorthSouth = true;
+
+    /// <summary>
+    /// The amplitude of the oscillation.
+    /// </summary>
+    public float movementAmplitude = 3f;
+    /// <summary>
+    /// The speed of the oscillation.
+    /// </summary>
+    public float movementFrequency = 1f;
 
     private Vector3 startingPosition;
     private LineRenderer lineRenderer;
@@ -161,12 +173,15 @@ public class Customer : MonoBehaviour
 
         // Check facing direction and set the animator
         Vector3 movingDirection = transform.position - previousPosition;
-        bool isFacingWest = movingDirection.x < 0;
-        bool isFacingNorth = movingDirection.z > 0;
-        animController.facingWest = isFacingWest;
-        animController.facingEast = !isFacingWest;
-        animController.facingNorth = isFacingNorth;
-        animController.facingSouth = !isFacingNorth;
+        bool isWalkingWest = movingDirection.x < 0f;
+        bool isWalkingEast = movingDirection.x > 0f;
+        bool isWalkingSouth = movingDirection.z < 0f;
+        bool isWalkingNorth = movingDirection.z > 0f;
+        animController.movingWest = isWalkingWest;
+        animController.movingEast = isWalkingEast;
+        animController.movingNorth = isWalkingNorth;
+        animController.movingSouth = isWalkingSouth;
+        Debug.Log("Moving West: " + isWalkingWest + " Moving East: " + isWalkingEast + " Moving North: " + isWalkingNorth + " Moving South: " + isWalkingSouth + "moving direction: " + movingDirection);
 
         previousPosition = transform.position;
     }
@@ -223,7 +238,8 @@ public class Customer : MonoBehaviour
         float movementOffset = Mathf.Sin(Time.time * movementFrequency) * movementAmplitude;
 
         // Apply the movement along the SELF's Z-axis
-        Vector3 newPosition = startingPosition + transform.forward * movementOffset;
+        Vector3 direction = isMovingNorthSouth ? Vector3.forward : Vector3.right;
+        Vector3 newPosition = startingPosition + direction * movementOffset;
 
         // Update the customer's position
         transform.position = newPosition;
