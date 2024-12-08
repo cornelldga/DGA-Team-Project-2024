@@ -97,12 +97,22 @@ public class Customer : MonoBehaviour
         switch (currentState)
         {
             case CustomerState.WaitingForOrder:
-                if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E))
+                float oil = GameManager.Instance.getPlayer().GetOil();
+                if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && oil >= 20)
                 {
                     currentState = CustomerState.Cooking;
                     customerRenderer.material = greenMaterial;
                     timer = 0f;
                     orderTaken = true;
+                    GameManager.Instance.getPlayer().AddOil(-20);
+
+                    // TODO: Pass self to Player 
+                    // NOTE: I used GameManager.Instance.AddCustomer() instead
+                    // This is not going to work since I am not passing myself. 
+                    // We should change this.
+                    //GameManager.Instance.addCustomer();
+
+
                     GameManager.Instance.TakeOrder(this);
                 }
                 break;
@@ -192,6 +202,16 @@ public class Customer : MonoBehaviour
     public bool IsOrderCompleted()
     {
         return isOrderCompleted;
+    }
+
+    /// <returns> If this customer is active. Becomes inactive once order is completed or failed. </returns>
+    public bool IsInactive()
+    {
+        if (currentState == CustomerState.Done)
+        {
+            return true;
+        }
+        return false;
     }
 
 
