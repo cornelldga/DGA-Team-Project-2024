@@ -73,6 +73,7 @@ MonoBehaviour:
   customerName: Walker
   orderName: 
   customerImage: {fileID: 0}
+  customerSprite: {fileID: 5229204291158607446}
   waitTime: 20
   cookTime: 5
   interactionRange: 5
@@ -216,7 +217,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.07, y: 0.035, z: 0.07}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4229518997468610015}
@@ -262,7 +263,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 735bd583f66714bf19249e656c487b8d, type: 3}
+  m_Sprite: {fileID: -39309797, guid: d36797c22817f448d98e85b4b7ef81b7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -408,7 +409,7 @@ Transform:
   m_GameObject: {fileID: 8450852664889649489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.333, y: -0.06, z: 0.129}
+  m_LocalPosition: {x: -0.292, y: -0.06, z: 0.129}
   m_LocalScale: {x: 0.54, y: 0.27, z: 0.54}
   m_ConstrainProportionsScale: 1
   m_Children: []
