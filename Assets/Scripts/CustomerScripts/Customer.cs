@@ -19,6 +19,11 @@ public class Customer : MonoBehaviour
     [Tooltip("The image that will be displayed in UI.")]
     public Sprite customerImage;
     /// <summary>
+    /// The sprite that will be displayed in the game world.
+    /// </summary>
+    [Tooltip("The sprite that will be displayed in the game world.")]
+    public GameObject customerSprite;
+    /// <summary>
     /// The time the customer will wait for their order, after which the order will fail. 
     /// </summary>
     public float waitTime;
@@ -53,6 +58,8 @@ public class Customer : MonoBehaviour
     private bool isOrderCompleted = false;
     private enum CustomerState { WaitingForOrder, Cooking, Returning, Done }
     private CustomerState currentState;
+    private Vector3 previousPosition;
+    private Billboard animController;
 
     void Start()
     {
@@ -65,6 +72,9 @@ public class Customer : MonoBehaviour
 
         // Initialize and configure the LineRenderer
         SetupInteractionRangeIndicator();
+
+        // Get the Billboard component
+        animController = customerSprite.GetComponent<Billboard>();
     }
 
     void Update()
@@ -93,14 +103,6 @@ public class Customer : MonoBehaviour
                     customerRenderer.material = greenMaterial;
                     timer = 0f;
                     orderTaken = true;
-
-                    // TODO: Pass self to Player 
-                    // NOTE: I used GameManager.Instance.AddCustomer() instead
-                    // This is not going to work since I am not passing myself. 
-                    // We should change this.
-                    //GameManager.Instance.addCustomer();
-
-
                     GameManager.Instance.TakeOrder(this);
                 }
                 break;
@@ -143,6 +145,20 @@ public class Customer : MonoBehaviour
 
         // move the customer back and forth
         MoveCustomer();
+
+        // line up the rotation angle with the camera
+        animController.transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0);
+
+        // Check facing direction and set the animator
+        Vector3 movingDirection = transform.position - previousPosition;
+        bool isFacingWest = movingDirection.x < 0;
+        bool isFacingNorth = movingDirection.z > 0;
+        animController.facingWest = isFacingWest;
+        animController.facingEast = !isFacingWest;
+        animController.facingNorth = isFacingNorth;
+        animController.facingSouth = !isFacingNorth;
+
+        previousPosition = transform.position;
     }
 
     /// <summary>
