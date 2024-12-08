@@ -35,8 +35,8 @@ public class CopModel : MonoBehaviour
     [SerializeField] private float MaxPursuitRadius = 35; // The distance where the cop will lose sight of the target
     private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
     [SerializeField] private int BaseSpeed = 12; // base movement speed while patrolling
-    [SerializeField] private int RamSpeed = 20; // revved up speed barreling towards the player. 
-    [SerializeField] private float RamCooldown = 1; // the amount of time spend on a ram attack until returning to normal navigation
+    [SerializeField] private int RamSpeed = 18; // revved up speed barreling towards the player. 
+    [SerializeField] private float RamMovementDuration = 1; // the amount of time spend on a ram attack until returning to normal navigation
     private const int WanderRerouteTime = 5; // max time spend on a single wander path to prevent getting stuck
     private const int PursuitRerouteTime = 1; // max time spend on a single hot pursuit path to prevent getting stuck
 
@@ -56,7 +56,7 @@ public class CopModel : MonoBehaviour
     private int speed;
 
     // Parameters managing cooldown for ramming, in seconds
-    private float RamTimer = 0;
+    private float RamCooldownTimer = 5;
     private bool IsRamming = false;
 
     // parameters for managing rerouting
@@ -87,15 +87,13 @@ public class CopModel : MonoBehaviour
         float distanceFromPlayer = Vector3.Distance(this.transform.position, GameManager.Instance.getPlayer().transform.position);
         
         // set attacking state
-        if (!IsRamming && distanceFromPlayer < RamRadius)
+        if (!IsRamming && distanceFromPlayer < RamRadius && RamCooldownTimer <= 0)
         {
-            
             IsRamming = true;
-            RamTimer = 0;
+            RamMovementDuration = 0;
             Vector3 moveDir = (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
             RB.velocity = moveDir * RamSpeed;
             CurrentPath = null;
-
         } 
 
         // set navigation state
@@ -136,12 +134,14 @@ public class CopModel : MonoBehaviour
         // resolve the attack before doing anything
         if (IsRamming)
         {
-            RamTimer += Time.deltaTime;
-            if (RamTimer >= RamCooldown)
+            RamMovementDuration -= Time.deltaTime;
+            if (RamMovementDuration <=0)
             {
                 IsRamming = false;
+                RamCooldownTimer = 5;
             }
-
+        } else if (!IsRamming) {
+            RamCooldownTimer -=1;
         }
 
 
