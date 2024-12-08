@@ -51,7 +51,7 @@ MonoBehaviour:
   speed: 2
   health: 10
   invincibilityDuration: 5
-  invincibilityDeltaTime: 0.5
+  invincibilityDeltaTime: 0.25
   maxOil: 100
   nitro1: 304
   nitro2: 303
