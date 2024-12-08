@@ -72,6 +72,21 @@ public class Breakable : MonoBehaviour
     }
 
     /// <summary>
+    /// Checks for trigger/collision with player (for when we don't want physics in collisions)
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            myPlayer.AddOil(oilAmount);
+            StartRespawn();
+            //AudioManager.Instance.Play("sfx_BarrelBreak");
+            
+        }
+    }
+
+    /// <summary>
     /// Processes collision with player and applies appropriate effects
     /// </summary>
     private void CheckCollision(Collision collision)
