@@ -134,6 +134,7 @@ public class Customer : MonoBehaviour
                 if (cookTime <= 0 && !foodReady)
                 {
                     foodReady = true;
+                    AudioManager.Instance.Play("sfx_TimerDing");
                 }
 
                 if (waitTime <= 0)
@@ -143,6 +144,7 @@ public class Customer : MonoBehaviour
                         currentState = CustomerState.Done;
                         customerRenderer.material = redMaterial;
                         GameManager.Instance.RemoveOrder(this);
+                        AudioManager.Instance.Play("sfx_CustomerAngry");
                     }
                     break;
                 }

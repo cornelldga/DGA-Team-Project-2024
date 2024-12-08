@@ -49,63 +49,266 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 3813211ab7c57d041a3bb9c701f3dd36, type: 3}
     volume: 0.3
     pitch: 1
-    loop: 0
+    loop: 1
     source: {fileID: 0}
     reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
   - name: music_TheSizzle
     clip: {fileID: 8300000, guid: 02710fc0fad933748b5656f5b8b30619, type: 3}
     volume: 0.3
     pitch: 1
-    loop: 0
+    loop: 1
     source: {fileID: 0}
     reverb: 0
-  soundEffects:
-  - name: sfx_Crash1
-    clip: {fileID: 8300000, guid: 3702e8e8a7454db43acf3443e69c07d4, type: 3}
-    volume: 0.3
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: music_SmoothMover
+    clip: {fileID: 8300000, guid: 13a4a3075c400ee4da72d6cfbd8ec97f, type: 3}
+    volume: 0.4
     pitch: 1
-    loop: 0
+    loop: 1
     source: {fileID: 0}
     reverb: 0
-  - name: sfx_Crash2
-    clip: {fileID: 8300000, guid: a5e0708311a1fb94cbb0d79e9f24701f, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-    reverb: 0
-  - name: sfx_Boost
-    clip: {fileID: 8300000, guid: bbc812acd8e24414fae91adcce9f806c, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-    reverb: 0
-  - name: sfx_BarrelBreak
-    clip: {fileID: 8300000, guid: 6967e1480a3ea7641a58e84f7556feea, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-    reverb: 0
-  - name: sfx_TimeUp
-    clip: {fileID: 8300000, guid: 6967e1480a3ea7641a58e84f7556feea, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-    reverb: 0
-  - name: sfx_Boost
-    clip: {fileID: 8300000, guid: bbc812acd8e24414fae91adcce9f806c, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-    reverb: 0
-  - name: sfx_SirenLong
-    clip: {fileID: 8300000, guid: 4ae455adcf8c9cb499c5207177c0990d, type: 3}
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: music_ChowsOn
+    clip: {fileID: 8300000, guid: b07537791553cb2438f38cd3b33616c2, type: 3}
     volume: 0.3
     pitch: 1
     loop: 1
     source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  soundEffects:
+  - name: sfx_Crash1
+    clip: {fileID: 8300000, guid: 82bd9ed47d7a69a429f64f38616e8de7, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_Boost
+    clip: {fileID: 8300000, guid: bbc812acd8e24414fae91adcce9f806c, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_BarrelBreak
+    clip: {fileID: 8300000, guid: 53f6a4070d1e15241a2e7b58376ff5a1, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_TimerDing
+    clip: {fileID: 8300000, guid: 575dc917c6f42ec4ab3e62757a522f1e, type: 3}
+    volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_Boost
+    clip: {fileID: 8300000, guid: bbc812acd8e24414fae91adcce9f806c, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_SirenLong
+    clip: {fileID: 8300000, guid: 4ae455adcf8c9cb499c5207177c0990d, type: 3}
+    volume: 0.1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
     reverb: 1
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_OilReplenish
+    clip: {fileID: 8300000, guid: 6da75a7ac90332641b6ac5968f73c707, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_LowFuel
+    clip: {fileID: 8300000, guid: 9c63a17be206d9a4cbdf82069fd8a400, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_CustomerAngry
+    clip: {fileID: 8300000, guid: 8274a32b35e8db54a8988bf083574efc, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_BikeSqueak1
+    clip: {fileID: 8300000, guid: 421e87bff29481c4488bee7c167fc715, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_BikeSqueak2
+    clip: {fileID: 8300000, guid: c0451f91ace919c4a98b0896d29368ee, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_BikeSqueak3
+    clip: {fileID: 8300000, guid: f43d8df1451f4834585402f5b47a1d75, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_BikeSqueak4
+    clip: {fileID: 8300000, guid: 0d8f11cc7e77e2640945b5bc3f3e162b, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_BikeSqueak5
+    clip: {fileID: 8300000, guid: c80d505860ce11441b810ff9cf9a1b0f, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_BikeSqueak6
+    clip: {fileID: 8300000, guid: 70acbac887c4aa64f80c189af87e1cec, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
