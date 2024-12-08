@@ -17,6 +17,9 @@ public class LevelSelectButton : MonoBehaviour
 
     //by default the level should be unlocked; this will be changed when save data is implemented
     [SerializeField] private Boolean isLocked = false;
+
+    [SerializeField] private int levelsCompletedToUnlock = 0;
+
     [SerializeField] private Boolean isSelected = false;
     [SerializeField] private string levelDescription;
 
@@ -34,6 +37,13 @@ public class LevelSelectButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(PlayerPrefs.GetInt("Levels Completed") < levelsCompletedToUnlock){
+            isLocked = true;
+        }
+        else{
+            isLocked = false;
+        }
+
         if(isLocked){
             //change the color tone of the button to be slightly darker
             GetComponent<UnityEngine.UI.Image>().color = new Color(0.5f, 0.5f, 0.5f, 1f);
