@@ -181,7 +181,6 @@ public class Customer : MonoBehaviour
         animController.movingEast = isWalkingEast;
         animController.movingNorth = isWalkingNorth;
         animController.movingSouth = isWalkingSouth;
-        Debug.Log("Moving West: " + isWalkingWest + " Moving East: " + isWalkingEast + " Moving North: " + isWalkingNorth + " Moving South: " + isWalkingSouth + "moving direction: " + movingDirection);
 
         previousPosition = transform.position;
     }
