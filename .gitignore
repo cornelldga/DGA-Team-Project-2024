@@ -74,7 +74,8 @@ crashlytics-build.properties
 # masOS
 .DS_Store
 .vscode/settings.json
-ProjectSettings/Packages/com.unity.probuilder/Settings.json
 Packages/manifest.json
 Packages/packages-lock.json
 ProjectSettings/Packages/com.unity.probuilder/Settings.json
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+ProjectSettings/EditorBuildSettings.asset

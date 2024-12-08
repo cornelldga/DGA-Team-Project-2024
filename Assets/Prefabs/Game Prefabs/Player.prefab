@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6313500550521984349}
@@ -57,7 +57,7 @@ MonoBehaviour:
   nitro2: 303
   drift: 32
   minCrashSpeed: 3
-  Sprite: {fileID: 7051094709918193244}
+  billBoard: {fileID: 7051094709918193244}
   smokeParticle: {fileID: 4909140721607116632, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
   maxCollisionForce: 1
 --- !u!54 &-3585756424289968986
@@ -161,6 +161,7 @@ GameObject:
   - component: {fileID: 6313500550521984349}
   - component: {fileID: 8687194786871449255}
   - component: {fileID: 7051094709918193244}
+  - component: {fileID: 5601335064601965621}
   m_Layer: 0
   m_Name: 2DSprite3
   m_TagString: Untagged
@@ -176,13 +177,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6523499825807090859}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.17364816, z: 0, w: 0.9848078}
+  m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
   m_LocalPosition: {x: 0, y: 0.48, z: 0}
-  m_LocalScale: {x: 0.065, y: 0.086666666, z: 0.086666666}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6340811529274514996}
-  m_LocalEulerAnglesHint: {x: 0, y: 20, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 45, z: 0}
 --- !u!212 &8687194786871449255
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -224,12 +225,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: ea2655b355e5041d78246f4648401e49, type: 3}
+  m_Sprite: {fileID: 21300000, guid: db7c2133589f4694a8994f942ae1c8a3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 26.470568, y: 19.84}
+  m_Size: {x: 1.5, y: 1.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -247,8 +248,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2288dd41db344b49b20e79a67242369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  north: {fileID: 21300000, guid: 1dd8ecf32230049d68be50ee8596f1dd, type: 3}
-  south: {fileID: 21300000, guid: f4805517f23974e979c157fc4d60c805, type: 3}
-  west: {fileID: 21300000, guid: ea2655b355e5041d78246f4648401e49, type: 3}
-  northwest: {fileID: 21300000, guid: 0ee47134c5de64076a482701a5bc1c29, type: 3}
-  southwest: {fileID: 21300000, guid: d9e9966679f414583b29184c81c75294, type: 3}
+  movingNorth: 0
+  movingSouth: 0
+  movingWest: 0
+  movingEast: 0
+  turningNorth: 0
+  turningSouth: 0
+  turningWest: 0
+  turningEast: 0
+--- !u!95 &5601335064601965621
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6523499825807090859}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 829fc26fc05069246826ade21d680971, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

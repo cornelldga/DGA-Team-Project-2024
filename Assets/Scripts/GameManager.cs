@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// This class is used to manage the game logic and game state in each level.
@@ -15,23 +13,30 @@ public class GameManager : MonoBehaviour
     List<Customer> customers = new List<Customer>();
 
     [Header("Game Logic")]
+    [Tooltip("Determines what levels should be unlocked when completing this level")]
+    [SerializeField] int levelNumber = -1;
     [Tooltip("How long the player has to complete the level")]
     [SerializeField] private float gameTimer;
     private Player player;
     private int numCustomers;
     bool pauseGame = false;
     bool gameOver = false;
-
-    [Tooltip("The minimum number of customers required to win")]
-    [SerializeField] private int minCustomersToWin;
+    
+    [Tooltip("The minimum number of customers required to win and earn 1 star")]
+    [SerializeField] private int oneStarRating;
+    [Tooltip("The minimum number of customers required to earn 2 stars")]
+    [SerializeField] private int twoStarRating;
     private int completedOrders = 0;
     [Space]
     [Header("GameManager UI")]
-    private HotbarManager hotbarManager;
+    private CookBarManager cookBarManager;
     [SerializeField] TMP_Text gameTimerText;
     [SerializeField] TMP_Text numCustomersText;
     [SerializeField] GameObject loseScreen;
     [SerializeField] GameObject winScreen;
+    [SerializeField] GameObject oneStar;
+    [SerializeField] GameObject twoStar;
+    [SerializeField] GameObject threeStar;
 
     [Space]
     [Header("GameManager Inputs")]
@@ -43,7 +48,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         GameManager gameManager = GameManager.Instance;
         player = FindObjectOfType<Player>();
-        hotbarManager = FindObjectOfType<HotbarManager>();
+        cookBarManager = FindObjectOfType<CookBarManager>();
     }
     /// <summary>
     /// Check if game is paused. Update the game timer and handle orders
@@ -75,6 +80,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if(levelNumber == -1)
+        {
+            throw new System.Exception("You must set the level number based on its chronological order." +
+                " Set to 0 if test level or endless level");
+        }
+
         gameTimerText.text = gameTimer.ToString();
         CountCustomers();
         numCustomersText.text = completedOrders.ToString() + "/" + numCustomers.ToString();
@@ -111,12 +122,13 @@ public class GameManager : MonoBehaviour
     private void UpdateGameTimer()
     {
         gameTimer-=Time.deltaTime;
-        gameTimerText.text = gameTimer.ToString("F2");
         if (gameTimer <= 0)
         {
+            gameTimerText.text = "0.00";
             AudioManager.Instance.Play("sfx_TimeUp");
             EndGame();
         }
+        gameTimerText.text = gameTimer.ToString("F2");
     }
     /// <summary>
     /// Pauses the game, setting timeScale to 0 and disables the player controller and customers
@@ -124,7 +136,9 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         pauseGame = true;
-        this.pauseScreen.SetActive(true);
+        if(gameOver != true){
+            this.pauseScreen.SetActive(true);
+        }
         player.enabled = false;
         Time.timeScale = 0;
         foreach(Customer customer in customers)
@@ -155,7 +169,7 @@ public class GameManager : MonoBehaviour
     {
         player.enabled = false;
         Time.timeScale = 0;
-        if (completedOrders >= minCustomersToWin)
+        if (completedOrders >= oneStarRating)
         {
             WinGame();
         }
@@ -171,7 +185,7 @@ public class GameManager : MonoBehaviour
     public void TakeOrder(Customer customer)
     {
         customers.Add(customer);
-        hotbarManager.AddToHotbar(customer);
+        cookBarManager.AddToHotbar(customer);
     }
     /// <summary>
     /// Called when a customer should be removed from the list of customers
@@ -179,7 +193,7 @@ public class GameManager : MonoBehaviour
     /// <param name="customer"></param>
     public void RemoveOrder(Customer customer) { 
         customers.Remove(customer);
-        hotbarManager.RemoveFromHotBar(customer);
+        cookBarManager.RemoveFromHotBar(customer);
     }
 
     /// <summary>
@@ -189,14 +203,21 @@ public class GameManager : MonoBehaviour
     {
         completedOrders++;
         numCustomersText.text = completedOrders.ToString() + "/" + numCustomers.ToString();
-        if (completedOrders == minCustomersToWin) {
+        if (completedOrders == oneStarRating)
+        {
             //indicator that the minimum amount of customers you must serve to win has been fufilled
             numCustomersText.color = Color.green;
+            oneStar.SetActive(true);
+        }
+        else if (completedOrders == twoStarRating)
+        {
+            twoStar.SetActive(true);
         }
         //customers.Remove(customer);
         RemoveOrder(customer);
         if (completedOrders == numCustomers)
         {
+            threeStar.SetActive(true);
             WinGame();
         }
     }
@@ -207,6 +228,7 @@ public class GameManager : MonoBehaviour
     {
         gameOver = true;
         PauseGame();
+        PlayerPrefs.SetInt("Levels Completed", Mathf.Max(PlayerPrefs.GetInt("Levels Completed", 0), levelNumber));
         winScreen.SetActive(true);
     }
     /// <summary>

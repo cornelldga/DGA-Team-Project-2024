@@ -36,13 +36,31 @@ public class Player : MonoBehaviour, ICrashable
     private Rigidbody rb;
     private Vector3 lastVelocity;
     private float oil;
-    private float[] angles = { 0, 45, 90, 135, 180, 225, 270, 315 };
-    private int curAngle = 0;
-    private bool movingForward = false;
+    private Vector3[] directionVector = {
+        Vector3.forward,
+        Vector3.forward+Vector3.right,
+        Vector3.right,
+        Vector3.right+Vector3.back,
+        Vector3.back,
+        Vector3.back+Vector3.left,
+        Vector3.left,
+        Vector3.forward+Vector3.left};
+    private int curDirection = 0;
     private bool isInvincible = false;
     private float turnDelay = 0;
     private float turnRate = 0.25f;
+
     private float driftTime = 0;
+    private float driftLimit = 0;
+    private bool driftOut = false;
+    private float rightDriftNum = 0;
+    private float leftDriftNum = 0;
+    private float driftNum = 0;
+    private bool drifting = false;
+    private bool startDrift = false;
+    private int driftAngle = 0;
+    private bool canDrift = true;
+    private bool downDrift = false;
 
     // Input booleans
     private bool pressForward;
@@ -58,7 +76,7 @@ public class Player : MonoBehaviour, ICrashable
 
     [SerializeField] float minCrashSpeed;
 
-    [SerializeField] private Billboard Sprite;
+    [SerializeField] private Billboard billBoard;
 
     public ParticleSystem smokeParticle;
 
@@ -71,7 +89,6 @@ public class Player : MonoBehaviour, ICrashable
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
         oil = maxOil;
         customers = GameManager.Instance.GetCustomers();
     }
@@ -82,12 +99,11 @@ public class Player : MonoBehaviour, ICrashable
         Drive();
         Nitro();
         Drift();
-
-        Sprite.UpdateSpriteToRotation(this.transform.localRotation.eulerAngles.y); //Update sprite rotation
     }
 
     private void Update()
     {
+        billBoard.movingNorth = billBoard.movingEast = billBoard.movingSouth = billBoard.movingWest = false;
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             pressForward = true;
@@ -143,12 +159,59 @@ public class Player : MonoBehaviour, ICrashable
         if ((pressRight || pressLeft) && Time.time > turnDelay)
         {
             turnDelay = Time.time + turnRate;
+            billBoard.facingNorth = billBoard.facingEast = billBoard.facingSouth = billBoard.facingWest = false;
             Turn();
+            if (curDirection == 0 || curDirection == 1 || curDirection == 2)
+            {
+                billBoard.facingNorth = true;
+            }
+            if (curDirection == 2 || curDirection == 3 || curDirection == 4)
+            {
+                billBoard.facingEast = true;
+            }
+            if (curDirection == 4 || curDirection == 5 || curDirection == 6)
+            {
+                billBoard.facingSouth = true;
+            }
+            if (curDirection == 6 || curDirection == 7 || curDirection == 0)
+            {
+                billBoard.facingWest = true;
+            }
         }
         if (customers.Count != 0)
         {
             HandleOrders();
         }
+
+        //0, 45, 90 is N
+        //90, 135, 180 is E
+        //180, 225, 270 is S
+        //270, 315, 0 is W
+        if(pressForward ^ pressBackward)
+        {
+            if (curDirection == 0 || curDirection == 1 || curDirection == 2)
+            {
+                billBoard.movingNorth = true;
+            }
+            if (curDirection == 2 || curDirection == 3 || curDirection == 4)
+            {
+                billBoard.movingEast = true;
+            }
+            if (curDirection == 4 || curDirection == 5 || curDirection == 6)
+            {
+                billBoard.movingSouth = true;
+            }
+            if (curDirection == 6 || curDirection == 7 || curDirection == 0)
+            {
+                billBoard.movingWest = true;
+            }
+        }
+        else
+        {
+            //turning variables set above
+            
+        }
+
     }
 
 
@@ -157,7 +220,7 @@ public class Player : MonoBehaviour, ICrashable
     {
         if (pressNitro && oil > 0)
         {
-            rb.AddRelativeForce(Vector3.forward * 50);
+            rb.AddRelativeForce(directionVector[curDirection] * 50);
             oil--;
             smokeParticle.Play();
             AudioManager.Instance.Play("sfx_Boost");
@@ -168,99 +231,145 @@ public class Player : MonoBehaviour, ICrashable
     // The player can press W and S to drive forwards and backwards.
     void Drive()
     {
+        if(pressForward && pressBackward)
+        {
+            return;
+        }
         if (pressForward)
         {
-            rb.AddRelativeForce(Vector3.forward * speed * 10);
-            movingForward = true;
+            rb.AddRelativeForce(directionVector[curDirection] * speed * 10);
         }
         else if (pressBackward)
         {
-            rb.AddRelativeForce(-Vector3.forward * speed * 10);
-            movingForward = false;
-        }
-        else
-        {
-            movingForward = false;
+            rb.AddRelativeForce(-directionVector[curDirection] * speed * 10);
         }
     }
 
     // The player can use A and D to turn to the next of 8 possible directions.
     void Turn()
     {
-        if (!pressDrift)
+        if (pressRight)
         {
-            if (pressRight)
+            if (curDirection == 7)
             {
-                if (curAngle == 7)
-                {
-                    curAngle = 0;
-                }
-                else
-                {
-                    curAngle++;
-                }
-                transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
+                curDirection = 0;
             }
-            else if (pressLeft)
+            else
             {
-                if (curAngle == 0)
-                {
-                    curAngle = 7;
-                }
-                else
-                {
-                    curAngle--;
-                }
-                transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
+                curDirection++;
+            }
+            if (startDrift){
+                leftDriftNum = 0;
+                rightDriftNum++;
             }
         }
-        else if (pressDrift)
+        else if (pressLeft)
         {
-            if (pressRight)
+            if (curDirection == 0)
             {
-                if (curAngle == 7)
-                {
-                    curAngle = 1;
-                }
-                else if (curAngle == 6)
-                {
-                    curAngle = 0;
-                }
-                else
-                {
-                    curAngle += 2;
-                }
-                transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
+                curDirection = 7;
             }
-            else if (pressLeft)
+            else
             {
-                if (curAngle == 0)
-                {
-                    curAngle = 6;
-                }
-                else if (curAngle == 1)
-                {
-                    curAngle = 7;
-                }
-                else
-                {
-                    curAngle -= 2;
-                }
-                transform.eulerAngles = new Vector3(0, angles[curAngle], 0);
+                curDirection--;
+            }
+            if (startDrift){
+                rightDriftNum = 0;
+                leftDriftNum++;
             }
         }
     }
+
     // Player can hold the spacebar to brake and turn while braking to drift
     void Drift()
     {
-        if (pressDrift && (pressLeft || pressRight))
+        if (pressDrift && canDrift && !driftOut)
         {
-            driftTime = Time.time + 0.5f;
+            if (!downDrift)
+            {
+                driftAngle = curDirection;
+                driftLimit = Time.time + 1;
+                downDrift = true;
+            }
+            drifting = true;
+            startDrift = true;
+            Time.timeScale = 0.5f;
+            Camera.main.orthographicSize = 5f;
+            if (Time.time >= driftLimit)
+            {
+                driftOut = true;
+            }
         }
-        if (!pressDrift && driftTime > Time.time && movingForward)
+        else if ((!pressDrift || driftOut) && drifting)
         {
-            rb.AddRelativeForce(Vector3.forward * 50);
+            if (startDrift)
+            {
+                driftTime = Time.time + 0.5f;
+                startDrift = false;
+                if (rightDriftNum > 0)
+                {
+                    if (driftAngle + 2 == curDirection || driftAngle - 6 == curDirection) {
+                        driftNum = 2;
+                    }
+                    else if (driftAngle + 3 == curDirection || driftAngle - 5 == curDirection)
+                    {
+                        driftNum = 3;
+                    }
+                    else if (driftAngle + 4 == curDirection || driftAngle - 4 == curDirection)
+                    {
+                        driftNum = 4;
+                    }
+                }
+                if (leftDriftNum > 0)
+                {
+                    if (driftAngle - 2 == curDirection || driftAngle + 6 == curDirection)
+                    {
+                        driftNum = 2;
+                    }
+                    else if (driftAngle - 3 == curDirection || driftAngle + 5 == curDirection)
+                    {
+                        driftNum = 3;
+                    }
+                    else if (driftAngle - 4 == curDirection || driftAngle + 4 == curDirection)
+                    {
+                        driftNum = 4;
+                    }
+                }
+                rightDriftNum = 0;
+                leftDriftNum = 0;
+                StartCoroutine(DriftCooldown());
+            }
+            if (driftNum == 2)
+            {
+                rb.AddRelativeForce(directionVector[curDirection] * 20);
+            }
+            if (driftNum == 3)
+            {
+                rb.AddRelativeForce(directionVector[curDirection] * 25);
+            }
+            if (driftNum == 4)
+            {
+                rb.AddRelativeForce(directionVector[curDirection] * 30);
+            }
+            if (Time.time >= driftTime)
+            {
+                drifting = false;
+                driftNum = 0;
+                driftOut = false;
+            }
+            Time.timeScale = 1;
+            Camera.main.orthographicSize = 7.5f;
+            downDrift = false;
         }
+    }
+
+    private IEnumerator DriftCooldown()
+    {
+        canDrift = false;
+
+        yield return new WaitForSeconds(1f);
+
+        canDrift = true;
     }
 
 
@@ -271,10 +380,9 @@ public class Player : MonoBehaviour, ICrashable
     {
         foreach (Customer customer in customers)
         {
-            if (customer.cookTime > 0 && oil > 0)
+            if (customer.cookTime > 0)
             {
                 customer.cookTime -= Time.deltaTime;
-                oil -= Time.deltaTime;
             }
         }
     }
@@ -351,7 +459,6 @@ public class Player : MonoBehaviour, ICrashable
     {
         if (speedVector.magnitude >= minCrashSpeed)
         {
-            Debug.Log("crashed into player");
             TakeDamage();
         }
     }
@@ -363,8 +470,12 @@ public class Player : MonoBehaviour, ICrashable
             other.gameObject.GetComponent<ICrashable>().Crash(rb.velocity, transform.position);
         }
         float curSpeed = lastVelocity.magnitude;
-        Vector3 direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
-        GetComponent<Rigidbody>().velocity = direction * Mathf.Max(curSpeed, maxCollisionForce);
+        if (curSpeed >= 7f)
+        {
+            Vector3 direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
+            GetComponent<Rigidbody>().velocity = direction * 0.5f * Mathf.Max(curSpeed, maxCollisionForce);
+        }
+        
     }
 
 

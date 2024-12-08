@@ -9,7 +9,8 @@ public class RadarUI : MonoBehaviour
     [SerializeField] private GameObject radarPrefab;
 
     private List<RadarDot> dots = new List<RadarDot>();
-    private CopModel[] cops;
+    //private CopModel[] cops;
+    private Customer[] customers;
     private Player player;
 
     // Scaling variables
@@ -21,15 +22,16 @@ public class RadarUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cops = FindObjectsOfType<CopModel>();
+        //cops = FindObjectsOfType<CopModel>();
+        customers = FindObjectsOfType<Customer>();
         player = GameManager.Instance.getPlayer();
 
         // Loop through all cops and instantiate a corresponding dot prefab for each
-        foreach (CopModel c in cops)
+        foreach (Customer c in customers)
         {
             RadarDot dotInstance = Instantiate(radarPrefab, transform).GetComponent<RadarDot>();
             dots.Add(dotInstance);
-            dotInstance.SetCop(c);
+            dotInstance.SetCustomer(c);
         }
         
 
@@ -44,8 +46,8 @@ public class RadarUI : MonoBehaviour
         // Find distances between each cop and the player
         foreach (RadarDot rd in dots)
         {
-            CopModel cop = rd.GetCop();
-            Vector3 distance = cop.transform.position - player.transform.position;
+            Customer customer = rd.GetCustomer();
+            Vector3 distance = customer.transform.position - player.transform.position;
             //Debug.Log("Distance to cop: " + distance);
 
             //rd.transform.localPosition = distance;

@@ -6,10 +6,9 @@ public class CameraFade : MonoBehaviour
 {
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("hello");
+        //Debug.Log("hello");
         if (other.gameObject.TryGetComponent(out ObjectFade fade))
         {
-            Debug.Log("FADE");
             fade.Fade();
         }
     }

@@ -23,22 +23,24 @@ public enum CopType
 /// </summary>
 public class CopModel : MonoBehaviour
 {
-    // Internal Constants
-    private const float RamRadius = 10; // how close the cop has to be to the cop to start a ram
-    private const float VisionRadius = 15; // how close the player has to be to start a pursuit
-    private const float MaxPursuitRadius = 35; // The distance where the cop will lose sight of the target
-    private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
-    private const int BaseSpeed = 12; // base movement speed while patrolling
-    private const int RamSpeed = 20; // revved up speed barreling towards the player. 
-    private const float RamCooldown = 1; // the amount of time spend on a ram attack until returning to normal navigation
-    private const int WanderRerouteTime = 5; // max time spend on a single wander path to prevent getting stuck
-    private const int PursuitRerouteTime = 1; // max time spend on a single hot pursuit path to prevent getting stuck
-
     // The behavior that determines a cops pathfinding target
     [SerializeField] private NavState State;
     [SerializeField] private CopType model;
 
-    [SerializeField] private Billboard Sprite;
+    [SerializeField] private Billboard billBoard;
+
+    // Internal Constants
+    [SerializeField] private float RamRadius = 10; // how close the cop has to be to the cop to start a ram
+    [SerializeField] private float VisionRadius = 15; // how close the player has to be to start a pursuit
+    [SerializeField] private float MaxPursuitRadius = 35; // The distance where the cop will lose sight of the target
+    private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
+    [SerializeField] private int BaseSpeed = 12; // base movement speed while patrolling
+    [SerializeField] private int RamSpeed = 20; // revved up speed barreling towards the player. 
+    [SerializeField] private float RamCooldown = 1; // the amount of time spend on a ram attack until returning to normal navigation
+    private const int WanderRerouteTime = 5; // max time spend on a single wander path to prevent getting stuck
+    private const int PursuitRerouteTime = 1; // max time spend on a single hot pursuit path to prevent getting stuck
+
+    
 
     // reference to its own rigid body
     private Rigidbody RB;
@@ -51,7 +53,7 @@ public class CopModel : MonoBehaviour
     private int CurrentIndex;
 
     // Movement speed multiplier towards the target
-    private int speed = BaseSpeed;
+    private int speed;
 
     // Parameters managing cooldown for ramming, in seconds
     private float RamTimer = 0;
@@ -73,6 +75,7 @@ public class CopModel : MonoBehaviour
     void Start()
     {
         RB = GetComponent<Rigidbody>();
+        speed = BaseSpeed;
     }
 
     /// <summary>
@@ -89,9 +92,6 @@ public class CopModel : MonoBehaviour
             
             IsRamming = true;
             RamTimer = 0;
-
-            RB.transform.LookAt(GameManager.Instance.getPlayer().transform.position);
-
             Vector3 moveDir = (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
             RB.velocity = moveDir * RamSpeed;
             CurrentPath = null;
@@ -102,11 +102,21 @@ public class CopModel : MonoBehaviour
         else if (distanceFromPlayer < VisionRadius)
         {
             State = NavState.HOTPURSUIT;
+            if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
+            {
+                //FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
+                FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
+            }
         }
 
         else if (State == NavState.HOTPURSUIT && distanceFromPlayer > MaxPursuitRadius)
         {
             State = NavState.WANDER;
+            /*if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
+            {
+                FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
+                FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
+            }*/
         }
     }
 
@@ -177,8 +187,6 @@ public class CopModel : MonoBehaviour
         // move cop along pathfinding
         HandleMovement();
 
-        Sprite.UpdateSpriteToRotation(this.transform.localRotation.eulerAngles.y);
-
     }
 
 
@@ -243,7 +251,6 @@ public class CopModel : MonoBehaviour
             {
                 Vector3 moveDir = (targetPosition - position).normalized;
                 RB.velocity = moveDir * speed;
-                transform.LookAt(targetPosition);
             }
             else
             {

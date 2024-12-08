@@ -33,7 +33,6 @@ public class ObjectFade : MonoBehaviour
         Color currentColor = r.material.color;
         Color smoothColor = new Color(currentColor.r, currentColor.g, currentColor.b, Mathf.Lerp(currentColor.a, fadeAmount, fadeSpeed));
         r.material.color = smoothColor;
-        print(r.material.color.a);
     }
 
     public void Reset()

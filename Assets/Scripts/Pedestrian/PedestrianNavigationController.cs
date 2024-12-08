@@ -9,10 +9,10 @@ using UnityEngine;
 /// Without getting crashed, the pedestrian will move towards the destination. When it reaches the destination, it selects a new one based on 1) its walking direction and 2) if there is a branch from the current waypoint. 
 /// If the pedestrian collides with the player, it will be knocked back based on the player's speed and ped-play direction.
 /// </remarks>
+[RequireComponent(typeof(Rigidbody))]
 public class PedestrianNavigationController : MonoBehaviour, ICrashable
 {
     public float movementSpeed = 1.0f;
-    [SerializeField] float rotationSpeed = 5000;
     [SerializeField] float stopDistance = 0.05f;
     [SerializeField] Vector3 destination;
     public bool hasReachedDestination = false;
@@ -27,6 +27,8 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
     float knockbackCooldown = 0.5f; // Delay before rechecking for kinematic state
     float knockbackTimer = 0f;
     Rigidbody rb;
+
+    [SerializeField] Billboard animController;
 
     void Start()
     {
@@ -65,25 +67,28 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
                 }
             }
         }
+
+        // line up the rotation angle with the camera
+        animController.transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0);
+
+        // Check facing direction and update animator
+        Vector3 movingDirection = destination - transform.position;
+        bool isWalkingWest = movingDirection.x < 0;
+        bool isWalkingEast = movingDirection.x > 0;
+        bool isWalkingSouth = movingDirection.z < 0;
+        bool isWalkingNorth = movingDirection.z > 0;
+        animController.movingWest = isWalkingWest;
+        animController.movingEast = isWalkingEast;
+        animController.movingNorth = isWalkingNorth;
+        animController.movingSouth = isWalkingSouth;
     }
 
     public void MoveToDestination()
     {
+        transform.position = Vector3.MoveTowards(transform.position, destination, movementSpeed * Time.deltaTime);
         if (Vector3.Distance(transform.position, destination) > stopDistance)
         {
             hasReachedDestination = false;
-
-            // Rotate towards destination
-            Vector3 direction = destination - transform.position;
-            direction.y = 0;
-            if (direction != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            }
-
-            // Move towards destination
-            transform.Translate(Vector3.forward * movementSpeed * Time.deltaTime);
         }
         else
         {
