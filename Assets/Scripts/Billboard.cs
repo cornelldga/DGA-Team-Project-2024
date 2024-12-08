@@ -26,12 +26,12 @@ public class Billboard : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        // if (transform.rotation.eulerAngles.x != Camera.main.transform.rotation.eulerAngles.x
-        //     || transform.rotation.eulerAngles.y != Camera.main.transform.rotation.eulerAngles.y)
-        // {
-        //     throw new System.Exception("This Billboard's rotation is not the same as the camera." +
-        //         " The rotation must be the same to project correctly");
-        // }
+        if (transform.rotation.eulerAngles.x != Camera.main.transform.rotation.eulerAngles.x
+            || transform.rotation.eulerAngles.y != Camera.main.transform.rotation.eulerAngles.y)
+        {
+            throw new System.Exception("This Billboard's rotation is not the same as the camera." +
+                " The rotation must be the same to project correctly");
+        }
     }
 
 
