@@ -230,6 +230,7 @@ public class GameManager : MonoBehaviour
         PauseGame();
         PlayerPrefs.SetInt("Levels Completed", Mathf.Max(PlayerPrefs.GetInt("Levels Completed", 0), levelNumber));
         winScreen.SetActive(true);
+        //TODO Add jingle to play when winning
     }
     /// <summary>
     /// Ends the game and triggers the lose condition for that level.
@@ -239,5 +240,6 @@ public class GameManager : MonoBehaviour
         gameOver = true;
         PauseGame();
         loseScreen.SetActive(true);
+        //TODO Add jingle to play when losing
     }
 }

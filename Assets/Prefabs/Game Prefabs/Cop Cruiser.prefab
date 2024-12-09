@@ -203,14 +203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2288dd41db344b49b20e79a67242369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movingNorth: 0
-  movingSouth: 0
-  movingWest: 0
-  movingEast: 0
-  facingNorth: 0
-  facingSouth: 0
-  facingWest: 0
-  facingEast: 0
 --- !u!95 &9208252215613819031
 Animator:
   serializedVersion: 5
@@ -282,7 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   State: 0
   model: 0
-  billBoard: {fileID: 0}
+  animController: {fileID: 5415605010644725904}
   RamRadius: 10
   VisionRadius: 15
   MaxPursuitRadius: 35

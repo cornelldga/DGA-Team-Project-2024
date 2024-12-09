@@ -224,7 +224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5175499702987744332, guid: 2d0cc5da2ceb0c542a9f160aaf7a04bf, type: 3}
       propertyPath: isLocked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5175499702987744332, guid: 2d0cc5da2ceb0c542a9f160aaf7a04bf, type: 3}
       propertyPath: levelIndex
@@ -427,7 +427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5175499702987744332, guid: 2d0cc5da2ceb0c542a9f160aaf7a04bf, type: 3}
       propertyPath: isLocked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5175499702987744332, guid: 2d0cc5da2ceb0c542a9f160aaf7a04bf, type: 3}
       propertyPath: levelIndex
@@ -1584,7 +1584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5175499702987744332, guid: 2d0cc5da2ceb0c542a9f160aaf7a04bf, type: 3}
       propertyPath: isLocked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5175499702987744332, guid: 2d0cc5da2ceb0c542a9f160aaf7a04bf, type: 3}
       propertyPath: levelIndex
@@ -1715,7 +1715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5175499702987744332, guid: 2d0cc5da2ceb0c542a9f160aaf7a04bf, type: 3}
       propertyPath: isLocked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5175499702987744332, guid: 2d0cc5da2ceb0c542a9f160aaf7a04bf, type: 3}
       propertyPath: levelIndex

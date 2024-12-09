@@ -76,7 +76,7 @@ public class Player : MonoBehaviour, ICrashable
 
     [SerializeField] float minCrashSpeed;
 
-    [SerializeField] private Billboard billBoard;
+    [SerializeField] private AnimatorController animController;
 
     [SerializeField] private GameObject model;
 
@@ -84,6 +84,12 @@ public class Player : MonoBehaviour, ICrashable
 
     [Tooltip("The maximum amount of force applied when colliding")]
     [SerializeField] float maxCollisionForce;
+
+    //Sound Tracking Variables
+    private bool boostSoundPlayed = false;
+    private bool lowFuelSoundPlayed = false;
+    private int bikeSqueakMax = 200;
+    private int bikeSqueakTimer = 200;
 
 
 
@@ -105,7 +111,7 @@ public class Player : MonoBehaviour, ICrashable
 
     private void Update()
     {
-        billBoard.movingNorth = billBoard.movingEast = billBoard.movingSouth = billBoard.movingWest = false;
+        animController.ResetConditions();
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             pressForward = true;
@@ -161,24 +167,7 @@ public class Player : MonoBehaviour, ICrashable
         if ((pressRight || pressLeft) && Time.time > turnDelay)
         {
             turnDelay = Time.time + turnRate;
-            billBoard.facingNorth = billBoard.facingEast = billBoard.facingSouth = billBoard.facingWest = false;
             Turn();
-            if (curDirection == 0 || curDirection == 1 || curDirection == 2)
-            {
-                billBoard.facingNorth = true;
-            }
-            if (curDirection == 2 || curDirection == 3 || curDirection == 4)
-            {
-                billBoard.facingEast = true;
-            }
-            if (curDirection == 4 || curDirection == 5 || curDirection == 6)
-            {
-                billBoard.facingSouth = true;
-            }
-            if (curDirection == 6 || curDirection == 7 || curDirection == 0)
-            {
-                billBoard.facingWest = true;
-            }
         }
         if (customers.Count != 0)
         {
@@ -189,43 +178,68 @@ public class Player : MonoBehaviour, ICrashable
         //90, 135, 180 is E
         //180, 225, 270 is S
         //270, 315, 0 is W
-        if(pressForward ^ pressBackward)
+        if (curDirection == 0 || curDirection == 1 || curDirection == 2)
+        {
+            animController.SetFacingNorth(true);
+        }
+        if (curDirection == 2 || curDirection == 3 || curDirection == 4)
+        {
+            animController.SetFacingEast(true);
+        }
+        if (curDirection == 4 || curDirection == 5 || curDirection == 6)
+        {
+            animController.SetFacingSouth(true);
+        }
+        if (curDirection == 6 || curDirection == 7 || curDirection == 0)
+        {
+            animController.SetFacingWest(true);
+        }
+        if (pressForward ^ pressBackward)
         {
             if (curDirection == 0 || curDirection == 1 || curDirection == 2)
             {
-                billBoard.movingNorth = true;
+                animController.SetMovingNorth(true);
             }
             if (curDirection == 2 || curDirection == 3 || curDirection == 4)
             {
-                billBoard.movingEast = true;
+                animController.SetMovingEast(true);
             }
             if (curDirection == 4 || curDirection == 5 || curDirection == 6)
             {
-                billBoard.movingSouth = true;
+                animController.SetMovingSouth(true);
             }
             if (curDirection == 6 || curDirection == 7 || curDirection == 0)
             {
-                billBoard.movingWest = true;
+                animController.SetMovingWest(true);
             }
         }
-        else
-        {
-            //turning variables set above
-            
-        }
-
     }
 
 
     // While holding shift, the player uses oil to nitro boost.
     void Nitro()
     {
+        if (pressNitro && !(oil > 0) && !lowFuelSoundPlayed)
+        {
+            AudioManager.Instance.Play("sfx_LowFuel");
+            lowFuelSoundPlayed = true;
+        }
         if (pressNitro && oil > 0)
         {
             rb.AddRelativeForce(directionVector[curDirection] * 50);
             oil--;
             smokeParticle.Play();
-            AudioManager.Instance.Play("sfx_Boost");
+            if (!boostSoundPlayed)
+            {
+                AudioManager.Instance.Play("sfx_Boost");
+                boostSoundPlayed = true;
+                lowFuelSoundPlayed = true;
+            }
+        }
+        if (!pressNitro)
+        {
+            boostSoundPlayed = false;
+            lowFuelSoundPlayed = false;
         }
 
     }
@@ -240,10 +254,28 @@ public class Player : MonoBehaviour, ICrashable
         if (pressForward)
         {
             rb.AddRelativeForce(directionVector[curDirection] * speed * 10);
+            PlayPedalSFX();
         }
         else if (pressBackward)
         {
             rb.AddRelativeForce(-directionVector[curDirection] * speed * 10);
+            PlayPedalSFX();
+        }
+    }
+
+    //Function to handle when bike squeaking sound effects should be played
+    void PlayPedalSFX()
+    {
+        if (bikeSqueakTimer > 0)
+        {
+            bikeSqueakTimer--;
+        }
+        else
+        {
+            int soundToPlay = Random.Range(1, 7);
+
+            AudioManager.Instance.Play("sfx_BikeSqueak" + soundToPlay);
+            bikeSqueakTimer = bikeSqueakMax;
         }
     }
 
@@ -436,15 +468,7 @@ public class Player : MonoBehaviour, ICrashable
         if (isInvincible) return;
         health --;
         int random = Random.Range(0, 2);
-        switch(random)
-        {
-            case 0:
-                AudioManager.Instance.Play("sfx_Crash1");
-                break;
-            case 1:
-                AudioManager.Instance.Play("sfx_Crash2");
-                break;
-        }
+        AudioManager.Instance.Play("sfx_Crash1");
 
         if (health <= 0)
         {

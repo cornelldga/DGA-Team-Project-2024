@@ -28,7 +28,7 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
     float knockbackTimer = 0f;
     Rigidbody rb;
 
-    [SerializeField] Billboard animController;
+    [SerializeField] AnimatorController animController;
 
     void Start()
     {
@@ -73,9 +73,14 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
 
         // Check facing direction and update animator
         Vector3 movingDirection = destination - transform.position;
-        bool isFacingWest = movingDirection.x < 0;
-        animController.facingWest = isFacingWest;
-        animController.facingEast = !isFacingWest;
+        bool isWalkingWest = movingDirection.x < 0;
+        bool isWalkingEast = movingDirection.x > 0;
+        bool isWalkingSouth = movingDirection.z < 0;
+        bool isWalkingNorth = movingDirection.z > 0;
+        animController.SetMovingWest(isWalkingWest);
+        animController.SetMovingEast(isWalkingEast);
+        animController.SetMovingNorth(isWalkingNorth);
+        animController.SetMovingSouth(isWalkingSouth);
     }
 
     public void MoveToDestination()

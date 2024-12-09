@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor.EditorTools;
 using UnityEngine;
 
@@ -18,6 +19,11 @@ public class Customer : MonoBehaviour
     /// </summary>
     [Tooltip("The image that will be displayed in UI.")]
     public Sprite customerImage;
+    /// <summary>
+    /// The sprite that will be displayed in the game world.
+    /// </summary>
+    [Tooltip("The sprite that will be displayed in the game world.")]
+    public GameObject customerSprite;
     /// <summary>
     /// The time the customer will wait for their order, after which the order will fail. 
     /// </summary>
@@ -41,8 +47,19 @@ public class Customer : MonoBehaviour
     public Material blueMaterial; // order successfully complete
 
     [Header("Movement Settings")]
-    public float movementAmplitude = 3f; // Distance of movement from the starting position
-    public float movementFrequency = 1f; // Speed of the oscillation
+    /// <summary>
+    /// if the customer is moving back and forth along the Z-axis. If unchecked, the customer will move along the X-axis (West and East).
+    /// </summary>
+    public bool isMovingNorthSouth = true;
+
+    /// <summary>
+    /// The amplitude of the oscillation.
+    /// </summary>
+    public float movementAmplitude = 3f;
+    /// <summary>
+    /// The speed of the oscillation.
+    /// </summary>
+    public float movementFrequency = 1f;
 
     private Vector3 startingPosition;
     private LineRenderer lineRenderer;
@@ -53,6 +70,8 @@ public class Customer : MonoBehaviour
     private bool isOrderCompleted = false;
     private enum CustomerState { WaitingForOrder, Cooking, Returning, Done }
     private CustomerState currentState;
+    private Vector3 previousPosition;
+    private AnimatorController animController;
 
     void Start()
     {
@@ -65,6 +84,9 @@ public class Customer : MonoBehaviour
 
         // Initialize and configure the LineRenderer
         SetupInteractionRangeIndicator();
+
+        // Get the Billboard component
+        animController = customerSprite.GetComponent<AnimatorController>();
     }
 
     void Update()
@@ -112,6 +134,7 @@ public class Customer : MonoBehaviour
                 if (cookTime <= 0 && !foodReady)
                 {
                     foodReady = true;
+                    AudioManager.Instance.Play("sfx_TimerDing");
                 }
 
                 if (waitTime <= 0)
@@ -121,6 +144,7 @@ public class Customer : MonoBehaviour
                         currentState = CustomerState.Done;
                         customerRenderer.material = redMaterial;
                         GameManager.Instance.RemoveOrder(this);
+                        AudioManager.Instance.Play("sfx_CustomerAngry");
                     }
                     break;
                 }
@@ -145,6 +169,22 @@ public class Customer : MonoBehaviour
 
         // move the customer back and forth
         MoveCustomer();
+
+        // line up the rotation angle with the camera
+        animController.transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0);
+
+        // Check facing direction and set the animator
+        Vector3 movingDirection = transform.position - previousPosition;
+        bool isWalkingWest = movingDirection.x < 0f;
+        bool isWalkingEast = movingDirection.x > 0f;
+        bool isWalkingSouth = movingDirection.z < 0f;
+        bool isWalkingNorth = movingDirection.z > 0f;
+        animController.SetMovingWest(isWalkingWest);
+        animController.SetMovingEast(isWalkingEast);
+        animController.SetMovingNorth(isWalkingNorth);
+        animController.SetMovingSouth(isWalkingSouth);
+
+        previousPosition = transform.position;
     }
 
     /// <summary>
@@ -199,7 +239,8 @@ public class Customer : MonoBehaviour
         float movementOffset = Mathf.Sin(Time.time * movementFrequency) * movementAmplitude;
 
         // Apply the movement along the SELF's Z-axis
-        Vector3 newPosition = startingPosition + transform.forward * movementOffset;
+        Vector3 direction = isMovingNorthSouth ? Vector3.forward : Vector3.right;
+        Vector3 newPosition = startingPosition + direction * movementOffset;
 
         // Update the customer's position
         transform.position = newPosition;
