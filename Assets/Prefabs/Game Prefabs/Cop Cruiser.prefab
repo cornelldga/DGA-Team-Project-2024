@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7776244402055408079}
   - component: {fileID: 7044380654155703155}
   - component: {fileID: 7235621288064972266}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShadowDriver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 8185853370742156877}
   - component: {fileID: 5415605010644725904}
   - component: {fileID: 9208252215613819031}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 2DSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 2142699969854059093}
   - component: {fileID: 8872929183569478298}
   - component: {fileID: 8614885688319681663}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cop Cruiser
   m_TagString: Untagged
   m_Icon: {fileID: 0}

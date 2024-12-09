@@ -78,6 +78,8 @@ public class Player : MonoBehaviour, ICrashable
 
     [SerializeField] private AnimatorController animController;
 
+    [SerializeField] private GameObject model;
+
     public ParticleSystem smokeParticle;
 
     [Tooltip("The maximum amount of force applied when colliding")]
@@ -430,6 +432,11 @@ public class Player : MonoBehaviour, ICrashable
         }
     }
 
+    private void ScaleModelTo(Vector3 scale)
+    {
+        model.transform.localScale = scale;
+    }
+
     /// <summary>
     /// Counts amount of time that player should be invincible after taking damage
     /// </summary>
@@ -437,11 +444,21 @@ public class Player : MonoBehaviour, ICrashable
     {
         isInvincible = true;
 
+        Physics.IgnoreLayerCollision(3, 6, true);
         for (float i = 0; i < invincibilityDuration; i += invincibilityDeltaTime)
         {
+            if (model.transform.localScale == Vector3.one)
+            {
+                ScaleModelTo(Vector3.zero);
+            }
+            else
+            {
+                ScaleModelTo(Vector3.one);
+            }
             yield return new WaitForSeconds(invincibilityDeltaTime);
         }
-
+        Physics.IgnoreLayerCollision(3, 6, false);
+        ScaleModelTo(Vector3.one);
         isInvincible = false;
     }
 

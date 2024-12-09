@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -3585756424289968986}
   - component: {fileID: 3557657905639662012}
   - component: {fileID: 409938213325812432}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -51,13 +51,14 @@ MonoBehaviour:
   speed: 2
   health: 10
   invincibilityDuration: 5
-  invincibilityDeltaTime: 0.15
+  invincibilityDeltaTime: 0.25
   maxOil: 100
   nitro1: 304
   nitro2: 303
   drift: 32
   minCrashSpeed: 3
   animController: {fileID: 7051094709918193244}
+  model: {fileID: 6523499825807090859}
   smokeParticle: {fileID: 4909140721607116632, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
   maxCollisionForce: 1
 --- !u!54 &-3585756424289968986
@@ -162,7 +163,7 @@ GameObject:
   - component: {fileID: 8687194786871449255}
   - component: {fileID: 7051094709918193244}
   - component: {fileID: 5601335064601965621}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 2DSprite3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
