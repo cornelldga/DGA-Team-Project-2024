@@ -57,7 +57,7 @@ MonoBehaviour:
   nitro2: 303
   drift: 32
   minCrashSpeed: 3
-  billBoard: {fileID: 7051094709918193244}
+  animController: {fileID: 7051094709918193244}
   smokeParticle: {fileID: 4909140721607116632, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
   maxCollisionForce: 1
 --- !u!54 &-3585756424289968986
@@ -248,14 +248,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2288dd41db344b49b20e79a67242369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movingNorth: 0
-  movingSouth: 0
-  movingWest: 0
-  movingEast: 0
-  turningNorth: 0
-  turningSouth: 0
-  turningWest: 0
-  turningEast: 0
 --- !u!95 &5601335064601965621
 Animator:
   serializedVersion: 5

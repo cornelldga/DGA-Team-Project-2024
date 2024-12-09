@@ -76,7 +76,7 @@ public class Player : MonoBehaviour, ICrashable
 
     [SerializeField] float minCrashSpeed;
 
-    [SerializeField] private Billboard billBoard;
+    [SerializeField] private AnimatorController animController;
 
     public ParticleSystem smokeParticle;
 
@@ -103,7 +103,7 @@ public class Player : MonoBehaviour, ICrashable
 
     private void Update()
     {
-        billBoard.movingNorth = billBoard.movingEast = billBoard.movingSouth = billBoard.movingWest = false;
+        animController.ResetConditions();
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
             pressForward = true;
@@ -159,24 +159,7 @@ public class Player : MonoBehaviour, ICrashable
         if ((pressRight || pressLeft) && Time.time > turnDelay)
         {
             turnDelay = Time.time + turnRate;
-            billBoard.facingNorth = billBoard.facingEast = billBoard.facingSouth = billBoard.facingWest = false;
             Turn();
-            if (curDirection == 0 || curDirection == 1 || curDirection == 2)
-            {
-                billBoard.facingNorth = true;
-            }
-            if (curDirection == 2 || curDirection == 3 || curDirection == 4)
-            {
-                billBoard.facingEast = true;
-            }
-            if (curDirection == 4 || curDirection == 5 || curDirection == 6)
-            {
-                billBoard.facingSouth = true;
-            }
-            if (curDirection == 6 || curDirection == 7 || curDirection == 0)
-            {
-                billBoard.facingWest = true;
-            }
         }
         if (customers.Count != 0)
         {
@@ -187,31 +170,41 @@ public class Player : MonoBehaviour, ICrashable
         //90, 135, 180 is E
         //180, 225, 270 is S
         //270, 315, 0 is W
-        if(pressForward ^ pressBackward)
+        if (curDirection == 0 || curDirection == 1 || curDirection == 2)
+        {
+            animController.SetFacingNorth(true);
+        }
+        if (curDirection == 2 || curDirection == 3 || curDirection == 4)
+        {
+            animController.SetFacingEast(true);
+        }
+        if (curDirection == 4 || curDirection == 5 || curDirection == 6)
+        {
+            animController.SetFacingSouth(true);
+        }
+        if (curDirection == 6 || curDirection == 7 || curDirection == 0)
+        {
+            animController.SetFacingWest(true);
+        }
+        if (pressForward ^ pressBackward)
         {
             if (curDirection == 0 || curDirection == 1 || curDirection == 2)
             {
-                billBoard.movingNorth = true;
+                animController.SetMovingNorth(true);
             }
             if (curDirection == 2 || curDirection == 3 || curDirection == 4)
             {
-                billBoard.movingEast = true;
+                animController.SetMovingEast(true);
             }
             if (curDirection == 4 || curDirection == 5 || curDirection == 6)
             {
-                billBoard.movingSouth = true;
+                animController.SetMovingSouth(true);
             }
             if (curDirection == 6 || curDirection == 7 || curDirection == 0)
             {
-                billBoard.movingWest = true;
+                animController.SetMovingWest(true);
             }
         }
-        else
-        {
-            //turning variables set above
-            
-        }
-
     }
 
 
