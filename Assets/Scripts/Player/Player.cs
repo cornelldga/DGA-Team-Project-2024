@@ -83,6 +83,12 @@ public class Player : MonoBehaviour, ICrashable
     [Tooltip("The maximum amount of force applied when colliding")]
     [SerializeField] float maxCollisionForce;
 
+    //Sound Tracking Variables
+    private bool boostSoundPlayed = false;
+    private bool lowFuelSoundPlayed = false;
+    private int bikeSqueakMax = 200;
+    private int bikeSqueakTimer = 200;
+
 
 
     // Start is called before the first frame update
@@ -211,12 +217,27 @@ public class Player : MonoBehaviour, ICrashable
     // While holding shift, the player uses oil to nitro boost.
     void Nitro()
     {
+        if (pressNitro && !(oil > 0) && !lowFuelSoundPlayed)
+        {
+            AudioManager.Instance.Play("sfx_LowFuel");
+            lowFuelSoundPlayed = true;
+        }
         if (pressNitro && oil > 0)
         {
             rb.AddRelativeForce(directionVector[curDirection] * 50);
             oil--;
             smokeParticle.Play();
-            AudioManager.Instance.Play("sfx_Boost");
+            if (!boostSoundPlayed)
+            {
+                AudioManager.Instance.Play("sfx_Boost");
+                boostSoundPlayed = true;
+                lowFuelSoundPlayed = true;
+            }
+        }
+        if (!pressNitro)
+        {
+            boostSoundPlayed = false;
+            lowFuelSoundPlayed = false;
         }
 
     }
@@ -231,10 +252,28 @@ public class Player : MonoBehaviour, ICrashable
         if (pressForward)
         {
             rb.AddRelativeForce(directionVector[curDirection] * speed * 10);
+            PlayPedalSFX();
         }
         else if (pressBackward)
         {
             rb.AddRelativeForce(-directionVector[curDirection] * speed * 10);
+            PlayPedalSFX();
+        }
+    }
+
+    //Function to handle when bike squeaking sound effects should be played
+    void PlayPedalSFX()
+    {
+        if (bikeSqueakTimer > 0)
+        {
+            bikeSqueakTimer--;
+        }
+        else
+        {
+            int soundToPlay = Random.Range(1, 7);
+
+            AudioManager.Instance.Play("sfx_BikeSqueak" + soundToPlay);
+            bikeSqueakTimer = bikeSqueakMax;
         }
     }
 
@@ -412,15 +451,7 @@ public class Player : MonoBehaviour, ICrashable
         if (isInvincible) return;
         health --;
         int random = Random.Range(0, 2);
-        switch(random)
-        {
-            case 0:
-                AudioManager.Instance.Play("sfx_Crash1");
-                break;
-            case 1:
-                AudioManager.Instance.Play("sfx_Crash2");
-                break;
-        }
+        AudioManager.Instance.Play("sfx_Crash1");
 
         if (health <= 0)
         {
