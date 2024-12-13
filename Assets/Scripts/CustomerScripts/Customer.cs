@@ -71,7 +71,7 @@ public class Customer : MonoBehaviour
     private enum CustomerState { WaitingForOrder, Cooking, Returning, Done }
     private CustomerState currentState;
     private Vector3 previousPosition;
-    private Billboard animController;
+    private AnimatorController animController;
 
     void Start()
     {
@@ -86,7 +86,7 @@ public class Customer : MonoBehaviour
         SetupInteractionRangeIndicator();
 
         // Get the Billboard component
-        animController = customerSprite.GetComponent<Billboard>();
+        animController = customerSprite.GetComponent<AnimatorController>();
     }
 
     void Update()
@@ -134,6 +134,7 @@ public class Customer : MonoBehaviour
                 if (cookTime <= 0 && !foodReady)
                 {
                     foodReady = true;
+                    AudioManager.Instance.Play("sfx_TimerDing");
                 }
 
                 if (waitTime <= 0)
@@ -143,6 +144,7 @@ public class Customer : MonoBehaviour
                         currentState = CustomerState.Done;
                         customerRenderer.material = redMaterial;
                         GameManager.Instance.RemoveOrder(this);
+                        AudioManager.Instance.Play("sfx_CustomerAngry");
                     }
                     break;
                 }
@@ -177,10 +179,10 @@ public class Customer : MonoBehaviour
         bool isWalkingEast = movingDirection.x > 0f;
         bool isWalkingSouth = movingDirection.z < 0f;
         bool isWalkingNorth = movingDirection.z > 0f;
-        animController.movingWest = isWalkingWest;
-        animController.movingEast = isWalkingEast;
-        animController.movingNorth = isWalkingNorth;
-        animController.movingSouth = isWalkingSouth;
+        animController.SetMovingWest(isWalkingWest);
+        animController.SetMovingEast(isWalkingEast);
+        animController.SetMovingNorth(isWalkingNorth);
+        animController.SetMovingSouth(isWalkingSouth);
 
         previousPosition = transform.position;
     }

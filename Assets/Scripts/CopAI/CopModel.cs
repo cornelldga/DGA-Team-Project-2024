@@ -27,7 +27,7 @@ public class CopModel : MonoBehaviour
     [SerializeField] private NavState State;
     [SerializeField] private CopType model;
 
-    [SerializeField] private Billboard billBoard;
+    [SerializeField] private AnimatorController animController;
 
     // Internal Constants
     [SerializeField] private float RamRadius = 10; // how close the cop has to be to the cop to start a ram
