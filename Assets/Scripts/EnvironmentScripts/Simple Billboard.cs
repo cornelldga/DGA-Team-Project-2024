@@ -5,14 +5,25 @@ using UnityEngine;
 /// </summary>
 public class SimpleBillboard : MonoBehaviour
 {
+    private SpriteRenderer spriteRenderer;
+
+    /// <summary>
+    /// Get the sprite renderer 
+    /// </summary>
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     /// <summary>
     /// Method to make the script sprite renderer face the player
     /// </summary>
     private void LateUpdate()
     {
-        if (Camera.main != null)
+        if (Camera.main != null && spriteRenderer != null)
         {
-            transform.rotation = Camera.main.transform.rotation;
+            // Only modify the sprite's billboarding property
+            spriteRenderer.transform.forward = Camera.main.transform.forward;
         }
     }
 }
