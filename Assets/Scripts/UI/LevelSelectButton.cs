@@ -26,8 +26,8 @@ public class LevelSelectButton : MonoBehaviour
     //the level number is just the number of the level that will be displayed
     [SerializeField] private int levelNumber;
 
-    //the level index is the index of the level in the build settings
-    [SerializeField] private int levelIndex;
+    //the name of the level
+    [SerializeField] string levelSceneName;
 
     void Awake(){
         defaultTexture = GetComponent<UnityEngine.UI.Image>().sprite;
@@ -52,15 +52,6 @@ public class LevelSelectButton : MonoBehaviour
         // GetComponentInChildren<TMPro.TextMeshProUGUI>().text = levelNumber.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void FixedUpdate(){
-    }
-
     //when the button is clicked, set the level data in the level select modal
     public void OnClick()
     {
@@ -80,7 +71,7 @@ public class LevelSelectButton : MonoBehaviour
             GetComponent<UnityEngine.UI.Image>().sprite = selectedTexture;
         }
         //again, this is the incorrect SetLevelData method, but until I get save data I'm using this
-        levelSelectModal.SetLevelData(levelNumber, levelIndex);
+        levelSelectModal.SetLevelData(levelNumber, levelSceneName);
 
         FindAnyObjectByType<AudioManager>().PlaySound("click");
         PanContainerTowardsDirectionOfButton();

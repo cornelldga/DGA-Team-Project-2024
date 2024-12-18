@@ -275,12 +275,13 @@ MonoBehaviour:
   State: 0
   model: 0
   animController: {fileID: 5415605010644725904}
-  RamRadius: 10
-  VisionRadius: 15
-  MaxPursuitRadius: 35
-  BaseSpeed: 12
-  RamSpeed: 20
-  RamCooldown: 1
+  RamRadius: 6
+  VisionRadius: 10
+  MaxPursuitRadius: 15
+  BaseSpeed: 8
+  RamSpeed: 15
+  RamCooldown: 1.75
+  ramInnacuracy: 15
 --- !u!54 &8872929183569478298
 Rigidbody:
   m_ObjectHideFlags: 0

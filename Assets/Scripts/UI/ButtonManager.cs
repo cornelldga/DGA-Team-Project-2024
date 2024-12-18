@@ -14,13 +14,6 @@ public class ButtonManager : MonoBehaviour
         audioManager = AudioManager.Instance;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
     public void onPressPlay() {
         audioManager.PlaySound("sfx_MenuClick");
         SceneManager.LoadScene(levelSelectIndex);
@@ -46,5 +39,8 @@ public class ButtonManager : MonoBehaviour
         audioManager.PlaySound("sfx_MenuClick");
     }
 
-
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

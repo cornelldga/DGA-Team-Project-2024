@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class ObjectFade : MonoBehaviour
 {
-    [SerializeField] Material opaqueMaterial;
+    Material opaqueMaterial;
     [SerializeField] Material fadeMaterial;
 
     [SerializeField] float fadeSpeed;
@@ -20,6 +20,7 @@ public class ObjectFade : MonoBehaviour
     void Start()
     {
         r = GetComponent<Renderer>();
+        opaqueMaterial = r.material;
     }
     /// <summary>
     /// Smoothly lower the alpha to the fadeAmount

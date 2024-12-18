@@ -55,7 +55,7 @@ public class Customer : MonoBehaviour
     /// <summary>
     /// The amplitude of the oscillation.
     /// </summary>
-    public float movementAmplitude = 3f;
+    public float movementAmplitude = .25f;
     /// <summary>
     /// The speed of the oscillation.
     /// </summary>

@@ -6,12 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Alpha/Alpha-MainMenu.unity
+    path: Assets/Scenes/Build/Main Menu.unity
     guid: 8017ad5a9cf1b4851a1d4b6ab14b8032
   - enabled: 1
-    path: Assets/Scenes/Alpha/Alpha-LevelSelect.unity
-    guid: 1d96fd3eaf4944b7eab795543d49b819
+    path: Assets/Scenes/Build/Level Select.unity
+    guid: 391193d106a55f04c9dda47d9348da29
   - enabled: 1
-    path: Assets/Scenes/Technical Prototype/Lots of Pedestrians.unity
-    guid: 4925e22c0e1c1974f900600fd0650d1c
+    path: Assets/Scenes/Build/Level Template.unity
+    guid: b6d68de44a1a6654d966aa9a5ce33314
+  - enabled: 1
+    path: Assets/Scenes/Build/Liam Level.unity
+    guid: ad7331f491fbf48d984356117bd2b107
+  - enabled: 1
+    path: Assets/Scenes/Build/Drift Level.unity
+    guid: 0a668d33d1b09214281a869335f7e8ba
   m_configObjects: {}

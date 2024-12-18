@@ -319,6 +319,7 @@ public class Player : MonoBehaviour, ICrashable
     {
         if (pressDrift && canDrift && !driftOut)
         {
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, 4f, Time.fixedDeltaTime);
             if (!downDrift)
             {
                 driftAngle = curDirection;
@@ -328,7 +329,6 @@ public class Player : MonoBehaviour, ICrashable
             drifting = true;
             startDrift = true;
             Time.timeScale = 0.5f;
-            Camera.main.orthographicSize = 5f;
             if (Time.time >= driftLimit)
             {
                 driftOut = true;

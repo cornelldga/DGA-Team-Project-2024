@@ -14,9 +14,7 @@ public class LevelSelectModal : MonoBehaviour
     [SerializeField] private GameObject bestTimeText;
     [SerializeField] private GameObject customesServedText;
 
-    //the level index to go to when the play button is clicked
-    //-1 means no level is selected
-    private int levelIndex = -1;
+    string levelName;
 
     void Awake(){
         stars = new GameObject[3];
@@ -24,20 +22,9 @@ public class LevelSelectModal : MonoBehaviour
         stars[1] = star2;
         stars[2] = star3;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     //set the level number, star count and description text
-    public void SetLevelData(int levelNumber, int starCount, int bestTime, int customesServed,int levelIndex)
+    public void SetLevelData(int levelNumber, int starCount, int bestTime, int customesServed,string levelName)
     {
         this.levelNumber.GetComponent<Text>().text = levelNumber.ToString();
         SetStarCount(starCount);
@@ -48,15 +35,15 @@ public class LevelSelectModal : MonoBehaviour
         
         //TODO: Adjust the customers served placeholder text
 
-        this.levelIndex = levelIndex;
+        this.levelName = levelName;
         playUpAnimation();
     }
 
     //this is just for testing because we don't have save data yet
-    public void SetLevelData(int levelNumber, int levelIndex){
+    public void SetLevelData(int levelNumber, string levelName){
         this.levelNumber.GetComponent<TMPro.TMP_Text>().text = levelNumber.ToString();
         SetStarCount(0);
-        this.levelIndex = levelIndex;
+        this.levelName = levelName;
         playUpAnimation();
     }
 
@@ -85,9 +72,6 @@ public class LevelSelectModal : MonoBehaviour
     //when the play button is clicked, load the level
     public void OnPlayButtonClicked()
     {
-        if (levelIndex != -1)
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(levelIndex);
-        }
+        UnityEngine.SceneManagement.SceneManager.LoadScene(levelName);
     }
 }

@@ -11,12 +11,15 @@ public class DirectionIndicator : MonoBehaviour
     private Customer selectedCustomer;
 
     //reference to the hotbar manager, later this should be done through the GameManager, but it's fine for now
-    private CookBarManager cookbarManager;
+    [SerializeField] CookBarManager cookbarManager;
+
+    SpriteRenderer spriteRenderer;
 
     void Start()
     {
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer.enabled = false;
         player = GameManager.Instance.getPlayer();
-        cookbarManager = FindObjectOfType<CookBarManager>();
         //if (somehow) there is already a selected customer, set the selectedCustomer to that customer
         if (cookbarManager.selectedSlot != null){
             selectedCustomer = cookbarManager.selectedSlot.GetCustomerUI();
@@ -31,7 +34,6 @@ public class DirectionIndicator : MonoBehaviour
         //if a customer is selected
         if(cookbarManager.selectedSlot.GetCustomerUI() != null){
             //get the sprite renderer of the direction indicator, and enable it
-            SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             spriteRenderer.enabled = true;
 
             selectedCustomer = cookbarManager.selectedSlot.GetCustomerUI();
@@ -53,7 +55,6 @@ public class DirectionIndicator : MonoBehaviour
         }
         else{
             //if there is no selected customer, disable the direction indicator
-            SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             spriteRenderer.enabled = false;
         }
     }

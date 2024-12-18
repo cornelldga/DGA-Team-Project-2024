@@ -37,6 +37,7 @@ public class CopModel : MonoBehaviour
     [SerializeField] private int BaseSpeed = 12; // base movement speed while patrolling
     [SerializeField] private int RamSpeed = 20; // revved up speed barreling towards the player. 
     [SerializeField] private float RamCooldown = 1; // the amount of time spend on a ram attack until returning to normal navigation
+    [SerializeField] float ramInnacuracy; // aadds inaccuracy rotation to ram position
     private const int WanderRerouteTime = 5; // max time spend on a single wander path to prevent getting stuck
     private const int PursuitRerouteTime = 1; // max time spend on a single hot pursuit path to prevent getting stuck
 
@@ -92,7 +93,8 @@ public class CopModel : MonoBehaviour
             
             IsRamming = true;
             RamTimer = 0;
-            Vector3 moveDir = (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
+            Vector3 moveDir = Quaternion.AngleAxis(UnityEngine.Random.Range(-ramInnacuracy, ramInnacuracy), Vector3.up) *
+                (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
             RB.velocity = moveDir * RamSpeed;
             CurrentPath = null;
 

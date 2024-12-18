@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// This class is used to manage the game logic and game state in each level.
@@ -32,8 +33,10 @@ public class GameManager : MonoBehaviour
     private CookBarManager cookBarManager;
     [SerializeField] TMP_Text gameTimerText;
     [SerializeField] TMP_Text numCustomersText;
+    [SerializeField] GameObject gameCanvas;
     [SerializeField] GameObject loseScreen;
     [SerializeField] GameObject winScreen;
+    [SerializeField] GameObject pauseScreen;
     [SerializeField] GameObject oneStar;
     [SerializeField] GameObject twoStar;
     [SerializeField] GameObject threeStar;
@@ -41,7 +44,6 @@ public class GameManager : MonoBehaviour
     [Space]
     [Header("GameManager Inputs")]
     [SerializeField] KeyCode pauseKey;
-    [SerializeField] GameObject pauseScreen;
 
     private void Awake()
     {
@@ -131,6 +133,22 @@ public class GameManager : MonoBehaviour
         gameTimerText.text = gameTimer.ToString("F2");
     }
     /// <summary>
+    /// Freezes the game by setting timescale to 0 and disabling key game componenents
+    /// </summary>
+    public void FreezeGame()
+    {
+        player.enabled = false;
+        Time.timeScale = 0;
+    }
+    /// <summary>
+    /// Toggles the game canvas
+    /// </summary>
+    public void ToggleGameUI(bool toggle)
+    {
+        gameCanvas.SetActive(toggle);
+    }
+
+    /// <summary>
     /// Pauses the game, setting timeScale to 0 and disables the player controller and customers
     /// </summary>
     public void PauseGame()
@@ -139,12 +157,11 @@ public class GameManager : MonoBehaviour
         if(gameOver != true){
             this.pauseScreen.SetActive(true);
         }
-        player.enabled = false;
-        Time.timeScale = 0;
-        foreach(Customer customer in customers)
+        foreach (Customer customer in customers)
         {
             customer.enabled = false;
         }
+        FreezeGame();
     }
     /// <summary>
     /// Resumes the game, setting timeScale to 1 and enables the player controller
@@ -241,5 +258,22 @@ public class GameManager : MonoBehaviour
         PauseGame();
         loseScreen.SetActive(true);
         //TODO Add jingle to play when losing
+    }
+    /// <summary>
+    /// Resets the current level by reloading
+    /// </summary>
+    public void ResetLevel()
+    {
+        ResumeGame();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    /// <summary>
+    /// Loads the scene of the specified scene name
+    /// </summary>
+    public void LoadScene(string sceneName)
+    {
+        ResumeGame();
+        SceneManager.LoadScene(sceneName);
     }
 }
