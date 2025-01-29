@@ -34,9 +34,9 @@ public class CopModel : MonoBehaviour
     [SerializeField] private float VisionRadius = 15; // how close the player has to be to start a pursuit
     [SerializeField] private float MaxPursuitRadius = 35; // The distance where the cop will lose sight of the target
     private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
-    [SerializeField] private int BaseSpeed = 12; // base movement speed while patrolling
-    [SerializeField] private int RamSpeed = 20; // revved up speed barreling towards the player. 
-    [SerializeField] private float RamCooldown = 1; // the amount of time spend on a ram attack until returning to normal navigation
+    [SerializeField] private float BaseSpeed = 0.5f; // base movement speed while patrolling
+    [SerializeField] private int RamSpeed = 3; // revved up speed barreling towards the player. 
+    [SerializeField] private float RamCooldown = 0.5f; // the amount of time spend on a ram attack until returning to normal navigation
     [SerializeField] float ramInnacuracy; // aadds inaccuracy rotation to ram position
     private const int WanderRerouteTime = 5; // max time spend on a single wander path to prevent getting stuck
     private const int PursuitRerouteTime = 1; // max time spend on a single hot pursuit path to prevent getting stuck
@@ -53,14 +53,17 @@ public class CopModel : MonoBehaviour
     // Position along the path that cop is at
     private int CurrentIndex;
 
+    // the rotation angle of the cop car to determine drawn animation sprite sheet
+    private float angle;
+
     // Movement speed multiplier towards the target
-    private int speed;
+    private float speed;
 
     // Parameters managing cooldown for ramming, in seconds
     private float RamTimer = 0;
     private bool IsRamming = false;
 
-    // parameters for managing rerouting
+    // parameters for managing reroutings
     private float NavTime = 0;
 
 
@@ -88,7 +91,7 @@ public class CopModel : MonoBehaviour
         float distanceFromPlayer = Vector3.Distance(this.transform.position, GameManager.Instance.getPlayer().transform.position);
         
         // set attacking state
-        if (!IsRamming && distanceFromPlayer < RamRadius)
+/*        if (!IsRamming && distanceFromPlayer < RamRadius)
         {
             
             IsRamming = true;
@@ -98,10 +101,10 @@ public class CopModel : MonoBehaviour
             RB.velocity = moveDir * RamSpeed;
             CurrentPath = null;
 
-        } 
+        } */
 
         // set navigation state
-        else if (distanceFromPlayer < VisionRadius)
+        if (distanceFromPlayer < VisionRadius)
         {
             State = NavState.HOTPURSUIT;
             if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
@@ -189,6 +192,9 @@ public class CopModel : MonoBehaviour
         // move cop along pathfinding
         HandleMovement();
 
+        // Update to the correct animation to rotation angle
+        animController.SetAnimFromRotationAngle(angle);
+
     }
 
 
@@ -249,6 +255,17 @@ public class CopModel : MonoBehaviour
             Vector3 position = this.transform.position;
             targetPosition = new Vector3(targetPosition.x, position.y, targetPosition.z);
 
+            Vector3 targetDirection = targetPosition - position;
+            targetDirection.Normalize();
+            angle = (float) ((Mathf.Atan2(targetDirection.x, targetDirection.z)) * (180 / Math.PI)) - 45;
+            Debug.Log("angle: " + angle);
+
+
+
+
+
+
+
             if (Vector3.Distance(this.transform.position, targetPosition) > 0.5f)
             {
                 Vector3 moveDir = (targetPosition - position).normalized;
@@ -257,6 +274,7 @@ public class CopModel : MonoBehaviour
             else
             {
                 CurrentIndex++;
+                RB.velocity = new Vector3();
             }
             
         }

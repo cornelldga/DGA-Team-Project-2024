@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -93,5 +94,51 @@ public class AnimatorController : MonoBehaviour
         SetFacingSouth(false);
         SetFacingEast(false);
         SetFacingWest(false);
+    }
+
+    /** Sets the displayed animation based on the objects current direction of movement */
+    public void SetAnimFromRotationAngle(float angle)
+    {
+
+        if (angle < 0)
+        {
+            angle = 360 + angle;
+        }
+
+
+
+        SetMovingNorth(isFacingNorth(angle));
+        SetMovingSouth(isFacingSouth(angle));
+        SetMovingEast(isFacingEast(angle)); 
+        SetMovingWest(isFacingWest(angle));
+
+        
+
+    }
+
+    /** Returns true if the body is facing North */
+    bool isFacingNorth(float angle)
+    {
+        return angle >= 290 && angle < 360 || angle >= 0 && angle < 70;
+    }
+
+
+    /** Returns true if the body is facing East */
+    bool isFacingEast(float angle)
+    {
+        return angle >= 30 && angle < 160;
+    }
+
+
+    /** Returns true if the body is facing South */
+    bool isFacingSouth(float angle)
+    {
+        return angle >= 110 && angle < 250;
+    }
+
+    /** Returns true if the body is facing West */
+    bool isFacingWest(float angle)
+    {
+        return angle >= 200 && angle < 340;
     }
 }
