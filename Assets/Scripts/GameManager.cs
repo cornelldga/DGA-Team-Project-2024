@@ -281,8 +281,8 @@ public class GameManager : MonoBehaviour
     /// Goes back to the main menu from the pause screen
     /// </summary>
     public void ReturnToMainMenu() {
-        FindObjectOfType<AudioManager>().StopSound("sfx_SirenLong");
         FindObjectOfType<AudioManager>().PlaySound("sfx_MenuClick");
+        FindObjectOfType<AudioManager>().StopSound("sfx_SirenLong");
         LoadScene("Main Menu");
     }
 
