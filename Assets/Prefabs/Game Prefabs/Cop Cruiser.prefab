@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6104927108436614769}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &7044380654155703155
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -275,13 +275,13 @@ MonoBehaviour:
   State: 0
   model: 0
   animController: {fileID: 5415605010644725904}
-  RamRadius: 6
+  RamRadius: 3
   VisionRadius: 10
   MaxPursuitRadius: 15
-  BaseSpeed: 8
-  RamSpeed: 15
-  RamCooldown: 1.75
-  ramInnacuracy: 15
+  BaseSpeed: 6
+  RamSpeed: 7
+  RamCooldown: 0.2
+  ramInnacuracy: 0
 --- !u!54 &8872929183569478298
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -329,6 +329,6 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 1
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}

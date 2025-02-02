@@ -1571,6 +1571,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 763982404534953431, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
   m_PrefabInstance: {fileID: 6693935003196535231}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1559038581 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1578315226416883018, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+  m_PrefabInstance: {fileID: 6693935003196535231}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2288dd41db344b49b20e79a67242369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1672061199
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,6 +1961,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 753890706617174955, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 763982404534953431, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1990,6 +2005,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1050946467146597223, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 1980278514677038102, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: gameTimer
       value: 100
@@ -1997,6 +2016,46 @@ PrefabInstance:
     - target: {fileID: 3271792073610812939, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3852751976509785180, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3852751976509785180, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: RamSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: BaseSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: RamRadius
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: RamCooldown
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: VisionRadius
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: ramInnacuracy
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: animController
+      value: 
+      objectReference: {fileID: 1559038581}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: MaxPursuitRadius
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5872541651714172970, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: m_TileAssetArray.Array.data[1].m_RefCount

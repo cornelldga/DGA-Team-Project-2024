@@ -30,18 +30,19 @@ public class CopModel : MonoBehaviour
     [SerializeField] private AnimatorController animController;
 
     // Internal Constants
-    [SerializeField] private float RamRadius = 10; // how close the cop has to be to the cop to start a ram
-    [SerializeField] private float VisionRadius = 15; // how close the player has to be to start a pursuit
-    [SerializeField] private float MaxPursuitRadius = 35; // The distance where the cop will lose sight of the target
+    [SerializeField] private float RamRadius = 3; // how close the cop has to be to the cop to start a ram
+    [SerializeField] private float VisionRadius = 10; // how close the player has to be to start a pursuit
+    [SerializeField] private float MaxPursuitRadius = 15; // The distance where the cop will lose sight of the target
+    
+    [SerializeField] private float BaseSpeed = 6; // base movement speed while patrolling
+    [SerializeField] private int RamSpeed = 7; // revved up speed barreling towards the player. 
+    [SerializeField] private float RamCooldown = 0.2f; // the amount of time spend on a ram attack until returning to normal navigation
+    [SerializeField] float ramInnacuracy; // adds inaccuracy rotation to ram position
+    
     private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
-    [SerializeField] private float BaseSpeed = 0.5f; // base movement speed while patrolling
-    [SerializeField] private int RamSpeed = 3; // revved up speed barreling towards the player. 
-    [SerializeField] private float RamCooldown = 0.5f; // the amount of time spend on a ram attack until returning to normal navigation
-    [SerializeField] float ramInnacuracy; // aadds inaccuracy rotation to ram position
     private const int WanderRerouteTime = 5; // max time spend on a single wander path to prevent getting stuck
     private const int PursuitRerouteTime = 1; // max time spend on a single hot pursuit path to prevent getting stuck
 
-    
 
     // reference to its own rigid body
     private Rigidbody RB;
@@ -59,11 +60,11 @@ public class CopModel : MonoBehaviour
     // Movement speed multiplier towards the target
     private float speed;
 
-    // Parameters managing cooldown for ramming, in seconds
+    // variables managing cooldown for ramming, in seconds
     private float RamTimer = 0;
     private bool IsRamming = false;
 
-    // parameters for managing reroutings
+    // variables for managing reroutings
     private float NavTime = 0;
 
 
@@ -82,6 +83,9 @@ public class CopModel : MonoBehaviour
         speed = BaseSpeed;
     }
 
+    // returns true if cop is pending recieving a path towards a target 
+    private bool PendingRoute() { return (CurrentPath == null || CurrentIndex >= CurrentPath.Length); }
+
     /// <summary>
     /// Change the navigation state of the cop based on proximity to player
     /// </summary>
@@ -91,7 +95,7 @@ public class CopModel : MonoBehaviour
         float distanceFromPlayer = Vector3.Distance(this.transform.position, GameManager.Instance.getPlayer().transform.position);
         
         // set attacking state
-/*        if (!IsRamming && distanceFromPlayer < RamRadius)
+        if (!IsRamming && distanceFromPlayer < RamRadius)
         {
             
             IsRamming = true;
@@ -99,12 +103,15 @@ public class CopModel : MonoBehaviour
             Vector3 moveDir = Quaternion.AngleAxis(UnityEngine.Random.Range(-ramInnacuracy, ramInnacuracy), Vector3.up) *
                 (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
             RB.velocity = moveDir * RamSpeed;
+
+            angle = (float)((Mathf.Atan2(moveDir.x, moveDir.z)) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
+            
             CurrentPath = null;
 
-        } */
+        }
 
         // set navigation state
-        if (distanceFromPlayer < VisionRadius)
+        else if (distanceFromPlayer < VisionRadius)
         {
             State = NavState.HOTPURSUIT;
             if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
@@ -138,9 +145,11 @@ public class CopModel : MonoBehaviour
     {
         StateChanger();
 
+
         // resolve the attack before doing anything
         if (IsRamming)
         {
+            Debug.Log("Ramming");
             RamTimer += Time.deltaTime;
             if (RamTimer >= RamCooldown)
             {
@@ -149,15 +158,13 @@ public class CopModel : MonoBehaviour
 
         }
 
-
-
         // calculate path towards current target
         else if (getNavState() == NavState.WANDER)
         {
-
+            Debug.Log("Wander");
             NavTime += Time.deltaTime;
 
-            if ((CurrentPath == null || CurrentIndex >= CurrentPath.Length) || NavTime >= WanderRerouteTime)
+            if (PendingRoute() || NavTime >= WanderRerouteTime)
             {
                 // Choose a random position to wander to
                 // ----
@@ -179,9 +186,10 @@ public class CopModel : MonoBehaviour
         }
         else if (State == NavState.HOTPURSUIT)
         {
+            Debug.Log("Pursuit");
             NavTime += Time.deltaTime;
 
-            if (NavTime >= PursuitRerouteTime)
+            if (PendingRoute() || NavTime >= PursuitRerouteTime)
             {
                 SetPathfindingTarget(GameManager.Instance.getPlayer().transform.position);
                 NavTime = 0;
@@ -257,15 +265,9 @@ public class CopModel : MonoBehaviour
 
             Vector3 targetDirection = targetPosition - position;
             targetDirection.Normalize();
-            angle = (float) ((Mathf.Atan2(targetDirection.x, targetDirection.z)) * (180 / Math.PI)) - 45;
-            Debug.Log("angle: " + angle);
+            angle = (float) ((Mathf.Atan2(targetDirection.x, targetDirection.z)) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
 
-
-
-
-
-
-
+            // if not at the target yet, move towards it
             if (Vector3.Distance(this.transform.position, targetPosition) > 0.5f)
             {
                 Vector3 moveDir = (targetPosition - position).normalized;
@@ -273,6 +275,7 @@ public class CopModel : MonoBehaviour
             }
             else
             {
+                // else increment path index
                 CurrentIndex++;
                 RB.velocity = new Vector3();
             }
