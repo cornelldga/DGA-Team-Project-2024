@@ -143,7 +143,6 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning($"Sound effect '{name}' not found!");
             return;
         }
-
         sound.source.Stop();
     }
 
@@ -156,6 +155,17 @@ public class AudioManager : MonoBehaviour
             return false;
         }
         return soundDictionary[name].source.isPlaying;
+    }
+
+    public void SetLooping(string name, bool doesLoop)
+    {
+        if (!soundDictionary.TryGetValue(name, out Sound sound))
+        {
+            Debug.LogWarning($"Sound effect '{name}' not found!");
+            return;
+        }
+
+        sound.source.loop = doesLoop;
     }
 
     private System.Collections.IEnumerator FadeIn(AudioSource audioSource, float targetVolume, float duration)
@@ -237,5 +247,10 @@ public class AudioManager : MonoBehaviour
             s.Value.source.pitch = pitch;
         }
         globalPitch = pitch;
+    }
+
+    void OnLevelWasLoaded()
+    {
+        StopSound("sfx_SirenLong");
     }
 }
