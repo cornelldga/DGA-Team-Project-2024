@@ -160,4 +160,8 @@ public class LevelSelectButton : MonoBehaviour
             GetComponent<UnityEngine.UI.Image>().sprite = defaultTexture;
         }
     }
+
+    public bool GetLocked(){
+        return isLocked;
+    }
 }
