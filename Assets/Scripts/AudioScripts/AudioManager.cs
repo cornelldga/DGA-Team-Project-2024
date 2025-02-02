@@ -136,9 +136,6 @@ public class AudioManager : MonoBehaviour
 
     public void StopSound(string name)
     {
-        foreach (string key in soundDictionary.Keys) {
-            Debug.Log("key: " + key);
-        }
         Debug.Log(soundDictionary.Keys.Count);
         if (!soundDictionary.TryGetValue(name, out Sound sound))
         {
@@ -199,17 +196,18 @@ public class AudioManager : MonoBehaviour
     // Utility methods for volume control
     public void LoadVolume()
     {
+        float masterVolume = PlayerPrefs.GetFloat("MasterVolumeKey", 1f);
         float musicVolume = PlayerPrefs.GetFloat("MusicKey", 1f);
         float sfxVolume = PlayerPrefs.GetFloat("SFXKey", 1f);
         foreach (KeyValuePair<string, Sound> s in soundDictionary)
         {
             if (s.Value.isMusic())
             {
-                s.Value.source.volume = musicVolume * s.Value.volume;
+                s.Value.source.volume = masterVolume * musicVolume * s.Value.volume;
             }
             else
             {
-                s.Value.source.volume = sfxVolume * s.Value.volume;
+                s.Value.source.volume = masterVolume * sfxVolume * s.Value.volume;
             }
         }
     }

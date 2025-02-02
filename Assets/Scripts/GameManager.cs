@@ -276,4 +276,15 @@ public class GameManager : MonoBehaviour
         ResumeGame();
         SceneManager.LoadScene(sceneName);
     }
+
+    /// <summary>
+    /// Goes back to the main menu from the pause screen
+    /// </summary>
+    public void ReturnToMainMenu() {
+        FindObjectOfType<AudioManager>().StopSound("sfx_SirenLong");
+        FindObjectOfType<AudioManager>().PlaySound("sfx_MenuClick");
+        LoadScene("Main Menu");
+    }
+
+
 }
