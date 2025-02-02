@@ -78,6 +78,7 @@ public class LevelSelectModal : MonoBehaviour
     //when the play button is clicked, load the level
     public void OnPlayButtonClicked()
     {
+        FindObjectOfType<AudioManager>().PlaySound("sfx_MenuClick");
         UnityEngine.SceneManagement.SceneManager.LoadScene(levelName);
     }
 }

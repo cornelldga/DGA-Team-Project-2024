@@ -318,6 +318,7 @@ public class Player : MonoBehaviour, ICrashable
     // Player can hold the spacebar to brake and turn while braking to drift
     void Drift()
     {
+        const float pitchTime = 0.25f;
         if (pressDrift && canDrift && !driftOut)
         {
             Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 4f, 7 * Time.deltaTime);
@@ -330,6 +331,8 @@ public class Player : MonoBehaviour, ICrashable
             drifting = true;
             startDrift = true;
             Time.timeScale = 0.5f;
+            //TODO Add update to audio manager to slow down audio
+            StartCoroutine(AudioManager.Instance.ChangePitch(0.5f, pitchTime));
             if (Time.time >= driftLimit)
             {
                 driftOut = true;
@@ -395,6 +398,8 @@ public class Player : MonoBehaviour, ICrashable
             Time.timeScale = 1;
             Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 7.5f, 7 * Time.deltaTime);
 
+            //TODO Add update to audio manager to speed up audio
+            StartCoroutine(AudioManager.Instance.ChangePitch(1f, pitchTime*2));
             downDrift = false;
         }
     }

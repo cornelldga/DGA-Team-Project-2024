@@ -157,6 +157,8 @@ public class Breakable : MonoBehaviour
         if (renderer != null)
         {
             renderer.material = materialInstance;
+            //renderer.sortingLayerName = "Player";
+            //renderer.sortingOrder = 1; 
         }
         objectColor = materialInstance.color;
         objectColor.a = 1f;
