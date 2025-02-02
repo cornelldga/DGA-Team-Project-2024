@@ -87,6 +87,11 @@ public class Customer : MonoBehaviour
 
         // Get the Billboard component
         animController = customerSprite.GetComponent<AnimatorController>();
+        if (isMovingNorthSouth)
+        {
+            SpriteRenderer spriteRenderer = customerSprite.GetComponent<SpriteRenderer>();
+            spriteRenderer.flipX = true;
+        }
     }
 
     void Update()

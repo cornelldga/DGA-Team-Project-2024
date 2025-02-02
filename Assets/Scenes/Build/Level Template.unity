@@ -1990,13 +1990,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 855198793236586101, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementAmplitude
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 855198793236586101, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementFrequency
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1980278514677038102, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: gameTimer
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2876729490830911512, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementAmplitude
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876729490830911512, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementFrequency
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876729490830911512, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: isMovingNorthSouth
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3271792073610812939, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007809040887846030, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementAmplitude
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007809040887846030, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementFrequency
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5872541651714172970, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: m_TileAssetArray.Array.data[1].m_RefCount
@@ -2069,6 +2097,14 @@ PrefabInstance:
     - target: {fileID: 6654839466338828978, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7428157476883355466, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementAmplitude
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7428157476883355466, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementFrequency
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7520954432033558904, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: m_IsActive
