@@ -62,6 +62,8 @@ public class LevelSelectButton : MonoBehaviour
             //deselect the button
             isSelected = false;
             GetComponent<UnityEngine.UI.Image>().sprite = defaultTexture;
+
+            levelSelectModal.playDownAnimation();
             //get the image component of this button, and set the texture to the 
         } else {
             FindObjectOfType<LevelSelectOrderer>().DeselectAllButtons(this);
@@ -71,10 +73,12 @@ public class LevelSelectButton : MonoBehaviour
             GetComponent<UnityEngine.UI.Image>().sprite = selectedTexture;
         }
         //again, this is the incorrect SetLevelData method, but until I get save data I'm using this
-        levelSelectModal.SetLevelData(levelNumber, levelSceneName);
+        if(isSelected){
+            levelSelectModal.SetLevelData(levelNumber, levelSceneName);
+            PanContainerTowardsDirectionOfButton();
+        }
 
         FindAnyObjectByType<AudioManager>().PlaySound("click");
-        PanContainerTowardsDirectionOfButton();
         
     }
 

@@ -69,6 +69,12 @@ public class LevelSelectModal : MonoBehaviour
         this.GetComponent<Animator>().SetTrigger("Up");
     }
 
+    public void playDownAnimation()
+    {
+        //play the down animation
+        this.GetComponent<Animator>().SetTrigger("Down");
+    }
+
     //when the play button is clicked, load the level
     public void OnPlayButtonClicked()
     {
