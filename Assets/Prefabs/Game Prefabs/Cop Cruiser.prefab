@@ -272,16 +272,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a542c40f295d96849b2f04008af93106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 0
+  State: 1
   model: 0
   animController: {fileID: 5415605010644725904}
-  RamRadius: 3
+  RamRadius: 8
   VisionRadius: 10
   MaxPursuitRadius: 15
-  BaseSpeed: 6
-  RamSpeed: 7
-  RamCooldown: 0.2
+  WanderSpeed: 6
+  PursuitSpeed: 8
+  RamAcc: 40
+  RamCooldown: 5
   ramInnacuracy: 0
+  ChargeTime: 0.5
+  AccelerationTime: 0.8
+  ResolutionTime: 1
 --- !u!54 &8872929183569478298
 Rigidbody:
   m_ObjectHideFlags: 0

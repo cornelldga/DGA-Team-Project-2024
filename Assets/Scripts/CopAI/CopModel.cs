@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Net;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,6 +12,14 @@ public enum NavState
     HOTPURSUIT,     // Travel towards the target position via the most direct path. Ram attack the player when in range.
     WANDER,         // Drive through the streets to cover the most distance, looking for the player
     IDLE            // Cop is not moving and staying still in current location. 
+}
+
+// a ram attack is broken up into 3 phases: charge, ram, resoltion
+public enum RamState
+{
+    CHARGE,         // Stationary, lock onto the player and rotate to face them
+    RAM,            // Fly forward in the final position set during the charge phase
+    RESOLUTION      // Slowdown and return to pathfinding
 }
 public enum CopType
 {
@@ -26,17 +35,19 @@ public class CopModel : MonoBehaviour
     // The behavior that determines a cops pathfinding target
     [SerializeField] private NavState State;
     [SerializeField] private CopType model;
+    private RamState RamState;
 
     [SerializeField] private AnimatorController animController;
 
     // Internal Constants
-    [SerializeField] private float RamRadius = 3; // how close the cop has to be to the cop to start a ram
+    [SerializeField] private float RamRadius = 8; // how close the cop has to be to the cop to start a ram
     [SerializeField] private float VisionRadius = 10; // how close the player has to be to start a pursuit
     [SerializeField] private float MaxPursuitRadius = 15; // The distance where the cop will lose sight of the target
     
-    [SerializeField] private float BaseSpeed = 6; // base movement speed while patrolling
-    [SerializeField] private int RamSpeed = 7; // revved up speed barreling towards the player. 
-    [SerializeField] private float RamCooldown = 0.2f; // the amount of time spend on a ram attack until returning to normal navigation
+    [SerializeField] private float WanderSpeed = 6; // base movement speed while patrolling
+    [SerializeField] private float PursuitSpeed = 8; // base movement speed while patrolling
+    [SerializeField] private int RamAcc = 30; // revved up speed barreling towards the player in a ram attack. 
+    [SerializeField] private float RamCooldown = 5; // the amount of time spend on a ram attack until returning to normal navigation
     [SerializeField] float ramInnacuracy; // adds inaccuracy rotation to ram position
     
     private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
@@ -61,8 +72,15 @@ public class CopModel : MonoBehaviour
     private float speed;
 
     // variables managing cooldown for ramming, in seconds
+
     private float RamTimer = 0;
     private bool IsRamming = false;
+    [SerializeField] private float ChargeTime = 0.5f;
+    [SerializeField] private float AccelerationTime = 0.8f;
+    [SerializeField] private float ResolutionTime = 1;
+    Vector3 RamDir;
+
+
 
     // variables for managing reroutings
     private float NavTime = 0;
@@ -80,11 +98,83 @@ public class CopModel : MonoBehaviour
     void Start()
     {
         RB = GetComponent<Rigidbody>();
-        speed = BaseSpeed;
+        
+        // set starting parameters according to beginning navigation state. 
+        switch (State)
+        {
+            case NavState.HOTPURSUIT:
+                SetHotPursuit();
+                break;
+            default: 
+                SetWander();
+                break;
+        }
     }
 
     // returns true if cop is pending recieving a path towards a target 
     private bool PendingRoute() { return (CurrentPath == null || CurrentIndex >= CurrentPath.Length); }
+
+    /// <summary>
+    /// Change the navigation state of the cop to wander
+    /// </summary>
+    private void SetWander()
+    {
+        State = NavState.WANDER;
+        speed = WanderSpeed;
+        /*if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
+        {
+            FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
+            FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
+        }*/
+
+    }
+
+    /// <summary>
+    /// Change the navigation state of the cop to hot pursuit. 
+    /// </summary>
+    private void SetHotPursuit()
+    {
+        State = NavState.HOTPURSUIT;
+        speed = PursuitSpeed;
+        if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
+        {
+            //FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
+            FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
+        }
+    }
+
+    private void RamCharge()
+    {
+        // face the player
+        RamDir = Quaternion.AngleAxis(UnityEngine.Random.Range(-ramInnacuracy, ramInnacuracy), Vector3.up) *
+            (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
+
+
+        RB.velocity = Vector3.zero;
+
+        angle = (float)((Mathf.Atan2(RamDir.x, RamDir.z)) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
+
+    }
+
+    /// <summary>
+    /// apply force for ram attack
+    /// </summary>
+    private void RamAttack()
+    {
+        //RB.velocity = RamDir * RamSpeed;
+        // v_f = v_0 + at
+        RB.velocity = RB.velocity + (RamDir * RamAcc) * Time.deltaTime;
+    }
+
+    private void RamResolve(float remainingTime)
+    {
+        // 0 = v_0 + at
+        // a = - v_0 / t
+        //Debug.Log(RB.velocity.magnitude);
+        Debug.Log(remainingTime);
+        float decleration = - RB.velocity.magnitude / remainingTime;
+        RB.velocity = RB.velocity + (RB.velocity.normalized * decleration) * Time.deltaTime;
+    }
 
     /// <summary>
     /// Change the navigation state of the cop based on proximity to player
@@ -93,42 +183,29 @@ public class CopModel : MonoBehaviour
     {
         // distance is given as a magnitude
         float distanceFromPlayer = Vector3.Distance(this.transform.position, GameManager.Instance.getPlayer().transform.position);
-        
+
         // set attacking state
-        if (!IsRamming && distanceFromPlayer < RamRadius)
+        if (!IsRamming && distanceFromPlayer < RamRadius && RamTimer <= 0)
         {
-            
+            // Begin charge phase of ram attack. 
+
             IsRamming = true;
             RamTimer = 0;
-            Vector3 moveDir = Quaternion.AngleAxis(UnityEngine.Random.Range(-ramInnacuracy, ramInnacuracy), Vector3.up) *
-                (GameManager.Instance.getPlayer().transform.position - this.transform.position).normalized;
-            RB.velocity = moveDir * RamSpeed;
-
-            angle = (float)((Mathf.Atan2(moveDir.x, moveDir.z)) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
-            
             CurrentPath = null;
+
+            RamState = RamState.CHARGE;    
 
         }
 
-        // set navigation state
+        // transition between navigation states
         else if (distanceFromPlayer < VisionRadius)
         {
-            State = NavState.HOTPURSUIT;
-            if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
-            {
-                //FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
-                FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
-            }
+            SetHotPursuit();
         }
 
         else if (State == NavState.HOTPURSUIT && distanceFromPlayer > MaxPursuitRadius)
         {
-            State = NavState.WANDER;
-            /*if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
-            {
-                FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
-                FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
-            }*/
+            SetWander();
         }
     }
 
@@ -149,19 +226,54 @@ public class CopModel : MonoBehaviour
         // resolve the attack before doing anything
         if (IsRamming)
         {
-            Debug.Log("Ramming");
-            RamTimer += Time.deltaTime;
-            if (RamTimer >= RamCooldown)
+ 
+            switch (RamState)
             {
-                IsRamming = false;
+                case RamState.CHARGE:
+                    //Debug.Log("Charging Ram");
+
+                    if (RamTimer >= ChargeTime)
+                    {
+                        
+                        RamState = RamState.RAM;
+                        RamTimer = 0;
+                    } else RamCharge();
+
+                    break;
+
+                case RamState.RAM:
+                    //Debug.Log("RAM!");
+
+                    if (RamTimer >= AccelerationTime)
+                    {
+                        RamState = RamState.RESOLUTION;
+                        RamTimer = 0;
+                    } else RamAttack();
+
+                    break;
+
+                case RamState.RESOLUTION:
+                    //Debug.Log("Resolve");
+
+                    if (RamTimer >= ResolutionTime)
+                    {
+                        RamTimer = RamCooldown;
+                        IsRamming = false;
+                    } else RamResolve(ResolutionTime - RamTimer);
+
+                    break;
+                default:
+                    break;
             }
+
+            RamTimer += Time.deltaTime;
 
         }
 
         // calculate path towards current target
         else if (getNavState() == NavState.WANDER)
         {
-            Debug.Log("Wander");
+            //Debug.Log("Wander");
             NavTime += Time.deltaTime;
 
             if (PendingRoute() || NavTime >= WanderRerouteTime)
@@ -186,7 +298,7 @@ public class CopModel : MonoBehaviour
         }
         else if (State == NavState.HOTPURSUIT)
         {
-            Debug.Log("Pursuit");
+            //Debug.Log("Pursuit");
             NavTime += Time.deltaTime;
 
             if (PendingRoute() || NavTime >= PursuitRerouteTime)
@@ -202,6 +314,13 @@ public class CopModel : MonoBehaviour
 
         // Update to the correct animation to rotation angle
         animController.SetAnimFromRotationAngle(angle);
+
+        // keep track of when a cop can ram again
+        if (!IsRamming && RamTimer > 0)
+        {
+            RamTimer -= Time.deltaTime;
+        }
+
 
     }
 

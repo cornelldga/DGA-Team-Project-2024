@@ -2026,8 +2026,16 @@ PrefabInstance:
       value: -3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: State
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: RamAcc
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: RamSpeed
-      value: 7
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: BaseSpeed
@@ -2035,11 +2043,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: RamRadius
-      value: 3
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: ChargeTime
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: RamCooldown
-      value: 0.2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: VisionRadius
@@ -2050,9 +2062,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: ResolutionTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: animController
       value: 
       objectReference: {fileID: 1559038581}
+    - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: AccelerationTime
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 4860284512082519951, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: MaxPursuitRadius
       value: 15
