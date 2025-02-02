@@ -30,6 +30,7 @@ public class AudioManager : MonoBehaviour
     private Dictionary<string, Sound> soundDictionary = new Dictionary<string, Sound>();
 
     private GameObject tempChildObj;
+    private float globalPitch = 1f;
 
     void Awake()
     {
@@ -212,5 +213,31 @@ public class AudioManager : MonoBehaviour
                 s.Value.source.volume = sfxVolume * s.Value.volume;
             }
         }
+    }
+
+    //Make all sfx play slower or faster
+    public System.Collections.IEnumerator ChangePitch(float pitch, float duration)
+    {
+        float startTime = Time.time;
+        float startPitch = globalPitch;
+
+        while (Time.time < startTime + duration)
+        {
+            float elapsed = Time.time - startTime;
+            float normalizedTime = elapsed / duration;
+            float newPitch = Mathf.Lerp(startPitch, pitch, normalizedTime);
+            foreach (KeyValuePair<string, Sound> s in soundDictionary)
+            {
+                s.Value.source.pitch = newPitch;
+            }
+            globalPitch = newPitch;
+            yield return null;
+        }
+
+        foreach (KeyValuePair<string, Sound> s in soundDictionary)
+        {
+            s.Value.source.pitch = pitch;
+        }
+        globalPitch = pitch;
     }
 }
