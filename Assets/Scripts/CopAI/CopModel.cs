@@ -41,21 +41,21 @@ public class CopModel : MonoBehaviour
     [SerializeField] private AnimatorController animController;
 
     // Internal Constants
+    [Header("State Change Radius")]
+    [SerializeField] private float CirclingRadius = 2; // how close the cop has to be to the player to start circling around them. 
     [SerializeField] private float RamRadius = 8; // how close the cop has to be to the player to start a ram
     [SerializeField] private float VisionRadius = 10; // how close the player has to be to start a pursuit
     [SerializeField] private float MaxPursuitRadius = 15; // The distance where the cop will lose sight of the target
-    [SerializeField] private float CirclingRadius = 2; // how close the cop has to be to the player to start circling around them. 
-    
+
+    [Header("Movement Speeds")]
     [SerializeField] private float WanderSpeed = 6; // base movement speed while patrolling
     [SerializeField] private float PursuitSpeed = 8; // base movement speed while patrolling
-    [SerializeField] private int RamAcc = 30; // revved up speed barreling towards the player in a ram attack. 
-    [SerializeField] private float RamCooldown = 5; // the amount of time spend on a ram attack until returning to normal navigation
-    [SerializeField] float ramInnacuracy; // adds inaccuracy rotation to ram position
     
+    
+
     private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
     private const int WanderRerouteTime = 5; // max time spend on a single wander path to prevent getting stuck
     private const int PursuitRerouteTime = 1; // max time spend on a single hot pursuit path to prevent getting stuck
-
 
     // reference to its own rigid body
     private Rigidbody RB;
@@ -77,6 +77,11 @@ public class CopModel : MonoBehaviour
 
     private float RamTimer = 0;
     private bool IsRamming = false;
+
+    [Header("Ramming Parameters")]
+    [SerializeField] private int RamAcc = 30; // revved up speed barreling towards the player in a ram attack. 
+    [SerializeField] private float RamCooldown = 5; // the amount of time spend on a ram attack until returning to normal navigation
+    [SerializeField] float ramInnacuracy; // adds inaccuracy rotation to ram position
     [SerializeField] private float ChargeTime = 0.5f;
     [SerializeField] private float AccelerationTime = 0.8f;
     [SerializeField] private float ResolutionTime = 1;
@@ -185,7 +190,7 @@ public class CopModel : MonoBehaviour
         if (distanceFromPlayer <= CirclingRadius)
         {
             State = NavState.CIRCLE;
-            Debug.Log("Circle");
+            //Debug.Log("Circle");
             RB.velocity = Vector3.zero;
         }
 
