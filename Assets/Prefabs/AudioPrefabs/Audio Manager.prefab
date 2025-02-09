@@ -145,8 +145,8 @@ MonoBehaviour:
     reverbLevel: 0
     reverbDelay: 0
   - name: sfx_TimerDing
-    clip: {fileID: 8300000, guid: 575dc917c6f42ec4ab3e62757a522f1e, type: 3}
-    volume: 0.2
+    clip: {fileID: 8300000, guid: 5cbbfdc8dc57bd44cb32b3d9943fc4db, type: 3}
+    volume: 0.25
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -300,6 +300,20 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_BikeSqueak6
     clip: {fileID: 8300000, guid: 70acbac887c4aa64f80c189af87e1cec, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_MenuClick
+    clip: {fileID: 8300000, guid: ce1fd8ad20b82a947b47df8a057956ef, type: 3}
     volume: 0.3
     pitch: 1
     loop: 0
