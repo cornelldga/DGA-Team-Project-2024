@@ -10,7 +10,7 @@ using UnityEngine.PlayerLoop;
 [RequireComponent(typeof(Animator))]
 public class AnimatorController : MonoBehaviour
 {
-    Animator anim;
+    public Animator anim;
 
     private void Start()
     {
@@ -32,7 +32,7 @@ public class AnimatorController : MonoBehaviour
     /// <summary>
     /// Sets the "Moving Sorth" boolean in the animator to the boolean arguement
     /// </summary>
-    public void SetMovingSouth(bool isMovingSouth) 
+    public void SetMovingSouth(bool isMovingSouth)
     {
         anim.SetBool("Moving South", isMovingSouth);
     }
@@ -80,6 +80,20 @@ public class AnimatorController : MonoBehaviour
         anim.SetBool("Facing West", isFacingWest);
     }
     /// <summary>
+    /// Set Crash Right boolean in the animator to the boolean arguement
+    /// </summary>
+    public void SetCrashRight(bool isCrashRight)
+    {
+        anim.SetBool("Crash Right", isCrashRight);
+    }
+    /// <summary>
+    /// Set Crash Left boolean in the animator to the boolean arguement
+    /// </summary>
+    public void SetCrashLeft(bool isCrashLeft)
+    {
+        anim.SetBool("Crash Left", isCrashLeft);
+    }
+    /// <summary>
     /// Sets all boolean parameters to false
     /// </summary>
     public void ResetConditions()
@@ -97,21 +111,20 @@ public class AnimatorController : MonoBehaviour
     /** Sets the displayed animation based on the objects current direction of movement */
     public void SetAnimFromRotationAngle(float angle)
     {
-
         if (angle < 0)
         {
             angle = 360 + angle;
         }
-
-
-
         SetMovingNorth(isFacingNorth(angle));
         SetMovingSouth(isFacingSouth(angle));
-        SetMovingEast(isFacingEast(angle)); 
+        SetMovingEast(isFacingEast(angle));
         SetMovingWest(isFacingWest(angle));
+    }
 
-        
-
+    public void changeAnimSpeed(float speed)
+    {
+        // TODO: How to change the speed of the animation?
+        anim.speed = speed;
     }
 
     /** Returns true if the body is facing North */

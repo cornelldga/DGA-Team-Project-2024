@@ -7,16 +7,16 @@ using UnityEngine;
 /// This class navigates the pedestrian through the waypoints.
 /// Upon arriving at a waypoint, the pedestrian selects the next waypoint based on its walking direction and the branch ratio. 
 /// </summary>
-[RequireComponent(typeof(PedestrianNavigationController))]
+[RequireComponent(typeof(PedNavigationController))]
 public class WaypointNavigator : MonoBehaviour
 {
-    PedestrianNavigationController navigationController;
+    PedNavigationController navigationController;
     public Waypoint currentWaypoint;
     int direction;
 
     void Awake()
     {
-        navigationController = GetComponent<PedestrianNavigationController>();
+        navigationController = GetComponent<PedNavigationController>();
     }
 
     // Start is called before the first frame update
