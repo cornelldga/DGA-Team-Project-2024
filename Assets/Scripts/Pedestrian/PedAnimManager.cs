@@ -2,21 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class PedestrianAudioSet
+{
+    public string name; // For debugging, assign pedestrian type name
+    public RuntimeAnimatorController animatorController;
+    public AudioClip[] orderCompleteSounds;
+    public AudioClip[] hurtSounds;
+    public AudioClip[] takeOrderSounds;
+}
+
 public class PedAnimManager : MonoBehaviour
 {
-    // Store multiple RuntimeAnimatorControllers (one for each type of pedestrian)
-    public RuntimeAnimatorController[] allAnims;
+    public PedestrianAudioSet[] pedestrianAudioSets; // Holds data for each pedestrian type
 
-    // Reference to the pedestrian's Animator
     [SerializeField] Animator animator;
+    private PedestrianAudioSet currentAudioSet;
 
     void Start()
     {
-        if (allAnims.Length > 0 && animator != null)
+        if (pedestrianAudioSets.Length > 0 && animator != null)
         {
-            // Choose a random animator from the array
-            int randomIndex = Random.Range(0, allAnims.Length);
-            animator.runtimeAnimatorController = allAnims[randomIndex];
+            // Choose a random pedestrian type
+            int randomIndex = Random.Range(0, pedestrianAudioSets.Length);
+            currentAudioSet = pedestrianAudioSets[randomIndex];
+
+            // Assign the animator controller
+            animator.runtimeAnimatorController = currentAudioSet.animatorController;
         }
+    }
+
+    // Public methods to retrieve sound clips for this pedestrian type
+    public AudioClip GetRandomOrderCompleteSound()
+    {
+        return GetRandomClip(currentAudioSet.orderCompleteSounds);
+    }
+
+    public AudioClip GetRandomHurtSound()
+    {
+        return GetRandomClip(currentAudioSet.hurtSounds);
+    }
+
+    public AudioClip GetRandomTakeOrderSound()
+    {
+        return GetRandomClip(currentAudioSet.takeOrderSounds);
+    }
+
+    private AudioClip GetRandomClip(AudioClip[] clips)
+    {
+        if (clips != null && clips.Length > 0)
+        {
+            return clips[Random.Range(0, clips.Length)];
+        }
+        return null; // Return null if no clips are found (Handle this in sound manager)
     }
 }

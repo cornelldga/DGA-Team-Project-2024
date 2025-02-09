@@ -11,6 +11,7 @@ using UnityEngine;
 /// If the pedestrian collides with the player, it will be knocked back based on the player's speed and ped-play direction.
 /// </remarks>
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PedSoundManager))]
 public class PedNavigationController : MonoBehaviour, ICrashable
 {
     public float movementSpeed = 1.0f;
@@ -32,11 +33,14 @@ public class PedNavigationController : MonoBehaviour, ICrashable
     [SerializeField] AnimatorController animController;
     private Vector3 previousPosition;
 
+    private PedSoundManager pedSoundManager;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true; // Ensure the Rigidbody is kinematic initially
         previousPosition = transform.position;
+        pedSoundManager = GetComponent<PedSoundManager>();
     }
 
     void Update()
@@ -178,6 +182,9 @@ public class PedNavigationController : MonoBehaviour, ICrashable
                 isInvincible = true;
                 invincibilityTimer = invincibilityDuration;
                 knockbackTimer = knockbackCooldown; // Start knockback cooldown
+
+                // play hurt sound
+                pedSoundManager.PlayHurtSound();
             }
         }
     }

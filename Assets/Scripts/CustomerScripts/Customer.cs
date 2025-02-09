@@ -9,6 +9,7 @@ using UnityEngine;
 /// <para> NOTE: For now, the customer is moving back and forth. </para>
 /// </summary>
 [RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(PedSoundManager))]
 public class Customer : MonoBehaviour
 {
     [Header("Customer Attributes")]
@@ -72,6 +73,7 @@ public class Customer : MonoBehaviour
     private CustomerState currentState;
     private Vector3 previousPosition;
     private AnimatorController animController;
+    private PedSoundManager pedSoundManager;
 
     void Start()
     {
@@ -92,6 +94,8 @@ public class Customer : MonoBehaviour
             SpriteRenderer spriteRenderer = customerSprite.GetComponent<SpriteRenderer>();
             spriteRenderer.flipX = true;
         }
+
+        pedSoundManager = GetComponent<PedSoundManager>();
     }
 
     void Update()
@@ -117,12 +121,14 @@ public class Customer : MonoBehaviour
                 float oil = GameManager.Instance.getPlayer().GetOil();
                 if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && oil >= 20)
                 {
+                    // TAKING ORDER
                     currentState = CustomerState.Cooking;
                     customerRenderer.material = greenMaterial;
                     timer = 0f;
                     orderTaken = true;
                     GameManager.Instance.getPlayer().AddOil(-20);
                     GameManager.Instance.TakeOrder(this);
+                    pedSoundManager.PlayTakeOrderSound();
                 }
                 break;
 
@@ -138,10 +144,11 @@ public class Customer : MonoBehaviour
                 {
                     if (!isOrderCompleted)
                     {
+                        // FAIL ORDER
                         currentState = CustomerState.Done;
                         customerRenderer.material = redMaterial;
                         GameManager.Instance.RemoveOrder(this);
-                        AudioManager.Instance.Play("sfx_CustomerAngry");
+                        pedSoundManager.PlayOrderFailedSound();
                     }
                     break;
                 }
@@ -187,6 +194,7 @@ public class Customer : MonoBehaviour
         customerRenderer.material = blueMaterial;
         GameManager.Instance.CompleteOrder(this);
         isOrderCompleted = true;
+        pedSoundManager.PlayOrderCompleteSound();
     }
 
     // GETTERS ----------------------------

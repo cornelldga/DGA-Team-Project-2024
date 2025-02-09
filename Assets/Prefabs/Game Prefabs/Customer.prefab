@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3837978546002499609}
   - component: {fileID: 5212781798578842466}
   - component: {fileID: 4074179547864516816}
+  - component: {fileID: 6477863927702599654}
+  - component: {fileID: 5409510496184920540}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Untagged
@@ -189,6 +191,77 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &6477863927702599654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543936700359820034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a4e9643d91a479c91fc539f8995edd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pedestrianAudioSets:
+  - name: Beetle
+    animatorController: {fileID: 9100000, guid: b0798779ecc02476e88a502f212db82a, type: 2}
+    orderCompleteSounds:
+    - {fileID: 8300000, guid: df4244d49df756741aad5dc393128ac9, type: 3}
+    - {fileID: 8300000, guid: aac71eac9d291ba4cad837eabedf5de6, type: 3}
+    hurtSounds:
+    - {fileID: 8300000, guid: 44f5a409362c1694fa88297000cc47ac, type: 3}
+    - {fileID: 8300000, guid: 47b34f2c07086834a91d3713165a621e, type: 3}
+    takeOrderSounds:
+    - {fileID: 8300000, guid: af48b331ab6fab8458b64119ce120630, type: 3}
+    - {fileID: 8300000, guid: 85f8d67af0c6571418df67324a59b33b, type: 3}
+  - name: Grasshopper
+    animatorController: {fileID: 9100000, guid: 910957cfd7e184ca7b180f1c69b93d08, type: 2}
+    orderCompleteSounds:
+    - {fileID: 8300000, guid: f53f35cbce62c184fa75b45016bcbb6b, type: 3}
+    - {fileID: 8300000, guid: b53083eb8335dbe40880d7932d1dbcb6, type: 3}
+    hurtSounds:
+    - {fileID: 8300000, guid: 0958d03a906625743a4d573f1de9a38e, type: 3}
+    - {fileID: 8300000, guid: 4ad7bf4db22d6a743aae43ac6cb0f097, type: 3}
+    takeOrderSounds:
+    - {fileID: 8300000, guid: f1272ad3c9759524dad142ce3060a35b, type: 3}
+    - {fileID: 8300000, guid: 18efcb3869f2afd40a4e4110c8178af7, type: 3}
+  - name: Ladybug
+    animatorController: {fileID: 9100000, guid: 13a56d2a620b14ff1bb421d09cf69aab, type: 2}
+    orderCompleteSounds:
+    - {fileID: 8300000, guid: 2ce5aac56a516eb4aa5551b991bc370c, type: 3}
+    - {fileID: 8300000, guid: c6cb1c709fcb67d46b895ba87b699a24, type: 3}
+    hurtSounds:
+    - {fileID: 8300000, guid: 3c921ba53bb0a424c85a4216c5a6c0b1, type: 3}
+    - {fileID: 8300000, guid: 88d9cf835d362554db93c1b08a781fe7, type: 3}
+    takeOrderSounds:
+    - {fileID: 8300000, guid: 1ae1e941a5a57224aa8789dabd643a07, type: 3}
+    - {fileID: 8300000, guid: b2157af926bdd8c4ab32b1b8baf6acb6, type: 3}
+  - name: Rolypoly
+    animatorController: {fileID: 9100000, guid: d16c377d639df4edb8fbfabf3a1b6242, type: 2}
+    orderCompleteSounds:
+    - {fileID: 8300000, guid: d406206496759d8459f53fab2835cb67, type: 3}
+    - {fileID: 8300000, guid: 726ea184a30c8404cbd230793da05e98, type: 3}
+    hurtSounds:
+    - {fileID: 8300000, guid: cf0b40d0b420b804fac2a307ee49fee8, type: 3}
+    takeOrderSounds:
+    - {fileID: 8300000, guid: 3309d37ee07c6af439a4845b70793cd7, type: 3}
+    - {fileID: 8300000, guid: b994cb03db6246f4099cafa1365ff2db, type: 3}
+  animator: {fileID: 6902939804337995817}
+--- !u!114 &5409510496184920540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543936700359820034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab3a8eb0d7af4e559fdc4c67652ac70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OrderFailedSounds:
+  - {fileID: 8300000, guid: 8274a32b35e8db54a8988bf083574efc, type: 3}
 --- !u!1 &5229204291158607446
 GameObject:
   m_ObjectHideFlags: 0
