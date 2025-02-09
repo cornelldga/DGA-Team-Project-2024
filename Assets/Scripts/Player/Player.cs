@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 // This script handles the inputs and manages the oil and cooking timers for the player
@@ -31,6 +30,10 @@ public class Player : MonoBehaviour, ICrashable
     [SerializeField] private KeyCode nitro2 = KeyCode.RightShift;
     [Tooltip("Button for drifting")]
     [SerializeField] private KeyCode drift = KeyCode.Space;
+
+    [SerializeField] private float zoomSpeed = 5f;
+    [SerializeField] private float normalCameraSize = 7.5f;
+    [SerializeField] private float driftCameraSize = 4f;
 
 
     private Rigidbody rb;
@@ -248,7 +251,7 @@ public class Player : MonoBehaviour, ICrashable
     // The player can press W and S to drive forwards and backwards.
     void Drive()
     {
-        if(pressForward && pressBackward)
+        if (pressForward && pressBackward)
         {
             return;
         }
@@ -293,7 +296,8 @@ public class Player : MonoBehaviour, ICrashable
             {
                 curDirection++;
             }
-            if (startDrift){
+            if (startDrift)
+            {
                 leftDriftNum = 0;
                 rightDriftNum++;
             }
@@ -308,7 +312,8 @@ public class Player : MonoBehaviour, ICrashable
             {
                 curDirection--;
             }
-            if (startDrift){
+            if (startDrift)
+            {
                 rightDriftNum = 0;
                 leftDriftNum++;
             }
@@ -321,7 +326,9 @@ public class Player : MonoBehaviour, ICrashable
         const float pitchTime = 0.25f;
         if (pressDrift && canDrift && !driftOut)
         {
+
             Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 4f, 7 * Time.deltaTime);
+
             if (!downDrift)
             {
                 driftAngle = curDirection;
@@ -346,7 +353,8 @@ public class Player : MonoBehaviour, ICrashable
                 startDrift = false;
                 if (rightDriftNum > 0)
                 {
-                    if (driftAngle + 2 == curDirection || driftAngle - 6 == curDirection) {
+                    if (driftAngle + 2 == curDirection || driftAngle - 6 == curDirection)
+                    {
                         driftNum = 2;
                     }
                     else if (driftAngle + 3 == curDirection || driftAngle - 5 == curDirection)
@@ -399,7 +407,9 @@ public class Player : MonoBehaviour, ICrashable
             Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 7.5f, 7 * Time.deltaTime);
 
             //TODO Add update to audio manager to speed up audio
+
             StartCoroutine(AudioManager.Instance.ChangePitch(1f, pitchTime*2));
+
             downDrift = false;
         }
     }
@@ -473,7 +483,7 @@ public class Player : MonoBehaviour, ICrashable
     public void TakeDamage()
     {
         if (isInvincible) return;
-        health --;
+        health--;
         int random = Random.Range(0, 2);
         AudioManager.Instance.Play("sfx_Crash1");
 
@@ -523,7 +533,7 @@ public class Player : MonoBehaviour, ICrashable
             Vector3 direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
             GetComponent<Rigidbody>().velocity = direction * 0.5f * Mathf.Max(curSpeed, maxCollisionForce);
         }
-        
+
     }
 
 

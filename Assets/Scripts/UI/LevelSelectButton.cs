@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Unity.VisualStudio.Editor;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -79,7 +78,7 @@ public class LevelSelectButton : MonoBehaviour
             PanContainerTowardsDirectionOfButton();
         }
 
-        FindAnyObjectByType<AudioManager>().PlaySound("click");
+        AudioManager.Instance.PlaySound("sfx_MenuClick");
         
     }
 
