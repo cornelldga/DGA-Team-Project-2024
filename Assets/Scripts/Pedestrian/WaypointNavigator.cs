@@ -32,7 +32,6 @@ public class WaypointNavigator : MonoBehaviour
     {
         if (navigationController.hasReachedDestination)
         {
-            Debug.Log("Pedestrian has reached destination!!");
             SelectNextDestination();
             navigationController.SetDestination(currentWaypoint.GetPosition());
         }

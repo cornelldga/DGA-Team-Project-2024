@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Renderer))]
 [RequireComponent(typeof(PedSoundManager))]
-public class Customer : MonoBehaviour
+public class Customer : MonoBehaviour, ICrashable
 {
     [Header("Customer Attributes")]
     public string customerName;
@@ -62,6 +62,19 @@ public class Customer : MonoBehaviour
     /// </summary>
     public float movementFrequency = 1f;
 
+    [Header("Knockback Settings")]
+    [SerializeField] float invincibilityDuration = 3.0f; // Duration of invincibility in seconds
+    [SerializeField] float knockbackCooldown = 0.5f; // Delay before rechecking for kinematic state
+    [SerializeField] float knockbackThreshold = 1f; // Minimum speed required to knock back a pedestrian
+    float knockbackTimer = 0f;
+    bool isKnockedBack = false;
+    bool isInvincible = false;
+    float invincibilityTimer = 0f;
+    Rigidbody rb;
+    [SerializeField] float knockbackScale = 3f;
+    [Tooltip("The maximum force that can be applied to a pedestrian")]
+    [SerializeField] float maxKnockback = 25f;
+
     private Vector3 startingPosition;
     private LineRenderer lineRenderer;
     private float timer = 0f;
@@ -74,6 +87,7 @@ public class Customer : MonoBehaviour
     private Vector3 previousPosition;
     private AnimatorController animController;
     private PedSoundManager pedSoundManager;
+    private Vector3 destination; // the destination of the customer if knocked back
 
     void Start()
     {
@@ -87,8 +101,10 @@ public class Customer : MonoBehaviour
         // Initialize and configure the LineRenderer
         SetupInteractionRangeIndicator();
 
-        // Get the Billboard component
+        // Get the Billboard componen
         animController = customerSprite.GetComponent<AnimatorController>();
+        // set animation speed to 0.5
+        animController.changeAnimSpeed(0.4f);
         if (isMovingNorthSouth)
         {
             SpriteRenderer spriteRenderer = customerSprite.GetComponent<SpriteRenderer>();
@@ -96,6 +112,7 @@ public class Customer : MonoBehaviour
         }
 
         pedSoundManager = GetComponent<PedSoundManager>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -176,11 +193,6 @@ public class Customer : MonoBehaviour
 
         // line up the rotation angle with the camera
         animController.transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0);
-
-        // Check facing direction and set the animator
-        Vector3 movingDirection = transform.position - previousPosition;
-        SetAnimationDirection(movingDirection);
-        previousPosition = transform.position;
     }
 
     /// <summary>
@@ -195,6 +207,37 @@ public class Customer : MonoBehaviour
         GameManager.Instance.CompleteOrder(this);
         isOrderCompleted = true;
         pedSoundManager.PlayOrderCompleteSound();
+    }
+
+    public void Crash(Vector3 speedVector, Vector3 position)
+    {
+        if (!isInvincible)
+        {
+            float magnitude = speedVector.magnitude;
+            Debug.Log("Crash! Pedestrian hit with speed: " + magnitude + " speed vector: " + speedVector);
+            if (magnitude > knockbackThreshold)
+            {
+                Vector3 knockbackDirection = (transform.position - position).normalized;
+                knockbackDirection.y = 0; // Ignore vertical direction
+                float knockbackForce = Mathf.Min(magnitude * knockbackScale, maxKnockback);
+
+                knockbackDirection += Vector3.up * 0.2f;
+                knockbackDirection.Normalize();
+
+                rb.isKinematic = false;
+                rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+
+                isKnockedBack = true;
+                isInvincible = true;
+                invincibilityTimer = invincibilityDuration;
+                knockbackTimer = knockbackCooldown; // Start knockback cooldown
+
+                // play hurt sound
+                pedSoundManager.PlayHurtSound();
+
+                Debug.Log("Crash! Pedestrian knocked back with force: " + knockbackForce);
+            }
+        }
     }
 
     // GETTERS ----------------------------
@@ -230,17 +273,60 @@ public class Customer : MonoBehaviour
 
     // PRIVATE METHODS ----------------------------
 
+    private Vector3 targetPosition;
+    private bool movingToEnd = true; // Determines direction
+
     private void MoveCustomer()
     {
-        // Calculate the movement offset using a sine wave
-        float movementOffset = Mathf.Sin(Time.time * movementFrequency) * movementAmplitude;
+        if (isKnockedBack)
+        {
+            knockbackTimer -= Time.deltaTime;
 
-        // Apply the movement along the SELF's Z-axis
-        Vector3 direction = isMovingNorthSouth ? Vector3.forward : Vector3.right;
-        Vector3 newPosition = startingPosition + direction * movementOffset;
+            animController.SetMovingNorth(false);
+            animController.SetMovingSouth(false);
+            animController.SetMovingEast(false);
+            animController.SetMovingWest(false);
 
-        // Update the customer's position
-        transform.position = newPosition;
+            // Determine crash direction
+            Vector3 deltaPosition = transform.position - previousPosition;
+            if (deltaPosition.x > 0) animController.SetCrashRight(true);
+            else if (deltaPosition.x < 0) animController.SetCrashLeft(true);
+
+            if (knockbackTimer <= 0f && rb.velocity.magnitude < 0.1f)
+            {
+                rb.isKinematic = true;
+                isKnockedBack = false;
+                animController.SetCrashRight(false);
+                animController.SetCrashLeft(false);
+                SetAnimationDirection(destination - transform.position);
+            }
+        }
+        else
+        {
+            // Define movement axis
+            Vector3 moveDirection = isMovingNorthSouth ? Vector3.forward : Vector3.right;
+
+            // Define two endpoints
+            Vector3 start = startingPosition - moveDirection * movementAmplitude;
+            Vector3 end = startingPosition + moveDirection * movementAmplitude;
+
+            // Set the target based on movement direction
+            targetPosition = movingToEnd ? end : start;
+
+            // Move towards the target
+            float step = movementFrequency * Time.deltaTime;
+            rb.MovePosition(Vector3.MoveTowards(transform.position, targetPosition, step));
+
+            // Check if reached the target
+            if (Vector3.Distance(transform.position, targetPosition) < 0.05f)
+            {
+                movingToEnd = !movingToEnd; // Toggle direction
+            }
+
+            // Update animation direction
+            SetAnimationDirection(targetPosition - transform.position);
+            previousPosition = transform.position;
+        }
     }
 
     private void SetupInteractionRangeIndicator()

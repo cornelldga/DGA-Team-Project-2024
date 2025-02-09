@@ -123,6 +123,12 @@ public class AnimatorController : MonoBehaviour
         SetMovingWest(isFacingWest(angle));
     }
 
+    public void changeAnimSpeed(float speed)
+    {
+        // TODO: How to change the speed of the animation?
+        anim.speed = speed;
+    }
+
     /** Returns true if the body is facing North */
     bool isFacingNorth(float angle)
     {

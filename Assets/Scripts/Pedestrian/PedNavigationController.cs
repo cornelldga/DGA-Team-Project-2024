@@ -14,19 +14,22 @@ using UnityEngine;
 [RequireComponent(typeof(PedSoundManager))]
 public class PedNavigationController : MonoBehaviour, ICrashable
 {
+    [Header("Movement Settings")]
     public float movementSpeed = 1.0f;
     [SerializeField] float stopDistance = 0.05f;
     [SerializeField] Vector3 destination;
     public bool hasReachedDestination = false;
+
+    [Header("Knockback Settings")]
     [SerializeField] float knockbackScale = 3f;
     [Tooltip("The maximum force that can be applied to a pedestrian")]
-    [SerializeField] float maxKnockback;
-
+    [SerializeField] float maxKnockback = 25f;
+    [SerializeField] float invincibilityDuration = 3.0f; // Duration of invincibility in seconds
+    [SerializeField] float knockbackCooldown = 0.5f; // Delay before rechecking for kinematic state
+    [SerializeField] float knockbackThreshold = 0.5f; // Minimum speed required to knock back a pedestrian
     bool isKnockedBack = false;
     bool isInvincible = false;
-    float invincibilityDuration = 3.0f; // Duration of invincibility in seconds
     float invincibilityTimer = 0f;
-    float knockbackCooldown = 0.5f; // Delay before rechecking for kinematic state
     float knockbackTimer = 0f;
     Rigidbody rb;
 
@@ -165,11 +168,11 @@ public class PedNavigationController : MonoBehaviour, ICrashable
         if (!isInvincible)
         {
             float magnitude = speedVector.magnitude;
-            float knockbackThreshold = 1.0f;
-
+            Debug.Log("Crash! Pedestrian hit with speed: " + magnitude + " speed vector: " + speedVector);
             if (magnitude > knockbackThreshold)
             {
                 Vector3 knockbackDirection = (transform.position - position).normalized;
+                knockbackDirection.y = 0; // Ignore vertical direction
                 float knockbackForce = Mathf.Min(magnitude * knockbackScale, maxKnockback);
 
                 knockbackDirection += Vector3.up * 0.2f;
@@ -181,10 +184,12 @@ public class PedNavigationController : MonoBehaviour, ICrashable
                 isKnockedBack = true;
                 isInvincible = true;
                 invincibilityTimer = invincibilityDuration;
-                knockbackTimer = knockbackCooldown; // Start knockback cooldown
+                knockbackTimer = knockbackCooldown; // Start knockback cooldown timer
 
                 // play hurt sound
                 pedSoundManager.PlayHurtSound();
+
+                Debug.Log("Crash! Pedestrian knocked back with force: " + knockbackForce);
             }
         }
     }

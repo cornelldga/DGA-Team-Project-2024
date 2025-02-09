@@ -104,8 +104,11 @@ MonoBehaviour:
   stopDistance: 0.5
   destination: {x: 0, y: 0, z: 0}
   hasReachedDestination: 0
-  knockbackScale: 3
-  maxKnockback: 25
+  knockbackScale: 1.5
+  maxKnockback: 8
+  invincibilityDuration: 3
+  knockbackCooldown: 0.5
+  knockbackThreshold: 0.5
   animController: {fileID: 5109388603625514691}
 --- !u!114 &4397536775025013367
 MonoBehaviour:
