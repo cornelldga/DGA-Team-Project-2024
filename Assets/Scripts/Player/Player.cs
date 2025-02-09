@@ -275,7 +275,7 @@ public class Player : MonoBehaviour, ICrashable
         {
             int soundToPlay = Random.Range(1, 7);
             //Removed temporarily bc annoying
-            AudioManager.Instance.PlaySound("sfx_BikeSqueak" + soundToPlay);
+            //AudioManager.Instance.PlaySound("sfx_BikeSqueak" + soundToPlay);
             bikeSqueakTimer = bikeSqueakMax;
         }
     }

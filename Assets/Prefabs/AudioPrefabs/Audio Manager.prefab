@@ -200,9 +200,23 @@ MonoBehaviour:
     reflectionsDelay: 0
     reverbLevel: 0
     reverbDelay: 0
+  - name: sfx_MenuClick
+    clip: {fileID: 8300000, guid: ce1fd8ad20b82a947b47df8a057956ef, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
   - name: sfx_OilReplenish
     clip: {fileID: 8300000, guid: 6da75a7ac90332641b6ac5968f73c707, type: 3}
-    volume: 0.3
+    volume: 0.2
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -216,21 +230,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_LowFuel
     clip: {fileID: 8300000, guid: 9c63a17be206d9a4cbdf82069fd8a400, type: 3}
-    volume: 0.5
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-    reverb: 0
-    dryLevel: 0
-    room: 0
-    decayTime: 1
-    reflectionsLevel: 0
-    reflectionsDelay: 0
-    reverbLevel: 0
-    reverbDelay: 0
-  - name: sfx_MenuClick
-    clip: {fileID: 8300000, guid: ce1fd8ad20b82a947b47df8a057956ef, type: 3}
-    volume: 0.3
+    volume: 0.15
     pitch: 1
     loop: 0
     source: {fileID: 0}

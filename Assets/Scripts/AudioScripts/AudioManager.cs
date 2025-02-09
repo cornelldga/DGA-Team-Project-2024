@@ -60,7 +60,7 @@ public class AudioManager : MonoBehaviour
             s.setMusic(true);
             soundDictionary[s.name] = s;
         }
-
+        Debug.Log("Size of sfx: " + soundEffects.Length);
         // Initialize sound effects
         foreach (Sound s in soundEffects)
         {
