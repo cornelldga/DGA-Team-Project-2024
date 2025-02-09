@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class PedSpriteManager : MonoBehaviour
 {
-    SpriteRenderer spriteRenderer;
+    // Store multiple RuntimeAnimatorControllers (one for each type of pedestrian)
+    public RuntimeAnimatorController[] allAnims;
 
-    // Start is called before the first frame update
+    // Reference to the pedestrian's Animator
+    [SerializeField] Animator animator;
+
     void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (allAnims.Length > 0 && animator != null)
+        {
+            // Choose a random animator from the array
+            int randomIndex = Random.Range(0, allAnims.Length);
+            animator.runtimeAnimatorController = allAnims[randomIndex];
+        }
     }
 }
