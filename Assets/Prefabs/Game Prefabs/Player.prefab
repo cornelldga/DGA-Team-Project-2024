@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   health: 10
-  invincibilityDuration: 5
+  invincibilityDuration: 2
   invincibilityDeltaTime: 0.25
   maxOil: 100
   nitro1: 304
