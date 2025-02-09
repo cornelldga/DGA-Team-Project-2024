@@ -158,6 +158,20 @@ MonoBehaviour:
     reflectionsDelay: 0
     reverbLevel: 0
     reverbDelay: 0
+  - name: sfx_Anger
+    clip: {fileID: 8300000, guid: 3cf6f216378fb9a44b85b2a1154846f8, type: 3}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
   - name: sfx_Boost
     clip: {fileID: 8300000, guid: bbc812acd8e24414fae91adcce9f806c, type: 3}
     volume: 0.3
@@ -214,9 +228,9 @@ MonoBehaviour:
     reflectionsDelay: 0
     reverbLevel: 0
     reverbDelay: 0
-  - name: sfx_CustomerAngry
-    clip: {fileID: 8300000, guid: 8274a32b35e8db54a8988bf083574efc, type: 3}
-    volume: 1
+  - name: sfx_MenuClick
+    clip: {fileID: 8300000, guid: ce1fd8ad20b82a947b47df8a057956ef, type: 3}
+    volume: 0.3
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -300,20 +314,6 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_BikeSqueak6
     clip: {fileID: 8300000, guid: 70acbac887c4aa64f80c189af87e1cec, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 0
-    source: {fileID: 0}
-    reverb: 0
-    dryLevel: 0
-    room: 0
-    decayTime: 1
-    reflectionsLevel: 0
-    reflectionsDelay: 0
-    reverbLevel: 0
-    reverbDelay: 0
-  - name: sfx_MenuClick
-    clip: {fileID: 8300000, guid: ce1fd8ad20b82a947b47df8a057956ef, type: 3}
     volume: 0.3
     pitch: 1
     loop: 0

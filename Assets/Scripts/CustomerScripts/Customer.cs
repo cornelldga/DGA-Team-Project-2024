@@ -144,7 +144,8 @@ public class Customer : MonoBehaviour
                         currentState = CustomerState.Done;
                         customerRenderer.material = redMaterial;
                         GameManager.Instance.RemoveOrder(this);
-                        AudioManager.Instance.Play("sfx_CustomerAngry");
+                        AudioManager.Instance.PlaySound("sfx_Anger");
+                        Debug.Log("Customer is angry!");
                     }
                     break;
                 }

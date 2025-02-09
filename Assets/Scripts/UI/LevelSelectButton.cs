@@ -58,7 +58,7 @@ public class LevelSelectButton : MonoBehaviour
         if(isLocked){
             return;
         }
-        FindObjectOfType<AudioManager>().PlaySound("sfx_MenuClick");
+        
         if(isSelected){
             //deselect the button
             isSelected = false;
@@ -79,8 +79,8 @@ public class LevelSelectButton : MonoBehaviour
             PanContainerTowardsDirectionOfButton();
         }
 
-        FindAnyObjectByType<AudioManager>().PlaySound("click");
-        
+        AudioManager.Instance.PlaySound("sfx_MenuClick");
+
     }
 
 
