@@ -147,6 +147,8 @@ MonoBehaviour:
   allAnims:
   - {fileID: 9100000, guid: b0798779ecc02476e88a502f212db82a, type: 2}
   - {fileID: 9100000, guid: 910957cfd7e184ca7b180f1c69b93d08, type: 2}
+  - {fileID: 9100000, guid: 13a56d2a620b14ff1bb421d09cf69aab, type: 2}
+  - {fileID: 9100000, guid: d16c377d639df4edb8fbfabf3a1b6242, type: 2}
   animator: {fileID: 3910523949179086265}
 --- !u!1 &8682799155138007177
 GameObject:
