@@ -137,16 +137,12 @@ public class AudioManager : MonoBehaviour
 
     public void StopSound(string name)
     {
-        foreach (string key in soundDictionary.Keys) {
-            Debug.Log("key: " + key);
-        }
         Debug.Log(soundDictionary.Keys.Count);
         if (!soundDictionary.TryGetValue(name, out Sound sound))
         {
             Debug.LogWarning($"Sound effect '{name}' not found!");
             return;
         }
-
         sound.source.Stop();
     }
 
@@ -159,6 +155,17 @@ public class AudioManager : MonoBehaviour
             return false;
         }
         return soundDictionary[name].source.isPlaying;
+    }
+
+    public void SetLooping(string name, bool doesLoop)
+    {
+        if (!soundDictionary.TryGetValue(name, out Sound sound))
+        {
+            Debug.LogWarning($"Sound effect '{name}' not found!");
+            return;
+        }
+
+        sound.source.loop = doesLoop;
     }
 
     private System.Collections.IEnumerator FadeIn(AudioSource audioSource, float targetVolume, float duration)
@@ -200,17 +207,18 @@ public class AudioManager : MonoBehaviour
     // Utility methods for volume control
     public void LoadVolume()
     {
+        float masterVolume = PlayerPrefs.GetFloat("MasterVolumeKey", 1f);
         float musicVolume = PlayerPrefs.GetFloat("MusicKey", 1f);
         float sfxVolume = PlayerPrefs.GetFloat("SFXKey", 1f);
         foreach (KeyValuePair<string, Sound> s in soundDictionary)
         {
             if (s.Value.isMusic())
             {
-                s.Value.source.volume = musicVolume * s.Value.volume;
+                s.Value.source.volume = masterVolume * musicVolume * s.Value.volume;
             }
             else
             {
-                s.Value.source.volume = sfxVolume * s.Value.volume;
+                s.Value.source.volume = masterVolume * sfxVolume * s.Value.volume;
             }
         }
     }
@@ -239,5 +247,10 @@ public class AudioManager : MonoBehaviour
             s.Value.source.pitch = pitch;
         }
         globalPitch = pitch;
+    }
+
+    void OnLevelWasLoaded()
+    {
+        StopSound("sfx_SirenLong");
     }
 }

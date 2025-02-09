@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.Unity.VisualStudio.Editor;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -58,6 +57,7 @@ public class LevelSelectButton : MonoBehaviour
         if(isLocked){
             return;
         }
+        FindObjectOfType<AudioManager>().PlaySound("sfx_MenuClick");
         if(isSelected){
             //deselect the button
             isSelected = false;
@@ -78,7 +78,7 @@ public class LevelSelectButton : MonoBehaviour
             PanContainerTowardsDirectionOfButton();
         }
 
-        FindAnyObjectByType<AudioManager>().PlaySound("click");
+        AudioManager.Instance.PlaySound("sfx_MenuClick");
         
     }
 
@@ -158,5 +158,9 @@ public class LevelSelectButton : MonoBehaviour
         } else {
             GetComponent<UnityEngine.UI.Image>().sprite = defaultTexture;
         }
+    }
+
+    public bool GetLocked(){
+        return isLocked;
     }
 }

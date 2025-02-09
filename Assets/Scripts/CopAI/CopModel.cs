@@ -1,16 +1,12 @@
 using System;
-using System.Collections;
-using System.Net;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 // Navigation type
 public enum NavState
 {
     HOTPURSUIT,     // Travel towards the target position via the most direct path. Ram attack the player when in range.
     WANDER,         // Drive through the streets to cover the most distance, looking for the player
+    CIRCLE,
     IDLE            // Cop is not moving and staying still in current location. 
 }
 
@@ -40,20 +36,21 @@ public class CopModel : MonoBehaviour
     [SerializeField] private AnimatorController animController;
 
     // Internal Constants
-    [SerializeField] private float RamRadius = 8; // how close the cop has to be to the cop to start a ram
+    [Header("State Change Radius")]
+    [SerializeField] private float CirclingRadius = 2; // how close the cop has to be to the player to start circling around them. 
+    [SerializeField] private float RamRadius = 8; // how close the cop has to be to the player to start a ram
     [SerializeField] private float VisionRadius = 10; // how close the player has to be to start a pursuit
     [SerializeField] private float MaxPursuitRadius = 15; // The distance where the cop will lose sight of the target
-    
+
+    [Header("Movement Speeds")]
     [SerializeField] private float WanderSpeed = 6; // base movement speed while patrolling
     [SerializeField] private float PursuitSpeed = 8; // base movement speed while patrolling
-    [SerializeField] private int RamAcc = 30; // revved up speed barreling towards the player in a ram attack. 
-    [SerializeField] private float RamCooldown = 5; // the amount of time spend on a ram attack until returning to normal navigation
-    [SerializeField] float ramInnacuracy; // adds inaccuracy rotation to ram position
     
+    
+
     private const int WanderDistance = 15; // the max distance that the cop will wander to per re-route
     private const int WanderRerouteTime = 5; // max time spend on a single wander path to prevent getting stuck
     private const int PursuitRerouteTime = 1; // max time spend on a single hot pursuit path to prevent getting stuck
-
 
     // reference to its own rigid body
     private Rigidbody RB;
@@ -75,12 +72,15 @@ public class CopModel : MonoBehaviour
 
     private float RamTimer = 0;
     private bool IsRamming = false;
+
+    [Header("Ramming Parameters")]
+    [SerializeField] private int RamAcc = 30; // revved up speed barreling towards the player in a ram attack. 
+    [SerializeField] private float RamCooldown = 5; // the amount of time spend on a ram attack until returning to normal navigation
+    [SerializeField] float ramInnacuracy; // adds inaccuracy rotation to ram position
     [SerializeField] private float ChargeTime = 0.5f;
     [SerializeField] private float AccelerationTime = 0.8f;
     [SerializeField] private float ResolutionTime = 1;
     Vector3 RamDir;
-
-
 
     // variables for managing reroutings
     private float NavTime = 0;
@@ -112,7 +112,7 @@ public class CopModel : MonoBehaviour
     }
 
     // returns true if cop is pending recieving a path towards a target 
-    private bool PendingRoute() { return (CurrentPath == null || CurrentIndex >= CurrentPath.Length); }
+    private bool PendingRoute() { return CurrentPath == null || CurrentIndex >= CurrentPath.Length; }
 
     /// <summary>
     /// Change the navigation state of the cop to wander
@@ -152,7 +152,7 @@ public class CopModel : MonoBehaviour
 
         RB.velocity = Vector3.zero;
 
-        angle = (float)((Mathf.Atan2(RamDir.x, RamDir.z)) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
+        angle = (float)(Mathf.Atan2(RamDir.x, RamDir.z) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
 
     }
 
@@ -163,17 +163,15 @@ public class CopModel : MonoBehaviour
     {
         //RB.velocity = RamDir * RamSpeed;
         // v_f = v_0 + at
-        RB.velocity = RB.velocity + (RamDir * RamAcc) * Time.deltaTime;
+        RB.velocity = RB.velocity + RamDir * RamAcc * Time.deltaTime;
     }
 
     private void RamResolve(float remainingTime)
     {
         // 0 = v_0 + at
         // a = - v_0 / t
-        //Debug.Log(RB.velocity.magnitude);
-        Debug.Log(remainingTime);
         float decleration = - RB.velocity.magnitude / remainingTime;
-        RB.velocity = RB.velocity + (RB.velocity.normalized * decleration) * Time.deltaTime;
+        RB.velocity = RB.velocity + RB.velocity.normalized * decleration * Time.deltaTime;
     }
 
     /// <summary>
@@ -184,8 +182,15 @@ public class CopModel : MonoBehaviour
         // distance is given as a magnitude
         float distanceFromPlayer = Vector3.Distance(this.transform.position, GameManager.Instance.getPlayer().transform.position);
 
+        if (!IsRamming && distanceFromPlayer <= CirclingRadius)
+        {
+            State = NavState.CIRCLE;
+            //Debug.Log("Circle");
+            RB.velocity = Vector3.zero;
+        }
+
         // set attacking state
-        if (!IsRamming && distanceFromPlayer < RamRadius && RamTimer <= 0)
+        else if (!IsRamming && distanceFromPlayer < RamRadius && RamTimer <= 0)
         {
             // Begin charge phase of ram attack. 
 
@@ -197,7 +202,6 @@ public class CopModel : MonoBehaviour
 
         }
 
-        // transition between navigation states
         else if (distanceFromPlayer < VisionRadius)
         {
             SetHotPursuit();
@@ -384,7 +388,7 @@ public class CopModel : MonoBehaviour
 
             Vector3 targetDirection = targetPosition - position;
             targetDirection.Normalize();
-            angle = (float) ((Mathf.Atan2(targetDirection.x, targetDirection.z)) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
+            angle = (float) (Mathf.Atan2(targetDirection.x, targetDirection.z) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
 
             // if not at the target yet, move towards it
             if (Vector3.Distance(this.transform.position, targetPosition) > 0.5f)
