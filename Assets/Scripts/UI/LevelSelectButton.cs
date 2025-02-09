@@ -58,6 +58,7 @@ public class LevelSelectButton : MonoBehaviour
         if(isLocked){
             return;
         }
+        FindObjectOfType<AudioManager>().PlaySound("sfx_MenuClick");
         if(isSelected){
             //deselect the button
             isSelected = false;
@@ -158,5 +159,9 @@ public class LevelSelectButton : MonoBehaviour
         } else {
             GetComponent<UnityEngine.UI.Image>().sprite = defaultTexture;
         }
+    }
+
+    public bool GetLocked(){
+        return isLocked;
     }
 }

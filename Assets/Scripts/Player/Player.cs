@@ -99,6 +99,7 @@ public class Player : MonoBehaviour, ICrashable
         rb = GetComponent<Rigidbody>();
         oil = maxOil;
         customers = GameManager.Instance.GetCustomers();
+        Physics.IgnoreLayerCollision(3, 6, false);
     }
 
     void FixedUpdate()
@@ -317,9 +318,10 @@ public class Player : MonoBehaviour, ICrashable
     // Player can hold the spacebar to brake and turn while braking to drift
     void Drift()
     {
+        const float pitchTime = 0.25f;
         if (pressDrift && canDrift && !driftOut)
         {
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, 4f, Time.fixedDeltaTime);
+            Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 4f, 7 * Time.deltaTime);
             if (!downDrift)
             {
                 driftAngle = curDirection;
@@ -329,6 +331,8 @@ public class Player : MonoBehaviour, ICrashable
             drifting = true;
             startDrift = true;
             Time.timeScale = 0.5f;
+            //TODO Add update to audio manager to slow down audio
+            StartCoroutine(AudioManager.Instance.ChangePitch(0.5f, pitchTime));
             if (Time.time >= driftLimit)
             {
                 driftOut = true;
@@ -392,7 +396,10 @@ public class Player : MonoBehaviour, ICrashable
                 driftOut = false;
             }
             Time.timeScale = 1;
-            Camera.main.orthographicSize = 7.5f;
+            Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 7.5f, 7 * Time.deltaTime);
+
+            //TODO Add update to audio manager to speed up audio
+            StartCoroutine(AudioManager.Instance.ChangePitch(1f, pitchTime*2));
             downDrift = false;
         }
     }
@@ -447,18 +454,18 @@ public class Player : MonoBehaviour, ICrashable
         Physics.IgnoreLayerCollision(3, 6, true);
         for (float i = 0; i < invincibilityDuration; i += invincibilityDeltaTime)
         {
-            if (model.transform.localScale == Vector3.one)
+            if (model.GetComponent<SpriteRenderer>().color == Color.white)
             {
-                ScaleModelTo(Vector3.zero);
+                model.GetComponent<SpriteRenderer>().color = Color.red;
             }
             else
             {
-                ScaleModelTo(Vector3.one);
+                model.GetComponent<SpriteRenderer>().color = Color.white;
             }
             yield return new WaitForSeconds(invincibilityDeltaTime);
         }
         Physics.IgnoreLayerCollision(3, 6, false);
-        ScaleModelTo(Vector3.one);
+        model.GetComponent<SpriteRenderer>().color = Color.white;
         isInvincible = false;
     }
 

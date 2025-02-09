@@ -30,6 +30,7 @@ public class AudioManager : MonoBehaviour
     private Dictionary<string, Sound> soundDictionary = new Dictionary<string, Sound>();
 
     private GameObject tempChildObj;
+    private float globalPitch = 1f;
 
     void Awake()
     {
@@ -136,16 +137,12 @@ public class AudioManager : MonoBehaviour
 
     public void StopSound(string name)
     {
-        foreach (string key in soundDictionary.Keys) {
-            Debug.Log("key: " + key);
-        }
         Debug.Log(soundDictionary.Keys.Count);
         if (!soundDictionary.TryGetValue(name, out Sound sound))
         {
             Debug.LogWarning($"Sound effect '{name}' not found!");
             return;
         }
-
         sound.source.Stop();
     }
 
@@ -158,6 +155,17 @@ public class AudioManager : MonoBehaviour
             return false;
         }
         return soundDictionary[name].source.isPlaying;
+    }
+
+    public void SetLooping(string name, bool doesLoop)
+    {
+        if (!soundDictionary.TryGetValue(name, out Sound sound))
+        {
+            Debug.LogWarning($"Sound effect '{name}' not found!");
+            return;
+        }
+
+        sound.source.loop = doesLoop;
     }
 
     private System.Collections.IEnumerator FadeIn(AudioSource audioSource, float targetVolume, float duration)
@@ -199,18 +207,50 @@ public class AudioManager : MonoBehaviour
     // Utility methods for volume control
     public void LoadVolume()
     {
+        float masterVolume = PlayerPrefs.GetFloat("MasterVolumeKey", 1f);
         float musicVolume = PlayerPrefs.GetFloat("MusicKey", 1f);
         float sfxVolume = PlayerPrefs.GetFloat("SFXKey", 1f);
         foreach (KeyValuePair<string, Sound> s in soundDictionary)
         {
             if (s.Value.isMusic())
             {
-                s.Value.source.volume = musicVolume * s.Value.volume;
+                s.Value.source.volume = masterVolume * musicVolume * s.Value.volume;
             }
             else
             {
-                s.Value.source.volume = sfxVolume * s.Value.volume;
+                s.Value.source.volume = masterVolume * sfxVolume * s.Value.volume;
             }
         }
+    }
+
+    //Make all sfx play slower or faster
+    public System.Collections.IEnumerator ChangePitch(float pitch, float duration)
+    {
+        float startTime = Time.time;
+        float startPitch = globalPitch;
+
+        while (Time.time < startTime + duration)
+        {
+            float elapsed = Time.time - startTime;
+            float normalizedTime = elapsed / duration;
+            float newPitch = Mathf.Lerp(startPitch, pitch, normalizedTime);
+            foreach (KeyValuePair<string, Sound> s in soundDictionary)
+            {
+                s.Value.source.pitch = newPitch;
+            }
+            globalPitch = newPitch;
+            yield return null;
+        }
+
+        foreach (KeyValuePair<string, Sound> s in soundDictionary)
+        {
+            s.Value.source.pitch = pitch;
+        }
+        globalPitch = pitch;
+    }
+
+    void OnLevelWasLoaded()
+    {
+        StopSound("sfx_SirenLong");
     }
 }
