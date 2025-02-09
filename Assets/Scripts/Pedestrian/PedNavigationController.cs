@@ -124,8 +124,9 @@ public class PedNavigationController : MonoBehaviour, ICrashable
         // Debug.Log("Pedestrian setting destination to: " + destination + " and moving directions (WENS): " + isWalkingWest + " " + isWalkingEast + " " + isWalkingNorth + " " + isWalkingSouth);
     }
 
-    // check if the pedestrian is going to move north, south, east or west, and set the corresponding boolean in the animator.
-    // note that there might be a slight shift in other directions due to randomization.
+    /// <summary>
+    /// Set the animation direction based on the distance between the current position and the destination.
+    /// </summary>
     private void SetAnimationDirection(Vector3 distance)
     {
         bool isWalkingWest = distance.x < 0 && Mathf.Abs(distance.x) > Mathf.Abs(distance.z);

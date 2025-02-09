@@ -122,14 +122,6 @@ public class Customer : MonoBehaviour
                     timer = 0f;
                     orderTaken = true;
                     GameManager.Instance.getPlayer().AddOil(-20);
-
-                    // TODO: Pass self to Player 
-                    // NOTE: I used GameManager.Instance.AddCustomer() instead
-                    // This is not going to work since I am not passing myself. 
-                    // We should change this.
-                    //GameManager.Instance.addCustomer();
-
-
                     GameManager.Instance.TakeOrder(this);
                 }
                 break;
@@ -180,15 +172,7 @@ public class Customer : MonoBehaviour
 
         // Check facing direction and set the animator
         Vector3 movingDirection = transform.position - previousPosition;
-        bool isWalkingWest = movingDirection.x < 0f;
-        bool isWalkingEast = movingDirection.x > 0f;
-        bool isWalkingSouth = movingDirection.z < 0f;
-        bool isWalkingNorth = movingDirection.z > 0f;
-        animController.SetMovingWest(isWalkingWest);
-        animController.SetMovingEast(isWalkingEast);
-        animController.SetMovingNorth(isWalkingNorth);
-        animController.SetMovingSouth(isWalkingSouth);
-
+        SetAnimationDirection(movingDirection);
         previousPosition = transform.position;
     }
 
@@ -289,6 +273,38 @@ public class Customer : MonoBehaviour
             lineRenderer.SetPosition(i, new Vector3(x, 0f, z));
 
             angle += (360f / segments);
+        }
+    }
+
+    /// <summary>
+    /// Set the animation direction based on the distance between the current position and the destination.
+    /// </summary>
+    private void SetAnimationDirection(Vector3 distance)
+    {
+        bool isWalkingWest = distance.x < 0 && Mathf.Abs(distance.x) > Mathf.Abs(distance.z);
+        bool isWalkingEast = distance.x > 0 && Mathf.Abs(distance.x) > Mathf.Abs(distance.z);
+        bool isWalkingSouth = distance.z < 0 && Mathf.Abs(distance.z) > Mathf.Abs(distance.x);
+        bool isWalkingNorth = distance.z > 0 && Mathf.Abs(distance.z) > Mathf.Abs(distance.x);
+        // set all to false
+        animController.SetMovingWest(false);
+        animController.SetMovingEast(false);
+        animController.SetMovingNorth(false);
+        animController.SetMovingSouth(false);
+        if (isWalkingWest)
+        {
+            animController.SetMovingWest(true);
+        }
+        else if (isWalkingEast)
+        {
+            animController.SetMovingEast(true);
+        }
+        else if (isWalkingNorth)
+        {
+            animController.SetMovingNorth(true);
+        }
+        else if (isWalkingSouth)
+        {
+            animController.SetMovingSouth(true);
         }
     }
 }
