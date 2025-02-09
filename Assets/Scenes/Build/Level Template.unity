@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pedestrianPrefab: {fileID: 891760649934663090, guid: 7ae272a29be7f48c2bb452bf7d221b9e, type: 3}
-  pedestriansToSpawn: 10
+  pedestriansToSpawn: 0
 --- !u!1 &77672066
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c97da6281d1475996f15c6d916bb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousWaypoint: {fileID: 0}
+  previousWaypoint: {fileID: 290148995}
   nextWaypoint: {fileID: 554014086}
   width: 1
   branches: []
@@ -480,7 +480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pedestrianPrefab: {fileID: 891760649934663090, guid: 7ae272a29be7f48c2bb452bf7d221b9e, type: 3}
-  pedestriansToSpawn: 10
+  pedestriansToSpawn: 1
 --- !u!1 &216621665
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,7 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previousWaypoint: {fileID: 1379442046}
-  nextWaypoint: {fileID: 0}
+  nextWaypoint: {fileID: 84386528}
   width: 1
   branches: []
   branchRatio: 0.5
@@ -630,7 +630,7 @@ Transform:
   m_GameObject: {fileID: 290148994}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.77, y: 0, z: 32.75}
+  m_LocalPosition: {x: 2.65, y: 0, z: 32.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1002,7 +1002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pedestrianPrefab: {fileID: 891760649934663090, guid: 7ae272a29be7f48c2bb452bf7d221b9e, type: 3}
-  pedestriansToSpawn: 10
+  pedestriansToSpawn: 0
 --- !u!1 &933691987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1990,13 +1990,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 855198793236586101, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementAmplitude
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 855198793236586101, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementFrequency
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1980278514677038102, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: gameTimer
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 2876729490830911512, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementAmplitude
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876729490830911512, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementFrequency
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876729490830911512, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: isMovingNorthSouth
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3271792073610812939, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007809040887846030, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementAmplitude
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007809040887846030, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementFrequency
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5872541651714172970, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: m_TileAssetArray.Array.data[1].m_RefCount
@@ -2069,6 +2097,14 @@ PrefabInstance:
     - target: {fileID: 6654839466338828978, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7428157476883355466, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementAmplitude
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7428157476883355466, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
+      propertyPath: movementFrequency
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7520954432033558904, guid: c0c2987449df96c4f8b611e0c98cb72c, type: 3}
       propertyPath: m_IsActive
