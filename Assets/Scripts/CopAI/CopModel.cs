@@ -187,7 +187,7 @@ public class CopModel : MonoBehaviour
         // distance is given as a magnitude
         float distanceFromPlayer = Vector3.Distance(this.transform.position, GameManager.Instance.getPlayer().transform.position);
 
-        if (distanceFromPlayer <= CirclingRadius)
+        if (!IsRamming && distanceFromPlayer <= CirclingRadius)
         {
             State = NavState.CIRCLE;
             //Debug.Log("Circle");
