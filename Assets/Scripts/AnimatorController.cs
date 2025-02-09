@@ -12,7 +12,7 @@ using UnityEngine.PlayerLoop;
 [RequireComponent(typeof(Animator))]
 public class AnimatorController : MonoBehaviour
 {
-    Animator anim;
+    public Animator anim;
 
     private void Start()
     {
@@ -34,7 +34,7 @@ public class AnimatorController : MonoBehaviour
     /// <summary>
     /// Sets the "Moving Sorth" boolean in the animator to the boolean arguement
     /// </summary>
-    public void SetMovingSouth(bool isMovingSouth) 
+    public void SetMovingSouth(bool isMovingSouth)
     {
         anim.SetBool("Moving South", isMovingSouth);
     }
@@ -109,10 +109,10 @@ public class AnimatorController : MonoBehaviour
 
         SetMovingNorth(isFacingNorth(angle));
         SetMovingSouth(isFacingSouth(angle));
-        SetMovingEast(isFacingEast(angle)); 
+        SetMovingEast(isFacingEast(angle));
         SetMovingWest(isFacingWest(angle));
 
-        
+
 
     }
 

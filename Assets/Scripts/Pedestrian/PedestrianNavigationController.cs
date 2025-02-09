@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,11 +30,13 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
     Rigidbody rb;
 
     [SerializeField] AnimatorController animController;
+    private Vector3 previousPosition;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true; // Ensure the Rigidbody is kinematic initially
+        previousPosition = transform.position;
     }
 
     void Update()
@@ -72,15 +75,9 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
         animController.transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0);
 
         // Check facing direction and update animator
-        Vector3 movingDirection = destination - transform.position;
-        bool isWalkingWest = movingDirection.x < 0;
-        bool isWalkingEast = movingDirection.x > 0;
-        bool isWalkingSouth = movingDirection.z < 0;
-        bool isWalkingNorth = movingDirection.z > 0;
-        animController.SetMovingWest(isWalkingWest);
-        animController.SetMovingEast(isWalkingEast);
-        animController.SetMovingNorth(isWalkingNorth);
-        animController.SetMovingSouth(isWalkingSouth);
+
+
+        previousPosition = transform.position;
     }
 
     public void MoveToDestination()
@@ -98,8 +95,41 @@ public class PedestrianNavigationController : MonoBehaviour, ICrashable
 
     public void SetDestination(Vector3 destination)
     {
+        Vector3 oldDestination = this.destination;
         this.destination = destination;
         hasReachedDestination = false;
+
+        if (!animController && !animController.anim) return;
+        Vector3 distance = destination - oldDestination;
+        // check if the pedestrian is going to move north, south, east or west
+        // note that there might be a slight shift in other directions due to randomization
+        // for example:
+        bool isWalkingWest = distance.x < 0 && Mathf.Abs(distance.x) > Mathf.Abs(distance.z);
+        bool isWalkingEast = distance.x > 0 && Mathf.Abs(distance.x) > Mathf.Abs(distance.z);
+        bool isWalkingSouth = distance.z < 0 && Mathf.Abs(distance.z) > Mathf.Abs(distance.x);
+        bool isWalkingNorth = distance.z > 0 && Mathf.Abs(distance.z) > Mathf.Abs(distance.x);
+        // set all to false
+        animController.SetMovingWest(false);
+        animController.SetMovingEast(false);
+        animController.SetMovingNorth(false);
+        animController.SetMovingSouth(false);
+        if (isWalkingWest)
+        {
+            animController.SetMovingWest(true);
+        }
+        else if (isWalkingEast)
+        {
+            animController.SetMovingEast(true);
+        }
+        else if (isWalkingNorth)
+        {
+            animController.SetMovingNorth(true);
+        }
+        else if (isWalkingSouth)
+        {
+            animController.SetMovingSouth(true);
+        }
+        Debug.Log("Set destination to: " + destination + " and moving directions: " + isWalkingWest + " " + isWalkingEast + " " + isWalkingNorth + " " + isWalkingSouth);
     }
 
     public void Crash(Vector3 speedVector, Vector3 position)

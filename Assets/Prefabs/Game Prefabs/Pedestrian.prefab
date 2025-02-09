@@ -216,14 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2288dd41db344b49b20e79a67242369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movingNorth: 0
-  movingSouth: 0
-  movingWest: 0
-  movingEast: 0
-  facingNorth: 0
-  facingSouth: 0
-  facingWest: 0
-  facingEast: 0
+  anim: {fileID: 3910523949179086265}
 --- !u!95 &3910523949179086265
 Animator:
   serializedVersion: 5
