@@ -82,6 +82,20 @@ public class AnimatorController : MonoBehaviour
         anim.SetBool("Facing West", isFacingWest);
     }
     /// <summary>
+    /// Set Crash Right boolean in the animator to the boolean arguement
+    /// </summary>
+    public void SetCrashRight(bool isCrashRight)
+    {
+        anim.SetBool("Crash Right", isCrashRight);
+    }
+    /// <summary>
+    /// Set Crash Left boolean in the animator to the boolean arguement
+    /// </summary>
+    public void SetCrashLeft(bool isCrashLeft)
+    {
+        anim.SetBool("Crash Left", isCrashLeft);
+    }
+    /// <summary>
     /// Sets all boolean parameters to false
     /// </summary>
     public void ResetConditions()
@@ -99,21 +113,14 @@ public class AnimatorController : MonoBehaviour
     /** Sets the displayed animation based on the objects current direction of movement */
     public void SetAnimFromRotationAngle(float angle)
     {
-
         if (angle < 0)
         {
             angle = 360 + angle;
         }
-
-
-
         SetMovingNorth(isFacingNorth(angle));
         SetMovingSouth(isFacingSouth(angle));
         SetMovingEast(isFacingEast(angle));
         SetMovingWest(isFacingWest(angle));
-
-
-
     }
 
     /** Returns true if the body is facing North */
