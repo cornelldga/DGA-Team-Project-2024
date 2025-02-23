@@ -6,7 +6,7 @@ using UnityEngine;
 public class PedSoundManager : MonoBehaviour
 {
     private PedAnimManager pedAnimManager;
-    private AudioSource tempAudioSource; // Temporary AudioSource for playing sounds
+    //private AudioSource tempAudioSource; // Temporary AudioSource for playing sounds //Commented out since we need to use the AudioManager
     [SerializeField] AudioClip[] OrderFailedSounds;
 
     void Start()
@@ -14,37 +14,37 @@ public class PedSoundManager : MonoBehaviour
         pedAnimManager = GetComponent<PedAnimManager>();
 
         // Create an AudioSource dynamically if not already attached
-        tempAudioSource = gameObject.AddComponent<AudioSource>();
+        //tempAudioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    private void PlayClip(AudioClip clip)
-    {
-        if (clip != null)
-        {
-            tempAudioSource.PlayOneShot(clip);
-        }
-    }
+    //private void PlayClip(AudioClip clip)
+    //{
+    //    if (clip != null)
+    //    {
+    //        tempAudioSource.PlayOneShot(clip);
+    //    }
+    //}
 
     public void PlayOrderCompleteSound()
     {
-        PlayClip(pedAnimManager.GetRandomOrderCompleteSound());
+        Debug.Log(pedAnimManager.GetRandomOrderCompleteSound());
+        AudioManager.Instance.PlaySound(pedAnimManager.GetRandomOrderCompleteSound());
     }
 
     public void PlayHurtSound()
     {
-        PlayClip(pedAnimManager.GetRandomHurtSound());
+        Debug.Log(pedAnimManager.GetRandomHurtSound());
+        AudioManager.Instance.PlaySound(pedAnimManager.GetRandomHurtSound());
     }
 
     public void PlayTakeOrderSound()
     {
-        PlayClip(pedAnimManager.GetRandomTakeOrderSound());
+        Debug.Log(pedAnimManager.GetRandomTakeOrderSound());
+        AudioManager.Instance.PlaySound(pedAnimManager.GetRandomTakeOrderSound());
     }
 
     public void PlayOrderFailedSound()
     {
-        if (OrderFailedSounds.Length > 0)
-        {
-            PlayClip(OrderFailedSounds[Random.Range(0, OrderFailedSounds.Length)]);
-        }
+        AudioManager.Instance.PlaySound("sfx_failorder");
     }
 }
