@@ -27,20 +27,23 @@ public class PedSoundManager : MonoBehaviour
 
     public void PlayOrderCompleteSound()
     {
-        Debug.Log(pedAnimManager.GetRandomOrderCompleteSound());
-        AudioManager.Instance.PlaySound(pedAnimManager.GetRandomOrderCompleteSound());
+        //Debug.Log(pedAnimManager.GetRandomOrderCompleteSound());
+        int randomIndex = Random.Range(1, 3);
+        AudioManager.Instance.PlaySound(pedAnimManager.GetRandomOrderCompleteSound() + randomIndex);
     }
 
     public void PlayHurtSound()
     {
-        Debug.Log(pedAnimManager.GetRandomHurtSound());
-        AudioManager.Instance.PlaySound(pedAnimManager.GetRandomHurtSound());
+        //Debug.Log(pedAnimManager.GetRandomHurtSound());
+        int randomIndex = Random.Range(1, 3);
+        AudioManager.Instance.PlaySound(pedAnimManager.GetRandomHurtSound() + randomIndex);
     }
 
     public void PlayTakeOrderSound()
     {
-        Debug.Log(pedAnimManager.GetRandomTakeOrderSound());
-        AudioManager.Instance.PlaySound(pedAnimManager.GetRandomTakeOrderSound());
+        //Debug.Log(pedAnimManager.GetRandomTakeOrderSound());
+        int randomIndex = Random.Range(1, 3);
+        AudioManager.Instance.PlaySound(pedAnimManager.GetRandomTakeOrderSound() + randomIndex);
     }
 
     public void PlayOrderFailedSound()
