@@ -64,7 +64,6 @@ public class Player : MonoBehaviour, ICrashable
     private int driftAngle = 0;
     private bool canDrift = true;
     private bool downDrift = false;
-    private bool slowMo = false;
 
     // Input booleans
     private bool pressForward;
@@ -236,7 +235,7 @@ public class Player : MonoBehaviour, ICrashable
             smokeParticle.Play();
             if (!boostSoundPlayed)
             {
-                AudioManager.Instance.PlaySound("sfx_Boost");
+                AudioManager.Instance.Play("sfx_Boost");
                 boostSoundPlayed = true;
                 lowFuelSoundPlayed = true;
             }
@@ -278,8 +277,8 @@ public class Player : MonoBehaviour, ICrashable
         else
         {
             int soundToPlay = Random.Range(1, 7);
-            //Removed temporarily bc annoying
-            //AudioManager.Instance.PlaySound("sfx_BikeSqueak" + soundToPlay);
+
+            AudioManager.Instance.Play("sfx_BikeSqueak" + soundToPlay);
             bikeSqueakTimer = bikeSqueakMax;
         }
     }
@@ -325,7 +324,7 @@ public class Player : MonoBehaviour, ICrashable
     void Drift()
     {
         const float pitchTime = 0.25f;
-        if ((pressDrift || slowMo) && canDrift && !driftOut)
+        if (pressDrift && canDrift && !driftOut)
         {
 
             Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 4f, 7 * Time.deltaTime);
@@ -334,7 +333,6 @@ public class Player : MonoBehaviour, ICrashable
             {
                 driftAngle = curDirection;
                 driftLimit = Time.time + 1;
-                StartCoroutine(SlowCooldown());
                 downDrift = true;
             }
             drifting = true;
@@ -414,15 +412,6 @@ public class Player : MonoBehaviour, ICrashable
 
             downDrift = false;
         }
-    }
-
-    private IEnumerator SlowCooldown()
-    {
-        slowMo = true;
-
-        yield return new WaitForSeconds(0.5f);
-
-        slowMo = false;
     }
 
     private IEnumerator DriftCooldown()
@@ -526,7 +515,10 @@ public class Player : MonoBehaviour, ICrashable
 
     public void Crash(Vector3 speedVector, Vector3 position)
     {
-        TakeDamage();
+        if (speedVector.magnitude >= minCrashSpeed)
+        {
+            TakeDamage();
+        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -541,6 +533,7 @@ public class Player : MonoBehaviour, ICrashable
             Vector3 direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
             GetComponent<Rigidbody>().velocity = direction * 0.5f * Mathf.Max(curSpeed, maxCollisionForce);
         }
+
     }
 
 

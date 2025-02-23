@@ -60,11 +60,10 @@ public class AudioManager : MonoBehaviour
             s.setMusic(true);
             soundDictionary[s.name] = s;
         }
-        Debug.Log("Size of sfx: " + soundEffects.Length);
+
         // Initialize sound effects
         foreach (Sound s in soundEffects)
         {
-            Debug.Log("Sound effect: " + s.name);
             if (!s.hasReverb())
             {
                 s.source = gameObject.AddComponent<AudioSource>();
@@ -113,14 +112,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(string name)
     {
-        Debug.Log("PlaySound Called with name " + name);
-        if (!soundDictionary.ContainsKey(name))
+        if (!soundDictionary.TryGetValue(name, out Sound sound))
         {
-            Debug.Log("Sound effect " + name + " not found!");
+            Debug.LogWarning($"Sound effect '{name}' not found!");
             return;
         }
-        Debug.Log("Playing sound: " + name);
-        soundDictionary[name].source.Play();
+
+        sound.source.Play();
     }
 
     //Deprecated way of playing sfx
@@ -172,8 +170,6 @@ public class AudioManager : MonoBehaviour
 
     private System.Collections.IEnumerator FadeIn(AudioSource audioSource, float targetVolume, float duration)
     {
-        float masterVolume = PlayerPrefs.GetFloat("MasterVolumeKey", 1f);
-        float musicVolume = PlayerPrefs.GetFloat("MusicKey", 1f);
         audioSource.volume = 0f;
         audioSource.Play();
 
@@ -184,17 +180,15 @@ public class AudioManager : MonoBehaviour
         {
             float elapsed = Time.time - startTime;
             float normalizedTime = elapsed / duration;
-            audioSource.volume = Mathf.Lerp(startVolume, masterVolume * musicVolume * targetVolume, normalizedTime);
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, normalizedTime);
             yield return null;
         }
 
-        audioSource.volume = masterVolume * musicVolume * targetVolume;
+        audioSource.volume = targetVolume;
     }
 
     private System.Collections.IEnumerator FadeOut(AudioSource audioSource, float duration)
     {
-        float masterVolume = PlayerPrefs.GetFloat("MasterVolumeKey", 1f);
-        float musicVolume = PlayerPrefs.GetFloat("MusicKey", 1f);
         float startTime = Time.time;
         float startVolume = audioSource.volume;
 
@@ -202,12 +196,12 @@ public class AudioManager : MonoBehaviour
         {
             float elapsed = Time.time - startTime;
             float normalizedTime = elapsed / duration;
-            audioSource.volume = Mathf.Lerp(masterVolume * musicVolume * startVolume, 0f, normalizedTime);
+            audioSource.volume = Mathf.Lerp(startVolume, 0f, normalizedTime);
             yield return null;
         }
 
         audioSource.Stop();
-        audioSource.volume = masterVolume * musicVolume * startVolume;
+        audioSource.volume = startVolume;
     }
 
     // Utility methods for volume control
