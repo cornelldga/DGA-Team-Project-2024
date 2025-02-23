@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8182307269469577234}
   - component: {fileID: 2561469007424895194}
   - component: {fileID: 3796284116853647316}
-  - component: {fileID: 4678648172771942969}
+  - component: {fileID: 5390560448794216266}
   - component: {fileID: 4397536775025013367}
   - component: {fileID: 5358890213639659395}
   - component: {fileID: 4993380822931508176}
@@ -88,7 +88,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &4678648172771942969
+--- !u!114 &5390560448794216266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,15 +97,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 891760649934663090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db443f28849774794b1349acb4804a2c, type: 3}
+  m_Script: {fileID: 11500000, guid: eec39e59e89508740a78af9b05d5b239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 3
-  stopDistance: 0.5
+  movementSpeed: 1
+  stopDistance: 0.05
   destination: {x: 0, y: 0, z: 0}
   hasReachedDestination: 0
-  knockbackScale: 1.5
-  maxKnockback: 8
+  knockbackScale: 3
+  maxKnockback: 25
   invincibilityDuration: 3
   knockbackCooldown: 0.5
   knockbackThreshold: 0.5
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pedestrianAudioSets:
   - name: Beetle
-    animatorController: {fileID: 9100000, guid: b0798779ecc02476e88a502f212db82a, type: 2}
+    animatorController: {fileID: 9100000, guid: b2c6d77557ac26945ac50d9262f25e00, type: 2}
     orderCompleteSounds:
     - {fileID: 8300000, guid: df4244d49df756741aad5dc393128ac9, type: 3}
     - {fileID: 8300000, guid: aac71eac9d291ba4cad837eabedf5de6, type: 3}
@@ -303,7 +303,7 @@ Animator:
   m_GameObject: {fileID: 8682799155138007177}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b0798779ecc02476e88a502f212db82a, type: 2}
+  m_Controller: {fileID: 9100000, guid: b2c6d77557ac26945ac50d9262f25e00, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
