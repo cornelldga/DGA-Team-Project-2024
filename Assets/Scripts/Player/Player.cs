@@ -64,6 +64,7 @@ public class Player : MonoBehaviour, ICrashable
     private int driftAngle = 0;
     private bool canDrift = true;
     private bool downDrift = false;
+    private bool slowMo = false;
 
     // Input booleans
     private bool pressForward;
@@ -324,7 +325,7 @@ public class Player : MonoBehaviour, ICrashable
     void Drift()
     {
         const float pitchTime = 0.25f;
-        if (pressDrift && canDrift && !driftOut)
+        if ((pressDrift || slowMo) && canDrift && !driftOut)
         {
 
             Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 4f, 7 * Time.deltaTime);
@@ -333,6 +334,7 @@ public class Player : MonoBehaviour, ICrashable
             {
                 driftAngle = curDirection;
                 driftLimit = Time.time + 1;
+                StartCoroutine(SlowCooldown());
                 downDrift = true;
             }
             drifting = true;
@@ -412,6 +414,15 @@ public class Player : MonoBehaviour, ICrashable
 
             downDrift = false;
         }
+    }
+
+    private IEnumerator SlowCooldown()
+    {
+        slowMo = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+        slowMo = false;
     }
 
     private IEnumerator DriftCooldown()
@@ -515,10 +526,7 @@ public class Player : MonoBehaviour, ICrashable
 
     public void Crash(Vector3 speedVector, Vector3 position)
     {
-        if (speedVector.magnitude >= minCrashSpeed)
-        {
-            TakeDamage();
-        }
+        TakeDamage();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -533,7 +541,6 @@ public class Player : MonoBehaviour, ICrashable
             Vector3 direction = Vector3.Reflect(lastVelocity.normalized, other.contacts[0].normal);
             GetComponent<Rigidbody>().velocity = direction * 0.5f * Mathf.Max(curSpeed, maxCollisionForce);
         }
-
     }
 
 
