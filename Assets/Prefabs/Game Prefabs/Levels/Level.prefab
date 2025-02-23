@@ -105,7 +105,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4286298669039247862}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6661720581f4c42bc957154f39efe2c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 96965b4abe3cbc04793265800f0f34b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pedestrianPrefab: {fileID: 891760649934663090, guid: 7ae272a29be7f48c2bb452bf7d221b9e, type: 3}
