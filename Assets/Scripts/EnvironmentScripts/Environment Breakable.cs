@@ -82,7 +82,7 @@ public class Breakable : MonoBehaviour
             myPlayer.AddOil(oilAmount);
             StartRespawn();
             //AudioManager.Instance.Play("sfx_BarrelBreak");
-            
+            AudioManager.Instance.Play("sfx_OilReplenish");
         }
     }
 

@@ -236,7 +236,7 @@ public class Player : MonoBehaviour, ICrashable
             smokeParticle.Play();
             if (!boostSoundPlayed)
             {
-                AudioManager.Instance.Play("sfx_Boost");
+                AudioManager.Instance.PlaySound("sfx_Boost");
                 boostSoundPlayed = true;
                 lowFuelSoundPlayed = true;
             }
@@ -278,8 +278,8 @@ public class Player : MonoBehaviour, ICrashable
         else
         {
             int soundToPlay = Random.Range(1, 7);
-
-            AudioManager.Instance.Play("sfx_BikeSqueak" + soundToPlay);
+            //Removed temporarily bc annoying
+            //AudioManager.Instance.PlaySound("sfx_BikeSqueak" + soundToPlay);
             bikeSqueakTimer = bikeSqueakMax;
         }
     }
