@@ -1,10 +1,5 @@
 using System;
-using System.Collections;
-using System.Net;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 // Navigation type
 public enum NavState
@@ -117,7 +112,7 @@ public class CopModel : MonoBehaviour
     }
 
     // returns true if cop is pending recieving a path towards a target 
-    private bool PendingRoute() { return (CurrentPath == null || CurrentIndex >= CurrentPath.Length); }
+    private bool PendingRoute() { return CurrentPath == null || CurrentIndex >= CurrentPath.Length; }
 
     /// <summary>
     /// Change the navigation state of the cop to wander
@@ -157,7 +152,7 @@ public class CopModel : MonoBehaviour
 
         RB.velocity = Vector3.zero;
 
-        angle = (float)((Mathf.Atan2(RamDir.x, RamDir.z)) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
+        angle = (float)(Mathf.Atan2(RamDir.x, RamDir.z) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
 
     }
 
@@ -168,7 +163,7 @@ public class CopModel : MonoBehaviour
     {
         //RB.velocity = RamDir * RamSpeed;
         // v_f = v_0 + at
-        RB.velocity = RB.velocity + (RamDir * RamAcc) * Time.deltaTime;
+        RB.velocity = RB.velocity + RamDir * RamAcc * Time.deltaTime;
     }
 
     private void RamResolve(float remainingTime)
@@ -176,7 +171,7 @@ public class CopModel : MonoBehaviour
         // 0 = v_0 + at
         // a = - v_0 / t
         float decleration = - RB.velocity.magnitude / remainingTime;
-        RB.velocity = RB.velocity + (RB.velocity.normalized * decleration) * Time.deltaTime;
+        RB.velocity = RB.velocity + RB.velocity.normalized * decleration * Time.deltaTime;
     }
 
     /// <summary>
@@ -393,7 +388,7 @@ public class CopModel : MonoBehaviour
 
             Vector3 targetDirection = targetPosition - position;
             targetDirection.Normalize();
-            angle = (float) ((Mathf.Atan2(targetDirection.x, targetDirection.z)) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
+            angle = (float) (Mathf.Atan2(targetDirection.x, targetDirection.z) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
 
             // if not at the target yet, move towards it
             if (Vector3.Distance(this.transform.position, targetPosition) > 0.5f)
