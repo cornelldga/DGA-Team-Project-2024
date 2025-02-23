@@ -61,6 +61,21 @@ public class Customer : MonoBehaviour, ICrashable
     /// </summary>
     public float movementFrequency = 1f;
 
+    [Header("Fade Settings")]
+    /// <summary>
+    /// How long it takes for customer to disappear
+    /// </summary>
+    public float fadeOutDuration = 7f;
+    /// <summary>
+    /// Difference between customer disappearing and ring indicator disappearing
+    /// </summary>
+    public float destroyDelay = 0f;
+
+    private float fadeTimer = 0f;
+    private bool isFading = false;
+    private Material[] originalMaterials;
+    private float originalAlpha;
+    private SpriteRenderer spriteRenderer;
     [Header("Knockback Settings")]
     [SerializeField] float invincibilityDuration = 3.0f; // Duration of invincibility in seconds
     [SerializeField] float knockbackCooldown = 0.5f; // Delay before rechecking for kinematic state
@@ -81,7 +96,7 @@ public class Customer : MonoBehaviour, ICrashable
     private bool orderTaken = false;
     private bool foodReady = false;
     private bool isOrderCompleted = false;
-    private enum CustomerState { WaitingForOrder, Cooking, Returning, Done }
+    private enum CustomerState { WaitingForOrder, Cooking, Returning, Fading, Done }
     private CustomerState currentState;
     private Vector3 previousPosition;
     private AnimatorController animController;
@@ -102,6 +117,10 @@ public class Customer : MonoBehaviour, ICrashable
 
         // Get the Billboard componen
         animController = customerSprite.GetComponent<AnimatorController>();
+
+        // Used for changing the alpha for the renderer/material
+        spriteRenderer = customerSprite.GetComponent<SpriteRenderer>();
+        originalAlpha = spriteRenderer.color.a;
         // set animation speed to 0.5
         animController.changeAnimSpeed(0.4f);
         if (isMovingNorthSouth)
@@ -160,11 +179,16 @@ public class Customer : MonoBehaviour, ICrashable
                 {
                     if (!isOrderCompleted)
                     {
-                        // FAIL ORDER
-                        currentState = CustomerState.Done;
+                        //currentState = CustomerState.Done; // Previous code
+                        // Start the fading
+                        currentState = CustomerState.Fading;
+                        StartFading();
+
                         customerRenderer.material = redMaterial;
                         GameManager.Instance.RemoveOrder(this);
                         pedSoundManager.PlayOrderFailedSound();
+
+
                     }
                     break;
                 }
@@ -176,6 +200,9 @@ public class Customer : MonoBehaviour, ICrashable
 
                 // NOTE: nobody is updating the cookTime now. Supposedly, Game manager or Player should do this. Par requirement, I am updating the waitTime now. This will render the customer to go straight into the red state.
                 waitTime -= Time.deltaTime;
+                break;
+            case CustomerState.Fading:
+                HandleFading();
                 break;
 
             case CustomerState.Done:
@@ -201,7 +228,9 @@ public class Customer : MonoBehaviour, ICrashable
     /// </summary>
     public void ReceiveOrder()
     {
-        currentState = CustomerState.Done;
+        //currentState = CustomerState.Done;
+        currentState = CustomerState.Fading;
+        StartFading();
         customerRenderer.material = blueMaterial;
         GameManager.Instance.CompleteOrder(this);
         isOrderCompleted = true;
@@ -272,6 +301,47 @@ public class Customer : MonoBehaviour, ICrashable
 
     // PRIVATE METHODS ----------------------------
 
+
+    private void StartFading()
+    {
+        isFading = true;
+        fadeTimer = 0f;
+    }
+
+    private void HandleFading()
+    {
+        if (!isFading) return;
+
+        fadeTimer += Time.deltaTime;
+        float normalizedTime = fadeTimer / fadeOutDuration;
+
+        if (normalizedTime <= 1f)
+        {
+            // Fade out the customer sprite
+            Color spriteColor = spriteRenderer.color;
+            spriteColor.a = Mathf.Lerp(originalAlpha, 0f, normalizedTime);
+            spriteRenderer.color = spriteColor;
+
+            // Fade out the customer material
+            Color materialColor = customerRenderer.material.color;
+            materialColor.a = Mathf.Lerp(1f, 0f, normalizedTime);
+            customerRenderer.material.color = materialColor;
+
+            // Fade out the line renderer
+            Color lineStartColor = lineRenderer.startColor;
+            Color lineEndColor = lineRenderer.endColor;
+            lineStartColor.a = Mathf.Lerp(1f, 0f, normalizedTime);
+            lineEndColor.a = Mathf.Lerp(1f, 0f, normalizedTime);
+            lineRenderer.startColor = lineStartColor;
+            lineRenderer.endColor = lineEndColor;
+        }
+        else
+        {
+            isFading = false;
+            currentState = CustomerState.Done;
+            Destroy(gameObject, destroyDelay);
+        }
+    }
     private Vector3 targetPosition;
     private bool movingToEnd = true; // Determines direction
 
