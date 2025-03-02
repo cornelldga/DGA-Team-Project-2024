@@ -7,9 +7,9 @@ public class PedestrianAudioSet
 {
     public string name; // For debugging, assign pedestrian type name
     public RuntimeAnimatorController animatorController;
-    public AudioClip[] orderCompleteSounds;
-    public AudioClip[] hurtSounds;
-    public AudioClip[] takeOrderSounds;
+    //public AudioClip[] orderCompleteSounds;
+    //public AudioClip[] hurtSounds;
+    //public AudioClip[] takeOrderSounds;
 }
 
 public class PedAnimManager : MonoBehaviour
@@ -33,19 +33,19 @@ public class PedAnimManager : MonoBehaviour
     }
 
     // Public methods to retrieve sound clips for this pedestrian type
-    public AudioClip GetRandomOrderCompleteSound()
+    public string GetRandomOrderCompleteSound()
     {
-        return GetRandomClip(currentAudioSet.orderCompleteSounds);
+        return "sfx_complete_"+name;
     }
 
-    public AudioClip GetRandomHurtSound()
+    public string GetRandomHurtSound()
     {
-        return GetRandomClip(currentAudioSet.hurtSounds);
+        return "sfx_hurt_"+name;
     }
 
-    public AudioClip GetRandomTakeOrderSound()
+    public string GetRandomTakeOrderSound()
     {
-        return GetRandomClip(currentAudioSet.takeOrderSounds);
+        return "sfx_order_"+name;
     }
 
     private AudioClip GetRandomClip(AudioClip[] clips)
