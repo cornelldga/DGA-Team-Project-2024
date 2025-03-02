@@ -70,10 +70,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minBreakSpeed: 0
-  oilAmount: 25
+  oilAmount: 0
   myMaterial: {fileID: 2100000, guid: 604e020cf40e043f2beb9145fb84e196, type: 2}
   respawnTime: 10
   animationDuration: 0.5
+  playerDamage: 0
 --- !u!1 &8172095644316762773
 GameObject:
   m_ObjectHideFlags: 0
