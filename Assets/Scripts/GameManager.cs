@@ -265,6 +265,7 @@ public class GameManager : MonoBehaviour
     public void ResetLevel()
     {
         ResumeGame();
+        FindObjectOfType<AudioManager>().ResetSirenTime();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
@@ -274,6 +275,7 @@ public class GameManager : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         ResumeGame();
+        FindObjectOfType<AudioManager>().ResetSirenTime();
         SceneManager.LoadScene(sceneName);
     }
 

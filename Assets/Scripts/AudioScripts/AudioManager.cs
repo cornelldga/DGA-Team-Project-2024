@@ -28,6 +28,7 @@ public class AudioManager : MonoBehaviour
 
     private Sound currentMusic;
     private Dictionary<string, Sound> soundDictionary = new Dictionary<string, Sound>();
+    private float sirenTime = 0f;
 
     private GameObject tempChildObj;
     private float globalPitch = 1f;
@@ -253,6 +254,35 @@ public class AudioManager : MonoBehaviour
             s.Value.source.pitch = pitch;
         }
         globalPitch = pitch;
+    }
+
+    public float GetSirenTime() { return sirenTime; }
+
+    public void SaveSirenTime(string name)
+    {
+        if (!soundDictionary.TryGetValue(name, out Sound sound))
+        {
+            Debug.LogWarning($"Sound effect '{name}' not found!");
+            return;
+        }
+        sirenTime = soundDictionary[name].source.time;
+        soundDictionary[name].source.Play();
+    }
+
+    public void PlaySoundAtSirenTime(string name)
+    {
+        if (!soundDictionary.TryGetValue(name, out Sound sound))
+        {
+            Debug.LogWarning($"Sound effect '{name}' not found!");
+            return;
+        }
+        soundDictionary[name].source.time = sirenTime;
+        soundDictionary[name].source.Play();
+    }
+
+    public void ResetSirenTime()
+    {
+        sirenTime = 0f;
     }
 
     void OnLevelWasLoaded()

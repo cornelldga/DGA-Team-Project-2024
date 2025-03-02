@@ -80,6 +80,7 @@ public class LevelSelectModal : MonoBehaviour
     {
         Debug.Log("Loading level: " + levelName);
         FindObjectOfType<AudioManager>().PlaySound("sfx_MenuClick");
+        FindObjectOfType<AudioManager>().ResetSirenTime();
         UnityEngine.SceneManagement.SceneManager.LoadScene(levelName);
     }
 }

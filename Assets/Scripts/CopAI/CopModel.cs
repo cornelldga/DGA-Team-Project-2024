@@ -121,11 +121,12 @@ public class CopModel : MonoBehaviour
     {
         State = NavState.WANDER;
         speed = WanderSpeed;
-        /*if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
+        if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenShort"))
         {
-            FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
-            FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
-        }*/
+            FindObjectOfType<AudioManager>().SaveSirenTime("sfx_SirenLong");
+            FindObjectOfType<AudioManager>().StopSound("sfx_SirenLong");
+            FindObjectOfType<AudioManager>().PlaySound("sfx_SirenShort");
+        }
 
     }
 
@@ -138,8 +139,8 @@ public class CopModel : MonoBehaviour
         speed = PursuitSpeed;
         if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
         {
-            //FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
-            FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
+            FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
+            FindObjectOfType<AudioManager>().PlaySoundAtSirenTime("sfx_SirenLong");
         }
     }
 
