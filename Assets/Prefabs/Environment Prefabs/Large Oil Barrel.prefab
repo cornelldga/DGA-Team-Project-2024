@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minBreakSpeed: 3
-  oilAmount: 0
+  oilAmount: 50
   myMaterial: {fileID: 2100000, guid: 604e020cf40e043f2beb9145fb84e196, type: 2}
   respawnTime: 10
   animationDuration: 0.5

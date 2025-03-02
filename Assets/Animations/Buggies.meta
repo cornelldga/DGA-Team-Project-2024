@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 36b411570fcaa0749bf59e4a677b2402
+<<<<<<<< HEAD:Assets/Animations/Buggies/Beetles.meta
+guid: abd2ec27d9f4948afac84610c8fd3112
+========
+guid: aab53404f236c8a47a6e6617956ccc49
+>>>>>>>> main:Assets/Animations/Buggies.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
