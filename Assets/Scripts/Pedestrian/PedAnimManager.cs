@@ -35,17 +35,17 @@ public class PedAnimManager : MonoBehaviour
     // Public methods to retrieve sound clips for this pedestrian type
     public string GetRandomOrderCompleteSound()
     {
-        return "sfx_complete_"+name;
+        return "sfx_complete_"+ currentAudioSet.name;
     }
 
     public string GetRandomHurtSound()
     {
-        return "sfx_hurt_"+name;
+        return "sfx_hurt_"+ currentAudioSet.name;
     }
 
     public string GetRandomTakeOrderSound()
     {
-        return "sfx_order_"+name;
+        return "sfx_order_"+ currentAudioSet.name;
     }
 
     private AudioClip GetRandomClip(AudioClip[] clips)
