@@ -88,7 +88,7 @@ MonoBehaviour:
     reverbLevel: 0
     reverbDelay: 0
   - name: music_FlyinFryer
-    clip: {fileID: 8300000, guid: 398888a5351244441ba24165a28d3c69, type: 3}
+    clip: {fileID: 8300000, guid: 3c3e51c5c2cd0a347bd1370aed47abf4, type: 3}
     volume: 0.3
     pitch: 1
     loop: 1
