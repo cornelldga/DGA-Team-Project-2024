@@ -143,7 +143,21 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning($"Sound effect '{name}' not found!");
             return;
         }
-        AudioSource.PlayClipAtPoint(soundDictionary[name].clip, position);
+        GameObject gameObject = new GameObject("One shot audio");
+        gameObject.transform.position = position;
+        AudioSource tempAudioSourceObj = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+        tempAudioSourceObj.clip = soundDictionary[name].source.clip;
+        tempAudioSourceObj.volume = soundDictionary[name].source.volume;
+
+        //Custom settings for spatialized audio
+        tempAudioSourceObj.dopplerLevel = 0f;
+        tempAudioSourceObj.spatialBlend = 1f; //This is actually in the default implementation, but is still relevant for spatialization
+        tempAudioSourceObj.minDistance = 100f;
+        tempAudioSourceObj.maxDistance = 1000f;
+
+
+        tempAudioSourceObj.Play();
+        UnityEngine.Object.Destroy(gameObject, soundDictionary[name].source.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
     }
 
     //Deprecated way of playing sfx

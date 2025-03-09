@@ -342,7 +342,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_failorder
     clip: {fileID: 8300000, guid: 3cf6f216378fb9a44b85b2a1154846f8, type: 3}
-    volume: 0.3
+    volume: 0.2
     pitch: 1
     loop: 0
     source: {fileID: 0}
