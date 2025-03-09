@@ -122,63 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &272834990
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 132122421946257138, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_Name
-      value: Large Oil Canister_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 25.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.52
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.9036846
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
 --- !u!1 &364774428
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,63 +216,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &420588903
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 132122421946257138, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_Name
-      value: Large Oil Canister
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -5.011072
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.47
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4.73
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
 --- !u!1001 &463215576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -444,63 +330,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d566ad6db931f42ceb7aa310a27185ca, type: 3}
---- !u!1001 &1545568336
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 132122421946257138, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_Name
-      value: Large Oil Canister_2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -24.485054
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.010002136
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 19.052176
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2007600641923733311, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6f55d0358f23344fe8e5c0237bbb1e73, type: 3}
 --- !u!1001 &6215743201630438870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -509,10 +338,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3944315825926450264, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6010855053245734532, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
       propertyPath: m_Name
       value: emily-Level
@@ -558,8 +383,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 1620007368430105968, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
@@ -571,6 +395,3 @@ SceneRoots:
   - {fileID: 6215743201630438870}
   - {fileID: 463215576}
   - {fileID: 1156116224}
-  - {fileID: 420588903}
-  - {fileID: 272834990}
-  - {fileID: 1545568336}
