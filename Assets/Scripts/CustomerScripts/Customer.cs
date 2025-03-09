@@ -156,12 +156,6 @@ public class Customer : MonoBehaviour, ICrashable
                 float oil = GameManager.Instance.getPlayer().GetOil();
                 if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && oil >= 20)
                 {
-                    // TAKING ORDER
-                    currentState = CustomerState.Cooking;
-                    customerRenderer.material = greenMaterial;
-                    timer = 0f;
-                    orderTaken = true;
-                    GameManager.Instance.getPlayer().AddOil(-20);
                     GameManager.Instance.TakeOrder(this);
                     pedSoundManager.PlayTakeOrderSound(transform.position);
                 }
@@ -219,6 +213,18 @@ public class Customer : MonoBehaviour, ICrashable
 
         // line up the rotation angle with the camera
         animController.transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0);
+    }
+    /// <summary>
+    /// Called when the player accepts the order
+    /// </summary>
+    public void TookOrder()
+    {
+        currentState = CustomerState.Cooking;
+        customerRenderer.material = greenMaterial;
+        timer = 0f;
+        orderTaken = true;
+        GameManager.Instance.getPlayer().AddOil(-20);
+        pedSoundManager.PlayTakeOrderSound();
     }
 
     /// <summary>
