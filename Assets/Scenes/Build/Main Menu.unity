@@ -4116,7 +4116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5749004150148114963, guid: 956247e55e8ba834980b67ac376541ef, type: 3}
       propertyPath: musicTracks.Array.data[0].name
-      value: music_GeneralTrack
+      value: music_MainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 5749004150148114963, guid: 956247e55e8ba834980b67ac376541ef, type: 3}
       propertyPath: musicTracks.Array.data[5].clip
@@ -4128,7 +4128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5749004150148114963, guid: 956247e55e8ba834980b67ac376541ef, type: 3}
       propertyPath: musicTracks.Array.data[5].name
-      value: music_MainMenu
+      value: music_ActualMenu
       objectReference: {fileID: 0}
     - target: {fileID: 5749004150148114963, guid: 956247e55e8ba834980b67ac376541ef, type: 3}
       propertyPath: musicTracks.Array.data[6].clip
@@ -7032,7 +7032,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -6664967067119762667, guid: c3e87cd538dcae14aa9133d3fb15e522, type: 3}
       propertyPath: musicName
-      value: music_MainMenu
+      value: music_ActualMenu
       objectReference: {fileID: 0}
     - target: {fileID: 784492036929461859, guid: c3e87cd538dcae14aa9133d3fb15e522, type: 3}
       propertyPath: m_LocalPosition.x
