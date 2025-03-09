@@ -386,6 +386,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: emily-level-2
       objectReference: {fileID: 0}
+    - target: {fileID: 2650329834336197527, guid: 34070a42bf4d0574da24c77f4a493645, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
