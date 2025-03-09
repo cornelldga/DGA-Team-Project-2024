@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 499374064228214087}
   - component: {fileID: 8256340408190174944}
   - component: {fileID: 1471634670680999751}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de3b60475640bd489d7b407ed4f9390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  opaqueMaterial: {fileID: 2100000, guid: b4814c0a28f6e2e4288a1c10e3dedf4f, type: 2}
   fadeMaterial: {fileID: 2100000, guid: 41dc136e23bb79549979d2eec053ce09, type: 2}
   fadeSpeed: 1
   fadeAmount: 0.2
+  fadeResetTime: 0.25

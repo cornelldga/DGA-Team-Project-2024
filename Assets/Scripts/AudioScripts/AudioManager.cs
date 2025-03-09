@@ -75,8 +75,21 @@ public class AudioManager : MonoBehaviour
                 tempChildObj.transform.SetParent(gameObject.transform);
                 s.source = tempChildObj.AddComponent<AudioSource>();
             }
+
+            if(s.name.ContainsInsensitive("Beetle") ||
+                s.name.ContainsInsensitive("Grasshopper") || 
+                s.name.ContainsInsensitive("Ladybug") ||
+                s.name.ContainsInsensitive("Rolypoly"))
+            {
+                Debug.Log("Increasing gaing for: " + s.name);
+                s.source.volume = s.volume + 0.35f;
+            }
+            else
+            {
+                s.source.volume = s.volume;
+            }
+
             s.source.clip = s.clip;
-            s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
             s.setMusic(false);
