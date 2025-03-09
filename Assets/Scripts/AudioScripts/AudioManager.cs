@@ -32,6 +32,8 @@ public class AudioManager : MonoBehaviour
     private GameObject tempChildObj;
     private float globalPitch = 1f;
 
+    private List<AudioSource> tempAudioSourceList = new List<AudioSource>();
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -143,6 +145,17 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning($"Sound effect '{name}' not found!");
             return;
         }
+
+        //Clear out old audio sources
+        foreach (AudioSource a in tempAudioSourceList.ToArray())
+        {
+            if (a == null || !a.isPlaying)
+            {
+                tempAudioSourceList.Remove(a);
+            }
+        }
+        //Debug.Log("Temp audio source length" + tempAudioSourceList.Count);
+
         GameObject gameObject = new GameObject("One shot audio");
         gameObject.transform.position = position;
         AudioSource tempAudioSourceObj = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
@@ -152,9 +165,10 @@ public class AudioManager : MonoBehaviour
         //Custom settings for spatialized audio
         tempAudioSourceObj.dopplerLevel = 0f;
         tempAudioSourceObj.spatialBlend = 1f; //This is actually in the default implementation, but is still relevant for spatialization
-        tempAudioSourceObj.minDistance = 100f;
-        tempAudioSourceObj.maxDistance = 1000f;
+        tempAudioSourceObj.minDistance = 30f;
+        tempAudioSourceObj.maxDistance = 500f;
 
+        tempAudioSourceList.Add(tempAudioSourceObj);
 
         tempAudioSourceObj.Play();
         UnityEngine.Object.Destroy(gameObject, soundDictionary[name].source.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
@@ -281,6 +295,10 @@ public class AudioManager : MonoBehaviour
             {
                 s.Value.source.pitch = newPitch;
             }
+            foreach (AudioSource a in tempAudioSourceList)
+            {
+                if(a != null) a.pitch = newPitch;
+            }
             globalPitch = newPitch;
             yield return null;
         }
@@ -288,6 +306,10 @@ public class AudioManager : MonoBehaviour
         foreach (KeyValuePair<string, Sound> s in soundDictionary)
         {
             s.Value.source.pitch = pitch;
+        }
+        foreach (AudioSource a in tempAudioSourceList)
+        {
+            if (a != null) a.pitch = pitch;
         }
         globalPitch = pitch;
     }
