@@ -207,6 +207,7 @@ public class GameManager : MonoBehaviour
         {
             customers.Add(customer);
             cookBarManager.AddToHotbar(customer);
+            customer.TookOrder();
         }
     }
     /// <summary>
