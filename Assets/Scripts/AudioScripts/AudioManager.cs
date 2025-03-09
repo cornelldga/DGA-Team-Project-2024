@@ -165,7 +165,7 @@ public class AudioManager : MonoBehaviour
         //Custom settings for spatialized audio
         tempAudioSourceObj.dopplerLevel = 0f;
         tempAudioSourceObj.spatialBlend = 1f; //This is actually in the default implementation, but is still relevant for spatialization
-        tempAudioSourceObj.minDistance = 30f;
+        tempAudioSourceObj.minDistance = 40f;
         tempAudioSourceObj.maxDistance = 500f;
 
         tempAudioSourceList.Add(tempAudioSourceObj);
