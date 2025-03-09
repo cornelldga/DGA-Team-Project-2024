@@ -136,6 +136,16 @@ public class AudioManager : MonoBehaviour
         soundDictionary[name].source.Play();
     }
 
+    public void PlaySoundAtPoint(string name, Vector3 position)
+    {
+        if (!soundDictionary.ContainsKey(name))
+        {
+            Debug.LogWarning($"Sound effect '{name}' not found!");
+            return;
+        }
+        AudioSource.PlayClipAtPoint(soundDictionary[name].clip, position);
+    }
+
     //Deprecated way of playing sfx
     public void Play(string name)
     {
