@@ -190,7 +190,7 @@ public class CopModel : MonoBehaviour
         }
 
         // set attacking state
-        else if (!IsRamming && distanceFromPlayer < RamRadius && RamTimer <= 0)
+        else if (!IsRamming && distanceFromPlayer < RamRadius && RamTimer <= 0 && IsPathClear())
         {
             // Begin charge phase of ram attack. 
 
@@ -224,6 +224,12 @@ public class CopModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (pathfindingLogic == null)
+        {
+            // initalize this here to ensure that map grid in the map instance has be initalized. 
+            pathfindingLogic = new Pathfinding();
+        }
+
         StateChanger();
 
 
@@ -354,11 +360,7 @@ public class CopModel : MonoBehaviour
         Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
         //UnityEngine.Debug.Log("{" + x + "," + y + "}");
 
-        if (pathfindingLogic == null)
-        {
-            // initalize this here to ensure that map grid in the map instance has be initalized. 
-            pathfindingLogic = new Pathfinding();
-        }
+        
         if (pathfindingLogic.isValid(dx, dy))
         {
             bool pathFound = pathfindingLogic.FindShortestPath(new Vector2(sx, sy), new Vector2(dx, dy));
@@ -369,6 +371,18 @@ public class CopModel : MonoBehaviour
             }
         }
 
+    }
+    
+    /** Returns true if there are no buildings between this cop the their target (the player) */
+    public bool IsPathClear()
+    {
+        int sx, sy;
+        Map.Instance.MapGrid.GetXY(this.transform.position, out sx, out sy);
+
+        int dx, dy;
+        Map.Instance.MapGrid.GetXY(GameManager.Instance.getPlayer().transform.position, out dx, out dy);
+
+        return pathfindingLogic.IsPathClear(new Vector2(sx, sy), new Vector2(dx, dy));
     }
 
 

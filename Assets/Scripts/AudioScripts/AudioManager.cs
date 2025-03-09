@@ -60,11 +60,11 @@ public class AudioManager : MonoBehaviour
             s.setMusic(true);
             soundDictionary[s.name] = s;
         }
-        Debug.Log("Size of sfx: " + soundEffects.Length);
+        //Debug.Log("Size of sfx: " + soundEffects.Length);
         // Initialize sound effects
         foreach (Sound s in soundEffects)
         {
-            Debug.Log("Sound effect: " + s.name);
+            //Debug.Log("Sound effect: " + s.name);
             if (!s.hasReverb())
             {
                 s.source = gameObject.AddComponent<AudioSource>();
@@ -75,8 +75,21 @@ public class AudioManager : MonoBehaviour
                 tempChildObj.transform.SetParent(gameObject.transform);
                 s.source = tempChildObj.AddComponent<AudioSource>();
             }
+
+            if(s.name.ContainsInsensitive("Beetle") ||
+                s.name.ContainsInsensitive("Grasshopper") || 
+                s.name.ContainsInsensitive("Ladybug") ||
+                s.name.ContainsInsensitive("Rolypoly"))
+            {
+                Debug.Log("Increasing gaing for: " + s.name);
+                s.source.volume = s.volume + 0.35f;
+            }
+            else
+            {
+                s.source.volume = s.volume;
+            }
+
             s.source.clip = s.clip;
-            s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
             s.setMusic(false);
@@ -113,13 +126,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(string name)
     {
-        Debug.Log("PlaySound Called with name " + name);
+        //Debug.Log("PlaySound Called with name " + name);
         if (!soundDictionary.ContainsKey(name))
         {
-            Debug.Log("Sound effect " + name + " not found!");
+            //Debug.Log("Sound effect " + name + " not found!");
             return;
         }
-        Debug.Log("Playing sound: " + name);
+        //Debug.Log("Playing sound: " + name);
         soundDictionary[name].source.Play();
     }
 
@@ -139,7 +152,7 @@ public class AudioManager : MonoBehaviour
 
     public void StopSound(string name)
     {
-        Debug.Log(soundDictionary.Keys.Count);
+        //Debug.Log(soundDictionary.Keys.Count);
         if (!soundDictionary.TryGetValue(name, out Sound sound))
         {
             Debug.LogWarning($"Sound effect '{name}' not found!");
@@ -259,4 +272,6 @@ public class AudioManager : MonoBehaviour
     {
         StopSound("sfx_SirenLong");
     }
+
+
 }

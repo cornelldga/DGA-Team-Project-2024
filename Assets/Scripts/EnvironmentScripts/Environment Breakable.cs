@@ -10,6 +10,7 @@ public class Breakable : MonoBehaviour
     [SerializeField] private Material myMaterial;
     [SerializeField] private float respawnTime = 10f;
     [SerializeField] private float animationDuration = 0.5f; // Add this to set animation length
+    [SerializeField] private float playerDamage = 0.0f;
 
     private Color objectColor;
     private bool isRespawning = false;
@@ -79,6 +80,7 @@ public class Breakable : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            myPlayer.TakeDamage();
             myPlayer.AddOil(oilAmount);
             StartRespawn();
             //AudioManager.Instance.Play("sfx_BarrelBreak");
@@ -96,6 +98,7 @@ public class Breakable : MonoBehaviour
             float collisionSpeed = collision.relativeVelocity.magnitude;
             if (minBreakSpeed <= 0f || collisionSpeed >= minBreakSpeed)
             {
+                myPlayer.TakeDamage();
                 myPlayer.AddOil(oilAmount);
                 StartRespawn();
                 //AudioManager.Instance.Play("sfx_BarrelBreak");

@@ -15,6 +15,9 @@ public class ObjectFade : MonoBehaviour
     [SerializeField] float fadeSpeed;
     [Tooltip("The value the alpha of the material will reach when fading")]
     [SerializeField] float fadeAmount;
+    [Tooltip("How long before the fade resets")]
+    [SerializeField] float fadeResetTime = .25f;
+    float resetTime;
     Renderer r;
     // Start is called before the first frame update
     void Start()
@@ -22,6 +25,18 @@ public class ObjectFade : MonoBehaviour
         r = GetComponent<Renderer>();
         opaqueMaterial = r.material;
     }
+    private void Update()
+    {
+        if (resetTime > 0)
+        {
+            resetTime -= Time.deltaTime;
+            if (resetTime <= 0)
+            {
+                ResetFade();
+            }
+        }
+    }
+
     /// <summary>
     /// Smoothly lower the alpha to the fadeAmount
     /// </summary>
@@ -34,9 +49,10 @@ public class ObjectFade : MonoBehaviour
         Color currentColor = r.material.color;
         Color smoothColor = new Color(currentColor.r, currentColor.g, currentColor.b, Mathf.Lerp(currentColor.a, fadeAmount, fadeSpeed));
         r.material.color = smoothColor;
+        resetTime = fadeResetTime;
     }
 
-    public void Reset()
+    void ResetFade()
     {
         r.material = opaqueMaterial;
     }

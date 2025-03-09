@@ -115,6 +115,8 @@ MonoBehaviour:
   isMovingNorthSouth: 1
   movementAmplitude: 2
   movementFrequency: 0.75
+  fadeOutDuration: 7
+  destroyDelay: 0
   invincibilityDuration: 3
   knockbackCooldown: 0.5
   knockbackThreshold: 0.5
@@ -238,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pedestrianAudioSets:
   - name: Beetle
-    animatorController: {fileID: 9100000, guid: b0798779ecc02476e88a502f212db82a, type: 2}
+    animatorController: {fileID: 9100000, guid: b2c6d77557ac26945ac50d9262f25e00, type: 2}
     orderCompleteSounds:
     - {fileID: 8300000, guid: df4244d49df756741aad5dc393128ac9, type: 3}
     - {fileID: 8300000, guid: aac71eac9d291ba4cad837eabedf5de6, type: 3}

@@ -156,6 +156,27 @@ public class Pathfinding
         return foundDest;
     }
 
+    /** Returns true if a straight line from the src and dst does not hit any obstacles (buildings).*/
+    public bool IsPathClear(Vector2 src, Vector2 dst) {
+
+        // Initalize Parameters of startNode
+        int x = (int)src.x;
+        int y = (int)src.y;
+
+        float dist = Vector2.Distance(src, dst);
+
+        for (int i = 0; i < dist; i++)
+        {
+            float a = i / dist;
+            int newX = (int)((src.x * (1 - a)) + (dst.x * a));
+            int newY = (int)((src.y * (1 - a)) + (dst.y * a));
+
+            if (!isValid(newX, newY)) return false;
+        }
+        
+        return true;
+    }
+
     /** Returns true of the given coordinates are within the bounds of the map and valid to navgate through */
     public bool isValid(int  x, int y)
     {
