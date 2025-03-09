@@ -101,6 +101,20 @@ MonoBehaviour:
     reflectionsDelay: 0
     reverbLevel: 0
     reverbDelay: 0
+  - name: music_FlyinFryer
+    clip: {fileID: 8300000, guid: 398888a5351244441ba24165a28d3c69, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
   soundEffects:
   - name: sfx_Crash1
     clip: {fileID: 8300000, guid: 82bd9ed47d7a69a429f64f38616e8de7, type: 3}

@@ -4,20 +4,33 @@ using UnityEngine;
 
 public class CameraFade : MonoBehaviour
 {
-    private void OnTriggerStay(Collider other)
+    [Tooltip("How often a fade check occurs")]
+    [SerializeField] float checkUpdateRate;
+    float updateWaitTime;
+    [SerializeField] LayerMask fadeCheckMask;
+
+    private void Update()
     {
-        //Debug.Log("hello");
-        if (other.gameObject.TryGetComponent(out ObjectFade fade))
+        updateWaitTime -= Time.deltaTime;
+        if (updateWaitTime <= 0)
         {
-            fade.Fade();
+            FadeCheck();
+            updateWaitTime = checkUpdateRate;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    void FadeCheck()
     {
-        if (other.gameObject.TryGetComponent(out ObjectFade fade))
+        Ray ray = Camera.main.ScreenPointToRay(
+                new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+        // 2. Perform the Raycast
+        if (Physics.Raycast(ray, out RaycastHit hit, fadeCheckMask))
         {
-            fade.Reset();
+            if (hit.collider.gameObject.TryGetComponent(out ObjectFade fade))
+            {
+                fade.Fade();
+            }
         }
     }
 }
