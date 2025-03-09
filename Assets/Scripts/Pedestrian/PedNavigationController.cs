@@ -187,7 +187,7 @@ public class PedNavigationController : MonoBehaviour, ICrashable
                 knockbackTimer = knockbackCooldown; // Start knockback cooldown timer
 
                 // play hurt sound
-                pedSoundManager.PlayHurtSound();
+                pedSoundManager.PlayHurtSound(position);
 
                 Debug.Log("Crash! Pedestrian knocked back with force: " + knockbackForce);
             }
