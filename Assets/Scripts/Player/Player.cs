@@ -347,7 +347,7 @@ public class Player : MonoBehaviour, ICrashable
                 driftOut = true;
             }
         }
-        else if ((!pressDrift || driftOut) && drifting)
+        else if ((!pressDrift || driftOut || !canDrift) && drifting)
         {
             if (startDrift)
             {
@@ -399,20 +399,26 @@ public class Player : MonoBehaviour, ICrashable
             {
                 rb.AddRelativeForce(directionVector[curDirection] * 30);
             }
-            if (Time.time >= driftTime)
+            Time.timeScale = 1;
+            Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 7.5f, 7 * Time.deltaTime);
+            
+            if (Time.time >= driftTime && Camera.main.orthographicSize == 7.5f)
             {
                 drifting = false;
                 driftNum = 0;
                 driftOut = false;
             }
-            Time.timeScale = 1;
-            Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 7.5f, 7 * Time.deltaTime);
 
             //TODO Add update to audio manager to speed up audio
 
             StartCoroutine(AudioManager.Instance.ChangePitch(1f, pitchTime*2));
 
             downDrift = false;
+        }
+        if (pressDrift)
+        {
+            Debug.Log(drifting);
+            Debug.Log(driftOut);
         }
     }
 
