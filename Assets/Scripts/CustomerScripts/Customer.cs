@@ -157,6 +157,7 @@ public class Customer : MonoBehaviour, ICrashable
                 if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && oil >= 20)
                 {
                     GameManager.Instance.TakeOrder(this);
+                    pedSoundManager.PlayTakeOrderSound(transform.position);
                 }
                 break;
 
@@ -239,7 +240,7 @@ public class Customer : MonoBehaviour, ICrashable
         customerRenderer.material = blueMaterial;
         GameManager.Instance.CompleteOrder(this);
         isOrderCompleted = true;
-        pedSoundManager.PlayOrderCompleteSound();
+        pedSoundManager.PlayOrderCompleteSound(transform.position);
     }
 
     public void Crash(Vector3 speedVector, Vector3 position)
@@ -266,7 +267,7 @@ public class Customer : MonoBehaviour, ICrashable
                 knockbackTimer = knockbackCooldown; // Start knockback cooldown
 
                 // play hurt sound
-                pedSoundManager.PlayHurtSound();
+                pedSoundManager.PlayHurtSound(transform.position);
 
                 Debug.Log("Crash! Pedestrian knocked back with force: " + knockbackForce);
             }

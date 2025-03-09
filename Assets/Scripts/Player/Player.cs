@@ -340,7 +340,7 @@ public class Player : MonoBehaviour, ICrashable
             drifting = true;
             startDrift = true;
             Time.timeScale = 0.5f;
-            //TODO Add update to audio manager to slow down audio
+            //Slow down audio
             StartCoroutine(AudioManager.Instance.ChangePitch(0.5f, pitchTime));
             if (Time.time >= driftLimit)
             {
