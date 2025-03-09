@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     //The customers the player is currently handling
     List<Customer> customers = new List<Customer>();
+    [Tooltip("Maximum number of customers the player can handle")]
+    [SerializeField] int maxCustomerOrders;
 
     [Header("Game Logic")]
     [Tooltip("Determines what levels should be unlocked when completing this level")]
@@ -201,8 +203,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void TakeOrder(Customer customer)
     {
-        customers.Add(customer);
-        cookBarManager.AddToHotbar(customer);
+        if(customers.Count < maxCustomerOrders)
+        {
+            customers.Add(customer);
+            cookBarManager.AddToHotbar(customer);
+        }
     }
     /// <summary>
     /// Called when a customer should be removed from the list of customers
