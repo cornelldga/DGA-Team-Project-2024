@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     //The customers the player is currently handling
     List<Customer> customers = new List<Customer>();
     [Tooltip("Maximum number of customers the player can handle")]
-    [SerializeField] int maxCustomerOrders;
+    [SerializeField] int maxCustomerOrders = 3;
 
     [Header("Game Logic")]
     [Tooltip("Determines what levels should be unlocked when completing this level")]
@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        if (maxCustomerOrders == 0) maxCustomerOrders = 3;
         Instance = this;
         GameManager gameManager = GameManager.Instance;
         player = FindObjectOfType<Player>();
