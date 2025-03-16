@@ -188,7 +188,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_SirenLong
     clip: {fileID: 8300000, guid: 4ae455adcf8c9cb499c5207177c0990d, type: 3}
-    volume: 0.06
+    volume: 0.03
     pitch: 1
     loop: 1
     source: {fileID: 0}
@@ -217,6 +217,20 @@ MonoBehaviour:
   - name: sfx_OilReplenish
     clip: {fileID: 8300000, guid: 6da75a7ac90332641b6ac5968f73c707, type: 3}
     volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_ExplosiveBarrel
+    clip: {fileID: 8300000, guid: 1bf1ffea14ac8e94183e3a29f1c98f5b, type: 3}
+    volume: 0.3
     pitch: 1
     loop: 0
     source: {fileID: 0}
