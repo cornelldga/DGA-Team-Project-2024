@@ -182,7 +182,7 @@ public class Customer : MonoBehaviour, ICrashable
                         GameManager.Instance.RemoveOrder(this);
                         AudioManager.Instance.PlaySound("sfx_Anger");
                         Debug.Log("Customer is angry!");
-                        pedSoundManager.PlayOrderFailedSound();
+                        pedSoundManager.PlayOrderFailedSound(transform.position);
                     }
                     break;
                 }
