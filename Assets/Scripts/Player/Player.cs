@@ -426,7 +426,7 @@ public class Player : MonoBehaviour, ICrashable
     {
         slowMo = true;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
 
         slowMo = false;
     }
