@@ -10,7 +10,8 @@ public class EnvironmentBreakable : MonoBehaviour
     [SerializeField] private Material myMaterial;
     [SerializeField] private float respawnTime = 10f;
     [SerializeField] private float animationDuration = 0.5f; // Add this to set animation length
-    [SerializeField] private float playerDamage = 0.0f;
+    [SerializeField] private bool isOil;
+    [SerializeField] private bool isDamage;
 
     private Color objectColor;
     private bool isRespawning = false;
@@ -80,8 +81,14 @@ public class EnvironmentBreakable : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            myPlayer.TakeDamage();
-            myPlayer.AddOil(oilAmount);
+            if (isOil)
+            {
+                myPlayer.AddOil(oilAmount);
+            }
+            else if (isDamage)
+            {
+                myPlayer.TakeDamage();
+            }
             StartRespawn();
             //AudioManager.Instance.Play("sfx_BarrelBreak");
             AudioManager.Instance.Play("sfx_OilReplenish");
@@ -98,6 +105,14 @@ public class EnvironmentBreakable : MonoBehaviour
             float collisionSpeed = collision.relativeVelocity.magnitude;
             if (minBreakSpeed <= 0f || collisionSpeed >= minBreakSpeed)
             {
+                if (isOil)
+                {
+                    myPlayer.AddOil(oilAmount);
+                }
+                else if (isDamage)
+                {
+                    myPlayer.TakeDamage();
+                }
                 myPlayer.TakeDamage();
                 myPlayer.AddOil(oilAmount);
                 AudioManager.Instance.Play("sfx_OilReplenish");
