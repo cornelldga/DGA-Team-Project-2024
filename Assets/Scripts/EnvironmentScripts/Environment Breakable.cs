@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Controls breakable objects like oil barrels that can be destroyed by player collision and respawn over time.
 /// </summary>
-public class Breakable : MonoBehaviour
+public class EnvironmentBreakable : MonoBehaviour
 {
     [SerializeField] private float minBreakSpeed = 0f;
     [SerializeField] private int oilAmount = 25;       // Amount of oil to add, 0 if not an oil barrel
