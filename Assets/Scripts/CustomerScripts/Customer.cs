@@ -224,7 +224,7 @@ public class Customer : MonoBehaviour, ICrashable
         timer = 0f;
         orderTaken = true;
         GameManager.Instance.getPlayer().AddOil(-20);
-        pedSoundManager.PlayTakeOrderSound();
+        pedSoundManager.PlayTakeOrderSound(transform.position);
     }
 
     /// <summary>
