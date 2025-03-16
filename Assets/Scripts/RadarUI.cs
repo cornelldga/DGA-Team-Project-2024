@@ -40,13 +40,20 @@ public class RadarUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Number of cops: " + cops.Length);
-        //dots[0].transform.localPosition = new Vector3(10, 0, 0);
 
         // Find distances between each cop and the player
         foreach (RadarDot rd in dots)
         {
             Customer customer = rd.GetCustomer();
+
+            // Need to remove a radar dot once the object it represents is deleted
+            if (customer == null)
+            {
+                dots.Remove(rd);
+                return;
+            }
+
+
             Vector3 distance = customer.transform.position - player.transform.position;
             //Debug.Log("Distance to cop: " + distance);
 
