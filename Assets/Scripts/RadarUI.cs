@@ -9,7 +9,6 @@ public class RadarUI : MonoBehaviour
     [SerializeField] private GameObject radarPrefab;
 
     private List<RadarDot> dots = new List<RadarDot>();
-    //private CopModel[] cops;
     private Customer[] customers;
     private Player player;
 
