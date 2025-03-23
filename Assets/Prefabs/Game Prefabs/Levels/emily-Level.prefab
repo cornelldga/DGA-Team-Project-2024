@@ -24719,7 +24719,7 @@ MonoBehaviour:
   width: 1
   branches:
   - {fileID: 5844997226020554776}
-  branchRatio: 0.5
+  branchRatio: 1
 --- !u!1 &3621939595175483798
 GameObject:
   m_ObjectHideFlags: 0
@@ -29107,7 +29107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pedestrianPrefab: {fileID: 891760649934663090, guid: 7ae272a29be7f48c2bb452bf7d221b9e, type: 3}
-  pedestriansToSpawn: 20
+  pedestriansToSpawn: 100
 --- !u!1 &6869859928892997931
 GameObject:
   m_ObjectHideFlags: 0
@@ -29532,7 +29532,7 @@ MonoBehaviour:
   width: 1
   branches:
   - {fileID: 7832848072924693124}
-  branchRatio: 0.5
+  branchRatio: 1
 --- !u!1 &7304732020952950866
 GameObject:
   m_ObjectHideFlags: 0
@@ -31354,9 +31354,6 @@ MonoBehaviour:
   nitro1: 304
   nitro2: 303
   drift: 32
-  zoomSpeed: 5
-  normalCameraSize: 7.5
-  driftCameraSize: 4
   minCrashSpeed: 3
   animController: {fileID: 1003447380294099049}
   model: {fileID: 3944682493537112734}
@@ -32659,7 +32656,7 @@ MonoBehaviour:
   branches:
   - {fileID: 9014949751208166092}
   - {fileID: 5670169670629283375}
-  branchRatio: 0.5
+  branchRatio: 1
 --- !u!1 &8848976573643196585
 GameObject:
   m_ObjectHideFlags: 0
