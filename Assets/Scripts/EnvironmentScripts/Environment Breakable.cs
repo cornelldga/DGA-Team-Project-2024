@@ -84,14 +84,15 @@ public class EnvironmentBreakable : MonoBehaviour
             if (isOil)
             {
                 myPlayer.AddOil(oilAmount);
+                AudioManager.Instance.Play("sfx_OilReplenish");
             }
             else if (isDamage)
             {
                 myPlayer.TakeDamage();
+                AudioManager.Instance.Play("sfx_ExplosiveBarrel");
             }
             StartRespawn();
             //AudioManager.Instance.Play("sfx_BarrelBreak");
-            AudioManager.Instance.Play("sfx_OilReplenish");
         }
     }
 
@@ -108,14 +109,15 @@ public class EnvironmentBreakable : MonoBehaviour
                 if (isOil)
                 {
                     myPlayer.AddOil(oilAmount);
+                    AudioManager.Instance.Play("sfx_OilReplenish");
                 }
                 else if (isDamage)
                 {
                     myPlayer.TakeDamage();
+                    AudioManager.Instance.Play("sfx_ExplosiveBarrel");
                 }
                 myPlayer.TakeDamage();
                 myPlayer.AddOil(oilAmount);
-                AudioManager.Instance.Play("sfx_OilReplenish");
                 StartRespawn();
                 //AudioManager.Instance.Play("sfx_BarrelBreak");
             }

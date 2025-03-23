@@ -52,8 +52,8 @@ public class PedSoundManager : MonoBehaviour
         AudioManager.Instance.PlaySoundAtPoint(sfx_id, position);
     }
 
-    public void PlayOrderFailedSound()
+    public void PlayOrderFailedSound(Vector3 position)
     {
-        AudioManager.Instance.PlaySound("sfx_failorder");
+        AudioManager.Instance.PlaySoundAtPoint("sfx_failorder", position);
     }
 }
