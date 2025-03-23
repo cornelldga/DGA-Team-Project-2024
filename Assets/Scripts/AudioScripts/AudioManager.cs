@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
+using UnityEngine.Assertions;
 
 public class AudioManager : MonoBehaviour
 {
@@ -35,7 +36,8 @@ public class AudioManager : MonoBehaviour
 
     private List<AudioSource> tempAudioSourceList = new List<AudioSource>();
 
-    
+    private float lowestPitch = 0.5f; //The lowest pitch that can be set, used by PlaySoundAtPoint
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -176,7 +178,7 @@ public class AudioManager : MonoBehaviour
         tempAudioSourceList.Add(tempAudioSourceObj);
 
         tempAudioSourceObj.Play();
-        UnityEngine.Object.Destroy(gameObject, soundDictionary[name].source.clip.length * (1.0f/((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale)));
+        UnityEngine.Object.Destroy(gameObject, soundDictionary[name].source.clip.length * (1.0f/lowestPitch));
     }
 
     //Deprecated way of playing sfx
@@ -288,6 +290,7 @@ public class AudioManager : MonoBehaviour
     //Make all sfx play slower or faster
     public System.Collections.IEnumerator ChangePitch(float pitch, float duration)
     {
+        Assert.IsTrue(pitch >= lowestPitch);
         float startTime = Time.time;
         float startPitch = globalPitch;
 
