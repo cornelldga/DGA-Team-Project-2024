@@ -35,6 +35,7 @@ public class AudioManager : MonoBehaviour
 
     private List<AudioSource> tempAudioSourceList = new List<AudioSource>();
 
+    
     void Awake()
     {
         if (instance != null && instance != this)
@@ -152,6 +153,9 @@ public class AudioManager : MonoBehaviour
         {
             if (a == null || !a.isPlaying)
             {
+                //This is NOT what is removing the audio source for playing voicelines
+                if (a == null) Debug.Log("Audio source is null, removing");
+                else Debug.Log("Audio source " +a.name+ " is not playing, removing");
                 tempAudioSourceList.Remove(a);
             }
         }
@@ -172,7 +176,7 @@ public class AudioManager : MonoBehaviour
         tempAudioSourceList.Add(tempAudioSourceObj);
 
         tempAudioSourceObj.Play();
-        UnityEngine.Object.Destroy(gameObject, soundDictionary[name].source.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+        UnityEngine.Object.Destroy(gameObject, soundDictionary[name].source.clip.length * (1.0f/((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale)));
     }
 
     //Deprecated way of playing sfx
@@ -319,6 +323,4 @@ public class AudioManager : MonoBehaviour
     {
         StopSound("sfx_SirenLong");
     }
-
-
 }
