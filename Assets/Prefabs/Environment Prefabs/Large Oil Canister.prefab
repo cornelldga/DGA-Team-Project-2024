@@ -53,6 +53,7 @@ MonoBehaviour:
   myMaterial: {fileID: 2100000, guid: 4e76f1579d16b46529cb8df23d8cf140, type: 2}
   respawnTime: 10
   animationDuration: 0.5
+  isOil: 1
 --- !u!65 &3781622491264397313
 BoxCollider:
   m_ObjectHideFlags: 0

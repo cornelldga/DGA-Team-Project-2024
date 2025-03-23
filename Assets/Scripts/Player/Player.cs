@@ -31,11 +31,6 @@ public class Player : MonoBehaviour, ICrashable
     [Tooltip("Button for drifting")]
     [SerializeField] private KeyCode drift = KeyCode.Space;
 
-    [SerializeField] private float zoomSpeed = 5f;
-    [SerializeField] private float normalCameraSize = 7.5f;
-    [SerializeField] private float driftCameraSize = 4f;
-
-
     private Rigidbody rb;
     private Vector3 lastVelocity;
     private float oil;
@@ -415,18 +410,13 @@ public class Player : MonoBehaviour, ICrashable
 
             downDrift = false;
         }
-        if (pressDrift)
-        {
-            Debug.Log(drifting);
-            Debug.Log(driftOut);
-        }
     }
 
     private IEnumerator SlowCooldown()
     {
         slowMo = true;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
 
         slowMo = false;
     }

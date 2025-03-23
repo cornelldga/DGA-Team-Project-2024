@@ -30,7 +30,6 @@ public class PedSoundManager : MonoBehaviour
         //Debug.Log(pedAnimManager.GetRandomOrderCompleteSound());
         int randomIndex = Random.Range(1, 3);
         string sfx_id = pedAnimManager.GetRandomOrderCompleteSound() + randomIndex;
-        Debug.Log(sfx_id);
         AudioManager.Instance.PlaySoundAtPoint(sfx_id, position);
     }
 
@@ -39,7 +38,6 @@ public class PedSoundManager : MonoBehaviour
         //Debug.Log(pedAnimManager.GetRandomHurtSound());
         int randomIndex = Random.Range(1, 3);
         string sfx_id = pedAnimManager.GetRandomHurtSound() + randomIndex;
-        Debug.Log(sfx_id);
         AudioManager.Instance.PlaySoundAtPoint(sfx_id, position);
     }
 
@@ -48,12 +46,11 @@ public class PedSoundManager : MonoBehaviour
         //Debug.Log(pedAnimManager.GetRandomTakeOrderSound());
         int randomIndex = Random.Range(1, 3);
         string sfx_id = pedAnimManager.GetRandomTakeOrderSound() + randomIndex;
-        Debug.Log(sfx_id);
         AudioManager.Instance.PlaySoundAtPoint(sfx_id, position);
     }
 
-    public void PlayOrderFailedSound()
+    public void PlayOrderFailedSound(Vector3 position)
     {
-        AudioManager.Instance.PlaySound("sfx_failorder");
+        AudioManager.Instance.PlaySoundAtPoint("sfx_failorder", position);
     }
 }

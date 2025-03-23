@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -44,6 +45,7 @@ public class AudioManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += StopSoundsOnLoad;
 
         // Initialize all audio sources
         InitializeAudioSources();
@@ -83,7 +85,6 @@ public class AudioManager : MonoBehaviour
                 s.name.ContainsInsensitive("Ladybug") ||
                 s.name.ContainsInsensitive("Rolypoly"))
             {
-                Debug.Log("Increasing gaing for: " + s.name);
                 s.source.volume = s.volume + 0.35f;
             }
             else
@@ -314,7 +315,7 @@ public class AudioManager : MonoBehaviour
         globalPitch = pitch;
     }
 
-    void OnLevelWasLoaded()
+    void StopSoundsOnLoad(Scene scene, LoadSceneMode loadMode)
     {
         StopSound("sfx_SirenLong");
     }

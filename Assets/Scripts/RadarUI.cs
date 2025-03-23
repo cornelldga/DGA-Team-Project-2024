@@ -47,6 +47,7 @@ public class RadarUI : MonoBehaviour
         foreach (RadarDot rd in dots)
         {
             Customer customer = rd.GetCustomer();
+            if (customer == null) continue;
             Vector3 distance = customer.transform.position - player.transform.position;
             //Debug.Log("Distance to cop: " + distance);
 

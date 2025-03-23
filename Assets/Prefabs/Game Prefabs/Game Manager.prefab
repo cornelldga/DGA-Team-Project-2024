@@ -639,7 +639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc1d3a518eb6be4d8b71b0411c37983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCustomers: 3
+  maxCustomerOrders: 3
   levelNumber: -1
   gameTimer: 100
   oneStarRating: 1
