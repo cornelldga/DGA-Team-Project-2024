@@ -31,11 +31,6 @@ public class Player : MonoBehaviour, ICrashable
     [Tooltip("Button for drifting")]
     [SerializeField] private KeyCode drift = KeyCode.Space;
 
-    [SerializeField] private float zoomSpeed = 5f;
-    [SerializeField] private float normalCameraSize = 7.5f;
-    [SerializeField] private float driftCameraSize = 4f;
-
-
     private Rigidbody rb;
     private Vector3 lastVelocity;
     private float oil;
@@ -414,11 +409,6 @@ public class Player : MonoBehaviour, ICrashable
             StartCoroutine(AudioManager.Instance.ChangePitch(1f, pitchTime*2));
 
             downDrift = false;
-        }
-        if (pressDrift)
-        {
-            Debug.Log(drifting);
-            Debug.Log(driftOut);
         }
     }
 

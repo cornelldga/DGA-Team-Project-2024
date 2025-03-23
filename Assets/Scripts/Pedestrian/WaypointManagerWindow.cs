@@ -11,7 +11,6 @@ using UnityEngine;
 /// </remarks>
 public class WaypointManagerWindow : EditorWindow
 {
-    [MenuItem("Tools/Waypoint Manager")]
     public static void Open()
     {
         GetWindow<WaypointManagerWindow>();

@@ -168,7 +168,6 @@ public class PedNavigationController : MonoBehaviour, ICrashable
         if (!isInvincible)
         {
             float magnitude = speedVector.magnitude;
-            Debug.Log("Crash! Pedestrian hit with speed: " + magnitude + " speed vector: " + speedVector);
             if (magnitude > knockbackThreshold)
             {
                 Vector3 knockbackDirection = (transform.position - position).normalized;
@@ -188,8 +187,6 @@ public class PedNavigationController : MonoBehaviour, ICrashable
 
                 // play hurt sound
                 pedSoundManager.PlayHurtSound(position);
-
-                Debug.Log("Crash! Pedestrian knocked back with force: " + knockbackForce);
             }
         }
     }
