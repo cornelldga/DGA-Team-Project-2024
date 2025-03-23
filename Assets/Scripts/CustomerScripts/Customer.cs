@@ -110,7 +110,7 @@ public class Customer : MonoBehaviour, ICrashable
         customerRenderer.material = grayMaterial;
         startingPosition = transform.position;
         // set the radius of the customer's detection range
-        detectionRange.GetComponent<SphereCollider>().radius = interactionRange / 2;
+        detectionRange.GetComponent<SphereCollider>().radius = interactionRange;
 
         // Initialize and configure the LineRenderer
         SetupInteractionRangeIndicator();
