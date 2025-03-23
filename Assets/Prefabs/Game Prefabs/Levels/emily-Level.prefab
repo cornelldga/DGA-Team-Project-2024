@@ -44897,6 +44897,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Customer_3
       objectReference: {fileID: 0}
+    - target: {fileID: 5212781798578842466, guid: 1ee74df1607b2fa458d92c11be8f3548, type: 3}
+      propertyPath: movementAmplitude
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238507828846755103, guid: 1ee74df1607b2fa458d92c11be8f3548, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.041
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238507828846755103, guid: 1ee74df1607b2fa458d92c11be8f3548, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.23
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
