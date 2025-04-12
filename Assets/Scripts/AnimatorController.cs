@@ -93,6 +93,16 @@ public class AnimatorController : MonoBehaviour
     {
         anim.SetBool("Crash Left", isCrashLeft);
     }
+
+    /// <summary>
+    /// Set speeding boolean in the animator to the boolean arguement
+    /// </summary>
+    public void SetSpeeding(bool isSpeeding)
+    {
+        anim.SetBool("Speeding", isSpeeding);
+    }
+
+
     /// <summary>
     /// Sets all boolean parameters to false
     /// </summary>

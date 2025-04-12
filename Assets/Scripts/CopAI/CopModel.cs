@@ -198,6 +198,9 @@ public class CopModel : MonoBehaviour
             RamTimer = 0;
             CurrentPath = null;
 
+            // change animation for speeding
+            animController.SetSpeeding(true);
+
             RamState = RamState.CHARGE;    
 
         }
@@ -269,6 +272,8 @@ public class CopModel : MonoBehaviour
                     {
                         RamTimer = RamCooldown;
                         IsRamming = false;
+                        animController.SetSpeeding(false);
+
                     } else RamResolve(ResolutionTime - RamTimer);
 
                     break;
