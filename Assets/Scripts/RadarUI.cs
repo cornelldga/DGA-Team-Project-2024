@@ -10,6 +10,7 @@ public class RadarUI : MonoBehaviour
 
     private List<RadarDot> dots = new List<RadarDot>();
     private Customer[] customers;
+    private Breakable[] largeOils;
     private Player player;
 
     // Scaling variables
@@ -23,6 +24,7 @@ public class RadarUI : MonoBehaviour
     {
         //cops = FindObjectsOfType<CopModel>();
         customers = FindObjectsOfType<Customer>();
+        Breakable[] breakables = FindObjectsOfType<Breakable>();
         player = GameManager.Instance.getPlayer();
 
         // Loop through all cops and instantiate a corresponding dot prefab for each
@@ -32,6 +34,9 @@ public class RadarUI : MonoBehaviour
             dots.Add(dotInstance);
             dotInstance.SetCustomer(c);
         }
+
+        // Loop through all breakables and only keep large oil
+
         
 
     }

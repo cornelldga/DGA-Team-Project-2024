@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7391468639699071181}
   m_Layer: 3
   m_Name: Large Oil Canister
-  m_TagString: Untagged
+  m_TagString: LargeOil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,6 +53,7 @@ MonoBehaviour:
   myMaterial: {fileID: 2100000, guid: 4e76f1579d16b46529cb8df23d8cf140, type: 2}
   respawnTime: 10
   animationDuration: 0.5
+  playerDamage: 0
 --- !u!65 &3781622491264397313
 BoxCollider:
   m_ObjectHideFlags: 0
