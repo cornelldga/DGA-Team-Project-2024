@@ -34,6 +34,7 @@ public class CopModel : MonoBehaviour
     private RamState RamState;
 
     [SerializeField] private AnimatorController animController;
+    [SerializeField] private AnimatorController exclaimController;
 
     // Internal Constants
     [Header("State Change Radius")]
@@ -198,6 +199,10 @@ public class CopModel : MonoBehaviour
             RamTimer = 0;
             CurrentPath = null;
 
+            // change animation for speeding
+            animController.SetSpeeding(true);
+            exclaimController.SetSpeeding(true);
+
             RamState = RamState.CHARGE;    
 
         }
@@ -269,6 +274,9 @@ public class CopModel : MonoBehaviour
                     {
                         RamTimer = RamCooldown;
                         IsRamming = false;
+                        animController.SetSpeeding(false);
+                        exclaimController.SetSpeeding(false);
+
                     } else RamResolve(ResolutionTime - RamTimer);
 
                     break;
