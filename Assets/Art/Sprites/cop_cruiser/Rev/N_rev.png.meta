@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1500
+  spritePixelsToUnits: 800
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -95,18 +95,260 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: N_rev_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3840
+        width: 1920
+        height: 1920
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eefbe60cfe6ea704cb7679bfdfb5e029
+      internalID: 924563384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: N_rev_1
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 3840
+        width: 1920
+        height: 1920
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36314b9aafca0d6408d97ba4f483cc11
+      internalID: -1922817462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: N_rev_2
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 3840
+        width: 1920
+        height: 1920
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a02720c6b65a5de4abef90d0b9de3b72
+      internalID: -795005896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: N_rev_3
+      rect:
+        serializedVersion: 2
+        x: 5760
+        y: 3840
+        width: 1920
+        height: 1920
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6659839f251446745b640e5d28186cf1
+      internalID: 500585383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: N_rev_4
+      rect:
+        serializedVersion: 2
+        x: 7680
+        y: 3840
+        width: 1920
+        height: 1920
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb5a1db39632f8e4c8da8a31c9f31dd6
+      internalID: 669978906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: N_rev_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1920
+        width: 1920
+        height: 1920
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61f3dec8efce5954599650d57abe7894
+      internalID: -373589162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: N_rev_6
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 1920
+        width: 1920
+        height: 1920
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7b6bda4bed7fa643a9077fd49343026
+      internalID: 564661626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: N_rev_7
+      rect:
+        serializedVersion: 2
+        x: 3840
+        y: 1920
+        width: 1920
+        height: 1920
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 768ba47abc036964ea9836e139c30e14
+      internalID: 1656768277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: N_rev_8
+      rect:
+        serializedVersion: 2
+        x: 5760
+        y: 1920
+        width: 1920
+        height: 1920
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe6a0fe31589e3f40afc413da0178b5d
+      internalID: 1240718312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: N_rev_9
+      rect:
+        serializedVersion: 2
+        x: 7680
+        y: 1920
+        width: 1920
+        height: 1920
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c7ca8f2c8762aa49aac9a9c9071a1b5
+      internalID: 1752575113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: N_rev_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1920
+        height: 1920
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 224f2ff89869c4c4eb00ebff8b32425a
+      internalID: 946660525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f85d4d9b936c45346b19d01577bb8c42
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      N_rev_0: 924563384
+      N_rev_1: -1922817462
+      N_rev_10: 946660525
+      N_rev_2: -795005896
+      N_rev_3: 500585383
+      N_rev_4: 669978906
+      N_rev_5: -373589162
+      N_rev_6: 564661626
+      N_rev_7: 1656768277
+      N_rev_8: 1240718312
+      N_rev_9: 1752575113
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
