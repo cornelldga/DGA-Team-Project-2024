@@ -110,6 +110,15 @@ public class AnimatorController : MonoBehaviour
         anim.SetBool("Revving", isRev);
     }
 
+    /// <summary>
+    /// Set bounce boolean in the animator to the boolean arguement
+    /// </summary>
+    public void SetBounce(bool isBounce)
+    {
+        anim.SetBool("Bounce", isBounce);
+    }
+
+
 
 
     /// <summary>

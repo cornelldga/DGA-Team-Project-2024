@@ -272,11 +272,13 @@ public class CopModel : MonoBehaviour
                     {
                         RamState = RamState.RESOLUTION;
                         RamTimer = 0;
-                        animController.SetSpeeding(false);
                         exclaimController.SetSpeeding(false);
+                        animController.SetBounce(true);
 
 
-                    } else RamAttack();
+
+                    }
+                    else RamAttack();
 
                     break;
 
@@ -287,9 +289,14 @@ public class CopModel : MonoBehaviour
                     {
                         RamTimer = RamCooldown;
                         IsRamming = false;
-                    
 
-                    } else RamResolve(ResolutionTime - RamTimer);
+                        animController.SetSpeeding(false);
+                        animController.SetBounce(false);
+
+
+
+                    }
+                    else RamResolve(ResolutionTime - RamTimer);
 
                     break;
                 default:
