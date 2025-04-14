@@ -260,9 +260,6 @@ public class CopModel : MonoBehaviour
                         animController.SetSpeeding(true);
                         animController.SetRev(false);
 
-
-
-
                     }
                     else Rev();
 
@@ -290,7 +287,7 @@ public class CopModel : MonoBehaviour
                     {
                         RamTimer = RamCooldown;
                         IsRamming = false;
-                        
+                    
 
                     } else RamResolve(ResolutionTime - RamTimer);
 
