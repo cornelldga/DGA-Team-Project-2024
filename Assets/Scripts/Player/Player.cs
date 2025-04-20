@@ -31,11 +31,6 @@ public class Player : MonoBehaviour, ICrashable
     [Tooltip("Button for drifting")]
     [SerializeField] private KeyCode drift = KeyCode.Space;
 
-    [SerializeField] private float zoomSpeed = 5f;
-    [SerializeField] private float normalCameraSize = 7.5f;
-    [SerializeField] private float driftCameraSize = 4f;
-
-
     private Rigidbody rb;
     private Vector3 lastVelocity;
     private float oil;
@@ -233,7 +228,6 @@ public class Player : MonoBehaviour, ICrashable
         {
             rb.AddRelativeForce(directionVector[curDirection] * 50);
             oil--;
-            smokeParticle.Play();
             if (!boostSoundPlayed)
             {
                 AudioManager.Instance.PlaySound("sfx_Boost");
@@ -340,14 +334,14 @@ public class Player : MonoBehaviour, ICrashable
             drifting = true;
             startDrift = true;
             Time.timeScale = 0.5f;
-            //TODO Add update to audio manager to slow down audio
+            //Slow down audio
             StartCoroutine(AudioManager.Instance.ChangePitch(0.5f, pitchTime));
             if (Time.time >= driftLimit)
             {
                 driftOut = true;
             }
         }
-        else if ((!pressDrift || driftOut) && drifting)
+        else if ((!pressDrift || driftOut || !canDrift) && drifting)
         {
             if (startDrift)
             {
@@ -399,14 +393,15 @@ public class Player : MonoBehaviour, ICrashable
             {
                 rb.AddRelativeForce(directionVector[curDirection] * 30);
             }
-            if (Time.time >= driftTime)
+            Time.timeScale = 1;
+            Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 7.5f, 7 * Time.deltaTime);
+            
+            if (Time.time >= driftTime && Camera.main.orthographicSize == 7.5f)
             {
                 drifting = false;
                 driftNum = 0;
                 driftOut = false;
             }
-            Time.timeScale = 1;
-            Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 7.5f, 7 * Time.deltaTime);
 
             //TODO Add update to audio manager to speed up audio
 
@@ -420,7 +415,7 @@ public class Player : MonoBehaviour, ICrashable
     {
         slowMo = true;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
 
         slowMo = false;
     }
@@ -428,9 +423,11 @@ public class Player : MonoBehaviour, ICrashable
     private IEnumerator DriftCooldown()
     {
         canDrift = false;
+        smokeParticle.Play();
 
         yield return new WaitForSeconds(1f);
 
+        smokeParticle.Stop();
         canDrift = true;
     }
 

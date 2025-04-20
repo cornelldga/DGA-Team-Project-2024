@@ -59,20 +59,6 @@ MonoBehaviour:
     reflectionsDelay: 0
     reverbLevel: 0
     reverbDelay: 0
-  - name: music_TheSizzle
-    clip: {fileID: 8300000, guid: 02710fc0fad933748b5656f5b8b30619, type: 3}
-    volume: 0.3
-    pitch: 1
-    loop: 1
-    source: {fileID: 0}
-    reverb: 0
-    dryLevel: 0
-    room: 0
-    decayTime: 1
-    reflectionsLevel: 0
-    reflectionsDelay: 0
-    reverbLevel: 0
-    reverbDelay: 0
   - name: music_SmoothMover
     clip: {fileID: 8300000, guid: 13a4a3075c400ee4da72d6cfbd8ec97f, type: 3}
     volume: 0.4
@@ -102,7 +88,7 @@ MonoBehaviour:
     reverbLevel: 0
     reverbDelay: 0
   - name: music_FlyinFryer
-    clip: {fileID: 8300000, guid: 398888a5351244441ba24165a28d3c69, type: 3}
+    clip: {fileID: 8300000, guid: 3c3e51c5c2cd0a347bd1370aed47abf4, type: 3}
     volume: 0.3
     pitch: 1
     loop: 1
@@ -202,7 +188,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_SirenLong
     clip: {fileID: 8300000, guid: 4ae455adcf8c9cb499c5207177c0990d, type: 3}
-    volume: 0.1
+    volume: 0.03
     pitch: 1
     loop: 1
     source: {fileID: 0}
@@ -231,6 +217,20 @@ MonoBehaviour:
   - name: sfx_OilReplenish
     clip: {fileID: 8300000, guid: 6da75a7ac90332641b6ac5968f73c707, type: 3}
     volume: 0.2
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: sfx_ExplosiveBarrel
+    clip: {fileID: 8300000, guid: 1bf1ffea14ac8e94183e3a29f1c98f5b, type: 3}
+    volume: 0.3
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -356,7 +356,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_failorder
     clip: {fileID: 8300000, guid: 3cf6f216378fb9a44b85b2a1154846f8, type: 3}
-    volume: 0.3
+    volume: 0.2
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -370,7 +370,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_complete_Beetle1
     clip: {fileID: 8300000, guid: df4244d49df756741aad5dc393128ac9, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -384,7 +384,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_complete_Beetle2
     clip: {fileID: 8300000, guid: aac71eac9d291ba4cad837eabedf5de6, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -398,7 +398,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_hurt_Beetle1
     clip: {fileID: 8300000, guid: 44f5a409362c1694fa88297000cc47ac, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -412,7 +412,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_hurt_Beetle2
     clip: {fileID: 8300000, guid: 47b34f2c07086834a91d3713165a621e, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -426,7 +426,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_order_Beetle1
     clip: {fileID: 8300000, guid: af48b331ab6fab8458b64119ce120630, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -440,7 +440,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_order_Beetle2
     clip: {fileID: 8300000, guid: 85f8d67af0c6571418df67324a59b33b, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -454,7 +454,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_complete_Grasshopper1
     clip: {fileID: 8300000, guid: f53f35cbce62c184fa75b45016bcbb6b, type: 3}
-    volume: 0.3
+    volume: 0.2
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -468,7 +468,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_complete_Grasshopper2
     clip: {fileID: 8300000, guid: b53083eb8335dbe40880d7932d1dbcb6, type: 3}
-    volume: 0.3
+    volume: 0.6
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -538,7 +538,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_complete_Ladybug1
     clip: {fileID: 8300000, guid: 2ce5aac56a516eb4aa5551b991bc370c, type: 3}
-    volume: 0.3
+    volume: 0.5
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -552,7 +552,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_complete_Ladybug2
     clip: {fileID: 8300000, guid: c6cb1c709fcb67d46b895ba87b699a24, type: 3}
-    volume: 0.3
+    volume: 0.5
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -566,7 +566,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_hurt_Ladybug1
     clip: {fileID: 8300000, guid: 3c921ba53bb0a424c85a4216c5a6c0b1, type: 3}
-    volume: 0.3
+    volume: 0.4
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -580,7 +580,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_hurt_Ladybug2
     clip: {fileID: 8300000, guid: 88d9cf835d362554db93c1b08a781fe7, type: 3}
-    volume: 0.3
+    volume: 0.4
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -594,7 +594,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_order_Ladybug1
     clip: {fileID: 8300000, guid: 1ae1e941a5a57224aa8789dabd643a07, type: 3}
-    volume: 0.3
+    volume: 0.5
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -608,7 +608,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_order_Ladybug2
     clip: {fileID: 8300000, guid: b2157af926bdd8c4ab32b1b8baf6acb6, type: 3}
-    volume: 0.3
+    volume: 0.5
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -622,7 +622,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_complete_Rolypoly1
     clip: {fileID: 8300000, guid: d406206496759d8459f53fab2835cb67, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -636,7 +636,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_complete_Rolypoly2
     clip: {fileID: 8300000, guid: 726ea184a30c8404cbd230793da05e98, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -650,7 +650,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_hurt_Rolypoly1
     clip: {fileID: 8300000, guid: cf0b40d0b420b804fac2a307ee49fee8, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -664,7 +664,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_hurt_Rolypoly2
     clip: {fileID: 8300000, guid: cf0b40d0b420b804fac2a307ee49fee8, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -678,7 +678,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_order_Rolypoly1
     clip: {fileID: 8300000, guid: 3309d37ee07c6af439a4845b70793cd7, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -692,7 +692,7 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_order_Rolypoly2
     clip: {fileID: 8300000, guid: b994cb03db6246f4099cafa1365ff2db, type: 3}
-    volume: 0.3
+    volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}

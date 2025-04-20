@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
+using UnityEngine.Assertions;
 
 public class AudioManager : MonoBehaviour
 {
@@ -32,6 +34,10 @@ public class AudioManager : MonoBehaviour
     private GameObject tempChildObj;
     private float globalPitch = 1f;
 
+    private List<AudioSource> tempAudioSourceList = new List<AudioSource>();
+
+    private float lowestPitch = 0.5f; //The lowest pitch that can be set, used by PlaySoundAtPoint
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -42,6 +48,7 @@ public class AudioManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += StopSoundsOnLoad;
 
         // Initialize all audio sources
         InitializeAudioSources();
@@ -81,7 +88,6 @@ public class AudioManager : MonoBehaviour
                 s.name.ContainsInsensitive("Ladybug") ||
                 s.name.ContainsInsensitive("Rolypoly"))
             {
-                Debug.Log("Increasing gaing for: " + s.name);
                 s.source.volume = s.volume + 0.35f;
             }
             else
@@ -134,6 +140,45 @@ public class AudioManager : MonoBehaviour
         }
         //Debug.Log("Playing sound: " + name);
         soundDictionary[name].source.Play();
+    }
+
+    public void PlaySoundAtPoint(string name, Vector3 position)
+    {
+        if (!soundDictionary.ContainsKey(name))
+        {
+            Debug.LogWarning($"Sound effect '{name}' not found!");
+            return;
+        }
+
+        //Clear out old audio sources
+        foreach (AudioSource a in tempAudioSourceList.ToArray())
+        {
+            if (a == null || !a.isPlaying)
+            {
+                //This is NOT what is removing the audio source for playing voicelines
+                if (a == null) Debug.Log("Audio source is null, removing");
+                else Debug.Log("Audio source " +a.name+ " is not playing, removing");
+                tempAudioSourceList.Remove(a);
+            }
+        }
+        //Debug.Log("Temp audio source length" + tempAudioSourceList.Count);
+
+        GameObject gameObject = new GameObject("One shot audio");
+        gameObject.transform.position = position;
+        AudioSource tempAudioSourceObj = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
+        tempAudioSourceObj.clip = soundDictionary[name].source.clip;
+        tempAudioSourceObj.volume = soundDictionary[name].source.volume;
+
+        //Custom settings for spatialized audio
+        tempAudioSourceObj.dopplerLevel = 0f;
+        tempAudioSourceObj.spatialBlend = 1f; //This is actually in the default implementation, but is still relevant for spatialization
+        tempAudioSourceObj.minDistance = 40f;
+        tempAudioSourceObj.maxDistance = 500f;
+
+        tempAudioSourceList.Add(tempAudioSourceObj);
+
+        tempAudioSourceObj.Play();
+        UnityEngine.Object.Destroy(gameObject, soundDictionary[name].source.clip.length * (1.0f/lowestPitch));
     }
 
     //Deprecated way of playing sfx
@@ -245,6 +290,7 @@ public class AudioManager : MonoBehaviour
     //Make all sfx play slower or faster
     public System.Collections.IEnumerator ChangePitch(float pitch, float duration)
     {
+        Assert.IsTrue(pitch >= lowestPitch);
         float startTime = Time.time;
         float startPitch = globalPitch;
 
@@ -257,6 +303,10 @@ public class AudioManager : MonoBehaviour
             {
                 s.Value.source.pitch = newPitch;
             }
+            foreach (AudioSource a in tempAudioSourceList)
+            {
+                if(a != null) a.pitch = newPitch;
+            }
             globalPitch = newPitch;
             yield return null;
         }
@@ -265,13 +315,15 @@ public class AudioManager : MonoBehaviour
         {
             s.Value.source.pitch = pitch;
         }
+        foreach (AudioSource a in tempAudioSourceList)
+        {
+            if (a != null) a.pitch = pitch;
+        }
         globalPitch = pitch;
     }
 
-    void OnLevelWasLoaded()
+    void StopSoundsOnLoad(Scene scene, LoadSceneMode loadMode)
     {
         StopSound("sfx_SirenLong");
     }
-
-
 }

@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5971759413239886028}
@@ -59,8 +59,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.35843664, y: 0.5741955, z: 0.73493516}
-  m_Center: {x: -0.46492103, y: -0.07477677, z: 0.26571637}
+  m_Size: {x: 0.3481905, y: 0.5741955, z: 0.3235507}
+  m_Center: {x: -0.24951679, y: -0.07477677, z: 0.060024187}
 --- !u!54 &3139131401675027197
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -241,47 +241,12 @@ MonoBehaviour:
   pedestrianAudioSets:
   - name: Beetle
     animatorController: {fileID: 9100000, guid: b2c6d77557ac26945ac50d9262f25e00, type: 2}
-    orderCompleteSounds:
-    - {fileID: 8300000, guid: df4244d49df756741aad5dc393128ac9, type: 3}
-    - {fileID: 8300000, guid: aac71eac9d291ba4cad837eabedf5de6, type: 3}
-    hurtSounds:
-    - {fileID: 8300000, guid: 44f5a409362c1694fa88297000cc47ac, type: 3}
-    - {fileID: 8300000, guid: 47b34f2c07086834a91d3713165a621e, type: 3}
-    takeOrderSounds:
-    - {fileID: 8300000, guid: af48b331ab6fab8458b64119ce120630, type: 3}
-    - {fileID: 8300000, guid: 85f8d67af0c6571418df67324a59b33b, type: 3}
   - name: Grasshopper
     animatorController: {fileID: 9100000, guid: 910957cfd7e184ca7b180f1c69b93d08, type: 2}
-    orderCompleteSounds:
-    - {fileID: 8300000, guid: f53f35cbce62c184fa75b45016bcbb6b, type: 3}
-    - {fileID: 8300000, guid: b53083eb8335dbe40880d7932d1dbcb6, type: 3}
-    hurtSounds:
-    - {fileID: 8300000, guid: 0958d03a906625743a4d573f1de9a38e, type: 3}
-    - {fileID: 8300000, guid: 4ad7bf4db22d6a743aae43ac6cb0f097, type: 3}
-    takeOrderSounds:
-    - {fileID: 8300000, guid: f1272ad3c9759524dad142ce3060a35b, type: 3}
-    - {fileID: 8300000, guid: 18efcb3869f2afd40a4e4110c8178af7, type: 3}
   - name: Ladybug
     animatorController: {fileID: 9100000, guid: 13a56d2a620b14ff1bb421d09cf69aab, type: 2}
-    orderCompleteSounds:
-    - {fileID: 8300000, guid: 2ce5aac56a516eb4aa5551b991bc370c, type: 3}
-    - {fileID: 8300000, guid: c6cb1c709fcb67d46b895ba87b699a24, type: 3}
-    hurtSounds:
-    - {fileID: 8300000, guid: 3c921ba53bb0a424c85a4216c5a6c0b1, type: 3}
-    - {fileID: 8300000, guid: 88d9cf835d362554db93c1b08a781fe7, type: 3}
-    takeOrderSounds:
-    - {fileID: 8300000, guid: 1ae1e941a5a57224aa8789dabd643a07, type: 3}
-    - {fileID: 8300000, guid: b2157af926bdd8c4ab32b1b8baf6acb6, type: 3}
   - name: Rolypoly
     animatorController: {fileID: 9100000, guid: d16c377d639df4edb8fbfabf3a1b6242, type: 2}
-    orderCompleteSounds:
-    - {fileID: 8300000, guid: d406206496759d8459f53fab2835cb67, type: 3}
-    - {fileID: 8300000, guid: 726ea184a30c8404cbd230793da05e98, type: 3}
-    hurtSounds:
-    - {fileID: 8300000, guid: cf0b40d0b420b804fac2a307ee49fee8, type: 3}
-    takeOrderSounds:
-    - {fileID: 8300000, guid: 3309d37ee07c6af439a4845b70793cd7, type: 3}
-    - {fileID: 8300000, guid: b994cb03db6246f4099cafa1365ff2db, type: 3}
   animator: {fileID: 6902939804337995817}
 --- !u!114 &5409510496184920540
 MonoBehaviour:
@@ -295,8 +260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ab3a8eb0d7af4e559fdc4c67652ac70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OrderFailedSounds:
-  - {fileID: 8300000, guid: 8274a32b35e8db54a8988bf083574efc, type: 3}
 --- !u!1 &5229204291158607446
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,8 +288,8 @@ Transform:
   m_GameObject: {fileID: 5229204291158607446}
   serializedVersion: 2
   m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: -0.157, y: 0, z: 0}
-  m_LocalScale: {x: 0.07, y: 0.035, z: 0.07}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4229518997468610015}
@@ -395,7 +358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2288dd41db344b49b20e79a67242369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  anim: {fileID: 6902939804337995817}
 --- !u!95 &6902939804337995817
 Animator:
   serializedVersion: 5
@@ -511,8 +474,8 @@ Transform:
   m_GameObject: {fileID: 8450852664889649489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.292, y: -0.06, z: 0.129}
-  m_LocalScale: {x: 0.54, y: 0.27, z: 0.54}
+  m_LocalPosition: {x: 0.4, y: 0.1, z: -0.2}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4229518997468610015}

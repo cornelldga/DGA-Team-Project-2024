@@ -110,7 +110,7 @@ public class Customer : MonoBehaviour, ICrashable
         customerRenderer.material = grayMaterial;
         startingPosition = transform.position;
         // set the radius of the customer's detection range
-        detectionRange.GetComponent<SphereCollider>().radius = interactionRange / 2;
+        detectionRange.GetComponent<SphereCollider>().radius = interactionRange;
 
         // Initialize and configure the LineRenderer
         SetupInteractionRangeIndicator();
@@ -156,14 +156,8 @@ public class Customer : MonoBehaviour, ICrashable
                 float oil = GameManager.Instance.getPlayer().GetOil();
                 if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && oil >= 20)
                 {
-                    // TAKING ORDER
-                    currentState = CustomerState.Cooking;
-                    customerRenderer.material = greenMaterial;
-                    timer = 0f;
-                    orderTaken = true;
-                    GameManager.Instance.getPlayer().AddOil(-20);
                     GameManager.Instance.TakeOrder(this);
-                    pedSoundManager.PlayTakeOrderSound();
+                    pedSoundManager.PlayTakeOrderSound(transform.position);
                 }
                 break;
 
@@ -188,7 +182,7 @@ public class Customer : MonoBehaviour, ICrashable
                         GameManager.Instance.RemoveOrder(this);
                         AudioManager.Instance.PlaySound("sfx_Anger");
                         Debug.Log("Customer is angry!");
-                        pedSoundManager.PlayOrderFailedSound();
+                        pedSoundManager.PlayOrderFailedSound(transform.position);
                     }
                     break;
                 }
@@ -220,6 +214,18 @@ public class Customer : MonoBehaviour, ICrashable
         // line up the rotation angle with the camera
         animController.transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0);
     }
+    /// <summary>
+    /// Called when the player accepts the order
+    /// </summary>
+    public void TookOrder()
+    {
+        currentState = CustomerState.Cooking;
+        customerRenderer.material = greenMaterial;
+        timer = 0f;
+        orderTaken = true;
+        GameManager.Instance.getPlayer().AddOil(-20);
+        pedSoundManager.PlayTakeOrderSound(transform.position);
+    }
 
     /// <summary>
     /// Completes the order for the customer. 
@@ -234,7 +240,7 @@ public class Customer : MonoBehaviour, ICrashable
         customerRenderer.material = blueMaterial;
         GameManager.Instance.CompleteOrder(this);
         isOrderCompleted = true;
-        pedSoundManager.PlayOrderCompleteSound();
+        pedSoundManager.PlayOrderCompleteSound(transform.position);
     }
 
     public void Crash(Vector3 speedVector, Vector3 position)
@@ -261,7 +267,7 @@ public class Customer : MonoBehaviour, ICrashable
                 knockbackTimer = knockbackCooldown; // Start knockback cooldown
 
                 // play hurt sound
-                pedSoundManager.PlayHurtSound();
+                pedSoundManager.PlayHurtSound(transform.position);
 
                 Debug.Log("Crash! Pedestrian knocked back with force: " + knockbackForce);
             }
