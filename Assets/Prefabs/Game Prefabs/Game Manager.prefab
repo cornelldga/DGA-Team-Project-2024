@@ -644,6 +644,8 @@ MonoBehaviour:
   gameTimer: 100
   oneStarRating: 1
   twoStarRating: 2
+  threeStarRating: 3
+  failLoseAmount: 2
   gameTimerText: {fileID: 8433878967962942961}
   numCustomersText: {fileID: 116640349956554878}
   gameCanvas: {fileID: 7196769242683853668}
