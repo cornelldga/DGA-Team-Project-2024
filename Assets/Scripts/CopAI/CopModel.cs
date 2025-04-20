@@ -10,11 +10,11 @@ public enum NavState
     IDLE            // Cop is not moving and staying still in current location. 
 }
 
-// a ram attack is broken up into 3 phases: charge, ram, resoltion
+// a ram attack is broken up into 3 phases: Rev, ram, resoltion
 public enum RamState
 {
-    CHARGE,         // Stationary, lock onto the player and rotate to face them
-    RAM,            // Fly forward in the final position set during the charge phase
+    REV,         // Stationary, lock onto the player and rotate to face them
+    RAM,            // Fly forward in the final position set during the Rev phase
     RESOLUTION      // Slowdown and return to pathfinding
 }
 public enum CopType
@@ -34,6 +34,7 @@ public class CopModel : MonoBehaviour
     private RamState RamState;
 
     [SerializeField] private AnimatorController animController;
+    [SerializeField] private AnimatorController exclaimController;
 
     // Internal Constants
     [Header("State Change Radius")]
@@ -77,7 +78,7 @@ public class CopModel : MonoBehaviour
     [SerializeField] private int RamAcc = 30; // revved up speed barreling towards the player in a ram attack. 
     [SerializeField] private float RamCooldown = 5; // the amount of time spend on a ram attack until returning to normal navigation
     [SerializeField] float ramInnacuracy; // adds inaccuracy rotation to ram position
-    [SerializeField] private float ChargeTime = 0.5f;
+    [SerializeField] private float RevTime = 0.5f;
     [SerializeField] private float AccelerationTime = 0.8f;
     [SerializeField] private float ResolutionTime = 1;
     Vector3 RamDir;
@@ -143,7 +144,7 @@ public class CopModel : MonoBehaviour
         }
     }
 
-    private void RamCharge()
+    private void Rev()
     {
         // face the player
         RamDir = Quaternion.AngleAxis(UnityEngine.Random.Range(-ramInnacuracy, ramInnacuracy), Vector3.up) *
@@ -153,6 +154,8 @@ public class CopModel : MonoBehaviour
         RB.velocity = Vector3.zero;
 
         angle = (float)(Mathf.Atan2(RamDir.x, RamDir.z) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
+
+
 
     }
 
@@ -192,13 +195,19 @@ public class CopModel : MonoBehaviour
         // set attacking state
         else if (!IsRamming && distanceFromPlayer < RamRadius && RamTimer <= 0 && IsPathClear())
         {
-            // Begin charge phase of ram attack. 
+            // Begin ram attack, beginning with the REV
 
             IsRamming = true;
             RamTimer = 0;
             CurrentPath = null;
 
-            RamState = RamState.CHARGE;    
+            // change animation for revving
+            exclaimController.SetSpeeding(true);
+            animController.SetRev(true);
+
+
+            RamState = RamState.REV;
+
 
         }
 
@@ -239,15 +248,20 @@ public class CopModel : MonoBehaviour
  
             switch (RamState)
             {
-                case RamState.CHARGE:
+                case RamState.REV:
                     //Debug.Log("Charging Ram");
 
-                    if (RamTimer >= ChargeTime)
+                    if (RamTimer >= RevTime)
                     {
                         
                         RamState = RamState.RAM;
                         RamTimer = 0;
-                    } else RamCharge();
+
+                        animController.SetSpeeding(true);
+                        animController.SetRev(false);
+
+                    }
+                    else Rev();
 
                     break;
 
@@ -258,7 +272,13 @@ public class CopModel : MonoBehaviour
                     {
                         RamState = RamState.RESOLUTION;
                         RamTimer = 0;
-                    } else RamAttack();
+                        exclaimController.SetSpeeding(false);
+                        animController.SetBounce(true);
+
+
+
+                    }
+                    else RamAttack();
 
                     break;
 
@@ -269,7 +289,14 @@ public class CopModel : MonoBehaviour
                     {
                         RamTimer = RamCooldown;
                         IsRamming = false;
-                    } else RamResolve(ResolutionTime - RamTimer);
+
+                        animController.SetSpeeding(false);
+                        animController.SetBounce(false);
+
+
+
+                    }
+                    else RamResolve(ResolutionTime - RamTimer);
 
                     break;
                 default:

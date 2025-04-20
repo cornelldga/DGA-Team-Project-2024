@@ -228,7 +228,6 @@ public class Player : MonoBehaviour, ICrashable
         {
             rb.AddRelativeForce(directionVector[curDirection] * 50);
             oil--;
-            smokeParticle.Play();
             if (!boostSoundPlayed)
             {
                 AudioManager.Instance.PlaySound("sfx_Boost");
@@ -424,9 +423,11 @@ public class Player : MonoBehaviour, ICrashable
     private IEnumerator DriftCooldown()
     {
         canDrift = false;
+        smokeParticle.Play();
 
         yield return new WaitForSeconds(1f);
 
+        smokeParticle.Stop();
         canDrift = true;
     }
 
