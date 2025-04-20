@@ -17,6 +17,7 @@ public class PedSoundManager : MonoBehaviour
         //Debug.Log(pedAnimManager.GetRandomOrderCompleteSound());
         int randomIndex = Random.Range(1, 3);
         string sfx_id = pedAnimManager.GetRandomOrderCompleteSound() + randomIndex;
+        AudioManager.Instance.StopSound
         AudioManager.Instance.PlaySoundAtPoint(sfx_id, position);
     }
 
