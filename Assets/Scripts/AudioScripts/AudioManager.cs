@@ -88,7 +88,12 @@ public class AudioManager : MonoBehaviour
                 s.name.ContainsInsensitive("Ladybug") ||
                 s.name.ContainsInsensitive("Rolypoly"))
             {
-                s.source.volume = s.volume + 0.35f;
+                //Pedestrian sounds
+                s.source.volume = s.volume + 0.4f;
+                if (s.name.ContainsInsensitive("hurt"))
+                {
+                    s.source.volume = s.volume + 0.15f;
+                }
             }
             else
             {
