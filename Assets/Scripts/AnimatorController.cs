@@ -102,6 +102,24 @@ public class AnimatorController : MonoBehaviour
         anim.SetBool("Speeding", isSpeeding);
     }
 
+    /// <summary>
+    /// Set speeding boolean in the animator to the boolean arguement
+    /// </summary>
+    public void SetRev(bool isRev)
+    {
+        anim.SetBool("Revving", isRev);
+    }
+
+    /// <summary>
+    /// Set bounce boolean in the animator to the boolean arguement
+    /// </summary>
+    public void SetBounce(bool isBounce)
+    {
+        anim.SetBool("Bounce", isBounce);
+    }
+
+
+
 
     /// <summary>
     /// Sets all boolean parameters to false
