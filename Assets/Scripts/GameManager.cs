@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,12 +25,17 @@ public class GameManager : MonoBehaviour
     private int numCustomers;
     bool pauseGame = false;
     bool gameOver = false;
-    
+
     [Tooltip("The minimum number of customers required to win and earn 1 star")]
     [SerializeField] private int oneStarRating;
     [Tooltip("The minimum number of customers required to earn 2 stars")]
     [SerializeField] private int twoStarRating;
+    [Tooltip("The minimum number of customers required to earn 3 stars. If -1, then set to total customers in level")]
+    [SerializeField] private int threeStarRating = -1;
+    [Tooltip("The number of failed orders for the player to lose")]
+    [SerializeField] private int failLoseAmount;
     private int completedOrders = 0;
+    private int failedOrders = 0;
     [Space]
     [Header("GameManager UI")]
     private CookBarManager cookBarManager;
@@ -53,6 +59,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         GameManager gameManager = GameManager.Instance;
         player = FindObjectOfType<Player>();
+        numCustomers = FindObjectsOfType<Customer>().Length;
         cookBarManager = FindObjectOfType<CookBarManager>();
     }
     /// <summary>
@@ -85,7 +92,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if(levelNumber == -1)
+        if (levelNumber == -1)
         {
             throw new System.Exception("You must set the level number based on its chronological order." +
                 " Set to 0 if test level or endless level");
@@ -109,9 +116,9 @@ public class GameManager : MonoBehaviour
     /// Returns the reference to the Player script
     /// </summary>
     public Player getPlayer()
-        {
-            return player;
-        }
+    {
+        return player;
+    }
 
     /// <summary>
     /// Returns the list of customers that are being handled in the game
@@ -126,7 +133,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void UpdateGameTimer()
     {
-        gameTimer-=Time.deltaTime;
+        gameTimer -= Time.deltaTime;
         if (gameTimer <= 0)
         {
             gameTimerText.text = "0.00";
@@ -157,7 +164,8 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         pauseGame = true;
-        if(gameOver != true){
+        if (gameOver != true)
+        {
             this.pauseScreen.SetActive(true);
         }
         foreach (Customer customer in customers)
@@ -204,20 +212,45 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void TakeOrder(Customer customer)
     {
-        if(customers.Count < maxCustomerOrders)
+        if (customers.Count < maxCustomerOrders)
         {
             customers.Add(customer);
             cookBarManager.AddToHotbar(customer);
             customer.TookOrder();
         }
+    }/// <summary>
+     /// Called when the player fails to deliver an order to a customer in time
+     /// </summary>
+     /// <param name="customer"></param>
+    public void FailOrder(Customer customer)
+    {
+        failedOrders++;
+        RemoveOrder(customer);
     }
+
     /// <summary>
-    /// Called when a customer should be removed from the list of customers
+    /// Called when a customer should be removed from the list of customers and checks if the game should end
     /// </summary>
     /// <param name="customer"></param>
-    public void RemoveOrder(Customer customer) { 
+    public void RemoveOrder(Customer customer)
+    {
         customers.Remove(customer);
         cookBarManager.RemoveFromHotBar(customer);
+        if (failedOrders == failLoseAmount)
+        {
+            LoseGame();
+        }
+        else if (numCustomers == failedOrders + completedOrders)
+        {
+            if (completedOrders >= oneStarRating)
+            {
+                WinGame();
+            }
+            else
+            {
+                LoseGame();
+            }
+        }
     }
 
     /// <summary>
@@ -237,13 +270,11 @@ public class GameManager : MonoBehaviour
         {
             twoStar.SetActive(true);
         }
-        //customers.Remove(customer);
-        RemoveOrder(customer);
-        if (completedOrders == numCustomers)
+        else if (completedOrders == threeStarRating)
         {
             threeStar.SetActive(true);
-            WinGame();
         }
+        RemoveOrder(customer);
     }
     /// <summary>
     /// Ends the game and triggers the win condition for that level.
@@ -274,7 +305,7 @@ public class GameManager : MonoBehaviour
         ResumeGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    
+
     /// <summary>
     /// Loads the scene of the specified scene name
     /// </summary>
@@ -287,7 +318,8 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Goes back to the main menu from the pause screen
     /// </summary>
-    public void ReturnToMainMenu() {
+    public void ReturnToMainMenu()
+    {
         FindObjectOfType<AudioManager>().PlaySound("sfx_MenuClick");
         FindObjectOfType<AudioManager>().StopSound("sfx_SirenLong");
         LoadScene("Main Menu");
