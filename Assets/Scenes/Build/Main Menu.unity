@@ -3810,6 +3810,10 @@ PrefabInstance:
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5749004150148114963, guid: 956247e55e8ba834980b67ac376541ef, type: 3}
+      propertyPath: soundEffects.Array.data[6].volume
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749004150148114963, guid: 956247e55e8ba834980b67ac376541ef, type: 3}
       propertyPath: musicTracks.Array.data[5].decayTime
       value: 1
       objectReference: {fileID: 0}

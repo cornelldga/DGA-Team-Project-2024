@@ -29,12 +29,12 @@ public class AudioManager : MonoBehaviour
     public Sound[] soundEffects;
 
     private Sound currentMusic;
-    private Dictionary<string, Sound> soundDictionary = new Dictionary<string, Sound>();
+    public Dictionary<string, Sound> soundDictionary = new Dictionary<string, Sound>();
 
     private GameObject tempChildObj;
     private float globalPitch = 1f;
 
-    private List<AudioSource> tempAudioSourceList = new List<AudioSource>();
+    public List<AudioSource> tempAudioSourceList = new List<AudioSource>();
 
     private float lowestPitch = 0.5f; //The lowest pitch that can be set, used by PlaySoundAtPoint
 
