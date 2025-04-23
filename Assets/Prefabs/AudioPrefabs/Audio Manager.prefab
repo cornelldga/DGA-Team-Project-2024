@@ -751,3 +751,18 @@ MonoBehaviour:
     reflectionsDelay: 0
     reverbLevel: 0
     reverbDelay: 0
+  - name: sfx_SirenShort
+    clip: {fileID: 8300000, guid: 8b97d6780e1865849ae0eb7af71e2016, type: 3}
+    volume: 0.07
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 1
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  tempAudioSourceList: []
