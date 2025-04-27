@@ -32131,6 +32131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -32489,6 +32493,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 8234b0235b04c480784521fb31de8929, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ad0ec6bca2ba2fa4ead0b38c6b4b4843, type: 2}
     - target: {fileID: 2491072345170998243, guid: 8234b0235b04c480784521fb31de8929, type: 3}
       propertyPath: m_Name
       value: Floor 2 Building
@@ -32637,6 +32645,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -33057,6 +33069,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -34365,6 +34381,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 8234b0235b04c480784521fb31de8929, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ad0ec6bca2ba2fa4ead0b38c6b4b4843, type: 2}
     - target: {fileID: 2491072345170998243, guid: 8234b0235b04c480784521fb31de8929, type: 3}
       propertyPath: m_Name
       value: Floor 2 Building
@@ -34649,6 +34669,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 8234b0235b04c480784521fb31de8929, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ad0ec6bca2ba2fa4ead0b38c6b4b4843, type: 2}
     - target: {fileID: 2491072345170998243, guid: 8234b0235b04c480784521fb31de8929, type: 3}
       propertyPath: m_Name
       value: Floor 2 Building
@@ -34945,6 +34969,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -35537,6 +35565,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 8234b0235b04c480784521fb31de8929, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ad0ec6bca2ba2fa4ead0b38c6b4b4843, type: 2}
     - target: {fileID: 2491072345170998243, guid: 8234b0235b04c480784521fb31de8929, type: 3}
       propertyPath: m_Name
       value: Floor 2 Building
@@ -36315,6 +36347,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -37561,6 +37597,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
