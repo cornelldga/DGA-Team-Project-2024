@@ -86,6 +86,9 @@ public class CopModel : MonoBehaviour
     // variables for managing reroutings
     private float NavTime = 0;
 
+    // AudioSource
+    public AudioSource sirenSource;
+
 
     public NavState getNavState()
     {
@@ -99,14 +102,29 @@ public class CopModel : MonoBehaviour
     void Start()
     {
         RB = GetComponent<Rigidbody>();
-        
+        GameObject sirenObj = new GameObject("One shot audio");
+        sirenObj.transform.position = new Vector3(0, 0, 0);
         // set starting parameters according to beginning navigation state. 
+        
+        sirenSource = (AudioSource)sirenObj.AddComponent(typeof(AudioSource));
+        sirenSource.loop = false;
+        sirenSource.clip = AudioManager.Instance.soundDictionary["sfx_SirenShort"].clip;
+        sirenSource.gameObject.AddComponent<AudioReverbFilter>();
+        sirenSource.volume = 0.07f;
+        //Custom settings for spatialized audio
+        sirenSource.dopplerLevel = 0f;
+        sirenSource.spatialBlend = 1f; //This is actually in the default implementation, but is still relevant for spatialization
+        sirenSource.minDistance = 2f;
+        sirenSource.maxDistance = 20f;
+        sirenSource.spatialize = true;
+        AudioManager.Instance.tempAudioSourceList.Add(sirenSource);
+
         switch (State)
         {
             case NavState.HOTPURSUIT:
                 SetHotPursuit();
                 break;
-            default: 
+            default:
                 SetWander();
                 break;
         }
@@ -122,6 +140,15 @@ public class CopModel : MonoBehaviour
     {
         State = NavState.WANDER;
         speed = WanderSpeed;
+        if (sirenSource.clip != AudioManager.Instance.soundDictionary["sfx_SirenShort"].clip)
+        {
+            sirenSource.Stop();
+            sirenSource.volume = 0.1f;
+            sirenSource.loop = false;
+            sirenSource.clip = AudioManager.Instance.soundDictionary["sfx_SirenShort"].clip;
+            sirenSource.Play();
+        }
+        
         /*if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
         {
             FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
@@ -137,11 +164,20 @@ public class CopModel : MonoBehaviour
     {
         State = NavState.HOTPURSUIT;
         speed = PursuitSpeed;
-        if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
+        //if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
+        //{
+        //FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
+        //FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
+        if (sirenSource.clip != AudioManager.Instance.soundDictionary["sfx_SirenLong"].clip)
         {
-            //FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
-            FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
+            sirenSource.Stop();
+            sirenSource.loop = true;
+            sirenSource.volume = 0.07f;
+            sirenSource.clip = AudioManager.Instance.soundDictionary["sfx_SirenLong"].clip;
+            sirenSource.Play();
         }
+            
+        //}
     }
 
     private void Rev()
@@ -233,6 +269,7 @@ public class CopModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (pathfindingLogic == null)
         {
             // initalize this here to ensure that map grid in the map instance has be initalized. 
@@ -358,7 +395,8 @@ public class CopModel : MonoBehaviour
             RamTimer -= Time.deltaTime;
         }
 
-
+        sirenSource.transform.position = FindObjectOfType<Player>().gameObject.transform.position + FindObjectOfType<AudioListener>().gameObject.transform.position - gameObject.transform.position;
+        //Debug.Log(sirenSource.transform.position - FindObjectOfType<AudioListener>().gameObject.transform.position);
     }
 
 

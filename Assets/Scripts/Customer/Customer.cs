@@ -148,11 +148,11 @@ public class Customer : MonoBehaviour, ICrashable
                     GameManager.Instance.TakeOrder(this);
                     if (isPedSound)
                     {
-                        pedSoundManager.PlayOrderTakenSound(transform.position);
+                        pedSoundManager.PlayTakeOrderSound(transform.position);
                     }
                     else
                     {
-                        customerSoundManager.PlayOrderTakenSound(transform.position);
+                        customerSoundManager.PlayTakeOrderSound(transform.position);
                     }
                 }
                 break;
@@ -176,11 +176,11 @@ public class Customer : MonoBehaviour, ICrashable
                         AudioManager.Instance.PlaySound("sfx_Anger");
                         if (isPedSound)
                         {
-                            pedSoundManager.PlayOrderFailSound(transform.position);
+                            pedSoundManager.PlayOrderFailedSound(transform.position);
                         }
                         else
                         {
-                            customerSoundManager.PlayOrderFailSound(transform.position);
+                            customerSoundManager.PlayOrderFailedSound(transform.position);
                         }
                     }
                     break;
@@ -340,20 +340,15 @@ public class Customer : MonoBehaviour, ICrashable
 
         if (normalizedTime <= 1f)
         {
-            // Fade out the customer sprite
-            Color spriteColor = spriteRenderer.color;
-            spriteColor.a = Mathf.Lerp(originalAlpha, 0f, normalizedTime);
-            spriteRenderer.color = spriteColor;
+            float alpha = Mathf.Lerp(originalAlpha, 0f, normalizedTime);
+            Color color = spriteRenderer.color;
+            color.a = alpha;
+            spriteRenderer.color = color;
 
-            // Fade out the customer material
-            Color materialColor = customerRenderer.material.color;
-            materialColor.a = Mathf.Lerp(1f, 0f, normalizedTime);
-            customerRenderer.material.color = materialColor;
-
-            // Fade out the indicator range
-            Color rangeColor = rangeIndicatorSprite.material.color;
-            rangeColor.a = Mathf.Lerp(1f, 0f, normalizedTime);
-            rangeIndicatorSprite.material.color = rangeColor;
+            // Update the range indicator's alpha
+            Color rangeColor = rangeIndicatorSprite.color;
+            rangeColor.a = alpha;
+            rangeIndicatorSprite.color = rangeColor;
         }
         else
         {
