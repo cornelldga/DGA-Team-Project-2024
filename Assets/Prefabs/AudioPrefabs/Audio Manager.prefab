@@ -361,6 +361,21 @@ MonoBehaviour:
     reflectionsDelay: 0
     reverbLevel: 0
     reverbDelay: 0
+  - name: sfx_BuildingThud
+    clip: {fileID: 8300000, guid: 5dcc81c3585a3f54ab8623cd5fe57765, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    chokeGroup: 0
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
   - name: VOICELINESVOICELINESVOICELINES
     clip: {fileID: 8300000, guid: df4244d49df756741aad5dc393128ac9, type: 3}
     volume: 0.3
@@ -757,6 +772,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 1
     dryLevel: 0
     room: 0
