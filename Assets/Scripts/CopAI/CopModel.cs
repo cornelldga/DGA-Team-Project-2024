@@ -10,11 +10,11 @@ public enum NavState
     IDLE            // Cop is not moving and staying still in current location. 
 }
 
-// a ram attack is broken up into 3 phases: charge, ram, resoltion
+// a ram attack is broken up into 3 phases: Rev, ram, resoltion
 public enum RamState
 {
-    CHARGE,         // Stationary, lock onto the player and rotate to face them
-    RAM,            // Fly forward in the final position set during the charge phase
+    REV,         // Stationary, lock onto the player and rotate to face them
+    RAM,            // Fly forward in the final position set during the Rev phase
     RESOLUTION      // Slowdown and return to pathfinding
 }
 public enum CopType
@@ -78,13 +78,16 @@ public class CopModel : MonoBehaviour
     [SerializeField] private int RamAcc = 30; // revved up speed barreling towards the player in a ram attack. 
     [SerializeField] private float RamCooldown = 5; // the amount of time spend on a ram attack until returning to normal navigation
     [SerializeField] float ramInnacuracy; // adds inaccuracy rotation to ram position
-    [SerializeField] private float ChargeTime = 0.5f;
+    [SerializeField] private float RevTime = 0.5f;
     [SerializeField] private float AccelerationTime = 0.8f;
     [SerializeField] private float ResolutionTime = 1;
     Vector3 RamDir;
 
     // variables for managing reroutings
     private float NavTime = 0;
+
+    // AudioSource
+    public AudioSource sirenSource;
 
 
     public NavState getNavState()
@@ -99,14 +102,29 @@ public class CopModel : MonoBehaviour
     void Start()
     {
         RB = GetComponent<Rigidbody>();
-        
+        GameObject sirenObj = new GameObject("One shot audio");
+        sirenObj.transform.position = new Vector3(0, 0, 0);
         // set starting parameters according to beginning navigation state. 
+        
+        sirenSource = (AudioSource)sirenObj.AddComponent(typeof(AudioSource));
+        sirenSource.loop = false;
+        sirenSource.clip = AudioManager.Instance.soundDictionary["sfx_SirenShort"].clip;
+        sirenSource.gameObject.AddComponent<AudioReverbFilter>();
+        sirenSource.volume = 0.07f;
+        //Custom settings for spatialized audio
+        sirenSource.dopplerLevel = 0f;
+        sirenSource.spatialBlend = 1f; //This is actually in the default implementation, but is still relevant for spatialization
+        sirenSource.minDistance = 2f;
+        sirenSource.maxDistance = 20f;
+        sirenSource.spatialize = true;
+        AudioManager.Instance.tempAudioSourceList.Add(sirenSource);
+
         switch (State)
         {
             case NavState.HOTPURSUIT:
                 SetHotPursuit();
                 break;
-            default: 
+            default:
                 SetWander();
                 break;
         }
@@ -122,6 +140,15 @@ public class CopModel : MonoBehaviour
     {
         State = NavState.WANDER;
         speed = WanderSpeed;
+        if (sirenSource.clip != AudioManager.Instance.soundDictionary["sfx_SirenShort"].clip)
+        {
+            sirenSource.Stop();
+            sirenSource.volume = 0.1f;
+            sirenSource.loop = false;
+            sirenSource.clip = AudioManager.Instance.soundDictionary["sfx_SirenShort"].clip;
+            sirenSource.Play();
+        }
+        
         /*if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
         {
             FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
@@ -137,14 +164,23 @@ public class CopModel : MonoBehaviour
     {
         State = NavState.HOTPURSUIT;
         speed = PursuitSpeed;
-        if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
+        //if (!FindObjectOfType<AudioManager>().IsSoundPlaying("sfx_SirenLong"))
+        //{
+        //FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
+        //FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
+        if (sirenSource.clip != AudioManager.Instance.soundDictionary["sfx_SirenLong"].clip)
         {
-            //FindObjectOfType<AudioManager>().StopSound("sfx_SirenShort");
-            FindObjectOfType<AudioManager>().PlaySound("sfx_SirenLong");
+            sirenSource.Stop();
+            sirenSource.loop = true;
+            sirenSource.volume = 0.07f;
+            sirenSource.clip = AudioManager.Instance.soundDictionary["sfx_SirenLong"].clip;
+            sirenSource.Play();
         }
+            
+        //}
     }
 
-    private void RamCharge()
+    private void Rev()
     {
         // face the player
         RamDir = Quaternion.AngleAxis(UnityEngine.Random.Range(-ramInnacuracy, ramInnacuracy), Vector3.up) *
@@ -154,6 +190,8 @@ public class CopModel : MonoBehaviour
         RB.velocity = Vector3.zero;
 
         angle = (float)(Mathf.Atan2(RamDir.x, RamDir.z) * (180 / Math.PI)) - 45; // subtract 45 to account for orthographic rotation.
+
+
 
     }
 
@@ -193,17 +231,19 @@ public class CopModel : MonoBehaviour
         // set attacking state
         else if (!IsRamming && distanceFromPlayer < RamRadius && RamTimer <= 0 && IsPathClear())
         {
-            // Begin charge phase of ram attack. 
+            // Begin ram attack, beginning with the REV
 
             IsRamming = true;
             RamTimer = 0;
             CurrentPath = null;
 
-            // change animation for speeding
-            animController.SetSpeeding(true);
+            // change animation for revving
             exclaimController.SetSpeeding(true);
+            animController.SetRev(true);
 
-            RamState = RamState.CHARGE;    
+
+            RamState = RamState.REV;
+
 
         }
 
@@ -229,6 +269,7 @@ public class CopModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (pathfindingLogic == null)
         {
             // initalize this here to ensure that map grid in the map instance has be initalized. 
@@ -244,15 +285,20 @@ public class CopModel : MonoBehaviour
  
             switch (RamState)
             {
-                case RamState.CHARGE:
+                case RamState.REV:
                     //Debug.Log("Charging Ram");
 
-                    if (RamTimer >= ChargeTime)
+                    if (RamTimer >= RevTime)
                     {
                         
                         RamState = RamState.RAM;
                         RamTimer = 0;
-                    } else RamCharge();
+
+                        animController.SetSpeeding(true);
+                        animController.SetRev(false);
+
+                    }
+                    else Rev();
 
                     break;
 
@@ -263,7 +309,13 @@ public class CopModel : MonoBehaviour
                     {
                         RamState = RamState.RESOLUTION;
                         RamTimer = 0;
-                    } else RamAttack();
+                        exclaimController.SetSpeeding(false);
+                        animController.SetBounce(true);
+
+
+
+                    }
+                    else RamAttack();
 
                     break;
 
@@ -274,10 +326,14 @@ public class CopModel : MonoBehaviour
                     {
                         RamTimer = RamCooldown;
                         IsRamming = false;
-                        animController.SetSpeeding(false);
-                        exclaimController.SetSpeeding(false);
 
-                    } else RamResolve(ResolutionTime - RamTimer);
+                        animController.SetSpeeding(false);
+                        animController.SetBounce(false);
+
+
+
+                    }
+                    else RamResolve(ResolutionTime - RamTimer);
 
                     break;
                 default:
@@ -339,7 +395,8 @@ public class CopModel : MonoBehaviour
             RamTimer -= Time.deltaTime;
         }
 
-
+        sirenSource.transform.position = FindObjectOfType<Player>().gameObject.transform.position + FindObjectOfType<AudioListener>().gameObject.transform.position - gameObject.transform.position;
+        //Debug.Log(sirenSource.transform.position - FindObjectOfType<AudioListener>().gameObject.transform.position);
     }
 
 
