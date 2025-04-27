@@ -135,10 +135,13 @@ public class Customer : MonoBehaviour, ICrashable
     {
         if (currentState != CustomerState.Fading || currentState != CustomerState.Fading)
         {
+            // range color is R = 80 G = 140 B = 80 A = 0.7
+            Color rangeColor = new Color(0.31f, 0.55f, 0.31f, 0.7f);
+
             bool inRange = detectionRange.GetComponent<CustomerRange>().playerInRange;
             rangeIndicatorSprite.color = inRange
-                ? Color.green
-                : Color.blue;
+                ? rangeColor
+                : Color.white;
         }
 
         // update the state of the customer
