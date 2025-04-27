@@ -31,6 +31,7 @@ public class Customer : MonoBehaviour, ICrashable
     public float interactionRange = 2f;
     public GameObject detectionRange;
     public SpriteRenderer rangeIndicatorSprite;
+    public GameObject hungrySign;
 
     [Header("Movement Settings")]
     /// <summary>
@@ -126,6 +127,8 @@ public class Customer : MonoBehaviour, ICrashable
             isPedSound = true;
         }
         rb = GetComponent<Rigidbody>();
+
+        hungrySign.SetActive(false);
     }
 
     void Update()
@@ -158,10 +161,10 @@ public class Customer : MonoBehaviour, ICrashable
                 break;
 
             case CustomerState.Cooking:
-                // NOTE: I removed the function of the timer for now.
                 if (cookTime <= 0 && !foodReady)
                 {
                     foodReady = true;
+                    hungrySign.SetActive(true);
                     AudioManager.Instance.Play("sfx_TimerDing");
                 }
 
@@ -345,10 +348,13 @@ public class Customer : MonoBehaviour, ICrashable
             color.a = alpha;
             spriteRenderer.color = color;
 
-            // Update the range indicator's alpha
             Color rangeColor = rangeIndicatorSprite.color;
             rangeColor.a = alpha;
             rangeIndicatorSprite.color = rangeColor;
+
+            Color hungryColor = hungrySign.GetComponent<SpriteRenderer>().color;
+            hungryColor.a = alpha;
+            hungrySign.GetComponent<SpriteRenderer>().color = hungryColor;
         }
         else
         {
