@@ -51,6 +51,7 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -65,6 +66,7 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -79,6 +81,7 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -93,6 +96,7 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -108,6 +112,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -122,6 +127,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -136,6 +142,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -150,6 +157,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -164,6 +172,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -178,6 +187,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -188,11 +198,12 @@ MonoBehaviour:
     reverbDelay: 0
   - name: sfx_SirenLong
     clip: {fileID: 8300000, guid: 4ae455adcf8c9cb499c5207177c0990d, type: 3}
-    volume: 0.03
+    volume: 0.003
     pitch: 1
     loop: 1
     source: {fileID: 0}
-    reverb: 1
+    chokeGroup: 0
+    reverb: 0
     dryLevel: 0
     room: 0
     decayTime: 1
@@ -206,6 +217,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -220,6 +232,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -234,6 +247,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -248,6 +262,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -262,6 +277,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -276,6 +292,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -290,6 +307,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -304,6 +322,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -318,6 +337,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -332,6 +352,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -346,6 +367,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -360,6 +382,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -369,11 +392,12 @@ MonoBehaviour:
     reverbLevel: 0
     reverbDelay: 0
   - name: sfx_complete_Beetle1
-    clip: {fileID: 8300000, guid: df4244d49df756741aad5dc393128ac9, type: 3}
+    clip: {fileID: 8300000, guid: 5fdb40f458c45ef49996bd91747f7dc8, type: 3}
     volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -383,11 +407,12 @@ MonoBehaviour:
     reverbLevel: 0
     reverbDelay: 0
   - name: sfx_complete_Beetle2
-    clip: {fileID: 8300000, guid: aac71eac9d291ba4cad837eabedf5de6, type: 3}
+    clip: {fileID: 8300000, guid: d8bc0b5cd38879641a9d5139642ab918, type: 3}
     volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -402,6 +427,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -416,6 +442,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -430,6 +457,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -444,6 +472,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -458,6 +487,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -472,6 +502,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -486,6 +517,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -500,6 +532,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -514,6 +547,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -528,6 +562,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -542,6 +577,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -556,6 +592,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -570,6 +607,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -584,6 +622,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -598,6 +637,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -612,6 +652,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -621,11 +662,12 @@ MonoBehaviour:
     reverbLevel: 0
     reverbDelay: 0
   - name: sfx_complete_Rolypoly1
-    clip: {fileID: 8300000, guid: d406206496759d8459f53fab2835cb67, type: 3}
+    clip: {fileID: 8300000, guid: 58aac510476553e469ea5b941d76124e, type: 3}
     volume: 0.55
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -640,6 +682,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -654,6 +697,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -668,6 +712,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -682,6 +727,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -696,6 +742,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+    chokeGroup: 0
     reverb: 0
     dryLevel: 0
     room: 0
@@ -704,3 +751,18 @@ MonoBehaviour:
     reflectionsDelay: 0
     reverbLevel: 0
     reverbDelay: 0
+  - name: sfx_SirenShort
+    clip: {fileID: 8300000, guid: 8b97d6780e1865849ae0eb7af71e2016, type: 3}
+    volume: 0.07
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+    reverb: 1
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  tempAudioSourceList: []

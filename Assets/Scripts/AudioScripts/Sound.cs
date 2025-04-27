@@ -24,6 +24,9 @@ public class Sound
     //Is this music?
     private bool music;
 
+    //Choke Group
+    public int chokeGroup;
+
     //Does this have reverb?
     public bool reverb;
 

@@ -338,6 +338,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 645887454940386362, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4653139983023904543, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5905870207526619576, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
       propertyPath: twoStarRating
       value: 3
@@ -353,6 +361,10 @@ PrefabInstance:
     - target: {fileID: 6010855053245734532, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
       propertyPath: m_Name
       value: emily-Level
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394918006512628031, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8807523061468402261, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
       propertyPath: m_LocalPosition.x
