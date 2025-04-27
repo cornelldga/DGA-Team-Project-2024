@@ -83,6 +83,8 @@ public class Customer : MonoBehaviour, ICrashable
     private Vector3 previousPosition;
     private AnimatorController animController;
     private PedSoundManager pedSoundManager;
+    private CustomerSoundManager customerSoundManager;
+    private bool isPedSound = false;
     private Vector3 destination; // the destination of the customer if knocked back
 
     void Start()
@@ -114,6 +116,20 @@ public class Customer : MonoBehaviour, ICrashable
         }
 
         pedSoundManager = GetComponent<PedSoundManager>();
+        if (pedSoundManager == null)
+        {
+            isPedSound = false;
+        }
+        else
+        {
+            isPedSound = true;
+        }
+        customerSoundManager = GetComponent<CustomerSoundManager>();
+        if (customerSoundManager == null && !isPedSound)
+        {
+            Debug.LogError("You should add a PedSoundManager or CustomerSoundManager to the customer prefab");
+            return;
+        }
         rb = GetComponent<Rigidbody>();
     }
 
@@ -135,7 +151,14 @@ public class Customer : MonoBehaviour, ICrashable
                 if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && oil >= 20)
                 {
                     GameManager.Instance.TakeOrder(this);
-                    pedSoundManager.PlayTakeOrderSound(transform.position);
+                    if (isPedSound)
+                    {
+                        pedSoundManager.PlayTakeOrderSound(transform.position);
+                    }
+                    else
+                    {
+                        customerSoundManager.PlayTakeOrderSound(transform.position);
+                    }
                 }
                 break;
 
@@ -156,7 +179,14 @@ public class Customer : MonoBehaviour, ICrashable
                         StartFading();
                         GameManager.Instance.RemoveOrder(this);
                         AudioManager.Instance.PlaySound("sfx_Anger");
-                        pedSoundManager.PlayOrderFailedSound(transform.position);
+                        if (isPedSound)
+                        {
+                            pedSoundManager.PlayOrderFailedSound(transform.position);
+                        }
+                        else
+                        {
+                            customerSoundManager.PlayOrderFailedSound(transform.position);
+                        }
                     }
                     break;
                 }
@@ -184,7 +214,6 @@ public class Customer : MonoBehaviour, ICrashable
 
         // move the customer back and forth
         MoveCustomer();
-
         // line up the rotation angle with the camera
         animController.transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0);
     }
@@ -197,7 +226,14 @@ public class Customer : MonoBehaviour, ICrashable
         timer = 0f;
         orderTaken = true;
         GameManager.Instance.getPlayer().AddOil(-20);
-        pedSoundManager.PlayTakeOrderSound(transform.position);
+        if (isPedSound)
+        {
+            pedSoundManager.PlayOrderCompleteSound(transform.position);
+        }
+        else
+        {
+            customerSoundManager.PlayOrderCompleteSound(transform.position);
+        }
     }
 
     /// <summary>
@@ -211,7 +247,14 @@ public class Customer : MonoBehaviour, ICrashable
         StartFading();
         GameManager.Instance.CompleteOrder(this);
         isOrderCompleted = true;
-        pedSoundManager.PlayOrderCompleteSound(transform.position);
+        if (isPedSound)
+        {
+            pedSoundManager.PlayOrderCompleteSound(transform.position);
+        }
+        else
+        {
+            customerSoundManager.PlayOrderCompleteSound(transform.position);
+        }
     }
 
     public void Crash(Vector3 speedVector, Vector3 position)
@@ -238,7 +281,14 @@ public class Customer : MonoBehaviour, ICrashable
                 knockbackTimer = knockbackCooldown; // Start knockback cooldown
 
                 // play hurt sound
-                pedSoundManager.PlayHurtSound(transform.position);
+                if (isPedSound)
+                {
+                    pedSoundManager.PlayHurtSound(transform.position);
+                }
+                else
+                {
+                    customerSoundManager.PlayHurtSound(transform.position);
+                }
 
                 Debug.Log("Crash! Pedestrian knocked back with force: " + knockbackForce);
             }
