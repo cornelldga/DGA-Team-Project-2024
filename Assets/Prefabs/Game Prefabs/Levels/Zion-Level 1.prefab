@@ -4066,7 +4066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxCustomerOrders: 3
   levelNumber: 15
-  gameTimer: 60
+  gameTimer: 99
   oneStarRating: 2
   twoStarRating: 3
   threeStarRating: 5
