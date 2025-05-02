@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -7,18 +5,11 @@ using UnityEngine;
 /// <para> NOTE: For now, the customer is not updating its timer. </para>
 /// <para> NOTE: For now, the customer is moving back and forth. </para>
 /// </summary>
-[RequireComponent(typeof(Renderer))]
-[RequireComponent(typeof(PedSoundManager))]
 public class Customer : MonoBehaviour, ICrashable
 {
     [Header("Customer Attributes")]
     public string customerName;
     public string orderName;
-    /// <summary>
-    /// The image that will be displayed in UI.
-    /// </summary>
-    [Tooltip("The image that will be displayed in UI.")]
-    public Sprite customerImage;
     /// <summary>
     /// The sprite that will be displayed in the game world.
     /// </summary>
@@ -39,19 +30,14 @@ public class Customer : MonoBehaviour, ICrashable
     [Tooltip("The range within which the player can interact with the customer.")]
     public float interactionRange = 2f;
     public GameObject detectionRange;
-
-    [Header("Tentative Materials")]
-    public Material grayMaterial; // order not taken yet
-    public Material greenMaterial; // waiting for order
-    public Material redMaterial; // patience ran out
-    public Material blueMaterial; // order successfully complete
+    public SpriteRenderer rangeIndicatorSprite;
+    public GameObject hungrySign;
 
     [Header("Movement Settings")]
     /// <summary>
     /// if the customer is moving back and forth along the Z-axis. If unchecked, the customer will move along the X-axis (West and East).
     /// </summary>
     public bool isMovingNorthSouth = true;
-
     /// <summary>
     /// The amplitude of the oscillation.
     /// </summary>
@@ -70,10 +56,8 @@ public class Customer : MonoBehaviour, ICrashable
     /// Difference between customer disappearing and ring indicator disappearing
     /// </summary>
     public float destroyDelay = 0f;
-
     private float fadeTimer = 0f;
     private bool isFading = false;
-    private Material[] originalMaterials;
     private float originalAlpha;
     private SpriteRenderer spriteRenderer;
     [Header("Knockback Settings")]
@@ -90,7 +74,6 @@ public class Customer : MonoBehaviour, ICrashable
     [SerializeField] float maxKnockback = 25f;
 
     private Vector3 startingPosition;
-    private LineRenderer lineRenderer;
     private float timer = 0f;
     private Renderer customerRenderer;
     private bool orderTaken = false;
@@ -101,19 +84,23 @@ public class Customer : MonoBehaviour, ICrashable
     private Vector3 previousPosition;
     private AnimatorController animController;
     private PedSoundManager pedSoundManager;
+    private CustomerSoundManager customerSoundManager;
+    private bool isPedSound = false;
     private Vector3 destination; // the destination of the customer if knocked back
 
     void Start()
     {
         customerRenderer = GetComponent<Renderer>();
         currentState = CustomerState.WaitingForOrder;
-        customerRenderer.material = grayMaterial;
         startingPosition = transform.position;
         // set the radius of the customer's detection range
         detectionRange.GetComponent<SphereCollider>().radius = interactionRange;
 
         // Initialize and configure the LineRenderer
-        SetupInteractionRangeIndicator();
+        // SetupInteractionRangeIndicator();
+
+        // immediately size + tint the ring:
+        UpdateRangeIndicator();
 
         // Get the Billboard componen
         animController = customerSprite.GetComponent<AnimatorController>();
@@ -130,23 +117,33 @@ public class Customer : MonoBehaviour, ICrashable
         }
 
         pedSoundManager = GetComponent<PedSoundManager>();
+        customerSoundManager = GetComponent<CustomerSoundManager>();
+        if (pedSoundManager == null)
+        {
+            isPedSound = false;
+        }
+        else
+        {
+            isPedSound = true;
+        }
         rb = GetComponent<Rigidbody>();
+
+        hungrySign.SetActive(false);
     }
 
     void Update()
     {
-        // check if player is in range
-        if (detectionRange.GetComponent<CustomerRange>().playerInRange)
+        if (currentState != CustomerState.Fading || currentState != CustomerState.Fading)
         {
-            // change the color of the line renderer to green
-            lineRenderer.startColor = Color.green;
-            lineRenderer.endColor = Color.green;
-        }
-        else
-        {
-            // change the color of the line renderer to blue
-            lineRenderer.startColor = Color.blue;
-            lineRenderer.endColor = Color.blue;
+            // range highlight color is R = 80 G = 140 B = 80 A = 0.7
+            Color highlightColor = new Color(0.2f, 0.65f, 0.2f, 0.9f);
+            // range color is light white
+            Color rangeColor = new Color(1f, 1f, 1f, 0.5f);
+
+            bool inRange = detectionRange.GetComponent<CustomerRange>().playerInRange;
+            rangeIndicatorSprite.color = inRange
+                ? highlightColor
+                : rangeColor;
         }
 
         // update the state of the customer
@@ -157,15 +154,22 @@ public class Customer : MonoBehaviour, ICrashable
                 if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && oil >= 20)
                 {
                     GameManager.Instance.TakeOrder(this);
-                    pedSoundManager.PlayTakeOrderSound(transform.position);
+                    if (isPedSound)
+                    {
+                        pedSoundManager.PlayTakeOrderSound(transform.position);
+                    }
+                    else
+                    {
+                        customerSoundManager.PlayTakeOrderSound(transform.position);
+                    }
                 }
                 break;
 
             case CustomerState.Cooking:
-                // NOTE: I removed the function of the timer for now.
                 if (cookTime <= 0 && !foodReady)
                 {
                     foodReady = true;
+                    hungrySign.SetActive(true);
                     AudioManager.Instance.Play("sfx_TimerDing");
                 }
 
@@ -173,16 +177,19 @@ public class Customer : MonoBehaviour, ICrashable
                 {
                     if (!isOrderCompleted)
                     {
-                        //currentState = CustomerState.Done; // Previous code
                         // Start the fading
                         currentState = CustomerState.Fading;
                         StartFading();
-
-                        customerRenderer.material = redMaterial;
                         GameManager.Instance.RemoveOrder(this);
                         AudioManager.Instance.PlaySound("sfx_Anger");
-                        Debug.Log("Customer is angry!");
-                        pedSoundManager.PlayOrderFailedSound(transform.position);
+                        if (isPedSound)
+                        {
+                            pedSoundManager.PlayOrderFailedSound(transform.position);
+                        }
+                        else
+                        {
+                            customerSoundManager.PlayOrderFailedSound(transform.position);
+                        }
                     }
                     break;
                 }
@@ -220,11 +227,17 @@ public class Customer : MonoBehaviour, ICrashable
     public void TookOrder()
     {
         currentState = CustomerState.Cooking;
-        customerRenderer.material = greenMaterial;
         timer = 0f;
         orderTaken = true;
         GameManager.Instance.getPlayer().AddOil(-20);
-        pedSoundManager.PlayTakeOrderSound(transform.position);
+        if (isPedSound)
+        {
+            pedSoundManager.PlayTakeOrderSound(transform.position);
+        }
+        else
+        {
+            customerSoundManager.PlayTakeOrderSound(transform.position);
+        }
     }
 
     /// <summary>
@@ -234,13 +247,18 @@ public class Customer : MonoBehaviour, ICrashable
     /// </summary>
     public void ReceiveOrder()
     {
-        //currentState = CustomerState.Done;
         currentState = CustomerState.Fading;
         StartFading();
-        customerRenderer.material = blueMaterial;
         GameManager.Instance.CompleteOrder(this);
         isOrderCompleted = true;
-        pedSoundManager.PlayOrderCompleteSound(transform.position);
+        if (isPedSound)
+        {
+            pedSoundManager.PlayOrderCompleteSound(transform.position);
+        }
+        else
+        {
+            customerSoundManager.PlayOrderCompleteSound(transform.position);
+        }
     }
 
     public void Crash(Vector3 speedVector, Vector3 position)
@@ -267,7 +285,14 @@ public class Customer : MonoBehaviour, ICrashable
                 knockbackTimer = knockbackCooldown; // Start knockback cooldown
 
                 // play hurt sound
-                pedSoundManager.PlayHurtSound(transform.position);
+                if (isPedSound)
+                {
+                    pedSoundManager.PlayHurtSound(transform.position);
+                }
+                else
+                {
+                    customerSoundManager.PlayHurtSound(transform.position);
+                }
 
                 Debug.Log("Crash! Pedestrian knocked back with force: " + knockbackForce);
             }
@@ -323,23 +348,18 @@ public class Customer : MonoBehaviour, ICrashable
 
         if (normalizedTime <= 1f)
         {
-            // Fade out the customer sprite
-            Color spriteColor = spriteRenderer.color;
-            spriteColor.a = Mathf.Lerp(originalAlpha, 0f, normalizedTime);
-            spriteRenderer.color = spriteColor;
+            float alpha = Mathf.Lerp(originalAlpha, 0f, normalizedTime);
+            Color color = spriteRenderer.color;
+            color.a = alpha;
+            spriteRenderer.color = color;
 
-            // Fade out the customer material
-            Color materialColor = customerRenderer.material.color;
-            materialColor.a = Mathf.Lerp(1f, 0f, normalizedTime);
-            customerRenderer.material.color = materialColor;
+            Color rangeColor = rangeIndicatorSprite.color;
+            rangeColor.a = alpha;
+            rangeIndicatorSprite.color = rangeColor;
 
-            // Fade out the line renderer
-            Color lineStartColor = lineRenderer.startColor;
-            Color lineEndColor = lineRenderer.endColor;
-            lineStartColor.a = Mathf.Lerp(1f, 0f, normalizedTime);
-            lineEndColor.a = Mathf.Lerp(1f, 0f, normalizedTime);
-            lineRenderer.startColor = lineStartColor;
-            lineRenderer.endColor = lineEndColor;
+            Color hungryColor = hungrySign.GetComponent<SpriteRenderer>().color;
+            hungryColor.a = alpha;
+            hungrySign.GetComponent<SpriteRenderer>().color = hungryColor;
         }
         else
         {
@@ -404,45 +424,62 @@ public class Customer : MonoBehaviour, ICrashable
         }
     }
 
-    private void SetupInteractionRangeIndicator()
+    // private void SetupInteractionRangeIndicator()
+    // {
+    //     // Get or Add a LineRenderer component
+    //     lineRenderer = GetComponent<LineRenderer>();
+    //     if (lineRenderer == null)
+    //     {
+    //         lineRenderer = gameObject.AddComponent<LineRenderer>();
+    //     }
+
+    //     // Configure LineRenderer properties
+    //     lineRenderer.positionCount = 0; // Will be set later
+    //     lineRenderer.loop = true; // Close the circle
+    //     lineRenderer.useWorldSpace = false; // Relative to the GameObject
+    //     lineRenderer.startWidth = 0.05f;
+    //     lineRenderer.endWidth = 0.05f;
+    //     lineRenderer.startColor = Color.blue;
+    //     lineRenderer.endColor = Color.blue;
+    //     lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // Use a simple material
+
+    //     // Create the circle
+    //     CreateCirclePoints();
+    // }
+
+    // private void CreateCirclePoints()
+    // {
+    //     int segments = 100; // Number of segments to make the circle smooth
+    //     float angle = 0f;
+
+    //     lineRenderer.positionCount = segments + 1; // +1 to close the circle
+
+    //     for (int i = 0; i <= segments; i++)
+    //     {
+    //         float x = Mathf.Cos(Mathf.Deg2Rad * angle) * interactionRange;
+    //         float z = Mathf.Sin(Mathf.Deg2Rad * angle) * interactionRange;
+
+    //         lineRenderer.SetPosition(i, new Vector3(x, 0f, z));
+
+    //         angle += (360f / segments);
+    //     }
+    // }
+
+    private void UpdateRangeIndicator()
     {
-        // Get or Add a LineRenderer component
-        lineRenderer = GetComponent<LineRenderer>();
-        if (lineRenderer == null)
-        {
-            lineRenderer = gameObject.AddComponent<LineRenderer>();
-        }
-
-        // Configure LineRenderer properties
-        lineRenderer.positionCount = 0; // Will be set later
-        lineRenderer.loop = true; // Close the circle
-        lineRenderer.useWorldSpace = false; // Relative to the GameObject
-        lineRenderer.startWidth = 0.05f;
-        lineRenderer.endWidth = 0.05f;
-        lineRenderer.startColor = Color.blue;
-        lineRenderer.endColor = Color.blue;
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // Use a simple material
-
-        // Create the circle
-        CreateCirclePoints();
+        // Make the ring’s world‑space diameter = interactionRange * 2
+        // (since we imported the sprite so that scale=1 → diameter=1 unit)
+        float diameter = interactionRange * 2f;
+        rangeIndicatorSprite.transform.localScale
+            = new Vector3(diameter, diameter, diameter);
     }
 
-    private void CreateCirclePoints()
+    // if you ever change interactionRange at runtime:
+    public void SetInteractionRange(float r)
     {
-        int segments = 100; // Number of segments to make the circle smooth
-        float angle = 0f;
-
-        lineRenderer.positionCount = segments + 1; // +1 to close the circle
-
-        for (int i = 0; i <= segments; i++)
-        {
-            float x = Mathf.Cos(Mathf.Deg2Rad * angle) * interactionRange;
-            float z = Mathf.Sin(Mathf.Deg2Rad * angle) * interactionRange;
-
-            lineRenderer.SetPosition(i, new Vector3(x, 0f, z));
-
-            angle += (360f / segments);
-        }
+        interactionRange = r;
+        detectionRange.GetComponent<SphereCollider>().radius = r;
+        UpdateRangeIndicator();
     }
 
     /// <summary>
