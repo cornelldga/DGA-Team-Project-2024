@@ -339,16 +339,28 @@ PrefabInstance:
       value: Smoke
       objectReference: {fileID: 0}
     - target: {fileID: 3168597716865963479, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3168597716865963479, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3168597716865963479, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3168597716865963479, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.61
+      value: -0.11
       objectReference: {fileID: 0}
     - target: {fileID: 3168597716865963479, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.64
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3168597716865963479, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.72
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3168597716865963479, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -388,7 +400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909140721607116632, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4909140721607116632, guid: e3adffcfa8bb94b63a9a54850f00f0d8, type: 3}
       propertyPath: InitialModule.startLifetime.minScalar
