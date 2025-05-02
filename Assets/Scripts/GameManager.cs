@@ -264,15 +264,17 @@ public class GameManager : MonoBehaviour
         {
             //indicator that the minimum amount of customers you must serve to win has been fufilled
             numCustomersText.color = Color.green;
-            oneStar.SetActive(true);
+            twoStar.SetActive(true);
         }
         else if (completedOrders == twoStarRating)
         {
-            twoStar.SetActive(true);
+            twoStar.SetActive(false);
+            oneStar.SetActive(true);
+            threeStar.SetActive(true);
         }
         else if (completedOrders == threeStarRating)
         {
-            threeStar.SetActive(true);
+            twoStar.SetActive(true);
         }
         RemoveOrder(customer);
     }
@@ -325,5 +327,14 @@ public class GameManager : MonoBehaviour
         LoadScene("Main Menu");
     }
 
+    /// <summary>
+    /// Goes back to the level select from the win/lose screen
+    /// </summary>
+    public void ReturnToLevelSelect()
+    {
+        FindObjectOfType<AudioManager>().PlaySound("sfx_MenuClick");
+        FindObjectOfType<AudioManager>().StopSound("sfx_SirenLong");
+        LoadScene("Level Select");
+    }
 
 }
