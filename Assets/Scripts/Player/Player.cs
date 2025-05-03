@@ -528,6 +528,15 @@ public class Player : MonoBehaviour, ICrashable
 
     private void OnCollisionEnter(Collision other)
     {
+        if (other.gameObject.layer == 6)
+        {
+            //Cop Sound already plays, so this is left blank
+        }
+        if (other.gameObject.layer == 7)
+        {
+            //If player hits wall
+            AudioManager.Instance.Play("sfx_BuildingThud");
+        }
         if (other.gameObject.GetComponent<ICrashable>() != null)
         {
             other.gameObject.GetComponent<ICrashable>().Crash(rb.velocity, transform.position);
