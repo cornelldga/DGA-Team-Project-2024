@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Floor 2 Mint
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_Parent: {fileID: 2100000, guid: ad0ec6bca2ba2fa4ead0b38c6b4b4843, type: 2}
+  m_Parent: {fileID: 2100000, guid: f868fc53cf62c7244923fdc4952c9efa, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
