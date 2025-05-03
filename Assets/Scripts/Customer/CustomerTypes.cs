@@ -3,57 +3,54 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class CustomerType
+public enum CustomerType
 {
-    public string name;
-    public RuntimeAnimatorController animatorController;
+    Beetle,
+    Grasshopper,
+    Ladybug,
+    Rolypoly
 }
 
 public class CustomerTypes : MonoBehaviour
 {
-    public CustomerType[] customerTypes;
-    public Customer customer;
+    [SerializeField] Customer customer;
 
     [SerializeField] Animator animator;
-    private CustomerType currentCustomerType;
+    [SerializeField] RuntimeAnimatorController[] animatorControllers;
 
     void Start()
     {
-        if (customerTypes.Length != 0 && animator != null)
+        switch (customer.customerType)
         {
-            Debug.Log(customerTypes);
-            string name = customer.customerName;
-            bool foundname = false;
-            // check if name is in customer types
-            foreach (CustomerType type in customerTypes)
-            {
-                if (type.name == name)
-                {
-                    currentCustomerType = type;
-                }
-            }
-            if (!foundname)
-            {
-                Debug.LogError("Customer Type " + name + " Not Found!! Check your customer Name in Customer script!");
-                throw new Exception("CUSTOMER TYPE NOT FOUND");
-            }
+            case CustomerType.Beetle:
+                animator.runtimeAnimatorController = animatorControllers[0];
+                break;
+            case CustomerType.Grasshopper:
+                animator.runtimeAnimatorController = animatorControllers[1];
+                break;
+            case CustomerType.Ladybug:
+                animator.runtimeAnimatorController = animatorControllers[2];
+                break;
+            case CustomerType.Rolypoly:
+                animator.runtimeAnimatorController = animatorControllers[3];
+                break;
         }
     }
 
     // Public methods to retrieve sound clips for this pedestrian type
     public string GetRandomOrderCompleteSound()
     {
-        return "sfx_complete_" + currentCustomerType.name;
+        return "sfx_complete_" + nameof(customer.customerType) + UnityEngine.Random.Range(1,3);
     }
 
     public string GetRandomHurtSound()
     {
-        return "sfx_hurt_" + currentCustomerType.name;
+        return "sfx_hurt_" + nameof(customer.customerType) + UnityEngine.Random.Range(1, 3);
     }
 
     public string GetRandomTakeOrderSound()
     {
-        return "sfx_order_" + currentCustomerType.name;
+        return "sfx_order_" + nameof(customer.customerType) + UnityEngine.Random.Range(1, 3);
     }
 
     private AudioClip GetRandomClip(AudioClip[] clips)
