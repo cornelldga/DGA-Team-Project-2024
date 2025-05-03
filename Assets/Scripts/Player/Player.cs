@@ -57,9 +57,10 @@ public class Player : MonoBehaviour, ICrashable
     private bool drifting = false;
     private bool startDrift = false;
     private int driftAngle = 0;
-    private bool canDrift = true;
+    private float driftCooldown;
     private bool downDrift = false;
     private bool slowMo = false;
+    private bool canDrift = true;
 
     // Input booleans
     private bool pressForward;
@@ -111,6 +112,7 @@ public class Player : MonoBehaviour, ICrashable
 
     private void Update()
     {
+        driftCooldown -= Time.deltaTime;
         animController.ResetConditions();
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
@@ -319,10 +321,10 @@ public class Player : MonoBehaviour, ICrashable
     void Drift()
     {
         const float pitchTime = 0.25f;
-        if ((pressDrift || slowMo) && canDrift && !driftOut)
+        if ((pressDrift || slowMo) && canDrift && !driftOut && driftCooldown <= 0)
         {
 
-            Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 4f, 7 * Time.deltaTime);
+            Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 3.5f, 7 * Time.deltaTime);
 
             if (!downDrift)
             {
@@ -379,7 +381,6 @@ public class Player : MonoBehaviour, ICrashable
                 }
                 rightDriftNum = 0;
                 leftDriftNum = 0;
-                StartCoroutine(DriftCooldown());
             }
             if (driftNum == 2)
             {
@@ -394,13 +395,15 @@ public class Player : MonoBehaviour, ICrashable
                 rb.AddRelativeForce(directionVector[curDirection] * 30);
             }
             Time.timeScale = 1;
-            Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 7.5f, 7 * Time.deltaTime);
+            Camera.main.orthographicSize = Mathf.MoveTowards(Camera.main.orthographicSize, 5f, 7 * Time.deltaTime);
             
-            if (Time.time >= driftTime && Camera.main.orthographicSize == 7.5f)
+            if (Time.time >= driftTime)
             {
                 drifting = false;
                 driftNum = 0;
                 driftOut = false;
+                Camera.main.orthographicSize = 5f;
+                driftCooldown = 2f;
             }
 
             //TODO Add update to audio manager to speed up audio
@@ -418,17 +421,6 @@ public class Player : MonoBehaviour, ICrashable
         yield return new WaitForSeconds(0.25f);
 
         slowMo = false;
-    }
-
-    private IEnumerator DriftCooldown()
-    {
-        canDrift = false;
-        smokeParticle.Play();
-
-        yield return new WaitForSeconds(1f);
-
-        smokeParticle.Stop();
-        canDrift = true;
     }
 
 

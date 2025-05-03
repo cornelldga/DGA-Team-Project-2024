@@ -5,10 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public enum CustomerType
 {
-    Beetle,
-    Grasshopper,
-    Ladybug,
-    Rolypoly
+    Beetle = 0,
+    Grasshopper = 1,
+    Ladybug = 2,
+    Rolypoly = 3
 }
 
 public class CustomerTypes : MonoBehaviour

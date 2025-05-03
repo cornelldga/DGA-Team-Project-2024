@@ -599,7 +599,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Return to Main Menu
+  m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -931,7 +931,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1057369693, guid: 7a2b4725029962d45bbde9fca8303b72, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7a2b4725029962d45bbde9fca8303b72, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1006,7 +1006,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1008174244, guid: 500e7bbeabb7c68498bc01ab76a7b97f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 500e7bbeabb7c68498bc01ab76a7b97f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1984,7 +1984,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -363}
-  m_SizeDelta: {x: 666.7079, y: 135.3332}
+  m_SizeDelta: {x: 400, y: 135.3332}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5524488886628375178
 CanvasRenderer:
@@ -2070,7 +2070,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 24316842006043466}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ReturnToMainMenu
+        m_MethodName: ReturnToLevelSelect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2279,7 +2279,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1646419405, guid: 603784237757f6242aa5190311401c94, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 603784237757f6242aa5190311401c94, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

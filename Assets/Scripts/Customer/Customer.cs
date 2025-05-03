@@ -84,6 +84,11 @@ public class Customer : MonoBehaviour, ICrashable
     [SerializeField] Color completeColor;
     PedAnimManager pedAnimManager;
 
+
+    void Awake()
+    {
+        customerType = (CustomerType)(UnityEngine.Random.Range(0, 4));
+    }
     void Start()
     {
         fadeTimer = fadeOutDuration;
@@ -168,7 +173,7 @@ public class Customer : MonoBehaviour, ICrashable
                     {
                         // Start the fading
                         currentState = CustomerState.Fading;
-                        GameManager.Instance.RemoveOrder(this);
+                        GameManager.Instance.FailOrder(this);
                         AudioManager.Instance.PlaySound("sfx_Anger");
                         rangeIndicatorSprite.color = Color.clear;
                         hungrySign.SetActive(false);
@@ -326,7 +331,6 @@ public class Customer : MonoBehaviour, ICrashable
         }
     }
     private Vector3 targetPosition;
-    private bool movingToEnd = true; // Determines direction
 
     private void MoveCustomer()
     {
