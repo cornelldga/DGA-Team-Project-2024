@@ -55,7 +55,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (maxCustomerOrders == 0) maxCustomerOrders = 3;
         Instance = this;
         GameManager gameManager = GameManager.Instance;
         player = FindObjectOfType<Player>();
@@ -92,26 +91,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (levelNumber == -1)
-        {
-            throw new System.Exception("You must set the level number based on its chronological order." +
-                " Set to 0 if test level or endless level");
-        }
-
         gameTimerText.text = gameTimer.ToString();
-        CountCustomers();
         numCustomersText.text = completedOrders.ToString() + "/" + numCustomers.ToString();
     }
-
-    /// <summary>
-    /// Counts customers in the scene to be used to track orders completed to the number of customers in that level
-    /// </summary>
-    void CountCustomers()
-    {
-        Customer[] customers = GameObject.FindObjectsOfType<Customer>();
-        numCustomers = customers.Length;
-    }
-
     /// <summary>
     /// Returns the reference to the Player script
     /// </summary>
@@ -216,7 +198,7 @@ public class GameManager : MonoBehaviour
         {
             customers.Add(customer);
             cookBarManager.AddToHotbar(customer);
-            customer.TookOrder();
+            getPlayer().AddOil(-20);
         }
     }/// <summary>
      /// Called when the player fails to deliver an order to a customer in time

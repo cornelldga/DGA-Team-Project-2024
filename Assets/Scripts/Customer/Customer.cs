@@ -8,7 +8,7 @@ using UnityEngine;
 public class Customer : MonoBehaviour, ICrashable
 {
     [Header("Customer Attributes")]
-    public string customerName;
+    public CustomerType customerType;
     public string orderName;
     /// <summary>
     /// The sprite that will be displayed in the game world.
@@ -55,9 +55,7 @@ public class Customer : MonoBehaviour, ICrashable
     /// <summary>
     /// Difference between customer disappearing and ring indicator disappearing
     /// </summary>
-    public float destroyDelay = 0f;
     private float fadeTimer = 0f;
-    private bool isFading = false;
     private float originalAlpha;
     private SpriteRenderer spriteRenderer;
     [Header("Knockback Settings")]
@@ -83,13 +81,16 @@ public class Customer : MonoBehaviour, ICrashable
     private CustomerState currentState;
     private Vector3 previousPosition;
     private AnimatorController animController;
-    private PedSoundManager pedSoundManager;
-    private CustomerSoundManager customerSoundManager;
-    private bool isPedSound = false;
     private Vector3 destination; // the destination of the customer if knocked back
+
+    [SerializeField] Color rangeColor;
+    [SerializeField] Color inRangeColor;
+    [SerializeField] Color completeColor;
+    PedAnimManager pedAnimManager;
 
     void Start()
     {
+        fadeTimer = fadeOutDuration;
         customerRenderer = GetComponent<Renderer>();
         currentState = CustomerState.WaitingForOrder;
         startingPosition = transform.position;
@@ -107,24 +108,12 @@ public class Customer : MonoBehaviour, ICrashable
 
         // Used for changing the alpha for the renderer/material
         spriteRenderer = customerSprite.GetComponent<SpriteRenderer>();
-        originalAlpha = spriteRenderer.color.a;
         // set animation speed to 0.5
         animController.changeAnimSpeed(0.4f);
         if (isMovingNorthSouth)
         {
             SpriteRenderer spriteRenderer = customerSprite.GetComponent<SpriteRenderer>();
             spriteRenderer.flipX = true;
-        }
-
-        pedSoundManager = GetComponent<PedSoundManager>();
-        customerSoundManager = GetComponent<CustomerSoundManager>();
-        if (pedSoundManager == null)
-        {
-            isPedSound = false;
-        }
-        else
-        {
-            isPedSound = true;
         }
         rb = GetComponent<Rigidbody>();
 
@@ -135,14 +124,9 @@ public class Customer : MonoBehaviour, ICrashable
     {
         if (currentState != CustomerState.Fading || currentState != CustomerState.Fading)
         {
-            // range highlight color is R = 80 G = 140 B = 80 A = 0.7
-            Color highlightColor = new Color(0.2f, 0.65f, 0.2f, 0.9f);
-            // range color is light white
-            Color rangeColor = new Color(1f, 1f, 1f, 0.5f);
-
             bool inRange = detectionRange.GetComponent<CustomerRange>().playerInRange;
             rangeIndicatorSprite.color = inRange
-                ? highlightColor
+                ? inRangeColor
                 : rangeColor;
         }
 
@@ -154,17 +138,26 @@ public class Customer : MonoBehaviour, ICrashable
                 if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && oil >= 20)
                 {
                     GameManager.Instance.TakeOrder(this);
-                    if (isPedSound)
+                    currentState = CustomerState.Cooking;
+                    timer = 0f;
+                    orderTaken = true;
+                    switch (customerType)
                     {
-                        pedSoundManager.PlayTakeOrderSound(transform.position);
-                    }
-                    else
-                    {
-                        customerSoundManager.PlayTakeOrderSound(transform.position);
+                        case CustomerType.Beetle:
+                            AudioManager.Instance.PlaySound("sfx_order_Beetle" + UnityEngine.Random.Range(1, 3));
+                            break;
+                        case CustomerType.Grasshopper:
+                            AudioManager.Instance.PlaySound("sfx_order_Grasshopper" + UnityEngine.Random.Range(1, 3));
+                            break;
+                        case CustomerType.Ladybug:
+                            AudioManager.Instance.PlaySound("sfx_order_Ladybug" + UnityEngine.Random.Range(1, 3));
+                            break;
+                        case CustomerType.Rolypoly:
+                            AudioManager.Instance.PlaySound("sfx_order_Rolypoly" + UnityEngine.Random.Range(1, 3));
+                            break;
                     }
                 }
                 break;
-
             case CustomerState.Cooking:
                 if (cookTime <= 0 && !foodReady)
                 {
@@ -179,17 +172,8 @@ public class Customer : MonoBehaviour, ICrashable
                     {
                         // Start the fading
                         currentState = CustomerState.Fading;
-                        StartFading();
                         GameManager.Instance.RemoveOrder(this);
                         AudioManager.Instance.PlaySound("sfx_Anger");
-                        if (isPedSound)
-                        {
-                            pedSoundManager.PlayOrderFailedSound(transform.position);
-                        }
-                        else
-                        {
-                            customerSoundManager.PlayOrderFailedSound(transform.position);
-                        }
                     }
                     break;
                 }
@@ -221,24 +205,6 @@ public class Customer : MonoBehaviour, ICrashable
         // line up the rotation angle with the camera
         animController.transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0);
     }
-    /// <summary>
-    /// Called when the player accepts the order
-    /// </summary>
-    public void TookOrder()
-    {
-        currentState = CustomerState.Cooking;
-        timer = 0f;
-        orderTaken = true;
-        GameManager.Instance.getPlayer().AddOil(-20);
-        if (isPedSound)
-        {
-            pedSoundManager.PlayTakeOrderSound(transform.position);
-        }
-        else
-        {
-            customerSoundManager.PlayTakeOrderSound(transform.position);
-        }
-    }
 
     /// <summary>
     /// Completes the order for the customer. 
@@ -248,16 +214,24 @@ public class Customer : MonoBehaviour, ICrashable
     public void ReceiveOrder()
     {
         currentState = CustomerState.Fading;
-        StartFading();
         GameManager.Instance.CompleteOrder(this);
         isOrderCompleted = true;
-        if (isPedSound)
+        rangeIndicatorSprite.color = Color.clear;
+        hungrySign.SetActive(false);
+        switch (customerType)
         {
-            pedSoundManager.PlayOrderCompleteSound(transform.position);
-        }
-        else
-        {
-            customerSoundManager.PlayOrderCompleteSound(transform.position);
+            case CustomerType.Beetle:
+                AudioManager.Instance.PlaySound("sfx_complete_Beetle" + UnityEngine.Random.Range(1, 3));
+                break;
+            case CustomerType.Grasshopper:
+                AudioManager.Instance.PlaySound("sfx_complete_Grasshopper" + UnityEngine.Random.Range(1, 3));
+                break;
+            case CustomerType.Ladybug:
+                AudioManager.Instance.PlaySound("sfx_complete_Ladybug" + UnityEngine.Random.Range(1, 3));
+                break;
+            case CustomerType.Rolypoly:
+                AudioManager.Instance.PlaySound("sfx_complete_Rolypoly" + UnityEngine.Random.Range(1, 3));
+                break;
         }
     }
 
@@ -285,13 +259,20 @@ public class Customer : MonoBehaviour, ICrashable
                 knockbackTimer = knockbackCooldown; // Start knockback cooldown
 
                 // play hurt sound
-                if (isPedSound)
+                switch (customerType)
                 {
-                    pedSoundManager.PlayHurtSound(transform.position);
-                }
-                else
-                {
-                    customerSoundManager.PlayHurtSound(transform.position);
+                    case CustomerType.Beetle:
+                        AudioManager.Instance.PlaySound("sfx_hurt_Beetle" + UnityEngine.Random.Range(1, 3));
+                        break;
+                    case CustomerType.Grasshopper:
+                        AudioManager.Instance.PlaySound("sfx_hurt_Grasshopper" + UnityEngine.Random.Range(1, 3));
+                        break;
+                    case CustomerType.Ladybug:
+                        AudioManager.Instance.PlaySound("sfx_hurt_Ladybug" + UnityEngine.Random.Range(1, 3));
+                        break;
+                    case CustomerType.Rolypoly:
+                        AudioManager.Instance.PlaySound("sfx_hurt_Rolypoly" + UnityEngine.Random.Range(1, 3));
+                        break;
                 }
 
                 Debug.Log("Crash! Pedestrian knocked back with force: " + knockbackForce);
@@ -332,40 +313,18 @@ public class Customer : MonoBehaviour, ICrashable
 
     // PRIVATE METHODS ----------------------------
 
-
-    private void StartFading()
-    {
-        isFading = true;
-        fadeTimer = 0f;
-    }
-
     private void HandleFading()
     {
-        if (!isFading) return;
-
-        fadeTimer += Time.deltaTime;
+        fadeTimer -= Time.deltaTime;
         float normalizedTime = fadeTimer / fadeOutDuration;
-
-        if (normalizedTime <= 1f)
+        if(normalizedTime <= 0)
         {
-            float alpha = Mathf.Lerp(originalAlpha, 0f, normalizedTime);
-            Color color = spriteRenderer.color;
-            color.a = alpha;
-            spriteRenderer.color = color;
-
-            Color rangeColor = rangeIndicatorSprite.color;
-            rangeColor.a = alpha;
-            rangeIndicatorSprite.color = rangeColor;
-
-            Color hungryColor = hungrySign.GetComponent<SpriteRenderer>().color;
-            hungryColor.a = alpha;
-            hungrySign.GetComponent<SpriteRenderer>().color = hungryColor;
+            Destroy(gameObject);
         }
         else
         {
-            isFading = false;
-            currentState = CustomerState.Done;
-            Destroy(gameObject, destroyDelay);
+            spriteRenderer.color = new Color(255, 255, 255, normalizedTime);
+            Color hungryColor = hungrySign.GetComponent<SpriteRenderer>().color;
         }
     }
     private Vector3 targetPosition;
@@ -423,48 +382,6 @@ public class Customer : MonoBehaviour, ICrashable
             previousPosition = transform.position;
         }
     }
-
-    // private void SetupInteractionRangeIndicator()
-    // {
-    //     // Get or Add a LineRenderer component
-    //     lineRenderer = GetComponent<LineRenderer>();
-    //     if (lineRenderer == null)
-    //     {
-    //         lineRenderer = gameObject.AddComponent<LineRenderer>();
-    //     }
-
-    //     // Configure LineRenderer properties
-    //     lineRenderer.positionCount = 0; // Will be set later
-    //     lineRenderer.loop = true; // Close the circle
-    //     lineRenderer.useWorldSpace = false; // Relative to the GameObject
-    //     lineRenderer.startWidth = 0.05f;
-    //     lineRenderer.endWidth = 0.05f;
-    //     lineRenderer.startColor = Color.blue;
-    //     lineRenderer.endColor = Color.blue;
-    //     lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // Use a simple material
-
-    //     // Create the circle
-    //     CreateCirclePoints();
-    // }
-
-    // private void CreateCirclePoints()
-    // {
-    //     int segments = 100; // Number of segments to make the circle smooth
-    //     float angle = 0f;
-
-    //     lineRenderer.positionCount = segments + 1; // +1 to close the circle
-
-    //     for (int i = 0; i <= segments; i++)
-    //     {
-    //         float x = Mathf.Cos(Mathf.Deg2Rad * angle) * interactionRange;
-    //         float z = Mathf.Sin(Mathf.Deg2Rad * angle) * interactionRange;
-
-    //         lineRenderer.SetPosition(i, new Vector3(x, 0f, z));
-
-    //         angle += (360f / segments);
-    //     }
-    // }
-
     private void UpdateRangeIndicator()
     {
         // Make the ring’s world‑space diameter = interactionRange * 2

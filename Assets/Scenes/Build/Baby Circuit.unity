@@ -346,6 +346,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4659808164033029172, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5905870207526619576, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
       propertyPath: twoStarRating
       value: 3
@@ -407,7 +411,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8775262207901482751, guid: b0285e1781be588429decf1a154c7ab5, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0285e1781be588429decf1a154c7ab5, type: 3}

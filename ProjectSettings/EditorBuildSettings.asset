@@ -17,9 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level Template.unity
     guid: b6d68de44a1a6654d966aa9a5ce33314
-  - enabled: 0
-    path: Assets/Scenes/Build/Liam Level.unity
-    guid: ad7331f491fbf48d984356117bd2b107
   - enabled: 1
     path: Assets/Scenes/Build/Baby Circuit.unity
     guid: 2d70dd3d56bd2034f8716eb642d81d35
@@ -29,4 +26,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Build/Liam Circuit.unity
     guid: adc4df2c050ad452f9872ac8c480d83a
+  - enabled: 1
+    path: Assets/Scenes/Build/Chinatown.unity
+    guid: 5b039deb4b6764ef2a79027e6ce3b0bc
+  - enabled: 1
+    path: Assets/Scenes/Build/Liam Star.unity
+    guid: bc8500efdcf3745f992fcbd7895c8289
+  - enabled: 1
+    path: Assets/Scenes/Spring Test Levels/Jordan-level-1.unity
+    guid: b38951c90a5b68040b982d0c76d45ab7
   m_configObjects: {}
