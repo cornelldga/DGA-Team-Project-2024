@@ -1,4 +1,6 @@
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// The Customer class is responsible for managing the customer's attributes, state, and behavior. 
@@ -38,14 +40,8 @@ public class Customer : MonoBehaviour, ICrashable
     /// if the customer is moving back and forth along the Z-axis. If unchecked, the customer will move along the X-axis (West and East).
     /// </summary>
     public bool isMovingNorthSouth = true;
-    /// <summary>
-    /// The amplitude of the oscillation.
-    /// </summary>
-    public float movementAmplitude = .25f;
-    /// <summary>
-    /// The speed of the oscillation.
-    /// </summary>
-    public float movementFrequency = 1f;
+
+    [SerializeField] float moveSpeed;
 
     [Header("Fade Settings")]
     /// <summary>
@@ -67,7 +63,6 @@ public class Customer : MonoBehaviour, ICrashable
     bool isInvincible = false;
     float invincibilityTimer = 0f;
     Rigidbody rb;
-    [SerializeField] float knockbackScale = 3f;
     [Tooltip("The maximum force that can be applied to a pedestrian")]
     [SerializeField] float maxKnockback = 25f;
 
@@ -85,6 +80,7 @@ public class Customer : MonoBehaviour, ICrashable
 
     [SerializeField] Color rangeColor;
     [SerializeField] Color inRangeColor;
+    [SerializeField] Color cookingColor;
     [SerializeField] Color completeColor;
     PedAnimManager pedAnimManager;
 
@@ -122,7 +118,7 @@ public class Customer : MonoBehaviour, ICrashable
 
     void Update()
     {
-        if (currentState != CustomerState.Fading || currentState != CustomerState.Fading)
+        if (currentState != CustomerState.Fading && currentState == CustomerState.Cooking && foodReady)
         {
             bool inRange = detectionRange.GetComponent<CustomerRange>().playerInRange;
             rangeIndicatorSprite.color = inRange
@@ -134,8 +130,7 @@ public class Customer : MonoBehaviour, ICrashable
         switch (currentState)
         {
             case CustomerState.WaitingForOrder:
-                float oil = GameManager.Instance.getPlayer().GetOil();
-                if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && oil >= 20)
+                if (detectionRange.GetComponent<CustomerRange>().playerInRange && Input.GetKeyDown(KeyCode.E) && GameManager.Instance.getPlayer().GetOil() >= 20)
                 {
                     GameManager.Instance.TakeOrder(this);
                     currentState = CustomerState.Cooking;
@@ -156,6 +151,7 @@ public class Customer : MonoBehaviour, ICrashable
                             AudioManager.Instance.PlaySound("sfx_order_Rolypoly" + UnityEngine.Random.Range(1, 3));
                             break;
                     }
+                    rangeIndicatorSprite.color = cookingColor;
                 }
                 break;
             case CustomerState.Cooking:
@@ -174,6 +170,8 @@ public class Customer : MonoBehaviour, ICrashable
                         currentState = CustomerState.Fading;
                         GameManager.Instance.RemoveOrder(this);
                         AudioManager.Instance.PlaySound("sfx_Anger");
+                        rangeIndicatorSprite.color = Color.clear;
+                        hungrySign.SetActive(false);
                     }
                     break;
                 }
@@ -198,12 +196,11 @@ public class Customer : MonoBehaviour, ICrashable
         {
             timer += Time.deltaTime;
         }
+    }
 
-        // move the customer back and forth
+    private void FixedUpdate()
+    {
         MoveCustomer();
-
-        // line up the rotation angle with the camera
-        animController.transform.rotation = Quaternion.Euler(Camera.main.transform.rotation.eulerAngles.x, Camera.main.transform.rotation.eulerAngles.y, 0);
     }
 
     /// <summary>
@@ -245,7 +242,8 @@ public class Customer : MonoBehaviour, ICrashable
             {
                 Vector3 knockbackDirection = (transform.position - position).normalized;
                 knockbackDirection.y = 0; // Ignore vertical direction
-                float knockbackForce = Mathf.Min(magnitude * knockbackScale, maxKnockback);
+                float knockbackForce = Mathf.Abs(magnitude) < maxKnockback ? magnitude :
+                    magnitude < 0 ? -maxKnockback :  maxKnockback;
 
                 knockbackDirection += Vector3.up * 0.2f;
                 knockbackDirection.Normalize();
@@ -334,7 +332,7 @@ public class Customer : MonoBehaviour, ICrashable
     {
         if (isKnockedBack)
         {
-            knockbackTimer -= Time.deltaTime;
+            knockbackTimer -= Time.fixedDeltaTime;
 
             animController.SetMovingNorth(false);
             animController.SetMovingSouth(false);
@@ -357,29 +355,10 @@ public class Customer : MonoBehaviour, ICrashable
         }
         else
         {
-            // Define movement axis
-            Vector3 moveDirection = isMovingNorthSouth ? Vector3.forward : Vector3.right;
-
-            // Define two endpoints
-            Vector3 start = startingPosition - moveDirection * movementAmplitude;
-            Vector3 end = startingPosition + moveDirection * movementAmplitude;
-
-            // Set the target based on movement direction
-            targetPosition = movingToEnd ? end : start;
-
-            // Move towards the target
-            float step = movementFrequency * Time.deltaTime;
-            rb.MovePosition(Vector3.MoveTowards(transform.position, targetPosition, step));
-
-            // Check if reached the target
-            if (Vector3.Distance(transform.position, targetPosition) < 0.05f)
+            if(Vector3.Distance(transform.position,startingPosition) > .1f)
             {
-                movingToEnd = !movingToEnd; // Toggle direction
+                rb.AddForce((startingPosition - transform.position).normalized * moveSpeed, ForceMode.Force);
             }
-
-            // Update animation direction
-            SetAnimationDirection(targetPosition - transform.position);
-            previousPosition = transform.position;
         }
     }
     private void UpdateRangeIndicator()

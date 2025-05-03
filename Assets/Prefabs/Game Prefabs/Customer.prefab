@@ -1,5 +1,74 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &401065406143351411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8907873824550015417}
+  - component: {fileID: 5965159382882559858}
+  - component: {fileID: 2862497983903477301}
+  m_Layer: 0
+  m_Name: Fade Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8907873824550015417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401065406143351411}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0, z: -1}
+  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4229518997468610015}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5965159382882559858
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401065406143351411}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2862497983903477301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401065406143351411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ed3bcd9288518459ff9e680ecb3dfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeCheckMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1341076940169360861
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,6 +192,7 @@ Transform:
   - {fileID: 6595840706919743982}
   - {fileID: 8238507828846755103}
   - {fileID: 1641494726223866116}
+  - {fileID: 8907873824550015417}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &3837978546002499609
@@ -195,16 +265,15 @@ MonoBehaviour:
   rangeIndicatorSprite: {fileID: 5588073943357132575}
   hungrySign: {fileID: 1341076940169360861}
   isMovingNorthSouth: 1
-  movementAmplitude: 2
-  movementFrequency: 0.75
+  moveSpeed: 20
   fadeOutDuration: 7
   invincibilityDuration: 3
   knockbackCooldown: 0.5
-  knockbackThreshold: 0.5
-  knockbackScale: 0.02
-  maxKnockback: 1
+  knockbackThreshold: 2
+  maxKnockback: 10
   rangeColor: {r: 1, g: 1, b: 1, a: 1}
   inRangeColor: {r: 0, g: 1, b: 0.1530838, a: 1}
+  cookingColor: {r: 1, g: 0.5006008, b: 0, a: 1}
   completeColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0}
 --- !u!114 &5126105491987767177
 MonoBehaviour:
