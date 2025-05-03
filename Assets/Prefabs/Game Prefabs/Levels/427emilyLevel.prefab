@@ -28323,7 +28323,7 @@ MonoBehaviour:
   oneStarRating: 4
   twoStarRating: 6
   threeStarRating: 8
-  failLoseAmount: 0
+  failLoseAmount: 4
   gameTimerText: {fileID: 2482840658094039816}
   numCustomersText: {fileID: 8416449206979891496}
   gameCanvas: {fileID: 7842727777415789410}
