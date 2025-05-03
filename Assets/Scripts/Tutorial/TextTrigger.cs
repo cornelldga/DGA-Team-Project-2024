@@ -1,0 +1,25 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
+using UnityEngine;
+
+public class TextTrigger : MonoBehaviour
+{
+
+    [SerializeField] string tutorialMessage;
+    [SerializeField] TutorialScript tutorial;
+    bool activated = false; // message only appears once
+
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!activated)
+        {
+            //Debug.Log(tutorialMessage);
+            tutorial.ShowMessage(tutorialMessage);
+            activated = true;
+        }
+    }
+}

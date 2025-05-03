@@ -43,7 +43,8 @@ public class Player : MonoBehaviour, ICrashable
         Vector3.back+Vector3.left,
         Vector3.left,
         Vector3.forward+Vector3.left};
-    private int curDirection = 0;
+    // made visible to customize starting direction
+    [SerializeField]  private int curDirection = 0;
     private bool isInvincible = false;
     private float turnDelay = 0;
     private float turnRate = 0.25f;
