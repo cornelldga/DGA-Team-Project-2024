@@ -14,5 +14,6 @@ public class TutorialScript : MonoBehaviour
         {
             cop.SetActive(true);
         }
+
     }
 }
