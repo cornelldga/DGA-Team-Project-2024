@@ -9,24 +9,29 @@ public class TutorialScript : MonoBehaviour
     [SerializeField] private GameObject cop;
     [SerializeField] GameObject tooltip;
     [SerializeField] TMP_Text tooltipMessage;
+    [SerializeField] Button OKButton;
+
+    [SerializeField] GameObject objectiveLabel;
+    [SerializeField] TMP_Text objectiveMessage;
+
     // the number of seconds a message remains on screen before disappearing.
-    [SerializeField] private float messageDuration = 10;
-    private float messageTimer = 0;
+    //[SerializeField] private float messageDuration = 10;
+    //private float messageTimer = 0;
     private bool activeCop = false;
 
     // Update is called once per frame
     void Update()
     {
         // only show tooltip message for a set amount of time
-        if (messageTimer > 0)
-        {
-            Debug.Log(messageTimer);
-            messageTimer -= Time.deltaTime;
-            if (messageTimer <= 0)
-            {
-                tooltip.SetActive(false);
-            }
-        }
+        //if (messageTimer > 0)
+        //{
+        //    Debug.Log(messageTimer);
+        //    messageTimer -= Time.deltaTime;
+        //    if (messageTimer <= 0)
+        //    {
+        //        tooltip.SetActive(false);
+        //    }
+        //}
 
 
         // spawn cop after first order is taken. 
@@ -38,15 +43,30 @@ public class TutorialScript : MonoBehaviour
         }
     }
 
+    // Method called when OK button is pressed
+    public void OKButtonPressed()
+    {
+        tooltip.SetActive(false);
+        GameManager.Instance.ResumeGame();
+
+        objectiveLabel.SetActive(true);
+    }
+
     // Pause game, show given tutorial message on the screen
     public void ShowMessage(string message)
     {
+        objectiveLabel.SetActive(false);
 
-        //GameManager.Instance.PauseGame();
+        GameManager.Instance.FreezeGame();
         tooltipMessage.text = message;
         tooltip.SetActive(true);
+        
+        //messageTimer = messageDuration;
 
-        messageTimer = messageDuration;
+    }
 
+    public void setObjectiveMessage(string message)
+    {
+        objectiveMessage.text = message;
     }
 }
