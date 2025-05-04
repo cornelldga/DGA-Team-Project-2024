@@ -9,7 +9,8 @@ public class Customer : MonoBehaviour, ICrashable
 {
     [Header("Customer Attributes")]
     public CustomerType customerType;
-    public string orderName;
+    public int foodType;
+    public int maxFoodType = 3;
     /// <summary>
     /// The sprite that will be displayed in the game world.
     /// </summary>
@@ -85,6 +86,7 @@ public class Customer : MonoBehaviour, ICrashable
     void Awake()
     {
         customerType = (CustomerType)(Random.Range(0, 4));
+        foodType = Random.Range(0, maxFoodType);
     }
     void Start()
     {
@@ -269,31 +271,6 @@ public class Customer : MonoBehaviour, ICrashable
         }
     }
 
-#if UNITY_EDITOR
-    private void OnDrawGizmosSelected()
-    {
-        // draw lines between points
-        Gizmos.color = Color.cyan;
-        Vector3 worldA = transform.position + patrolPointA;
-        Vector3 worldB = transform.position + patrolPointB;
-        Gizmos.DrawLine(worldA, worldB);
-        Gizmos.DrawSphere(worldA, 0.1f);
-        Gizmos.DrawSphere(worldB, 0.1f);
-
-        // make the points draggable
-        UnityEditor.EditorGUI.BeginChangeCheck();
-        Vector3 newWorldA = UnityEditor.Handles.PositionHandle(worldA, Quaternion.identity);
-        Vector3 newWorldB = UnityEditor.Handles.PositionHandle(worldB, Quaternion.identity);
-        if (UnityEditor.EditorGUI.EndChangeCheck())
-        {
-            // record undo so changes can be undone
-            UnityEditor.Undo.RecordObject(this, "Move Patrol Point");
-            patrolPointA = newWorldA - transform.position;
-            patrolPointB = newWorldB - transform.position;
-        }
-    }
-#endif
-
     // GETTERS ----------------------------
 
     /// <returns> If this customer's order is already taken. </returns>
@@ -326,6 +303,30 @@ public class Customer : MonoBehaviour, ICrashable
 
 
     // PRIVATE METHODS ----------------------------
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        // draw lines between points
+        Gizmos.color = Color.cyan;
+        Vector3 worldA = transform.position + patrolPointA;
+        Vector3 worldB = transform.position + patrolPointB;
+        Gizmos.DrawLine(worldA, worldB);
+        Gizmos.DrawSphere(worldA, 0.1f);
+        Gizmos.DrawSphere(worldB, 0.1f);
+
+        // make the points draggable
+        UnityEditor.EditorGUI.BeginChangeCheck();
+        Vector3 newWorldA = UnityEditor.Handles.PositionHandle(worldA, Quaternion.identity);
+        Vector3 newWorldB = UnityEditor.Handles.PositionHandle(worldB, Quaternion.identity);
+        if (UnityEditor.EditorGUI.EndChangeCheck())
+        {
+            // record undo so changes can be undone
+            UnityEditor.Undo.RecordObject(this, "Move Patrol Point");
+            patrolPointA = newWorldA - transform.position;
+            patrolPointB = newWorldB - transform.position;
+        }
+    }
+#endif
 
     private void HandleFading()
     {
@@ -341,7 +342,6 @@ public class Customer : MonoBehaviour, ICrashable
             Color hungryColor = hungrySign.GetComponent<SpriteRenderer>().color;
         }
     }
-    private Vector3 targetPosition;
 
     private void MoveCustomer()
     {
