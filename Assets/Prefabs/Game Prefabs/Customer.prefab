@@ -264,6 +264,8 @@ MonoBehaviour:
   detectionRange: {fileID: 5696436274596760233}
   rangeIndicatorSprite: {fileID: 5588073943357132575}
   hungrySign: {fileID: 1341076940169360861}
+  patrolPointA: {x: -1.36, y: 0, z: 0}
+  patrolPointB: {x: 1.47, y: 0, z: 0}
   isMovingNorthSouth: 1
   moveSpeed: 20
   fadeOutDuration: 7
