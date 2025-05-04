@@ -58,6 +58,7 @@ MonoBehaviour:
   nitro1: 304
   nitro2: 303
   drift: 32
+  curDirection: 0
   minCrashSpeed: 3
   animController: {fileID: 7051094709918193244}
   model: {fileID: 6523499825807090859}
@@ -281,7 +282,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: db7c2133589f4694a8994f942ae1c8a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1644e385282d3b448a081bfff1aabfdb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
