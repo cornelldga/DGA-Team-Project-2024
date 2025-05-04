@@ -726,7 +726,7 @@ MonoBehaviour:
   gameCanvas: {fileID: 7196769242683853668}
   loseScreen: {fileID: 2133578081533789098}
   winScreen: {fileID: 1227599742102206150}
-  pauseScreen: {fileID: 0}
+  pauseScreen: {fileID: 75122960018953432}
   oneStar: {fileID: 3083085380112073992}
   twoStar: {fileID: 4807510568962056008}
   threeStar: {fileID: 8699740055644379289}
@@ -2000,6 +2000,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32a1a809c558df74baf20e146f7fd40f, type: 3}
+--- !u!1 &75122960018953432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2687427875202264984, guid: 32a1a809c558df74baf20e146f7fd40f, type: 3}
+  m_PrefabInstance: {fileID: 2612451201837316928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8609511664414228447 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5997224294104679583, guid: 32a1a809c558df74baf20e146f7fd40f, type: 3}
