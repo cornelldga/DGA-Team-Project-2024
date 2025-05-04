@@ -33,18 +33,15 @@ public class Customer : MonoBehaviour, ICrashable
     public SpriteRenderer rangeIndicatorSprite;
     public GameObject hungrySign;
 
-    [Header("Patrol Points (editor only)")]
+    [Header("Moving Settings")]
     [Tooltip("Drag these in Scene to set the back-and-forth patrol endpoints.")]
     public Vector3 patrolPointA = Vector3.zero;
     public Vector3 patrolPointB = Vector3.zero;
-
-    [Header("Movement Settings")]
-    /// <summary>
-    /// if the customer is moving back and forth along the Z-axis. If unchecked, the customer will move along the X-axis (West and East).
-    /// </summary>
-    public bool isMovingNorthSouth = true;
-
     [SerializeField] float moveSpeed;
+
+    [Header("Patrol Obstacle Detection")]
+    [Tooltip("Layers considered obstacles for patrol direction.")]
+    public LayerMask obstacleMask;
 
     [Header("Fade Settings")]
     /// <summary>
@@ -94,6 +91,8 @@ public class Customer : MonoBehaviour, ICrashable
         fadeTimer = fadeOutDuration;
         currentState = CustomerState.WaitingForOrder;
         startingPosition = transform.position;
+        // if the default east-west path is blocked, switch to north-south
+        DetectAndSwitchPatrolAxis();
         // set the radius of the customer's detection range
         detectionRange.GetComponent<SphereCollider>().radius = interactionRange;
 
@@ -110,11 +109,6 @@ public class Customer : MonoBehaviour, ICrashable
         spriteRenderer = customerSprite.GetComponent<SpriteRenderer>();
         // set animation speed to 0.5
         animController.changeAnimSpeed(0.4f);
-        if (isMovingNorthSouth)
-        {
-            SpriteRenderer spriteRenderer = customerSprite.GetComponent<SpriteRenderer>();
-            spriteRenderer.flipX = true;
-        }
         rb = GetComponent<Rigidbody>();
 
         hungrySign.SetActive(false);
@@ -194,10 +188,6 @@ public class Customer : MonoBehaviour, ICrashable
             case CustomerState.Done:
                 break;
         }
-
-        if (currentState != CustomerState.WaitingForOrder && currentState != CustomerState.Done)
-        { }
-
     }
 
     void FixedUpdate()
@@ -389,14 +379,43 @@ public class Customer : MonoBehaviour, ICrashable
             // if far from target, push toward it
             if (Vector3.Distance(transform.position, target) > 0.1f)
             {
-                rb.AddForce((target - transform.position).normalized * moveSpeed, ForceMode.Force);
+                // move toward target
+                rb.MovePosition(Vector3.MoveTowards(transform.position, target, moveSpeed * Time.fixedDeltaTime));
                 SetAnimationDirection(target - transform.position);
+                previousPosition = transform.position;
             }
             else
             {
                 // reached endpoint: flip direction
                 movingToB = !movingToB;
+                // (Optional) Instantly flip animation direction at endpoint
+                Vector3 newTarget = movingToB ? worldB : worldA;
+                SetAnimationDirection(newTarget - transform.position);
             }
+        }
+    }
+
+
+    /// <summary>
+    /// Check the current patrol axis for obstacles; if any are detected, switch to the perpendicular axis.
+    /// </summary>
+    private void DetectAndSwitchPatrolAxis()
+    {
+        // compute world-space endpoints
+        Vector3 worldA = startingPosition + patrolPointA;
+        Vector3 worldB = startingPosition + patrolPointB;
+        Vector3 dir = (worldB - worldA).normalized;
+        float dist = Vector3.Distance(worldA, worldB);
+
+        // if there's any obstacle between A and B
+        if (Physics.Raycast(worldA, dir, dist, obstacleMask))
+        {
+            // swap to north-south: use same distance but along Z instead of X
+            float half = dist / 2f;
+            patrolPointA = new Vector3(0f, 0f, half);
+            patrolPointB = new Vector3(0f, 0f, -half);
+            // reset moving direction
+            movingToB = true;
         }
     }
 
