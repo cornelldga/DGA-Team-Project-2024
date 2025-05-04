@@ -281,6 +281,24 @@ public class Player : MonoBehaviour, ICrashable
         }
     }
 
+    // Turns the player right for the sake of the tutorial.
+    public void TurnRight()
+    {
+        if (curDirection == 7)
+        {
+            curDirection = 0;
+        }
+        else
+        {
+            curDirection++;
+        }
+        if (startDrift)
+        {
+            leftDriftNum = 0;
+            rightDriftNum++;
+        }
+    }
+
     // The player can use A and D to turn to the next of 8 possible directions.
     void Turn()
     {

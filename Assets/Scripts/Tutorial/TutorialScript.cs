@@ -26,6 +26,9 @@ public class TutorialScript : MonoBehaviour
     {
         objectiveLabel.SetActive(false);
         GameManager.Instance.FreezeGame();
+
+        GameManager.Instance.getPlayer().TurnRight();
+        GameManager.Instance.getPlayer().TurnRight();
     }
 
     // Update is called once per frame
