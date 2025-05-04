@@ -6209,6 +6209,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7221956013279956581, guid: e984f57829eb6704583f57fc0b0a271c, type: 3}
+      propertyPath: pauseScreen
+      value: 
+      objectReference: {fileID: 2687427875202264984, guid: 32a1a809c558df74baf20e146f7fd40f, type: 3}
     - target: {fileID: 7284249944879408012, guid: e984f57829eb6704583f57fc0b0a271c, type: 3}
       propertyPath: tutorialMessage
       value: To make a more precise turn, hold SPACE to drift!
