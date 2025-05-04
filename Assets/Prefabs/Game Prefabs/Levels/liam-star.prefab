@@ -14654,6 +14654,9 @@ Transform:
   - {fileID: 709107572555691328}
   - {fileID: 935070510380089154}
   - {fileID: 238120169862637873}
+  - {fileID: 5935083961006829830}
+  - {fileID: 8452377658415911680}
+  - {fileID: 6427283373577918576}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6024141968841111941
@@ -22729,6 +22732,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -22803,6 +22810,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -22877,6 +22888,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -22951,6 +22966,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -23227,6 +23246,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -23301,6 +23324,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -23375,6 +23402,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -23527,6 +23558,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -23679,6 +23714,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -23815,6 +23854,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -23889,6 +23932,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24103,6 +24150,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24177,6 +24228,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24251,6 +24306,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24325,6 +24384,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24461,6 +24524,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24535,6 +24602,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24609,6 +24680,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24683,6 +24758,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24757,6 +24836,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24823,6 +24906,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9162987610825445092, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
   m_PrefabInstance: {fileID: 3805346755835658701}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3843194641276488833
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8807523061468402261}
+    m_Modifications:
+    - target: {fileID: 4732837717268947645, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+      propertyPath: m_Name
+      value: car(backward)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811362741101958385, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.6817167
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811362741101958385, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811362741101958385, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 19.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811362741101958385, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811362741101958385, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811362741101958385, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811362741101958385, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811362741101958385, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811362741101958385, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811362741101958385, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+--- !u!4 &6427283373577918576 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7811362741101958385, guid: 6d8ff90c85117493a86b9bcf0b54e8cb, type: 3}
+  m_PrefabInstance: {fileID: 3843194641276488833}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4114409844846908102
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24831,6 +24976,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24905,6 +25054,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -24979,6 +25132,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -25053,6 +25210,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -25127,6 +25288,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -25325,6 +25490,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -25539,6 +25708,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -25613,6 +25786,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building_1
@@ -25765,6 +25942,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building_2
@@ -25839,6 +26020,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -25913,6 +26098,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -25978,6 +26167,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 9162987610825445092, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
   m_PrefabInstance: {fileID: 5435416727313037367}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5445882649481476317
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8807523061468402261}
+    m_Modifications:
+    - target: {fileID: 370756599233453073, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_Name
+      value: car(forward)_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 16.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+--- !u!4 &8452377658415911680 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+  m_PrefabInstance: {fileID: 5445882649481476317}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5499612412816684629
 PrefabInstance:
@@ -26065,6 +26316,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -26139,6 +26394,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -26213,6 +26472,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -26287,6 +26550,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -26361,6 +26628,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -26435,6 +26706,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -26509,6 +26784,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -26661,6 +26940,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -26735,6 +27018,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -26871,6 +27158,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27007,6 +27298,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27143,6 +27438,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27217,6 +27516,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27291,6 +27594,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27443,6 +27750,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27517,6 +27828,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27591,6 +27906,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27665,6 +27984,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27739,6 +28062,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27813,6 +28140,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27887,6 +28218,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -27961,6 +28296,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -28035,6 +28374,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -28171,6 +28514,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -28245,6 +28592,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -28310,6 +28661,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 9162987610825445092, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
   m_PrefabInstance: {fileID: 7811517147616935119}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7819074354837478107
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8807523061468402261}
+    m_Modifications:
+    - target: {fileID: 370756599233453073, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_Name
+      value: car(forward)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -13.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+--- !u!4 &5935083961006829830 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4530420942615768029, guid: 446582f11a0d74830bf9110c42f3c553, type: 3}
+  m_PrefabInstance: {fileID: 7819074354837478107}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7835014170643590672
 PrefabInstance:
@@ -28381,6 +28794,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -28455,6 +28872,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -28529,6 +28950,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -28603,6 +29028,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -28755,6 +29184,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -28829,6 +29262,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -28981,6 +29418,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -29055,6 +29496,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -29207,6 +29652,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -29281,6 +29730,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
@@ -29355,6 +29808,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3687810330514094658}
     m_Modifications:
+    - target: {fileID: 499374064228214087, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8db934d77fa3d964cbc96c90af899545, type: 2}
     - target: {fileID: 2491072345170998243, guid: 013a052fb8cb94e9ab97d63903ef877e, type: 3}
       propertyPath: m_Name
       value: Arch Building
