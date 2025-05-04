@@ -105,6 +105,36 @@ MonoBehaviour:
     reflectionsDelay: 0
     reverbLevel: 0
     reverbDelay: 0
+  - name: music_LevelSelect
+    clip: {fileID: 8300000, guid: 18fef489c8c8f744aaea71cbb491bd27, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+    chokeGroup: 0
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
+  - name: music_ActualMenu
+    clip: {fileID: 8300000, guid: 3c195717cceea7249ac94991228ba42d, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+    chokeGroup: 0
+    reverb: 0
+    dryLevel: 0
+    room: 0
+    decayTime: 1
+    reflectionsLevel: 0
+    reflectionsDelay: 0
+    reverbLevel: 0
+    reverbDelay: 0
   soundEffects:
   - name: sfx_Crash1
     clip: {fileID: 8300000, guid: 82bd9ed47d7a69a429f64f38616e8de7, type: 3}

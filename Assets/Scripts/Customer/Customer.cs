@@ -1,6 +1,4 @@
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 /// <summary>
 /// The Customer class is responsible for managing the customer's attributes, state, and behavior. 
@@ -11,7 +9,8 @@ public class Customer : MonoBehaviour, ICrashable
 {
     [Header("Customer Attributes")]
     public CustomerType customerType;
-    public string orderName;
+    public int foodType;
+    public int maxFoodType = 3;
     /// <summary>
     /// The sprite that will be displayed in the game world.
     /// </summary>
@@ -35,13 +34,15 @@ public class Customer : MonoBehaviour, ICrashable
     public SpriteRenderer rangeIndicatorSprite;
     public GameObject hungrySign;
 
-    [Header("Movement Settings")]
-    /// <summary>
-    /// if the customer is moving back and forth along the Z-axis. If unchecked, the customer will move along the X-axis (West and East).
-    /// </summary>
-    public bool isMovingNorthSouth = true;
-
+    [Header("Moving Settings")]
+    [Tooltip("Drag these in Scene to set the back-and-forth patrol endpoints.")]
+    public Vector3 patrolPointA = Vector3.zero;
+    public Vector3 patrolPointB = Vector3.zero;
     [SerializeField] float moveSpeed;
+
+    [Header("Patrol Obstacle Detection")]
+    [Tooltip("Layers considered obstacles for patrol direction.")]
+    public LayerMask obstacleMask;
 
     [Header("Fade Settings")]
     /// <summary>
@@ -52,7 +53,6 @@ public class Customer : MonoBehaviour, ICrashable
     /// Difference between customer disappearing and ring indicator disappearing
     /// </summary>
     private float fadeTimer = 0f;
-    private float originalAlpha;
     private SpriteRenderer spriteRenderer;
     [Header("Knockback Settings")]
     [SerializeField] float invincibilityDuration = 3.0f; // Duration of invincibility in seconds
@@ -61,14 +61,13 @@ public class Customer : MonoBehaviour, ICrashable
     float knockbackTimer = 0f;
     bool isKnockedBack = false;
     bool isInvincible = false;
-    float invincibilityTimer = 0f;
     Rigidbody rb;
     [Tooltip("The maximum force that can be applied to a pedestrian")]
     [SerializeField] float maxKnockback = 25f;
 
     private Vector3 startingPosition;
-    private float timer = 0f;
-    private Renderer customerRenderer;
+    // track which patrol point we're moving toward
+    private bool movingToB = true;
     private bool orderTaken = false;
     private bool foodReady = false;
     private bool isOrderCompleted = false;
@@ -82,19 +81,20 @@ public class Customer : MonoBehaviour, ICrashable
     [SerializeField] Color inRangeColor;
     [SerializeField] Color cookingColor;
     [SerializeField] Color completeColor;
-    PedAnimManager pedAnimManager;
 
 
     void Awake()
     {
-        customerType = (CustomerType)(UnityEngine.Random.Range(0, 4));
+        customerType = (CustomerType)(Random.Range(0, 4));
+        foodType = Random.Range(0, maxFoodType);
     }
     void Start()
     {
         fadeTimer = fadeOutDuration;
-        customerRenderer = GetComponent<Renderer>();
         currentState = CustomerState.WaitingForOrder;
         startingPosition = transform.position;
+        // if the default east-west path is blocked, switch to north-south
+        DetectAndSwitchPatrolAxis();
         // set the radius of the customer's detection range
         detectionRange.GetComponent<SphereCollider>().radius = interactionRange;
 
@@ -111,11 +111,6 @@ public class Customer : MonoBehaviour, ICrashable
         spriteRenderer = customerSprite.GetComponent<SpriteRenderer>();
         // set animation speed to 0.5
         animController.changeAnimSpeed(0.4f);
-        if (isMovingNorthSouth)
-        {
-            SpriteRenderer spriteRenderer = customerSprite.GetComponent<SpriteRenderer>();
-            spriteRenderer.flipX = true;
-        }
         rb = GetComponent<Rigidbody>();
 
         hungrySign.SetActive(false);
@@ -139,21 +134,20 @@ public class Customer : MonoBehaviour, ICrashable
                 {
                     GameManager.Instance.TakeOrder(this);
                     currentState = CustomerState.Cooking;
-                    timer = 0f;
                     orderTaken = true;
                     switch (customerType)
                     {
                         case CustomerType.Beetle:
-                            AudioManager.Instance.PlaySound("sfx_order_Beetle" + UnityEngine.Random.Range(1, 3));
+                            AudioManager.Instance.PlaySound("sfx_order_Beetle" + Random.Range(1, 3));
                             break;
                         case CustomerType.Grasshopper:
-                            AudioManager.Instance.PlaySound("sfx_order_Grasshopper" + UnityEngine.Random.Range(1, 3));
+                            AudioManager.Instance.PlaySound("sfx_order_Grasshopper" + Random.Range(1, 3));
                             break;
                         case CustomerType.Ladybug:
-                            AudioManager.Instance.PlaySound("sfx_order_Ladybug" + UnityEngine.Random.Range(1, 3));
+                            AudioManager.Instance.PlaySound("sfx_order_Ladybug" + Random.Range(1, 3));
                             break;
                         case CustomerType.Rolypoly:
-                            AudioManager.Instance.PlaySound("sfx_order_Rolypoly" + UnityEngine.Random.Range(1, 3));
+                            AudioManager.Instance.PlaySound("sfx_order_Rolypoly" + Random.Range(1, 3));
                             break;
                     }
                     rangeIndicatorSprite.color = cookingColor;
@@ -196,14 +190,9 @@ public class Customer : MonoBehaviour, ICrashable
             case CustomerState.Done:
                 break;
         }
-
-        if (currentState != CustomerState.WaitingForOrder && currentState != CustomerState.Done)
-        {
-            timer += Time.deltaTime;
-        }
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         MoveCustomer();
     }
@@ -223,16 +212,16 @@ public class Customer : MonoBehaviour, ICrashable
         switch (customerType)
         {
             case CustomerType.Beetle:
-                AudioManager.Instance.PlaySound("sfx_complete_Beetle" + UnityEngine.Random.Range(1, 3));
+                AudioManager.Instance.PlaySound("sfx_complete_Beetle" + Random.Range(1, 3));
                 break;
             case CustomerType.Grasshopper:
-                AudioManager.Instance.PlaySound("sfx_complete_Grasshopper" + UnityEngine.Random.Range(1, 3));
+                AudioManager.Instance.PlaySound("sfx_complete_Grasshopper" + Random.Range(1, 3));
                 break;
             case CustomerType.Ladybug:
-                AudioManager.Instance.PlaySound("sfx_complete_Ladybug" + UnityEngine.Random.Range(1, 3));
+                AudioManager.Instance.PlaySound("sfx_complete_Ladybug" + Random.Range(1, 3));
                 break;
             case CustomerType.Rolypoly:
-                AudioManager.Instance.PlaySound("sfx_complete_Rolypoly" + UnityEngine.Random.Range(1, 3));
+                AudioManager.Instance.PlaySound("sfx_complete_Rolypoly" + Random.Range(1, 3));
                 break;
         }
     }
@@ -248,7 +237,7 @@ public class Customer : MonoBehaviour, ICrashable
                 Vector3 knockbackDirection = (transform.position - position).normalized;
                 knockbackDirection.y = 0; // Ignore vertical direction
                 float knockbackForce = Mathf.Abs(magnitude) < maxKnockback ? magnitude :
-                    magnitude < 0 ? -maxKnockback :  maxKnockback;
+                    magnitude < 0 ? -maxKnockback : maxKnockback;
 
                 knockbackDirection += Vector3.up * 0.2f;
                 knockbackDirection.Normalize();
@@ -258,23 +247,22 @@ public class Customer : MonoBehaviour, ICrashable
 
                 isKnockedBack = true;
                 isInvincible = true;
-                invincibilityTimer = invincibilityDuration;
                 knockbackTimer = knockbackCooldown; // Start knockback cooldown
 
                 // play hurt sound
                 switch (customerType)
                 {
                     case CustomerType.Beetle:
-                        AudioManager.Instance.PlaySound("sfx_hurt_Beetle" + UnityEngine.Random.Range(1, 3));
+                        AudioManager.Instance.PlaySound("sfx_hurt_Beetle" + Random.Range(1, 3));
                         break;
                     case CustomerType.Grasshopper:
-                        AudioManager.Instance.PlaySound("sfx_hurt_Grasshopper" + UnityEngine.Random.Range(1, 3));
+                        AudioManager.Instance.PlaySound("sfx_hurt_Grasshopper" + Random.Range(1, 3));
                         break;
                     case CustomerType.Ladybug:
-                        AudioManager.Instance.PlaySound("sfx_hurt_Ladybug" + UnityEngine.Random.Range(1, 3));
+                        AudioManager.Instance.PlaySound("sfx_hurt_Ladybug" + Random.Range(1, 3));
                         break;
                     case CustomerType.Rolypoly:
-                        AudioManager.Instance.PlaySound("sfx_hurt_Rolypoly" + UnityEngine.Random.Range(1, 3));
+                        AudioManager.Instance.PlaySound("sfx_hurt_Rolypoly" + Random.Range(1, 3));
                         break;
                 }
 
@@ -315,12 +303,36 @@ public class Customer : MonoBehaviour, ICrashable
 
 
     // PRIVATE METHODS ----------------------------
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        // draw lines between points
+        Gizmos.color = Color.cyan;
+        Vector3 worldA = transform.position + patrolPointA;
+        Vector3 worldB = transform.position + patrolPointB;
+        Gizmos.DrawLine(worldA, worldB);
+        Gizmos.DrawSphere(worldA, 0.1f);
+        Gizmos.DrawSphere(worldB, 0.1f);
+
+        // make the points draggable
+        UnityEditor.EditorGUI.BeginChangeCheck();
+        Vector3 newWorldA = UnityEditor.Handles.PositionHandle(worldA, Quaternion.identity);
+        Vector3 newWorldB = UnityEditor.Handles.PositionHandle(worldB, Quaternion.identity);
+        if (UnityEditor.EditorGUI.EndChangeCheck())
+        {
+            // record undo so changes can be undone
+            UnityEditor.Undo.RecordObject(this, "Move Patrol Point");
+            patrolPointA = newWorldA - transform.position;
+            patrolPointB = newWorldB - transform.position;
+        }
+    }
+#endif
 
     private void HandleFading()
     {
         fadeTimer -= Time.deltaTime;
         float normalizedTime = fadeTimer / fadeOutDuration;
-        if(normalizedTime <= 0)
+        if (normalizedTime <= 0)
         {
             Destroy(gameObject);
         }
@@ -330,7 +342,6 @@ public class Customer : MonoBehaviour, ICrashable
             Color hungryColor = hungrySign.GetComponent<SpriteRenderer>().color;
         }
     }
-    private Vector3 targetPosition;
 
     private void MoveCustomer()
     {
@@ -359,12 +370,55 @@ public class Customer : MonoBehaviour, ICrashable
         }
         else
         {
-            if(Vector3.Distance(transform.position,startingPosition) > .1f)
+            // compute world-space patrol endpoints
+            Vector3 worldA = startingPosition + patrolPointA;
+            Vector3 worldB = startingPosition + patrolPointB;
+            // choose current target
+            Vector3 target = movingToB ? worldB : worldA;
+
+            // if far from target, push toward it
+            if (Vector3.Distance(transform.position, target) > 0.1f)
             {
-                rb.AddForce((startingPosition - transform.position).normalized * moveSpeed, ForceMode.Force);
+                // move toward target
+                rb.MovePosition(Vector3.MoveTowards(transform.position, target, moveSpeed * Time.fixedDeltaTime));
+                SetAnimationDirection(target - transform.position);
+                previousPosition = transform.position;
+            }
+            else
+            {
+                // reached endpoint: flip direction
+                movingToB = !movingToB;
+                // (Optional) Instantly flip animation direction at endpoint
+                Vector3 newTarget = movingToB ? worldB : worldA;
+                SetAnimationDirection(newTarget - transform.position);
             }
         }
     }
+
+
+    /// <summary>
+    /// Check the current patrol axis for obstacles; if any are detected, switch to the perpendicular axis.
+    /// </summary>
+    private void DetectAndSwitchPatrolAxis()
+    {
+        // compute world-space endpoints
+        Vector3 worldA = startingPosition + patrolPointA;
+        Vector3 worldB = startingPosition + patrolPointB;
+        Vector3 dir = (worldB - worldA).normalized;
+        float dist = Vector3.Distance(worldA, worldB);
+
+        // if there's any obstacle between A and B
+        if (Physics.Raycast(worldA, dir, dist, obstacleMask))
+        {
+            // swap to north-south: use same distance but along Z instead of X
+            float half = dist / 2f;
+            patrolPointA = new Vector3(0f, 0f, half);
+            patrolPointB = new Vector3(0f, 0f, -half);
+            // reset moving direction
+            movingToB = true;
+        }
+    }
+
     private void UpdateRangeIndicator()
     {
         // Make the ring’s world‑space diameter = interactionRange * 2
