@@ -14,10 +14,19 @@ public class TutorialScript : MonoBehaviour
     [SerializeField] GameObject objectiveLabel;
     [SerializeField] TMP_Text objectiveMessage;
 
+    [SerializeField] private Animator toolTipAnim;
+
     // the number of seconds a message remains on screen before disappearing.
     //[SerializeField] private float messageDuration = 10;
     //private float messageTimer = 0;
     private bool activeCop = false;
+
+
+    private void Start()
+    {
+        objectiveLabel.SetActive(false);
+        GameManager.Instance.FreezeGame();
+    }
 
     // Update is called once per frame
     void Update()
@@ -60,6 +69,7 @@ public class TutorialScript : MonoBehaviour
         GameManager.Instance.FreezeGame();
         tooltipMessage.text = message;
         tooltip.SetActive(true);
+        //toolTipAnim.;
         
         //messageTimer = messageDuration;
 
