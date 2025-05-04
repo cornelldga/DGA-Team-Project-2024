@@ -201,10 +201,12 @@ public class GameManager : MonoBehaviour
             cookBarManager.AddToHotbar(customer);
             getPlayer().AddOil(-20);
         }
-    }/// <summary>
-     /// Called when the player fails to deliver an order to a customer in time
-     /// </summary>
-     /// <param name="customer"></param>
+    }
+
+    /// <summary>
+    /// Called when the player fails to deliver an order to a customer in time
+    /// </summary>
+    /// <param name="customer"></param>
     public void FailOrder(Customer customer)
     {
         failedOrders++;
