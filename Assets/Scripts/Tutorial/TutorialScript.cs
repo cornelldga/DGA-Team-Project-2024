@@ -21,6 +21,11 @@ public class TutorialScript : MonoBehaviour
     private bool startTutorial = false;
     private string storedObjMessage;
 
+    // Whether another tooltip should be shown after pressing 'ok'
+    bool displayAnotherTooltip = false;
+    List<string> extraTips = new List<string>();
+    int tipIndex = 0;
+
 
 
     private void Start()
@@ -35,6 +40,15 @@ public class TutorialScript : MonoBehaviour
 
         GameManager.Instance.getPlayer().TurnRight();
         GameManager.Instance.getPlayer().TurnRight();
+
+        // Allocate extra tool tip messages
+        // Tips for learning how to boost
+        extraTips.Add("While we get that order cooking, I'll show you how to give the cops a good 'ol run around.");
+        extraTips.Add("Hold SHIFT to use fuel and boost forward!");
+
+        // Tips for refueling
+        extraTips.Add("You'll need fuel for cooking and speeding through the city, " +
+            "so make sure to stay stocked up! Drive into any oil containers to fuel up!");
     }
 
     // Update is called once per frame
@@ -47,19 +61,43 @@ public class TutorialScript : MonoBehaviour
             cop.SetActive(true);
             activeCop = true;
             ShowMessage("They found us! We can't vend food in this city, but that won't stop us. Avoid the cops until the order is ready!");
-            storedObjMessage = "Press 'E' to deliver an order";
+            displayAnotherTooltip = true;
+            storedObjMessage = "Hold SHIFT to boost";
+            //storedObjMessage = "Press 'E' to deliver an order";
         }
+
+        
     }
 
     // Method called when OK button is pressed
     public void OKButtonPressed()
     {
         GameManager.Instance.getPlayer().setCanDrift(false);
-        StartCoroutine(HideTooltipAfterAnimation());
 
-        GameManager.Instance.ResumeGame();
+        if (displayAnotherTooltip)
+        {
+            tooltipMessage.text = extraTips[tipIndex];
+            tipIndex++;
 
-        StartCoroutine(ShowObjectiveAnimation());
+            // Finish tips for teaching boost
+            if (tipIndex == 2)
+            {
+                displayAnotherTooltip = false;
+                // Start countdown for showing refuel tip
+                StartCoroutine(WaitNextTip());
+            }
+        }
+
+        else
+        {
+            StartCoroutine(HideTooltipAfterAnimation());
+
+            GameManager.Instance.ResumeGame();
+
+            StartCoroutine(ShowObjectiveAnimation());
+        }
+
+        
     }
 
     // Pause game, show given tutorial message on the screen
@@ -152,6 +190,31 @@ public class TutorialScript : MonoBehaviour
 
         // Show the objective after animation completes
         objectiveAnim.enabled = false;
+    }
+
+
+    // Coroutine for waiting between tool tips
+    private IEnumerator WaitNextTip()
+    {
+        // Wait to give next tip
+        yield return new WaitForSeconds(5.0f);
+
+        // Display the next tip
+        showNextMessage();
+    }
+
+
+    private void showNextMessage()
+    {
+
+        ShowMessage(extraTips[tipIndex]);
+
+        // Update objective for refuel
+        if (tipIndex == 2)
+        {
+            setObjectiveMessage("Collect oil to refuel");
+            tipIndex++;
+        }
     }
 
 }
