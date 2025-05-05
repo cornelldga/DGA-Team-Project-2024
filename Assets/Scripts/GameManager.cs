@@ -140,6 +140,7 @@ public class GameManager : MonoBehaviour
         gameCanvas.SetActive(toggle);
     }
 
+
     /// <summary>
     /// Pauses the game, setting timeScale to 0 and disables the player controller and customers
     /// </summary>
@@ -319,6 +320,14 @@ public class GameManager : MonoBehaviour
         FindObjectOfType<AudioManager>().PlaySound("sfx_MenuClick");
         FindObjectOfType<AudioManager>().StopSound("sfx_SirenLong");
         LoadScene("Level Select");
+    }
+    /// <summary>
+    /// Changes the scene to the specificed scene name
+    /// </summary>
+    /// <param name="sceneName">The name of the scene</param>
+    public void NextLevel(string sceneName)
+    {
+        LoadScene(sceneName);
     }
 
 }
