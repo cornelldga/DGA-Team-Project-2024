@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialMessage: 'There is a bend in the road! Turn your cart left with A and right
     with D '
+  objectiveMessage: Press/Hold 'A' or 'S' to turn
   tutorial: {fileID: 0}
 --- !u!65 &8078746535984522888
 BoxCollider:

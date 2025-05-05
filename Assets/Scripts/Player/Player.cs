@@ -299,6 +299,11 @@ public class Player : MonoBehaviour, ICrashable
         }
     }
 
+    public void setCanDrift(bool value)
+    {
+        canDrift = value;
+    }
+
     // The player can use A and D to turn to the next of 8 possible directions.
     void Turn()
     {
