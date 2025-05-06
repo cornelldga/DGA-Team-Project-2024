@@ -26,6 +26,10 @@ public class TutorialScript : MonoBehaviour
     List<string> extraTips = new List<string>();
     int tipIndex = 0;
 
+    float prevOil;
+
+
+
 
 
     private void Start()
@@ -40,15 +44,32 @@ public class TutorialScript : MonoBehaviour
 
         GameManager.Instance.getPlayer().TurnRight();
         GameManager.Instance.getPlayer().TurnRight();
+        prevOil = GameManager.Instance.getPlayer().GetMaxOil();
 
         // Allocate extra tool tip messages
-        // Tips for learning how to boost
+        // Tips for learning how to boost (Index 0)
         extraTips.Add("While we get that order cooking, I'll show you how to give the cops a good 'ol run around.");
         extraTips.Add("Hold SHIFT to use fuel and boost forward!");
 
-        // Tips for refueling
+        // Tips for refueling (Index 2)
         extraTips.Add("You'll need fuel for cooking and speeding through the city, " +
             "so make sure to stay stocked up! Drive into any oil containers to fuel up!");
+
+        // Tips for interacting with the second customer and radar (Index 3)
+        extraTips.Add("Now that you've got a handle of the 'ol cart, let's pick up " +
+            "another hungry customer's order.");
+        extraTips.Add("Use the radar to locate the next waiting customer. You can " +
+            "also use it to find oil canisters!");
+
+        // Tips for patience and hotbar (Index 5)
+        extraTips.Add("Each customer has a patience meter. Don't let it get " +
+            "too low or they'll find their food elsewhere!");
+        extraTips.Add("Use num keys '1', '2', or '3' to hone in " +
+            "on a specific customer's location.");
+
+        // Final farewell (Index 7)
+        extraTips.Add("I've taught you all I know. Go sling some grub " +
+            "to those hungry bugs!");
     }
 
     // Update is called once per frame
@@ -64,6 +85,21 @@ public class TutorialScript : MonoBehaviour
             displayAnotherTooltip = true;
             storedObjMessage = "Hold SHIFT to boost";
             //storedObjMessage = "Press 'E' to deliver an order";
+        }
+
+        // Check if player has refueled after they've been told to
+        if (tipIndex == 3) {
+            float currOil = GameManager.Instance.getPlayer().GetOil();
+
+            if (currOil > prevOil)
+            {
+                // Trigger completion of refuel goal
+                ShowMessage(extraTips[tipIndex]);
+                setObjectiveMessage("Find the next customer");
+                displayAnotherTooltip = true;
+            }
+
+            prevOil = currOil;
         }
 
         
@@ -85,6 +121,12 @@ public class TutorialScript : MonoBehaviour
                 displayAnotherTooltip = false;
                 // Start countdown for showing refuel tip
                 StartCoroutine(WaitNextTip());
+            }
+
+            //Finish tips for teaching radar
+            if (tipIndex == 5)
+            {
+
             }
         }
 
@@ -215,6 +257,9 @@ public class TutorialScript : MonoBehaviour
             setObjectiveMessage("Collect oil to refuel");
             tipIndex++;
         }
+
+        // Update objective for finding next customer
+
     }
 
 }
