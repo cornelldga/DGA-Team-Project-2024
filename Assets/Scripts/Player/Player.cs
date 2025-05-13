@@ -452,7 +452,8 @@ public class Player : MonoBehaviour, ICrashable
         {
             if (customer.cookTime > 0)
             {
-                customer.cookTime -= Time.deltaTime;
+                // with the addition of minigames to cook, the timer no longer passively ticks down. 
+                //customer.cookTime -= Time.deltaTime;
             }
         }
     }

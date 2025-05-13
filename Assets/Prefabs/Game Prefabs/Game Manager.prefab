@@ -2114,6 +2114,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RadarUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5761235434919495173, guid: 9c5ed45be6fd84bbe830cabe0b305bc8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
