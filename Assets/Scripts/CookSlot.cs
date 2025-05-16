@@ -81,6 +81,13 @@ public class CookSlot : MonoBehaviour
                 //slotIcon.color = readyColor;
                 cookDoneAnim.enabled = true;
             }
+            else if (!isOpen && !isReady)
+            {
+                // food needs to be constantly attended or it will take longer. 
+                customer.cookTime += Time.deltaTime;
+                if (customer.cookTime > maxCookTime) { customer.cookTime = maxCookTime; }
+            }
+            
 
             // Update patience and cook bars
             patienceFill.fillAmount = customer.waitTime / maxPatienceTime;
@@ -126,6 +133,24 @@ public class CookSlot : MonoBehaviour
         float seconds = Mathf.FloorToInt(time % 60);
         label.text = seconds.ToString();
     }
+
+    /// <summary>
+    /// Updates the value being displayed in the timer. via user input manual cooking the food. 
+    /// </summary>
+    /// <param name="time"></param>
+    /// <param name="label"></param>
+    public void Cook()
+    {
+        if (!isOpen)
+        {
+            Debug.Log("click");
+            customer.cookTime -= 1;
+        }
+
+        
+
+    }
+
 
     /// <summary>
     /// Removes the order from the hotbar.

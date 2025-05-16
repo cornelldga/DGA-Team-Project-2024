@@ -255,12 +255,12 @@ public class Player : MonoBehaviour, ICrashable
         }
         if (pressForward)
         {
-            rb.AddRelativeForce(directionVector[curDirection] * speed * 10);
+            rb.AddRelativeForce(directionVector[curDirection].normalized * speed * 10);
             PlayPedalSFX();
         }
         else if (pressBackward)
         {
-            rb.AddRelativeForce(-directionVector[curDirection] * speed * 10);
+            rb.AddRelativeForce(-directionVector[curDirection].normalized * speed * 10);
             PlayPedalSFX();
         }
     }
@@ -452,7 +452,8 @@ public class Player : MonoBehaviour, ICrashable
         {
             if (customer.cookTime > 0)
             {
-                customer.cookTime -= Time.deltaTime;
+                // with the addition of minigames to cook, the timer no longer passively ticks down. 
+                //customer.cookTime -= Time.deltaTime;
             }
         }
     }
