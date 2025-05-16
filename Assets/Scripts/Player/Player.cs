@@ -255,12 +255,12 @@ public class Player : MonoBehaviour, ICrashable
         }
         if (pressForward)
         {
-            rb.AddRelativeForce(directionVector[curDirection] * speed * 10);
+            rb.AddRelativeForce(directionVector[curDirection].normalized * speed * 10);
             PlayPedalSFX();
         }
         else if (pressBackward)
         {
-            rb.AddRelativeForce(-directionVector[curDirection] * speed * 10);
+            rb.AddRelativeForce(-directionVector[curDirection].normalized * speed * 10);
             PlayPedalSFX();
         }
     }
