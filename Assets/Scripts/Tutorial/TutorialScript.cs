@@ -15,26 +15,35 @@ public class TutorialScript : MonoBehaviour
 
     [SerializeField] private Animator toolTipAnim;
 
-    // the number of seconds a message remains on screen before disappearing.
-    //[SerializeField] private float messageDuration = 10;
-    //private float messageTimer = 0;
+    // cooking tutorial script message order
     private bool playedCookingTutorial1 = false;
     private bool playedCookingTutorial2 = false;
     private bool playedCookingTutorial3 = false;
     private bool playedCookingTutorial4 = false;
 
-    private bool activeCop = false;
-    [SerializeField] private GameObject cop;
-    // the customer that is visited first.
+    [Header("Cooking Tutorial Portion")]
+    [Tooltip("the customer that is visited first.")]
     [SerializeField] private Customer customer1;
-    // spawn in this customer after customer 1 is served. 
+    [Tooltip("spawn in this customer after customer 1 is served. ")]
     [SerializeField] private GameObject customer2;
+    [Tooltip("spawn in cop after second order is taken")]
+    [SerializeField] private GameObject cop;
+
+    [Header("Game Instance items to disable in Tutorial")]
+    [SerializeField] private GameObject timer;
+    [SerializeField] private GameObject radar;
+
 
     private void Start()
     {
         objectiveLabel.SetActive(false);
         cop.SetActive(false);
         customer2.SetActive(false);
+
+        timer.SetActive(false);
+        radar.SetActive(false);
+
+
 
         GameManager.Instance.FreezeGame();
 
@@ -81,12 +90,10 @@ public class TutorialScript : MonoBehaviour
             playedCookingTutorial4 = true;
             cop.SetActive(true);
 
-            ShowMessage("The cops! They found us! Keep cooking but speed away with 'SHIFT'!");
-            setObjectiveMessage("Finish order while avoiding cops");
+            ShowMessage("The cops! They found us! Keep cooking but step on the gas and speed away with 'SHIFT'!");
+            setObjectiveMessage("Finish the order while avoiding cops!");
 
         }
-
-
 
     }
 
