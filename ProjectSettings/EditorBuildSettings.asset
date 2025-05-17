@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Build/Liam Circuit.unity
     guid: adc4df2c050ad452f9872ac8c480d83a
   - enabled: 1
+    path: Assets/Scenes/Build/Level1.unity
+    guid: 403b847dee380c647a7253255a1551bb
+  - enabled: 1
     path: Assets/Scenes/Build/Chinatown.unity
     guid: 5b039deb4b6764ef2a79027e6ce3b0bc
   - enabled: 1
