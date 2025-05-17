@@ -402,6 +402,8 @@ MonoBehaviour:
   cookFill: {fileID: 3910518442753979365}
   cookDoneAnim: {fileID: 1222658817432978011}
   patienceLowAnim: {fileID: 1038345846059955747}
+  readyColor: {r: 0, g: 1, b: 0, a: 1}
+  startColor: {r: 1, g: 0.9442084, b: 0, a: 1}
   orderNum: 
   isOpen: 1
   isSelected: 0
@@ -1434,7 +1436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7735849, g: 0.33750418, b: 0.11311854, a: 1}
+  m_Color: {r: 1, g: 0.98800087, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

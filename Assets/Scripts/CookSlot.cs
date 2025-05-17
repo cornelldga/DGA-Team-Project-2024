@@ -26,6 +26,8 @@ public class CookSlot : MonoBehaviour
     [SerializeField] Image cookFill;
     [SerializeField] Animator cookDoneAnim;
     [SerializeField] Animator patienceLowAnim;
+    [SerializeField] Color readyColor;
+    [SerializeField] Color startColor;
 
     [SerializeField] string orderNum;
 
@@ -34,8 +36,6 @@ public class CookSlot : MonoBehaviour
     private float cookProgress = 0;
 
     private float maxPatienceTime = 0;
-
-    private Color readyColor = new Color(184, 233, 173);
     private Color normColor;
 
     private Customer customer = null;
@@ -78,7 +78,7 @@ public class CookSlot : MonoBehaviour
             if (customer.cookTime < 0 && !isReady)
             {
                 isReady = true;
-                //slotIcon.color = readyColor;
+                cookFill.color = readyColor;
                 cookDoneAnim.enabled = true;
             }
             else if (!isOpen && !isReady)
@@ -108,6 +108,7 @@ public class CookSlot : MonoBehaviour
     /// <param name="c"></param>
     public void AddOrder(Customer c)
     {
+        cookFill.color = startColor;
         customer = c;
         //orderInfo.text = orderNum;
         //timerLabel.enabled = true;

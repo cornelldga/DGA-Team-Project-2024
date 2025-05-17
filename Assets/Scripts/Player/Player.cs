@@ -44,7 +44,8 @@ public class Player : MonoBehaviour, ICrashable
         Vector3.left,
         Vector3.forward+Vector3.left};
     // made visible to customize starting direction
-    [SerializeField]  private int curDirection = 0;
+    [SerializeField]  private int curDirection = 2;
+    int lastDirection = 2;
     private bool isInvincible = false;
     private float turnDelay = 0;
     private float turnRate = 0.25f;
@@ -91,6 +92,8 @@ public class Player : MonoBehaviour, ICrashable
     private bool lowFuelSoundPlayed = false;
     private int bikeSqueakMax = 200;
     private int bikeSqueakTimer = 200;
+
+    [SerializeField] SpriteRenderer[] arrows;
 
 
 
@@ -181,6 +184,11 @@ public class Player : MonoBehaviour, ICrashable
         //90, 135, 180 is E
         //180, 225, 270 is S
         //270, 315, 0 is W
+        if(curDirection != lastDirection)
+        {
+            arrows[lastDirection].enabled = false;
+            arrows[curDirection].enabled = true;
+        }
         if (curDirection == 0 || curDirection == 1 || curDirection == 2)
         {
             animController.SetFacingNorth(true);
@@ -216,6 +224,8 @@ public class Player : MonoBehaviour, ICrashable
                 animController.SetMovingWest(true);
             }
         }
+        lastDirection = curDirection;
+
     }
 
 
