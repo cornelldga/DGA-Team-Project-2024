@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Build/Baby Circuit.unity
     guid: 2d70dd3d56bd2034f8716eb642d81d35
   - enabled: 1
+    path: Assets/Scenes/Build/427EmilyLevel.unity
+    guid: f69c46f70d58dd943aadcac100b2de8c
+  - enabled: 1
     path: Assets/Scenes/Build/Level2.unity
     guid: aadf75ba737eaa842b27b98258c5c3c8
   - enabled: 1
