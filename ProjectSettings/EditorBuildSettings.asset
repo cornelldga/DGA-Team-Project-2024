@@ -21,11 +21,17 @@ EditorBuildSettings:
     path: Assets/Scenes/Build/Baby Circuit.unity
     guid: 2d70dd3d56bd2034f8716eb642d81d35
   - enabled: 1
+    path: Assets/Scenes/Build/Level2.unity
+    guid: aadf75ba737eaa842b27b98258c5c3c8
+  - enabled: 1
     path: Assets/Scenes/Build/Charles Drift.unity
     guid: 1dbd64ce25c282d4cb44be4e74b46058
   - enabled: 1
     path: Assets/Scenes/Build/Liam Circuit.unity
     guid: adc4df2c050ad452f9872ac8c480d83a
+  - enabled: 1
+    path: Assets/Scenes/Build/Level1.unity
+    guid: 403b847dee380c647a7253255a1551bb
   - enabled: 1
     path: Assets/Scenes/Build/Chinatown.unity
     guid: 5b039deb4b6764ef2a79027e6ce3b0bc
